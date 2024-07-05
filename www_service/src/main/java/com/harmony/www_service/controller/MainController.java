@@ -1,4 +1,4 @@
-package com.harmony.www_service.main;
+package com.harmony.www_service.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
