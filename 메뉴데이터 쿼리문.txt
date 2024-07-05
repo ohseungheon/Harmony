@@ -1,0 +1,143 @@
+INSERT INTO menu (menuName, category, imgurl) VALUES 
+('김치찌개', '한식', 'kimchi_stew'),
+('된장찌개', '한식', 'soybean_paste_stew'),
+('불고기', '한식', 'bulgogi'),
+('비빔밥', '한식', 'bibimbap'),
+('삼겹살', '한식', 'samgyeopsal'),
+('갈비찜', '한식', 'galbijjim'),
+('닭갈비', '한식', 'dakgalbi'),
+('감자전', '한식', 'potato_pancake'),
+('해물파전', '한식', 'seafood_pancake'),
+('냉면', '한식', 'cold_noodles'),
+('잡채', '한식', 'japchae'),
+('김밥', '한식', 'gimbap'),
+('떡볶이', '한식', 'tteokbokki'),
+('순두부찌개', '한식', 'soft_tofu_stew'),
+('쭈꾸미볶음', '한식', 'spicy_stir_fried_small_octopus'),
+('된장국', '한식', 'soybean_paste_soup'),
+('육개장', '한식', 'spicy_beef_soup'),
+('갈비탕', '한식', 'beef_rib_soup'),
+('매운탕', '한식', 'spicy_fish_stew'),
+('콩나물국밥', '한식', 'bean_sprout_soup_rice');
+
+INSERT INTO menu (menuName, category, imgurl) VALUES 
+('스시', '일식', 'sushi'),
+('사시미', '일식', 'sashimi'),
+('라멘', '일식', 'ramen'),
+('규동', '일식', 'gyudon'),
+('오코노미야키', '일식', 'okonomiyaki'),
+('가츠동', '일식', 'katsudon'),
+('텐동', '일식', 'tendon'),
+('타코야키', '일식', 'takoyaki'),
+('야키니쿠', '일식', 'yakiniku'),
+('우동', '일식', 'udon'),
+('소바', '일식', 'soba'),
+('카라아게', '일식', 'karaage'),
+('나베', '일식', 'nabe'),
+('샤브샤브', '일식', 'shabu_shabu'),
+('돈부리', '일식', 'donburi'),
+('미소시루', '일식', 'miso_soup'),
+('츠케멘', '일식', 'tsukemen'),
+('오뎅', '일식', 'oden'),
+('야키토리', '일식', 'yakitori'),
+('가이센동', '일식', 'kaisen_don');
+
+INSERT INTO menu (menuName, category, imgurl) VALUES 
+('스파게티', '양식', 'spaghetti'),
+('피자', '양식', 'pizza'),
+('햄버거', '양식', 'hamburger'),
+('스테이크', '양식', 'steak'),
+('샐러드', '양식', 'salad'),
+('리조또', '양식', 'risotto'),
+('파스타', '양식', 'pasta'),
+('치즈버거', '양식', 'cheeseburger'),
+('라자냐', '양식', 'lasagna'),
+('치킨윙', '양식', 'chicken_wings'),
+('치킨너겟', '양식', 'chicken_nuggets'),
+('프렌치프라이', '양식', 'french_fries'),
+('클럽샌드위치', '양식', 'club_sandwich'),
+('토마토수프', '양식', 'tomato_soup'),
+('크림스프', '양식', 'cream_soup'),
+('바베큐립', '양식', 'barbecue_ribs'),
+('갈릭브레드', '양식', 'garlic_bread'),
+('팬케이크', '양식', 'pancakes'),
+('와플', '양식', 'waffles'),
+('퀘사디아', '양식', 'quesadilla');
+
+INSERT INTO menu (menuName, category, imgurl) VALUES 
+('볶음밥', '중식', 'fried_rice'),
+('짬뽕', '중식', 'jjamppong'),
+('탕수육', '중식', 'sweet_and_sour_pork'),
+('짜장면', '중식', 'jajangmyeon'),
+('마파두부', '중식', 'mapo_tofu'),
+('깐풍기', '중식', 'kanpunggi'),
+('군만두', '중식', 'fried_dumplings'),
+('양장피', '중식', 'yangjangpi'),
+('팔보채', '중식', 'palbochae'),
+('유린기', '중식', 'yuringi'),
+('라조기', '중식', 'laziji'),
+('딤섬', '중식', 'dim_sum'),
+('샤오롱바오', '중식', 'xiao_long_bao'),
+('고추잡채', '중식', 'stir_fried_green_pepper_with_shredded_pork'),
+('양꼬치', '중식', 'lamb_skewers'),
+('마라탕', '중식', 'mala_tang'),
+('훠궈', '중식', 'hot_pot'),
+('중국식볶음면', '중식', 'chinese_stir_fried_noodles'),
+('북경오리', '중식', 'peking_duck'),
+('사천탕면', '중식', 'sichuan_hot_and_sour_noodles');
+
+INSERT INTO menu (menuName, category, imgurl) VALUES 
+('제육볶음', '한식', 'spicy_pork_stir_fry'),
+('삼계탕', '한식', 'samgyetang'),
+('두부조림', '한식', 'braised_tofu'),
+('콩나물밥', '한식', 'bean_sprout_rice'),
+('오이냉국', '한식', 'cucumber_cold_soup');
+
+INSERT INTO menu (menuName, category, imgurl) VALUES 
+('돈카츠', '일식', 'tonkatsu'),
+('카레라이스', '일식', 'curry_rice'),
+('오야코동', '일식', 'oyakodon'),
+('니쿠자가', '일식', 'nikujaga'),
+('하이라이스', '일식', 'hayashi_rice');
+
+INSERT INTO menu (menuName, category, imgurl) VALUES 
+('치킨 알프레도 파스타', '양식', 'chicken_alfredo_pasta'),
+('시저 샐러드', '양식', 'caesar_salad'),
+('클램 차우더', '양식', 'clam_chowder'),
+('치킨 파마산', '양식', 'chicken_parmesan'),
+('베이컨 맥 앤 치즈', '양식', 'bacon_mac_and_cheese');
+
+INSERT INTO menu (menuName, category, imgurl) VALUES 
+('마파두부', '중식', 'mapo_tofu'),
+('깐풍기', '중식', 'kanpunggi'),
+('군만두', '중식', 'fried_dumplings'),
+('라조기', '중식', 'laziji'),
+('양장피', '중식', 'yangjangpi');
+
+INSERT INTO menu (menuName, category, imgurl) VALUES 
+('멘보샤', '중식', 'menbosha'),
+('지삼선', '중식', 'di_san_xian'),
+('부추잡채', '중식', 'buchu_japchae'),
+('해파리냉채', '중식', 'jellyfish_salad'),
+('마라샹궈', '중식', 'mala_xiangguo');
+
+INSERT INTO menu (menuName, category, imgurl) VALUES 
+('칠리 콘 카르네', '양식', 'chili_con_carne'),
+('미트로프', '양식', 'meatloaf'),
+('감바스', '양식', 'gambas'),
+('페스토 파스타', '양식', 'pesto_pasta'),
+('포크찹', '양식', 'pork_chops');
+
+INSERT INTO menu (menuName, category, imgurl) VALUES 
+('텐푸라', '일식', 'tempura'),
+('규카츠', '일식', 'gyukatsu'),
+('미소라멘', '일식', 'miso_ramen'),
+('자루소바', '일식', 'zaru_soba'),
+('오차즈케', '일식', 'ochazuke');
+
+INSERT INTO menu (menuName, category, imgurl) VALUES 
+('부대찌개', '한식', 'budae_jjigae'),
+('낙지볶음', '한식', 'nakji_bokkeum'),
+('북엇국', '한식', 'bukeo_guk'),
+('호박죽', '한식', 'hobak_juk'),
+('동태찌개', '한식', 'dongtae_jjigae');
