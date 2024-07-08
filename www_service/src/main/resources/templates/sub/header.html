@@ -13,15 +13,17 @@
 
 body {
 	font-family: "Pretendard Variable", Pretendard;
-	color:#333;
-	font-size:16px;
+	color: #333;
+	font-size: 16px;
 }
-a{
-	text-decoration:none;
-	color:#333;
+
+a {
+	text-decoration: none;
+	color: #333;
 }
-ul{
-	list-style:none;
+
+ul {
+	list-style: none;
 }
 
 header {
@@ -54,13 +56,14 @@ header {
 }
 
 .head .login-area span a {
-	margin-left:15px;
-	font-size:14px;
-	color:#999;
-	font-weight:500;
+	margin-left: 15px;
+	font-size: 14px;
+	color: #999;
+	font-weight: 500;
 }
-.head .login-area span a:hover{
-	color:#333;
+
+.head .login-area span a:hover {
+	color: #333;
 }
 </style>
 </head>
@@ -72,10 +75,37 @@ header {
 				<a th:href="@{/}"><img th:src="@{/img/logo.png}"></a>
 			</div>
 			<div class="login-area">
-				<span><a th:href="@{/login_page}">로그인</a></span>
-				<span><a th:href="@{#}">회원가입</a></span>
+				<span th:if="${session.username eq null}"> <a
+					th:href="@{/login_page}">로그인</a>
+				</span> <span th:if="${session.username ne null}"> <a
+					th:href="@{/mypage_main}">[[${session.username}]]</a>
+				</span> <span th:if="${session.username eq null}"> <a
+					th:href="@{/regist_page}">회원가입</a>
+				</span> <span th:if="${session.username ne null}"> <a
+					th:href="@{/api/login/logout}" id="logout">로그아웃</a>
+				</span>
 			</div>
 		</div>
 	</header>
+
+	<script>
+	
+	const logout = document.getElementById("logout");
+	
+	logout.addEventListener("click", () => {
+		const xhttp = new XMLHttpRequest();
+		  xhttp.onload = function() {
+			  if(this.status === 200){
+				  if(this.responseText === "logout success"){
+					  window.location.href="/";
+				  }
+			  }
+		    document.getElementById("demo").innerHTML = this.responseText;
+		    }
+		  xhttp.open("GET", "api/login/logout");
+		  xhttp.send();
+	});
+	
+	</script>
 </body>
 </html>

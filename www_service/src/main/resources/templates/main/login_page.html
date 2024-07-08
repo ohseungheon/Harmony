@@ -34,7 +34,7 @@
 	font-size: 13px;
 }
 
-.loginForm button{
+.loginForm button {
 	width: 440px;
 	height: 50px;
 	font-family: "Pretendard Variable", Pretendard;
@@ -69,8 +69,8 @@
 
 	<section class="loginForm">
 		<form>
-			<input type="text" name="username" placeholder="아이디">
-			<input type="text" name="password" placeholder="비밀번호"> 
+			<input type="text" name="username" placeholder="아이디"> <input
+				type="text" name="password" placeholder="비밀번호">
 			<button type="submit" onclick="submitLogin(event)">로그인</button>
 		</form>
 		<div class="queen_regist-page">
@@ -79,45 +79,47 @@
 	</section>
 
 	<script>
-	function submitLogin(event){
-		event.preventDefault();
-		
-		const username = document.querySelector("Input[name='username']");
-		const password = document.querySelector("Input[name='password']");
-		
-		if (username.value == '') {
-			alert("아이디를 입력해주세요.");
-			username.focus();
-			return;
-		} else if (password.value == '') {
-			alert("비밀번호를 입력해주세요.");
-			password.focus();
-			return;
-		} 
+		function submitLogin(event) {
+			event.preventDefault();
+
+			const username = document.querySelector("Input[name='username']");
+			const password = document.querySelector("Input[name='password']");
+
+			if (username.value == '') {
+				alert("아이디를 입력해주세요.");
+				username.focus();
+				return;
+			} else if (password.value == '') {
+				alert("비밀번호를 입력해주세요.");
+				password.focus();
+				return;
+			}
 			
-			const sendData = JSON.stringify(admin);
+			const data = {
+				username : username.value,
+				password : password.value
+			}
+			
 			const xhttp = new XMLHttpRequest();
-			
 			xhttp.onload = function() {
-				console.log(this.status); // 응답 상태 확인
-				console.log(this.responseText); // 응답 내용 확인
 				if (this.status === 200) {
-					console.log("username: ", username);
-					console.log("role: ", role);
+					const response = this.responseText;
 
-					alert("환영합니다!!");
-
-					const response = JSON.parse(this.responseText);
-					window.location.href = "/";
+					if (response === "success") {
+						alert("환영합니다!!");
+						window.location.href = "/";
+					}else if(response === "fail"){
+						alert("아이디 및 비밀번호가 틀렸습니다. 다시 입력해주세요");
+						username.focus();
+					}
 				} else {
-					alert(this.responseText);
+					alert(response);
 				}
 			};
 			xhttp.open("POST", "http://localhost:8888/api/login/doLogin");
 			xhttp.setRequestHeader("Content-type", "application/json");
-			xhttp.send(sendData);
+			xhttp.send(JSON.stringify(data));
 		}
-	
 	</script>
 </body>
 </html>

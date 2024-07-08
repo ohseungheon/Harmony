@@ -11,5 +11,11 @@ public class LoginController {
 		
 		return "main/login_page";
 	}
+	
+	@RequestMapping("/regist_page")
+	public String registForm() {
+		
+		return "main/regist_page";
+	}
 
 }
