@@ -1,6 +1,7 @@
 package com.harmony.www_service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,15 +25,26 @@ public class ApiLoginController {
 			HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
-		
 		UserDto user = loginService.loginCheckService(userDto);
 		
 		if(user != null) {
 			session.setAttribute("username", user.getUsername());
 			session.setAttribute("role", user.getRole());
+		}else {
+			return "fail";
 		}
 		
 		return "success";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		
+		session.invalidate();
+		
+		return "logout success";
 	}
 	
 }
