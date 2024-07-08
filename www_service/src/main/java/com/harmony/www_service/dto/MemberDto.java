@@ -1,10 +1,15 @@
 package com.harmony.www_service.dto;
 
-import java.time.LocalDate;
 
+import java.sql.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberDto {
 
 	private int mno;
@@ -13,5 +18,4 @@ public class MemberDto {
 	private String addr;
 	private LocalDate birth;
 	private String phone;
-	
 }
