@@ -5,7 +5,7 @@
   <mapper namespace="com.example.goodjob.dao.ResumeDao">
   
   	<select id="loginCheck" resultType="com.harmony.www_service.dto.UserDto">
-  		
+  		select * from user where username = #{username} and password = #{password}
   	</select>
   
   </mapper>
