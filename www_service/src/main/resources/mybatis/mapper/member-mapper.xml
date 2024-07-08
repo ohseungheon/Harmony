@@ -7,5 +7,22 @@
   	<select id="getmemberList" resultType="com.harmony.www_service.dto.MemberDto">
   		SELECT * FROM member m JOIN user u ON m.username = u.username WHERE mno = #{mno}
   	</select>
-  
+  	
+  	<update id="updateMemberInfo1" >
+  		UPDATE member
+        SET
+            username = #{member.username},
+            nickName = #{member.nickName},
+            addr = #{member.addr},
+            birth = #{member.birth},
+            phone = #{member.phone}
+        WHERE mno = #{member.mno};
+  	</update>
+  	
+	<update id="updateMemberInfo2" >
+       UPDATE user
+       SET
+           password = #{member.password}
+       WHERE username = (SELECT username FROM member WHERE mno = #{member.mno});
+    </update>
   </mapper>
