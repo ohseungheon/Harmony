@@ -14,6 +14,7 @@ public class MemberDto {
 
 	private int mno;
 	private String username;
+	private String password;
 	private String nickName;
 	private String addr;
 	private LocalDate birth;
