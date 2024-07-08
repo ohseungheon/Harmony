@@ -1,57 +1,112 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>login</title>
-    <link rel="stylesheet" as="style" crossorigin
+<meta charset="UTF-8">
+<title>login</title>
+<link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-    <style>
-    
-    	.loginForm{
-    		width:600px;
-    		margin:50px auto;
-    		display:flex;
-    		flex-direction:column;
-    		text-align:center;
-    		border:1px solid #ccc;
-    		border-radius:5px;
-    		padding:120px 0;
-    	}
-    	.loginForm input[type="text"]{
-    		width:440px;
-    		height:50px;
-    		font-family: "Pretendard Variable", Pretendard;
-    		border:0;
-    		border-bottom:1px solid #999;
-    		box-sizing:border-box;
-    	}
-    	.loginForm input[type="submit"]{
-    		width:440px;
-    		height:50px;
-    		font-family: "Pretendard Variable", Pretendard;
-    		margin-top:50px;
-    		background:#f5a47e;
-    		border:0;
-    		border-radius:5px;
-    	}
-    
-    </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+.loginForm {
+	width: 600px;
+	margin: 50px auto;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 110px 0;
+}
+
+.loginForm input[type="text"] {
+	width: 440px;
+	height: 50px;
+	font-family: "Pretendard Variable", Pretendard;
+	border: 0;
+	border-bottom: 1px solid #999;
+	box-sizing: border-box;
+	margin-bottom: 10px;
+	padding-left: 5px;
+	font-size: 16px;
+}
+
+.loginForm input[type="text"]::placeholder {
+	color: #999;
+	font-size: 13px;
+}
+
+.loginForm button{
+	width: 440px;
+	height: 50px;
+	font-family: "Pretendard Variable", Pretendard;
+	font-weight: 600;
+	margin-top: 100px;
+	background: #f5a47e;
+	border: 0;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	color: #333;
+	margin-top: 100px;
+}
+
+.queen_regist-page {
+	width: 440px;
+	margin: 0 auto;
+	text-align: left;
+	font-size: 14px;
+	margin-top: 15px;
+}
+
+.queen_regist-page a {
+	color: #888;
+}
+</style>
 </head>
 <body>
-<header>
-<th:block th:insert="~{/sub/header.html}"></th:block>
-</header>
+	<header>
+		<th:block th:insert="~{/sub/header.html}"></th:block>
+	</header>
 
-<section class="loginForm">
-    <form action="login" method="post">
-    	<input type="text" name="username" placeholder="아이디">
-    	<input type="text" name="password" placeholder="비밀번호">
-    	<input type="submit" value="로그인">
-    </form>
-</section>
+	<section class="loginForm">
+		<form id="myForm">
+			<input type="text" name="username" placeholder="아이디"> <input
+				type="text" name="password" placeholder="비밀번호"> 
+				<button type="submit">로그인</button>
+		</form>
+		<div class="queen_regist-page">
+			<a th:href="@{/regist_page}">회원가입</a>
+		</div>
+	</section>
 
-<script>
+	<script>
+		// 로그인 하기
+		$(document).ready(function() {
+			$('#myForm').on('submit', function(e) {
+				e.preventDefault(); // 폼의 기본 제출 동작 방지
 
-</script>
+				// 폼 데이터 수집
+				var formData = {
+					username : $('#username').val(),
+					password : $('#password').val(),
+				};
+
+				// AJAX 요청
+				$.ajax({
+					type : 'POST',
+					url : '/api/login/login',
+					contentType : 'application/json',
+					data : JSON.stringify(formData),
+					success : function(response) {
+						$("#post_demo").text(JSON.stringify(response));
+						//alert('Form submitted successfully: ' + response.status);
+					},
+					error : function(error) {
+						alert('Error submitting form: ' + error);
+					}
+				});
+			});
+		});
+	</script>
 </body>
 </html>
