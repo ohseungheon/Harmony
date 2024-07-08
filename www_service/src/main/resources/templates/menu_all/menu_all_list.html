@@ -11,11 +11,49 @@
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
 <section>
-    
+    <div>
+        <button onclick="loadKoreanFood()" class="active">한식</button>
+        <button onclick="loadChineseFood()">중식</button>
+        <button onclick="loadJapaneseFood()">일식</button>
+        <button onclick="loadWesternFood()">양식</button>
+    </div>
+    <div id="menuList"></div>
 </section>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadKoreanFood();
+    });
 
+    function loadMenu(category) {
+            fetch(`/api/menu/menu_all_list?category=${encodeURIComponent(category)}`)
+                .then(response => response.json())
+                .then(data => {
+                    let html = '<ul>';
+                    data.forEach(menu => {
+                        html += `<li>${menu.menuName}</li>`;
+                    });
+                    html += '</ul>';
+                    document.getElementById('menuList').innerHTML = html;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+    function loadKoreanFood() {
+        loadMenu('한식');
+    }
+
+    function loadChineseFood() {
+        loadMenu('중식');
+    }
+
+    function loadJapaneseFood() {
+        loadMenu('일식');
+    }
+
+    function loadWesternFood() {
+        loadMenu('양식');
+    }
 </script>
 </body>
 </html>

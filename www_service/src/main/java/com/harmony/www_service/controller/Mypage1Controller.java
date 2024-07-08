@@ -24,3 +24,4 @@ public class Mypage1Controller {
 	}
 	
 }
+
