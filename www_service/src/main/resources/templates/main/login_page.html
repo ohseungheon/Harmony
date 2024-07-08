@@ -5,7 +5,6 @@
 <title>login</title>
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 .loginForm {
 	width: 600px;
@@ -69,10 +68,10 @@
 	</header>
 
 	<section class="loginForm">
-		<form id="myForm">
-			<input type="text" name="username" placeholder="아이디"> <input
-				type="text" name="password" placeholder="비밀번호"> 
-				<button type="submit">로그인</button>
+		<form>
+			<input type="text" name="username" placeholder="아이디">
+			<input type="text" name="password" placeholder="비밀번호"> 
+			<button type="submit" onclick="submitLogin(event)">로그인</button>
 		</form>
 		<div class="queen_regist-page">
 			<a th:href="@{/regist_page}">회원가입</a>
@@ -80,33 +79,45 @@
 	</section>
 
 	<script>
-		// 로그인 하기
-		$(document).ready(function() {
-			$('#myForm').on('submit', function(e) {
-				e.preventDefault(); // 폼의 기본 제출 동작 방지
+	function submitLogin(event){
+		event.preventDefault();
+		
+		const username = document.querySelector("Input[name='username']");
+		const password = document.querySelector("Input[name='password']");
+		
+		if (username.value == '') {
+			alert("아이디를 입력해주세요.");
+			username.focus();
+			return;
+		} else if (password.value == '') {
+			alert("비밀번호를 입력해주세요.");
+			password.focus();
+			return;
+		} 
+			
+			const sendData = JSON.stringify(admin);
+			const xhttp = new XMLHttpRequest();
+			
+			xhttp.onload = function() {
+				console.log(this.status); // 응답 상태 확인
+				console.log(this.responseText); // 응답 내용 확인
+				if (this.status === 200) {
+					console.log("username: ", username);
+					console.log("role: ", role);
 
-				// 폼 데이터 수집
-				var formData = {
-					username : $('#username').val(),
-					password : $('#password').val(),
-				};
+					alert("환영합니다!!");
 
-				// AJAX 요청
-				$.ajax({
-					type : 'POST',
-					url : '/api/login/doLogin',
-					contentType : 'application/json',
-					data : JSON.stringify(formData),
-					success : function(response) {
-						$("#post_demo").text(JSON.stringify(response));
-						//alert('Form submitted successfully: ' + response.status);
-					},
-					error : function(error) {
-						alert('Error submitting form: ' + error);
-					}
-				});
-			});
-		});
+					const response = JSON.parse(this.responseText);
+					window.location.href = "/";
+				} else {
+					alert(this.responseText);
+				}
+			};
+			xhttp.open("POST", "http://localhost:8888/api/login/doLogin");
+			xhttp.setRequestHeader("Content-type", "application/json");
+			xhttp.send(sendData);
+		}
+	
 	</script>
 </body>
 </html>

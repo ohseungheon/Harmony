@@ -8,28 +8,29 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-	
+
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		
+
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-		
-		http.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/", "/login_page", "/regist_page").permitAll()
-				.requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**").permitAll()
-				//.requestMatchers("/admin").hasRole("ADMIN")
-				//.requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
-				.anyRequest().permitAll()
-				);
-		
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+		http
+				.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/", "/login_page", "/regist_page").permitAll()
+						.requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**").permitAll()
+						// .requestMatchers("/admin").hasRole("ADMIN")
+						// .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
+						.anyRequest().permitAll());
+
 		http.formLogin(form -> form.disable());
-		
+
 		return http.build();
-			
+
 	}
 
 }
