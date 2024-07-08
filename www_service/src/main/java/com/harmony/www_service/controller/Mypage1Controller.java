@@ -14,12 +14,13 @@ import com.harmony.www_service.dto.MemberDto;
 public class Mypage1Controller {
     @Autowired
     IMemberDao memDao;
-	
+	//로그인한 회원번호로 회원정보 조회 
 	@RequestMapping("/info_update")
 	public String infoUpdate(@RequestParam("mno") int mno, Model model) {
 		MemberDto member = memDao.getmemberList(mno);
 		model.addAttribute("member", member);
-		System.out.println(member);
+		//System.out.println(member);
 		return "mypage1/info_update";
 	}
+	
 }
