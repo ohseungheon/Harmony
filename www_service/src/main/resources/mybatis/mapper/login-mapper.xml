@@ -4,6 +4,10 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.harmony.www_service.dao.LoginDao">
   
+  	<select id="findByUsername" resultType="com.harmony.www_service.dto.UserDto">
+  		select * from user where username = #{username}
+  	</select>
+  
   	<select id="loginCheck" resultType="com.harmony.www_service.dto.UserDto">
   		select * from user where username = #{username} and password = #{password}
   	</select>

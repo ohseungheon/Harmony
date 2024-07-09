@@ -22,19 +22,22 @@ public class SecurityConfig {
 
 		http
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/", "/**", "/login_page", "/regist_page", "/doLogin", "/doRegist").permitAll()
-						// .requestMatchers("/admin").hasRole("ADMIN")
-						// .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
+						.requestMatchers("/", "/**", "/login_page", "/regist_page", "/doLogin", "/doRegist", "loginProc").permitAll()
+						.requestMatchers("/admin").hasRole("ADMIN")
+						.requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
 						.anyRequest().authenticated()
 						);
 		http
-				.formLogin((auth) -> auth.loginPage("/login_page")
-				.loginProcessingUrl("/doLogin")
+				.formLogin((auth) -> auth
+				.loginPage("/login_page")
+				.loginProcessingUrl("/loginProc")
 				.permitAll()
 				);
 		
 		http
 				.csrf((csrf) -> csrf.disable());
+						
+				
 		
 		return http.build();
 

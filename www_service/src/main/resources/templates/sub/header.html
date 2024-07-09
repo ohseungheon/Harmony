@@ -77,8 +77,8 @@ header {
 			<div class="login-area">
 				<span th:if="${session.username eq null}"> <a
 					th:href="@{/login_page}">로그인</a>
-				</span> <span th:if="${session.username ne null}"> <a
-					th:href="@{/mypage_main}">[[${session.username}]] 님</a>
+				</span> <span th:if="${username ne null}"> <a
+					th:href="@{/mypage_main}">[[${username}]] 님</a>
 				</span> <span th:if="${session.username eq null}"> <a
 					th:href="@{/regist_page}">회원가입</a>
 				</span> <span th:if="${session.username ne null}"> <a
