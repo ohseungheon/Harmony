@@ -70,19 +70,19 @@
                     <input type="text" name="username" id="username" placeholder="아이디" th:value="${username}">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="password" id="password" placeholder="비밀번호" >
+                    <input type="text" name="password" id="password" placeholder="비밀번호" th:value="${member.password}">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="nickName" id="nickName" placeholder="닉네임" >
+                    <input type="text" name="nickName" id="nickName" placeholder="닉네임" th:value="${member.nickName}">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="addr" id="addr" placeholder="주소" >
+                    <input type="text" name="addr" id="addr" placeholder="주소" th:value="${member.addr}">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="birth" id="birth" placeholder="생년월일" >
+                    <input type="text" name="birth" id="birth" placeholder="생년월일" th:value="${member.birth}">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="phone" id="phone" placeholder="휴대폰 번호" >
+                    <input type="text" name="phone" id="phone" placeholder="휴대폰 번호" th:value="${member.phone}">
                 </div>
                 <input type="submit" value="수정">
             </form>

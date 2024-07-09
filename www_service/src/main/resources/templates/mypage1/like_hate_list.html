@@ -47,11 +47,20 @@
     }
     #by-span-name{
     	margin-left: 50px;
+    	font-size: 20px;
     }
-    #by-delete-btn{
+    #by-delete-btn {
     	margin-right: 50px;
-    	width: 60px;
+    	width: 80px;
     	height: 40px;
+    	background-color: #F5A47E;
+        border: none; /* 테두리 없애기 */
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+    }
+    #by-delete-btn:hover {
+    	background-color: #e5946e; /* 마우스 오버 시 색상 변경 */ 
     }
     #by-favorite_menu{
     	display: flex; /* Flexbox 사용 */
@@ -85,17 +94,9 @@
 <section id="by-section">
     <span class="by-list-span">💛레시피 추천 리스트</span>
     <div class="by-list" id="by-list-1">
-    	<!-- 레시피 추천한 리스트 출력 -->
-    	<div id="by-recipe_recom">
-			<span id="by-span-name">레시피 이름</span>
-			<button id="by-delete-btn">삭제</button>
-		</div>
-		<div id="by-recipe_recom">
-			<span id="by-span-name">레시피 이름</span>
-			<button id="by-delete-btn">삭제</button>
-		</div>
-		<div id="by-recipe_recom">
-			<span id="by-span-name">레시피 이름</span>
+    	<!-- 레시피 추천한 리스트 출력(반복문 사용해야함) -->
+    	<div th:each="recipeLike : ${recipeLike}" id="by-recipe_recom">
+			<span id="by-span-name" th:text="${recipeLike.recipeName}">[[${recipeLike.recipeName}]]</span>
 			<button id="by-delete-btn">삭제</button>
 		</div>
     </div>
@@ -104,59 +105,16 @@
     <div class="by-list">
     	<div id="by-favorite_menu">
     	<!-- 메뉴 좋아요한 리스트 출력 -->
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
-    			<span id="by-menu">떡볶이</span>
+    		<div th:each="menuLike : ${menuLike}" id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{'/img/menu/' + ${menuLike.imgUrl} + '.jpg'}">
+    			<span id="by-menu" th:text="${menuLike.menuName}">[[${menuLike.menuName}]]</span>
     		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
-    			<span id="by-menu">떡볶이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
-    			<span id="by-menu">떡볶이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
-    			<span id="by-menu">떡볶이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
-    			<span id="by-menu">떡볶이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
-    			<span id="by-menu">떡볶이</span>
-    		</div>
-    	</div>
+    	</div>	
     </div>
 </section>
 
 <script>
-$(document).ready(function() {
-	//레시피추천리스트
-	
-	$.ajax({
-		url: "",
-		method: "GET",
-		dataType: "json",
-		success: function(data){
-			let recipeList = $("#by-recipe_recom");
-			
-			data.forEach(function(recipe){
-				recipeList.append(
-						
-				
-				);
-			});
-		},
-	
-	});
-	
-	
-	//메뉴좋아요리스트
-	
-});
+
 </script>
 </body>
 </html>
