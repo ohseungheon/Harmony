@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+        .menuName{
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -26,20 +29,20 @@
     });
 
     function loadMenu(category) {
-            fetch(`/api/menu/menu_all_list?category=${encodeURIComponent(category)}`)
-                .then(response => response.json())
-                .then(data => {
-                    let html = '<ul>';
-                    data.forEach(menu => {
-                        html += `<li>${menu.menuName}</li>`;
-                    });
-                    html += '</ul>';
-                    document.getElementById('menuList').innerHTML = html;
-                })
-                .catch(error => console.error('Error:', error));
-        }
+        fetch(`/api/menu/menu_all_list?category=${encodeURIComponent(category)}`)
+            .then(response => response.json())
+            .then(data => {
+                let html = '<div>';
+                data.forEach(menu => {
+                    html += `<div class="menuName" onclick="loadRecipeList('${menu.mcode}')">${menu.menuName}</div>`;
+                });
+                html += '</div>';
+                document.getElementById('menuList').innerHTML = html;
+            })
+            .catch(error => console.error('Error:', error));
+    }
 
-    function loadKoreanFood() {
+    function loadKoreanFood() { 
         loadMenu('한식');
     }
 
@@ -53,6 +56,11 @@
 
     function loadWesternFood() {
         loadMenu('양식');
+    }
+
+    function loadRecipeList(mcode) {
+
+        window.location.href = `/menu_all/recipe_list?mcode=${mcode}`;
     }
 </script>
 </body>
