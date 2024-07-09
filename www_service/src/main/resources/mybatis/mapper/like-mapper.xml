@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.harmony.www_service.dao.ILikeDao">
+  
+  	<select id="getRecipeLike" resultType="com.harmony.www_service.dto.Recipe_recommendDto_by">
+  		SELECT rr.*, r.recipeName 
+  		FROM recipe_recommend rr 
+  		JOIN recipe r 
+  		ON rr.rcode = r.rcode 
+  		WHERE mno = #{mno}
+  	</select>
+  	
+  	<select id="getMenuLike" resultType="com.harmony.www_service.dto.Menu_favoriteDto_by">
+  		SELECT fm.*, m.menuName, m.imgurl 
+  		FROM favorite_menu fm 
+  		JOIN menu m 
+  		ON fm.mcode = m.mcode 
+  		WHERE mno = #{mno}
+  	</select>
+  </mapper>
