@@ -65,7 +65,7 @@
     <section>
         <div id="king-menu-request">
             <h2> 메뉴 추가 요청 Form</h2>
-            <form class="king-menu-request-form" method="POST" action="/menu2/add">
+            <form class="king-menu-request-form" method="POST" action="/menu2/add" enctype="multipart/form-data">
                 <input name="menu_name" class="king-menu-request-input" type="text" placeholder="메뉴 명">
                 <div id="king-category-div">
                     <div style="width:80px"> 카테고리 </div>
@@ -77,7 +77,7 @@
                         <option value="3">기타</option>
                     </select>
                 </div>
-                <input class="king-menu-request-input" type="file" name="img" />
+                <input class="king-menu-request-input" type="file" name="file" />
 
                 <button id="king-menu-request-sumbit-btn"type="submit"> 추가 요청 등록</button>
 
