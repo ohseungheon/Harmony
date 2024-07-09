@@ -13,8 +13,13 @@
 <section>
     <h1>recipe_list</h1>
     <hr>
+    <p>mcode : <span th:text="${mcode}"></span></p>
+    <div id="recipeList">
+        <div th:each="recipe : ${recipeList}" class="recipeList">
+            <p th:text="${recipe.recipeName}"></p>
+        </div>
+    </div>
 </section>
-<p>mcode : <span th:text="${mcode}"></span></p>
 <script>
 
 </script>
