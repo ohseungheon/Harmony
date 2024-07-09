@@ -1,15 +1,20 @@
 package com.harmony.www_service.service;
 
+import java.util.List;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.harmony.www_service.dao.Menu2Dao;
 import com.harmony.www_service.dto.MenuReqDto;
+import com.harmony.www_service.dto.MenuReqWithMember;
 import com.harmony.www_service.dto.MenuRequestWithFile;
 
 @Service
@@ -18,6 +23,9 @@ public class Menu2Service {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+    @Autowired
+    private Menu2Dao dao;
+
     public void addMenuRequest(MenuRequestWithFile reqMenu) {
 
         // 실제로 DB에 저장하기 위한 menuReqDto 객체 생성
@@ -25,22 +33,36 @@ public class Menu2Service {
         menuReqDto.setMenuName(reqMenu.getMenu_name());
         menuReqDto.setCategory(reqMenu.getCategory());
 
-        // 파일 이름 재구성 ( 겹치지 않게 하기 위함 )
-        String newName = UUID.randomUUID().toString() + "_" + reqMenu.getFileName();
+        String originName = reqMenu.getFileName();
+        String extension = "";
+
+        // 파일 확장자 추출
+        int dotIndex = originName.lastIndexOf('.');
+        if (dotIndex > 0 && dotIndex < originName.length() - 1) {
+            extension = originName.substring(dotIndex);
+        }
+
+        // 파일 이름 재구성 ( 고유한 이름으로 대체 )
+        String newName = UUID.randomUUID().toString() + extension;
         menuReqDto.setImgUrl(newName);
+
+        // 로그인 전 임시 하드 코딩
+        menuReqDto.setMno(2);
+
+        dao.insertMenuRequest(menuReqDto);
 
         try {
             // 프로젝트 루트 경로를 기준으로 파일 저장 경로 설정
             Path projectRootPath = Paths.get("").toAbsolutePath().normalize();
             Path uploadPath = projectRootPath.resolve(uploadDir).normalize();
-            Files.createDirectories(uploadPath);  // 업로드 디렉토리 생성
+            Files.createDirectories(uploadPath); // 업로드 디렉토리 생성
 
             // 파일 저장 경로 설정
             Path filePath = uploadPath.resolve(newName);
-            
+
             // 파일을 지정된 경로에 저장
             reqMenu.getFile().transferTo(filePath.toFile());
-            
+
         } catch (IllegalStateException e) {
             System.err.println("MultipartFile 객체가 이미 사용된 상태에서 다시 transferTo 메소드를 호출하려고 할 때.\n" + //
                     "파일 업로드 요청이 제대로 처리되지 않은 경우.\n" + //
@@ -55,5 +77,12 @@ public class Menu2Service {
             e.printStackTrace();
 
         }
+
     }
+
+    public List<MenuReqWithMember> getAllMenuReqDto() {
+
+        return dao.findAll();
+    }
+
 }
