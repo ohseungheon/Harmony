@@ -26,7 +26,9 @@
 			</thead>
 			<tbody>
 				<tr th:each="dto : ${FridgeIngredientList}">
-					<td id = "">[[${dto.name}]]</td>
+					
+					<td><img src="${dto.imgurl}"></td>
+					<td>[[${dto.name}]]</td>
 					<td><a href = "" class="ahover">x</a></td>
 				</tr>
 			</tbody>
@@ -35,15 +37,15 @@
 		
 		<table  style="margin: 0 auto;text-align: center;">
 			<thead>
-				<th>만들 수 있는 메뉴</th>
+			
+				<th>메뉴이름</th>
 			</thead>
 			<tbody>
-				<tr>
-					<td id = "">[[${showCanMakeMenu.menuName}]]</td>
+				<tr th:each="dto : ${showCanMakeMenuList}">
+					<td id = "">[[${dto.menuName}]]</td>
 				</tr>
 			</tbody>
 		</table>
-		
 		
 
 

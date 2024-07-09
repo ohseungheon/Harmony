@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.harmony.www_service.dao.Menu1Dao;
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.MenuDto;
+import com.harmony.www_service.service.MenuService;
 
 @Controller
 @RequestMapping("/menu1")
@@ -17,15 +18,23 @@ import com.harmony.www_service.dto.MenuDto;
 public class Menu1Controller {
 	@Autowired
 	Menu1Dao menu1dao;
+	@Autowired
+	MenuService menuService;
 
 	@RequestMapping("main")
 	public String main(org.springframework.ui.Model model) {
 		List<IngredientDto> FridgeIngredientList = menu1dao.showFridgeIngredient();
 		model.addAttribute("FridgeIngredientList",FridgeIngredientList);
+		System.out.println("======================FridgeIngredientList : "+FridgeIngredientList);
 		
-		MenuDto showCanMakeMenu = menu1dao.showCanMakeMenu();
-		System.out.println("======================showCanMakeMenu : "+showCanMakeMenu);
-    	model.addAttribute("showCanMakeMenu",showCanMakeMenu);
+		List<Integer> icodeList =  menuService.makeIcodeList(FridgeIngredientList);
+		System.out.println("======================icodeList : "+icodeList);
+		
+		
+		
+		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(icodeList);
+		System.out.println("======================showCanMakeMenu : "+showCanMakeMenuList);
+    	model.addAttribute("showCanMakeMenuList",showCanMakeMenuList);
 		return "menu1/menu_harmony1";
     }
     
