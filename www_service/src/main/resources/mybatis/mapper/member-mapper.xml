@@ -4,8 +4,8 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.harmony.www_service.dao.IMemberDao">
   
-  	<select id="getmemberList" resultType="com.harmony.www_service.dto.MemberDto">
-  		SELECT * FROM member m JOIN user u ON m.username = u.username WHERE mno = #{mno}
+  	<select id="getmemberList" resultType="com.harmony.www_service.dto.MemberDto_by">
+  		SELECT m.*, u.password FROM member m JOIN user u ON m.username = u.username WHERE u.username = #{username}
   	</select>
   	
   	<update id="updateMemberInfo1" >
@@ -16,13 +16,13 @@
             addr = #{member.addr},
             birth = #{member.birth},
             phone = #{member.phone}
-        WHERE mno = #{member.mno};
+        WHERE username = #{member.username};
   	</update>
   	
 	<update id="updateMemberInfo2" >
        UPDATE user
        SET
            password = #{member.password}
-       WHERE username = (SELECT username FROM member WHERE mno = #{member.mno});
+       WHERE username = (SELECT username FROM member WHERE username = #{member.username});
     </update>
   </mapper>

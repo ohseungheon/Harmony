@@ -2,7 +2,6 @@ package com.harmony.www_service.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.harmony.www_service.dto.MemberDto;
 import com.harmony.www_service.dto.UserDto;
 import com.harmony.www_service.dto.UserMemberDto;
 
