@@ -35,9 +35,7 @@ public class SecurityConfig {
 		
 		http
 				.csrf((csrf) -> csrf.disable());
-
-		http.formLogin(form -> form.disable());
-
+		
 		return http.build();
 
 	}
