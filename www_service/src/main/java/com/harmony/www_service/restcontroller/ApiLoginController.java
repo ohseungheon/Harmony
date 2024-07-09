@@ -52,30 +52,8 @@ public class ApiLoginController {
 //		
 //	}
 
-	@PostMapping("/loginProc")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody UserDto userDto){
-		
-		if(userDto != null) {
-			Map<String, Object> responseData = new HashMap<>();
-			responseData.put("username", userDto.getUsername());
-			responseData.put("role", userDto.getRole());
-			
-			return ResponseEntity.ok(responseData);
-		}else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		}
-	}
 
-	// 로그아웃
-	@GetMapping("/logout")
-	public String logout(HttpServletRequest request) {
-
-		HttpSession session = request.getSession();
-
-		session.invalidate();
-
-		return "logout success";
-	}
+	
 
 	// 회원가입
 	@PostMapping("/doRegist")
