@@ -48,7 +48,8 @@ public class Menu1Controller {
 	
 	@RequestMapping("deleteFridgeIngredientList")
 	public String deleteFridgeIngredientList(org.springframework.ui.Model model) {
-    	return "menu1/menu_list2";
+		
+    	return "";
     }
     
     

@@ -41,8 +41,7 @@
                         #{item}
                     </foreach>
                 )
-                GROUP BY ri1.rcode
-                HAVING COUNT(DISTINCT ri1.icode) = #{size}
+               
             ) AS filtered_rcodes
         )
     );
