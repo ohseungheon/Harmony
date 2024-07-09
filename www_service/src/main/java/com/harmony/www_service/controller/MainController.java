@@ -15,7 +15,7 @@ public class MainController {
     @RequestMapping("/")
     public String root(Model model) {
     	
-    	String id = SecurityContextHolder.getContext().getAuthentication().getName();
+    	String username = SecurityContextHolder.getContext().getAuthentication().getName();
     	
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	
@@ -24,7 +24,7 @@ public class MainController {
     	GrantedAuthority auth = iter.next();
     	String role = auth.getAuthority();
     	
-    	model.addAttribute("id", id);
+    	model.addAttribute("username", username);
     	model.addAttribute("role", role);
     	
         return "main/home";
