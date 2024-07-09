@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.harmony.www_service.dao.LoginDao;
-import com.harmony.www_service.dto.MemberDto;
 import com.harmony.www_service.dto.UserDto;
 import com.harmony.www_service.dto.UserMemberDto;
 

@@ -65,25 +65,24 @@
 <section id="by-section">
     <div id="by-div">
     	<div id="by-form">
-    		<form id="updateForm" th:action="@{/info_update}" method="post">
-    			<input type="hidden" name="mno" id="mno" th:value="${member.mno}">
+    		<form id="updateForm" th:action="@{/mypage1/info_update}" method="post">
                 <div class="form-group">
-                    <input type="text" name="username" id="username" placeholder="아이디" th:value="${member.username}">
+                    <input type="text" name="username" id="username" placeholder="아이디" th:value="${username}">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="password" id="password" placeholder="비밀번호" th:value="${member.password}">
+                    <input type="text" name="password" id="password" placeholder="비밀번호" >
                 </div>
                 <div class="form-group">
-                    <input type="text" name="nickName" id="nickName" placeholder="닉네임" th:value="${member.nickName}">
+                    <input type="text" name="nickName" id="nickName" placeholder="닉네임" >
                 </div>
                 <div class="form-group">
-                    <input type="text" name="addr" id="addr" placeholder="주소" th:value="${member.addr}">
+                    <input type="text" name="addr" id="addr" placeholder="주소" >
                 </div>
                 <div class="form-group">
-                    <input type="text" name="birth" id="birth" placeholder="생년월일" th:value="${member.birth}">
+                    <input type="text" name="birth" id="birth" placeholder="생년월일" >
                 </div>
                 <div class="form-group">
-                    <input type="text" name="phone" id="phone" placeholder="휴대폰 번호" th:value="${member.phone}">
+                    <input type="text" name="phone" id="phone" placeholder="휴대폰 번호" >
                 </div>
                 <input type="submit" value="수정">
             </form>
@@ -98,16 +97,14 @@ $(document).ready(function() {
 	$("#updateForm").on("submit", function(event){
 		event.preventDefault();
 		
-		const mno = document.getElementById("mno").value;
-		const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-        const nickName = document.getElementById("nickName").value;
-        const addr = document.getElementById("addr").value;
-        const birth = document.getElementById("birth").value;
-        const phone = document.getElementById("phone").value;
+        const username = $("#username").val();
+        const password = $("#password").val();
+        const nickName = $("#nickName").val();
+        const addr = $("#addr").val();
+        const birth = $("#birth").val();
+        const phone = $("#phone").val();
 		
         var jsonData = JSON.stringify({
-            mno: mno,
         	username: username,
             password: password,
             nickName: nickName,

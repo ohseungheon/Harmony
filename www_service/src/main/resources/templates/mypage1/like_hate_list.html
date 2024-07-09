@@ -4,18 +4,162 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+    #by-section {
+        width: 1000px;
+        height: auto;
+        border: 1px solid #eee;
+        margin: 80px auto;
+        
+        display: flex; /* Flexbox 사용 */
+        flex-direction: column; /* 세로 배치 */
+        justify-content: center; /* 수평 가운데 정렬 */
+        align-items: center; /* 수직 가운데 정렬 */
+    }
+    .by-list{
+    	border: 1px solid #eee;
+    	width: 750px;
+    	height: 450px;
+    	margin: 30px;
+    	
+    	position: relative;
+    }
+    .by-list-span{
+    	margin-top: 50px;
+    	margin-bottom: -20px;
+    }
+    #by-list-1{
+     margin-bottom: 40px;
+     display: flex; /* Flexbox 사용 */
+     flex-direction: column; /* 세로 배치 */
+     justify-content: center; /* 수평 가운데 정렬 */
+     align-items: center; /* 수직 가운데 정렬 */
+     position: relative;
+    }
+    #by-recipe_recom{
+    	border: 1px solid #eee;
+    	width: 600px;
+    	height: 100px;
+    	margin: 20px;
+    	
+    	display: flex; /* Flexbox 사용 */
+        justify-content: space-between; /* 내용물 사이의 공간을 균등하게 배분 */
+        align-items: center; /* 수직 가운데 정렬 */
+    }
+    #by-span-name{
+    	margin-left: 50px;
+    }
+    #by-delete-btn{
+    	margin-right: 50px;
+    	width: 60px;
+    	height: 40px;
+    }
+    #by-favorite_menu{
+    	display: flex; /* Flexbox 사용 */
+    	flex-wrap: wrap; /* 요소가 가로로 나열되고 줄 바꿈 */
+     	flex-direction: row;
+     	justify-content: center; /* 수평 가운데 정렬 */
+    }
+    #by-favo-menu{
+    	border: 1px solid #eee;
+		width: 150px;
+    	height: 150px;
+    	margin: 35px;
+    }
+   	#by-menu-img{
+   		border: 1px solid #eee;
+		width: 150px;
+    	height: 100px;
+   	}
+   	#by-menu {
+   		font-size: 20px; /* 폰트 사이즈 조절 */
+   		margin: 10px;
+   		display: flex; /* Flexbox 사용 */
+   		justify-content: center; /* 수평 가운데 정렬 */
+   	}
     </style>
 </head>
 <body>
 <header>
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
-<section>
+<section id="by-section">
+    <span class="by-list-span">💛레시피 추천 리스트</span>
+    <div class="by-list" id="by-list-1">
+    	<!-- 레시피 추천한 리스트 출력 -->
+    	<div id="by-recipe_recom">
+			<span id="by-span-name">레시피 이름</span>
+			<button id="by-delete-btn">삭제</button>
+		</div>
+		<div id="by-recipe_recom">
+			<span id="by-span-name">레시피 이름</span>
+			<button id="by-delete-btn">삭제</button>
+		</div>
+		<div id="by-recipe_recom">
+			<span id="by-span-name">레시피 이름</span>
+			<button id="by-delete-btn">삭제</button>
+		</div>
+    </div>
     
+    <span class="by-list-span">💗메뉴 좋아요 리스트</span>
+    <div class="by-list">
+    	<div id="by-favorite_menu">
+    	<!-- 메뉴 좋아요한 리스트 출력 -->
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
+    			<span id="by-menu">떡볶이</span>
+    		</div>
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
+    			<span id="by-menu">떡볶이</span>
+    		</div>
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
+    			<span id="by-menu">떡볶이</span>
+    		</div>
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
+    			<span id="by-menu">떡볶이</span>
+    		</div>
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
+    			<span id="by-menu">떡볶이</span>
+    		</div>
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
+    			<span id="by-menu">떡볶이</span>
+    		</div>
+    	</div>
+    </div>
 </section>
 
 <script>
-
+$(document).ready(function() {
+	//레시피추천리스트
+	
+	$.ajax({
+		url: "",
+		method: "GET",
+		dataType: "json",
+		success: function(data){
+			let recipeList = $("#by-recipe_recom");
+			
+			data.forEach(function(recipe){
+				recipeList.append(
+						"<div id='by-recipe_recom'>" + 
+							"<h4>" + recipe.recipeName + "</h4>" +
+							"<button>삭제</button>" +
+						"</div>"
+				
+				);
+			});
+		},
+	
+	});
+	
+	
+	//메뉴좋아요리스트
+	
+}
 </script>
 </body>
 </html>
