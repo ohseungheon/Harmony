@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 public class IngredientDto {
 	
 
-	private Integer icode;
+	private int icode;
 	private String name;
 	private Character type;
 	private String tip;
 	private String imgurl;
-	private String cartegory;
+	private String category;
 	
 
 }
