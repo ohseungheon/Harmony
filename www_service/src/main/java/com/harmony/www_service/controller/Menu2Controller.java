@@ -22,7 +22,6 @@ public class Menu2Controller {
     @PostMapping("/add")
     public String postMethodName(@RequestBody MenuWithFile reqMenu) {
         
-        return "redirect:/"; // menu all list 로 이동시켜야 됨 
+        return "redirect:/menu_all/menu_all_list"; 
     }
-    
 }
