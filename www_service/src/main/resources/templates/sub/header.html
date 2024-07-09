@@ -78,7 +78,7 @@ header {
 				<span th:if="${session.username eq null}"> <a
 					th:href="@{/login_page}">로그인</a>
 				</span> <span th:if="${session.username ne null}"> <a
-					th:href="@{/mypage_main}">[[${session.username}]]</a>
+					th:href="@{/mypage_main}">[[${session.username}]] 님</a>
 				</span> <span th:if="${session.username eq null}"> <a
 					th:href="@{/regist_page}">회원가입</a>
 				</span> <span th:if="${session.username ne null}"> <a
@@ -91,7 +91,7 @@ header {
 	<script>
 	
 	const logout = document.getElementById("logout");
-	
+	if(logout != null){
 	logout.addEventListener("click", () => {
 		const xhttp = new XMLHttpRequest();
 		  xhttp.onload = function() {
@@ -105,6 +105,7 @@ header {
 		  xhttp.open("GET", "api/login/logout");
 		  xhttp.send();
 	});
+	}
 	
 	</script>
 </body>

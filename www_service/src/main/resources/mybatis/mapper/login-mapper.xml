@@ -7,5 +7,15 @@
   	<select id="loginCheck" resultType="com.harmony.www_service.dto.UserDto">
   		select * from user where username = #{username} and password = #{password}
   	</select>
+  	
+  	<insert id="registUser">
+  		insert into user (username, password, role)
+  		values(#{username}, #{password}, #{role})
+  	</insert>
+  	
+  	<insert id="registMember">
+  		insert into member (username, nickName, addr, birth, phone)
+  		values (#{username}, #{nickName}, #{addr}, #{birth}, #{phone})
+  	</insert>
   
   </mapper>
