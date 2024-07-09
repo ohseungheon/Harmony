@@ -21,4 +21,7 @@ public interface LoginDao {
 	//회원가입 member
 	public int registMember(UserMemberDto userMemberDto);
 	
+	//nickname 가져오기
+	public String getNickname(@Param("username") String username);
+	
 }
