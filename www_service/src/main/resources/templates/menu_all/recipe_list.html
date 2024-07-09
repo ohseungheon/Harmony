@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+        .recipeList{
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -15,13 +18,15 @@
     <hr>
     <p>mcode : <span th:text="${mcode}"></span></p>
     <div id="recipeList">
-        <div th:each="recipe : ${recipeList}" class="recipeList">
+        <div th:each="recipe : ${recipeList}" class="recipeList" th:onclick="'loadRecipeDetail(\'' + ${recipe.rcode} + '\')'">
             <p th:text="${recipe.recipeName}"></p>
         </div>
     </div>
 </section>
 <script>
-
+    function loadRecipeDetail(rcode){
+        window.location.href = `/menu_all/recipe_detail?rcode=${rcode}`;
+    }
 </script>
 </body>
 </html>

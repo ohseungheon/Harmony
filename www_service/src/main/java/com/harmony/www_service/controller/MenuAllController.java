@@ -27,8 +27,15 @@ public class MenuAllController {
         List<RecipeDto> recipeList = recipeService.getRecipeList(mcode);
         model.addAttribute("mcode", mcode);
         model.addAttribute("recipeList", recipeList);
-        
+
         return "menu_all/recipe_list";
+    }
+
+    @GetMapping("/menu_all/recipe_detail")
+    public String recipe_detail(@RequestParam("rcode") int rcode, Model model){
+        model.addAttribute("rcode", rcode);
+
+        return "menu_all/recipe_detail";
     }
 
 
