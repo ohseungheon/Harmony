@@ -26,10 +26,11 @@ public class Menu2Service {
     @Autowired
     private Menu2Dao dao;
 
-    public void addMenuRequest(MenuRequestWithFile reqMenu) {
+    public void addMenuRequest(MenuRequestWithFile reqMenu, int mno) {
 
         // 실제로 DB에 저장하기 위한 menuReqDto 객체 생성
         MenuReqDto menuReqDto = new MenuReqDto();
+        menuReqDto.setMno(mno);
         menuReqDto.setMenuName(reqMenu.getMenu_name());
         menuReqDto.setCategory(reqMenu.getCategory());
 
@@ -45,9 +46,6 @@ public class Menu2Service {
         // 파일 이름 재구성 ( 고유한 이름으로 대체 )
         String newName = UUID.randomUUID().toString() + extension;
         menuReqDto.setImgUrl(newName);
-
-        // 로그인 전 임시 하드 코딩
-        menuReqDto.setMno(2);
 
         dao.insertMenuRequest(menuReqDto);
 
