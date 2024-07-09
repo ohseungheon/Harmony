@@ -1,21 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <style>
-    </style>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+.ahover:hover {
+    color: red;
+}
+</style>
 </head>
 <body>
-<header>
-<th:block th:insert="~{/sub/header.html}"></th:block>
-</header>
-<section>
-    
-</section>
+	<header>
+		<th:block th:insert="~{/sub/header.html}"></th:block>
+	</header>
+	<section>
+		<form id="mainForm" action="showMenu" method="get">
 
-<script>
+			<input type="submit" value="재료로 만들 수 있는 메뉴보기2">
+		</form>
 
-</script>
+		<table  style="margin: 0 auto;text-align: center;">
+			<thead>
+				<th>재료이름</th>
+				<th>재료삭제</th>
+			</thead>
+			<tbody>
+				<tr th:each="dto : ${FridgeIngredientList}">
+					<td id = "">[[${dto.name}]]</td>
+					<td><a href = "" class="ahover">x</a></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
+		<table  style="margin: 0 auto;text-align: center;">
+			<thead>
+				<th>만들 수 있는 메뉴</th>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+		
+		
+
+
+	</section>
+
+	<script>
+		
+	</script>
 </body>
 </html>
