@@ -1,5 +1,7 @@
 package com.harmony.www_service.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,10 @@ public class MemberService {
 	//회원번호를 가져오는 서비스 
 	public MemberDto_by getMemberByUsername(String username) {
 		return memDao.getmemberList(username);
+	}
+
+	public Optional<Integer> getMnoByUsername(String username){
+		Optional<Integer> mno = memDao.getMemberNoByUsername(username);
+		return mno;
 	}
 }

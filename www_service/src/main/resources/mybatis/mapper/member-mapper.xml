@@ -3,26 +3,32 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.harmony.www_service.dao.IMemberDao">
-  
-  	<select id="getmemberList" resultType="com.harmony.www_service.dto.MemberDto_by">
-  		SELECT m.*, u.password FROM member m JOIN user u ON m.username = u.username WHERE u.username = #{username}
-  	</select>
-  	
-  	<update id="updateMemberInfo1" >
-  		UPDATE member
-        SET
-            username = #{member.username},
-            nickName = #{member.nickName},
-            addr = #{member.addr},
-            birth = #{member.birth},
-            phone = #{member.phone}
-        WHERE username = #{member.username};
-  	</update>
-  	
-	<update id="updateMemberInfo2" >
-       UPDATE user
-       SET
-           password = #{member.password}
-       WHERE username = (SELECT username FROM member WHERE username = #{member.username});
+
+    <select id="getmemberList" resultType="com.harmony.www_service.dto.MemberDto_by">
+      SELECT m.*, u.password FROM member m JOIN user u ON m.username = u.username WHERE u.username = #{username}
+    </select>
+    
+    <update id="updateMemberInfo1" >
+      UPDATE member
+      SET
+          username = #{member.username},
+          nickName = #{member.nickName},
+          addr = #{member.addr},
+          birth = #{member.birth},
+          phone = #{member.phone}
+      WHERE username = #{member.username};
     </update>
-  </mapper>
+    
+  <update id="updateMemberInfo2" >
+    UPDATE user
+    SET
+        password = #{member.password}
+    WHERE username = (SELECT username FROM member WHERE username = #{member.username});
+  </update>
+
+  <select id="getMemberNoByUsername">
+    SELECT mno FROM member 
+    WHERE username = #{username}
+  </select>
+
+</mapper>
