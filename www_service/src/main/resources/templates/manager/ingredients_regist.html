@@ -172,10 +172,32 @@
 		<div id="dally_vegi_fruit_info"></div>
 		<div id="dally_dairy_poducts_info"></div>
 	</div>
+	<div class="dally_ingredient_form">
+		<form id="dally_formData" action="/do_ingredients_regist" method="POST"  enctype="multipart/form-data">
+			<div class="dally_form_img">
+				<label for="imgurl">재료 이미지</label>
+				<input type="file" name="imgurl" placeholder="이미지 주소를 등록하세요." width="150" height="200">
+			</div>
+			<div class="dally_category_selectbox">
+				<label for="dally_select_category">카테고리</label>
+				<select name="category" id="dally_select_category">
+					<option value="">선택해주세요</option>
+				</select>
+			</div>
+			재료 이름 <input type="text" name="name" placeholder="재료 이름을 입력하세요."><br>
+			<label for="type">단위</label>
+			<select name="type" id="dally_ingredient_type">
+				<option value="수량">수량</option>
+				<option value="중량">중량</option>
+			</select><br>
+			tip <input type="text" name="tip" placeholder="유통기한 등의 tip!"><br>
+			<input type="submit" value="재료 등록">
+		</form>
+	</div>
 </section>
 
 <script>
-	// dally_tabs를 눌렀을 때 탭 기능 구현
+	// 제일 상단탭(dally_tabs)를 눌렀을 때 탭 기능 구현
 	document.addEventListener('DOMContentLoaded', () => {
 		const dally_tab_btns = document.querySelectorAll('.dally_tab_btn');
 		const dally_tab_contents= document.querySelectorAll('.dally_tab_content');
@@ -195,20 +217,33 @@
 			});
 		});
 
-	// dally_img를 눌렀을 때 탭기능 구현
-	const dally_lists= document.querySelectorAll('.dally_li');
-	
-	dally_lists.forEach(button => {
-		button.addEventListener('click', () => {
+		// 그 밑의 탭(dally_img)를 눌렀을 때 탭기능 구현
+		const dally_lists= document.querySelectorAll('.dally_li');
+		
+		dally_lists.forEach(button => {
+			button.addEventListener('click', () => {
 
-
+			});
 		});
 	});
 
+	// 카테고리 선택 시 재료 등록 페이지에서 카테고리 select 값(option) 정해놓기 - 작동안됨 ^^
+	// let xhr = new XMLHttpRequest();
+	// xhr.onload = function (){
+	// 	const category = document.getElementById("dally_select_category");
+	// 	let data = JSON.parse(this.responseText);
 
+	// 	data.forEach(item => {
+	// 		const selectName = item["카테고리"];
+	// 		const option = document.createElement("option");
+	// 		option.value = item["카테고리"];
+	// 		option.text = selectName;
+	// 		category.appendChild(option);
+	// 	});
 
-	});
-
+	// 	xhr.open("POST", "/json/sub_category_ingredients.json", true);
+	// 	xhr.send();
+	// }
 </script>
 </body>
 </html>

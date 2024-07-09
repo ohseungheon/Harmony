@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.harmony.www_service.dao.IIngredientDao">
+  
+  	<insert id="registIngredient">
+  		INSERT INTO ingredient 
+  		(name, type, tip, imgurl, category ) 
+  		values
+  		(#{name}, #{type}, #{tip}, #{imgurl}, #{category})
+  	</insert>
+  	
+  	<select id="getList" resultType="com.harmony.www_service.dto.IngredientDto">
+  		SELECT name, type, imgurl, category FROM ingredient WHERE category = #{category}
+  	</select>
+  
+	<update id="updateIngredient">
+		UPDATE ingredient
+		SET
+			name = #{iDto.name},
+			type = #{iDto.type},
+			tip = #{iDto.tip}
+			imgurl = #{iDto.imgurl},
+			category = #{iDto.category}
+		WHERE icode = #{iDto.icode}
+	</update>
+	
+	<delete id="deleteIgredient">
+		DELETE FROM ingredient
+		WHERE icode = #{iDto.icode}
+	</delete>
+  
+  </mapper>
+ 	
