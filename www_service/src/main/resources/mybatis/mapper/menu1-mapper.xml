@@ -10,8 +10,37 @@
 		FROM ingredient
 		WHERE icode IN (
 		SELECT icode
-		FROM Fridge
+		FROM
+		Fridge
 		WHERE mno = 1
+		);
+
+	</select>
+
+	<select id="showCanMakeMenu"
+		resultType="com.harmony.www_service.dto.MenuDto">
+
+		SELECT menuName
+		FROM menu
+		WHERE mcode IN (
+		SELECT mcode
+		FROM recipe
+		WHERE rcode IN (
+		SELECT rcode
+		FROM (
+		SELECT ri1.rcode
+		FROM recipe_ingredient ri1
+		WHERE ri1.icode IN (23, 3,17)
+		AND NOT EXISTS (
+		SELECT icode
+		FROM recipe_ingredient ri2
+		WHERE ri2.rcode = ri1.rcode
+		AND ri2.icode NOT IN (23, 3,17)
+		)
+		GROUP BY ri1.rcode
+		HAVING COUNT(DISTINCT ri1.icode) = 3
+		) AS filtered_rcodes
+		)
 		);
 
 	</select>
