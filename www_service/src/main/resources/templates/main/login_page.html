@@ -84,8 +84,31 @@
 		</div>
 	</section>
 
-	<script>
-		
-	</script>
+	<!-- 로그인 실패 메시지 처리 스크립트 -->
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+	window.onload = function(){
+		/* 서버에서 전달된 에러 메시지를 읽어옴 */
+		const errormsg = /*[[${session.errormsg} ?: 'null']]*/ 'null';
+		if(errormsg && errormsg !== 'null'){
+			alert(errormsg);
+			
+			const userInput = document.querySelector("input[name='username']");
+			console.log(userInput);
+			if(userInput){
+				userInput.focus();
+			}
+			
+			/* 메시지를 출력 후 세션에서 제거 */
+			fetch('/clearErrorMessage', {
+				method: 'POST'
+			}).then(() => {
+				// 세션에서 메시지 제거 후 페이지 새로고침
+				window.location.href = "/login_page";
+			});
+		}
+	}
+/*]]>*/
+    </script>
 </body>
 </html>
