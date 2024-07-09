@@ -12,6 +12,11 @@
   		select * from user where username = #{username} and password = #{password}
   	</select>
   	
+  	<select id="getNickname">
+  		select nickName from member where username = #{username}
+  	</select>
+  	
+  	
   	<insert id="registUser">
   		insert into user (username, password, role)
   		values(#{username}, #{password}, #{role})

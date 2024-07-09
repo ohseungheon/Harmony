@@ -83,7 +83,7 @@ header {
 				<span th:if="${#authentication.principal == 'anonymousUser'}"> <a
 					th:href="@{/login_page}">로그인</a>
 				</span> <span th:if="${#authentication.principal != 'anonymousUser'}"> <a
-					th:href="@{/mypage_main}">[[${username}]] 님</a>
+					th:href="@{/mypage_main}" id="nick"></a>
 				</span> <span th:if="${#authentication.principal == 'anonymousUser'}"> <a
 					th:href="@{/regist_page}">회원가입</a>
 				</span> <span th:if="${#authentication.principal != 'anonymousUser'}"> <a
@@ -95,7 +95,15 @@ header {
 
 	<script>
 	
-	
+	document.addEventListener("DOMContentLoaded", () => {
+		
+		fetch('/api/login/nickname')
+		.then(response => response.text())
+		.then(data => {
+			document.getElementById("nick").innerHTML = data + "님";
+		});
+		
+		});
 	
 	</script>
 </body>

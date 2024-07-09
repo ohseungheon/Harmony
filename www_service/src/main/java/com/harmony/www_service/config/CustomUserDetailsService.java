@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 			return new CustomUserDetails(userDto);
 		}
 		
-		return null;
+		throw new UsernameNotFoundException("로그인 실패");
 	}
 	
 	
