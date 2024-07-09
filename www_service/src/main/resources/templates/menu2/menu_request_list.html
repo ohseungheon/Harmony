@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .king-mr-list {
+            display: flex;
+            flex-direction: column;
+            margin: 32px;
+            padding: 12px;
+            width: 240px;
+            height: 240px;
+            border: 1px solid #6b6b6b;
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        .king-mr-list:hover{
+            background-color: #e0e0e0;
+        }
+
+        .king-mr-list>img {
+            width: 214px;
+            height: 160px;
+        }
+
+        .king-mr-description {
+            display: flex;
+            flex-direction: row;
+            margin-top: 10px;
+        }
+
+        .king-mr-description>span {
+            margin-right: 12px;
+            font-size: 16px;
+        }
+
+        #king-mr-category {
+            color: rgb(210, 85, 85);
+        }
+
+        #king-mr-menuname {
+            color: rgb(55, 55, 210);
+        }
+        .king-mr-grid{
+            display:flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <th:block th:insert="~{/sub/header.html}"></th:block>
+    </header>
+    <section>
+        <div class="king-mr-grid">
+            <div class="king-mr-list" th:each="mr: ${mrList}">
+                <img th:src="@{${'/uploads/'+mr.imgUrl}}">
+                <div class="king-mr-description">
+                    <span id="king-mr-menuname" th:text="${mr.menuName}"></span>
+                    <span id="king-mr-category" th:text="${mr.category}"></span>
+                </div>
+                <span th:text="${'요청자 :  '+mr.username}"></span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+
+    </script>
+</body>
+
+</html>
