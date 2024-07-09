@@ -10,27 +10,33 @@
 			text-align: center;
     	}
 		.dally_tab_container{
-			width: 80%;
+			width:400px;
 			margin: 0 auto;
 		}
 		.dally_tabs{
 			margin: auto;
 			padding: 50px 10px 10px 10px;
 			text-align: center;
-			border-bottom: 2px solid #ccc;
 		}
-		.dally_tab_btn{
-			padding: 10px 20px;
+		.dally_tab_btns{
+			display: flex;
+			justify-content:center;
 			cursor: pointer;
 			background-color: #f1f1f1;
 			border: none;
 			outline: none;
+			
+		}
+		.dally_tab_btns li{
+			width: 100px;
+			padding:10px 0;
+			text-align: center;
 		}
 		.dally_tab_btn:hover{
 			background-color: #ddd;
 		}
 		.dally_tab_btn.active{
-			padding: 10px 20px;
+			padding: 10px 0px;
 			background-color: #ccc;
 		}
 		.dally_tab_content{
@@ -42,33 +48,32 @@
 		.dally_tab_content.active{
 			display: block;
 		}
+		.dally_category_meat,
+		.dally_category_seafood,
+		.dally_category_vegi_fruit,
+		.dally_category_dairy_poducts{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: row;
+			text-align: center;
+		}
 		.dally_img{
 			width: 80px;
 			height: 80px;
 		} 
-		.dally_category_img{
-			display: flex;
-			justify-content: center;
-			list-style-type: none;
-			padding: 0;
-			margin: 0;
-		}
-		.dally_category_text{
-			display: flex;
-			justify-content: center;
-			list-style-type: none;
-			padding: 0;
-			margin: 0;
-		}
 		.dally_li{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			text-align: center;
 			margin-right: 30px;
+			margin-bottom: 20px;
 		}
 		.dally_text{
 			margin-top: 10px;
-			margin-left: 30px;
-			margin-right: 30px;
 		}
-
     </style>
 </head>
 <body>
@@ -78,77 +83,101 @@
 <section>
 	<h2 class="dally_h2">재료등록</h2>
 	<div class="dally_tab_container">
-		<div class="dally_tabs">
-			<span class="dally_tab_btn active" data-tab="meat">육류</span>
-			<span class="dally_tab_btn" data-tab="seafood">해산물</span>
-			<span class="dally_tab_btn" data-tab="vegi_fruit">채소 / 과일</span>
-			<span class="dally_tab_btn" data-tab="dairy">유제품</span>
-		</div>
+		<ul class="dally_tab_btns">
+			<li class="dally_tab_btn active" data-tab="dally_img_meat">육류</li>
+			<li class="dally_tab_btn" data-tab="dally_img_seafood">해산물</li>
+			<li class="dally_tab_btn" data-tab="dally_img_vegi_fruit">채소 / 과일</li>
+			<li class="dally_tab_btn" data-tab="dally_img_dairy_poducts">유제품</li>
+		</ul>
 	</div>
 	<div class="dally_tab_content active" id="dally_img_meat">
-		<ul class="dally_category_img">
-			<li class="dally_li" id="beef"><img class="dally_img" th:src="@{/img/ingredient/meat/cow.png}"></li>
-			<li class="dally_li" id="pork"><img class="dally_img" th:src="@{/img/ingredient/meat/pig.png}"><li>
-			<li class="dally_li" id="chicken"><img class="dally_img" th:src="@{/img/ingredient/meat/chicken.png}"></li>
-			<li class="dally_li" id="duck"><img class="dally_img" th:src="@{/img/ingredient/meat/duck.png}"><li>			
-			<li class="dally_li" id="sheep"><img class="dally_img" th:src="@{/img/ingredient/meat/sheep.png}"><li>
-		</ul>
-		<ul class="dally_category_text">
-			<li class="dally_text">소고기</li>
-			<li class="dally_text">돼지고기</li>
-			<li class="dally_text">닭고기</li>
-			<li class="dally_text">오리고기</li>
-			<li class="dally_text">양고기</li>
-		</ul>
+		<div class="dally_category_meat">
+			<div class="dally_li" id="beef" data-tab="dally_beef_info">
+				<img class="dally_img" id="dally_meat" th:src="@{/img/ingredient/meat/cow.png}">
+				<p class="dally_text">소고기</p>
+			</div>
+			<div class="dally_li" id="pork" data-tab="dally_pork_info">
+				<img class="dally_img" id="dally_pork" th:src="@{/img/ingredient/meat/pig.png}">
+				<p class="dally_text">돼지고기</p>
+			</div>
+			<div class="dally_li" id="chicken" data-tab="dally_chicken_info">
+				<img class="dally_img" id="dally_chicken" th:src="@{/img/ingredient/meat/chicken.png}">
+				<p class="dally_text">닭고기</p>
+			</div>
+			<div class="dally_li" id="duck" data-tab="dally_duck_info">
+				<img class="dally_img" id="dally_duck" th:src="@{/img/ingredient/meat/duck.png}">
+				<p class="dally_text">오리고기</p>
+			</div>
+			<div class="dally_li" id="sheep" data-tab="dally_sheep_info">
+				<img class="dally_img" id="dally_sheep" th:src="@{/img/ingredient/meat/sheep.png}">
+				<p class="dally_text">양고기</p>
+			</div>	
+		</div>
 	</div>
 	<div class="dally_tab_content" id="dally_img_seafood">
-		<ul class="dally_category_img">
-			<li class="dally_li" id="crustacean"><img class="dally_img" th:src="@{/img/ingredient/seafood/crustacean.png}"></li>
-			<li class="dally_li" id="fish_shellfish"><img class="dally_img" th:src="@{/img/ingredient/seafood/fish.png}"><img class="dally_img" th:src="@{/img/ingredient/seafood/seashell.png}"></li>
-			<li class="dally_li" id="seaweed"><img class="dally_img" th:src="@{/img/ingredient/seafood/seaweed.png}"></li>
-			<li class="dally_li" id="octopus"><img class="dally_img" th:src="@{/img/ingredient/seafood/octopus.png}"></li>
-		</ul>
-		<ul class="dally_category_text">
-			<li class="dally_text">갑각류</li>
-			<li class="dally_text">어패류</li>
-			<li class="dally_text">해조류</li>
-			<li class="dally_text">연체동물</li>
-		</ul>
+		<div class="dally_category_seafood">
+			<div class="dally_li" id="crustacean" data-tab="dally_crustacean_info">
+				<img class="dally_img" th:src="@{/img/ingredient/seafood/crustacean.png}">
+				<p class="dally_text">갑각류</p>
+			</div>
+			<div class="dally_li" id="fish_shellfish" data-tab="dally_fish_shellfish_info">
+				<img class="dally_img" th:src="@{/img/ingredient/seafood/seashell.png}">
+				<p class="dally_text">어패류</p>
+			</div>
+			<div class="dally_li" id="seaweed" data-tab="dally_seaweed_info">
+				<img class="dally_img" th:src="@{/img/ingredient/seafood/seaweed.png}">
+				<p class="dally_text">해조류</p>
+			</div>
+			<div class="dally_li" id="octopus" data-tab="dally_octopus_info">
+				<img class="dally_img" th:src="@{/img/ingredient/seafood/octopus.png}">
+				<p class="dally_text">연체동물</p>
+			</div>
+		</div>
 	</div>
 	<div class="dally_tab_content" id="dally_img_vegi_fruit">
-		<ul class="dally_category_img">
-			<li class="dally_li" id="root"><img class="dally_img" th:src="@{/img/ingredient/vegi_fruit/root.png}"></li>
-			<li class="dally_li" id="stem"><img class="dally_img" th:src="@{/img/ingredient/vegi_fruit/stem.png}"><li>
-			<li class="dally_li" id="leaf"><img class="dally_img" th:src="@{/img/ingredient/vegi_fruit/leaf.png}"></li>
-			<li class="dally_li" id="fruit"><img class="dally_img" th:src="@{/img/ingredient/vegi_fruit/paprika.png}"><li>
-			<li class="dally_li" id="fruits"><img class="dally_img" th:src="@{/img/ingredient/vegi_fruit/fruits.png}"><li>
-		</ul>
-		<ul class="dally_category_text">
-			<li class="dally_text">뿌리채소</li>
-			<li class="dally_text">줄기채소</li>
-			<li class="dally_text">잎채소</li>
-			<li class="dally_text">열매채소</li>
-			<li class="dally_text">과일</li>
-		</ul>
+		<div class="dally_category_vegi_fruit">
+			<div class="dally_li" id="root" data-tab="dally_root_info">
+				<img class="dally_img" th:src="@{/img/ingredient/vegi_fruit/root.png}">
+				<p class="dally_text">뿌리채소</p>
+			</div>
+			<div class="dally_li" id="stem" data-tab="dally_stem_info">
+				<img class="dally_img" th:src="@{/img/ingredient/vegi_fruit/stem.png}">
+				<p class="dally_text">줄기채소</p>
+			</div>
+			<div class="dally_li" id="leaf" data-tab="dally_leaf_info">
+				<img class="dally_img" th:src="@{/img/ingredient/vegi_fruit/leaf.png}">
+				<p class="dally_text">잎채소</p>
+			</div>
+			<div class="dally_li" id="fruit" data-tab="dally_fruit_info">
+				<img class="dally_img" th:src="@{/img/ingredient/vegi_fruit/paprika.png}">
+				<p class="dally_text">열매채소</p>
+			</div>
+			<div class="dally_li" id="fruits" data-tab="dally_fruits_info">
+				<img class="dally_img" th:src="@{/img/ingredient/vegi_fruit/fruits.png}">
+				<p class="dally_text">과일</p>
+			</div>
+		</div>
 	</div>
-	<div class="dally_tab_content" id="dally_img_dairy_cheeze">
-		<ul class="dally_category_img">
-			<li class="dally_li" id="dairy_products"><img class="dally_img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}"></li>
-			<li class="dally_li" id="cheeze"><li>
-		</ul>
-		<ul class="dally_category_text">
-			<li class="dally_text">유제품</li>
-		</ul>
+	<div class="dally_tab_content" id="dally_img_dairy_poducts">
+		<div class="dally_category_dairy_poducts">
+			<div class="dally_li" id="dairy_products" data-tab="dally_dairy_products_info">
+				<img class="dally_img" th:src="@{/img/ingredient/dairy_products/dairy-products.png}">
+				<p class="dally_text">유제품</p>
+			</div>
+		</div>
 	</div>
-
-	<div id="dally_ingredients"></div>
-	<div id="dally_ingredient_info"></div>
+	<div class="dally_ingredient_info">
+		<div id="dally_meat_info"></div>
+		<div id="dally_seafood_info"></div>
+		<div id="dally_vegi_fruit_info"></div>
+		<div id="dally_dairy_poducts_info"></div>
+	</div>
 </section>
-	
+
 <script>
-	// dally_tabs를 눌렀을 때 이동하는 버튼 기능 구현
-	document.addEventListener('DOMcontentLoaded', () => {
-		const dally_tab_btns = document.querySelectorAll('.dally_tabs');
+	// dally_tabs를 눌렀을 때 탭 기능 구현
+	document.addEventListener('DOMContentLoaded', () => {
+		const dally_tab_btns = document.querySelectorAll('.dally_tab_btn');
 		const dally_tab_contents= document.querySelectorAll('.dally_tab_content');
 		
 		dally_tab_btns.forEach(button => {
@@ -160,12 +189,26 @@
 				// 클릭한 탭 활성화
 				button.classList.add('active');
 				// 모든 탭의 컨텐츠 숨기기
-				tab_contents.forEach(content => content.classList.remove('active'));
+				dally_tab_contents.forEach(content => content.classList.remove('active'));
 				// 클릭한 탭의 컨텐츠 보여주기
 				document.getElementById(dally_tab).classList.add('active');
 			});
 		});
+
+	// dally_img를 눌렀을 때 탭기능 구현
+	const dally_lists= document.querySelectorAll('.dally_li');
+	
+	dally_lists.forEach(button => {
+		button.addEventListener('click', () => {
+
+
+		});
 	});
+
+
+
+	});
+
 </script>
 </body>
 </html>
