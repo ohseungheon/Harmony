@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.harmony.www_service.dao.ILikeDao;
 import com.harmony.www_service.dao.IMemberDao;
+import com.harmony.www_service.dao.IMypage1Dao;
+import com.harmony.www_service.dto.FridgeIngredientDto;
 import com.harmony.www_service.dto.MemberDto_by;
 import com.harmony.www_service.dto.Menu_favoriteDto_by;
 import com.harmony.www_service.dto.Recipe_recommendDto_by;
@@ -23,6 +25,8 @@ public class Mypage1Controller {
     IMemberDao memDao;
     @Autowired
     ILikeDao likeDao;
+    @Autowired
+    IMypage1Dao myDao;
     @Autowired
     MemberService memberService;
     @Autowired
@@ -65,9 +69,26 @@ public class Mypage1Controller {
 	
 	//마이페이지 메인 
 	@RequestMapping("/mypage_main")
-	public String mypageMain() {
+	public String mypageMain(Model model) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		System.out.println("아이디==============="+username);
+		MemberDto_by member = memberService.getMemberByUsername(username);
+		int mno = member.getMno();
+		model.addAttribute("mno", mno);
+		
+		//냉동
+		List<FridgeIngredientDto> ice = myDao.getIceList(mno);
+		System.out.println("냉동===="+ice);
+		model.addAttribute("ice", ice);
+		//냉장
+		List<FridgeIngredientDto> cool = myDao.getCoolList(mno);
+		System.out.println("냉장+++"+cool);
+		model.addAttribute("cool", cool);
+		//상온
+		List<FridgeIngredientDto> food = myDao.getFoodList(mno);
+		System.out.println("상온>>>>"+food);
+		model.addAttribute("food", food);
+		
 		return "mypage1/mypage_main";
 	}
 	
