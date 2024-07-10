@@ -62,4 +62,9 @@ public class Menu2Controller {
         
         return "menu2/menu_request_list";
     }
+
+    @RequestMapping("/main")
+    public String menu_harmony(){
+        return "menu2/menu_harmony2";
+    }
 }
