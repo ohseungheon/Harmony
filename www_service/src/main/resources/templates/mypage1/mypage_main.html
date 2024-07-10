@@ -22,6 +22,7 @@
         width: 130px;
         height: 40px;
     }
+     /* 냉동/냉장 섹션 외부 스타일 */
     #by-ice-out, #by-cool-out {
     	display: flex; /* Flexbox 사용 */
     	flex-direction: row; /* 가로 배치 */
@@ -69,7 +70,7 @@
     	border: 1px solid #777777;
     	width: 400px;
         height: 420px;
-        margin: 10px;
+        margin: 5px;
         border-radius: 5px;
         
         display: flex; /* Flexbox 사용 */
@@ -85,7 +86,7 @@
     #by-favo-menu{
     	background-color: white;
     	border: 1px solid #777777;
-		width: 100px;
+		width: 110px;
     	height: 100px;
     	margin: 10px; 
     	display: flex;
@@ -145,46 +146,18 @@
 	<!-- 냉동 -->
 	<div id="by-ice-out">
 		<div id="by-ice-in">
-			<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
+			<div th:each="ice : ${ice}" id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${ice.imgUrl} +'.png'}">
+    			<span id="by-menu">[[${ice.deadline}]]</span>
     		</div>
 		</div>
 	</div>
 	<!-- 냉장 -->
 	<div id="by-cool-out">
 		<div id="by-cool-in">
-			<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
+			<div th:each="cool : ${cool}" id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${cool.imgUrl} +'.png'}">
+    			<span id="by-menu">[[${cool.deadline}]]</span>
     		</div>
 		</div>
 	</div>
@@ -195,21 +168,9 @@
 	
 	</div>
 	<div id="by-buk"> 
-		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    	</div>
-    	<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    	</div>
-    	<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    	</div>
-    	<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
+		<div th:each="food : ${food}" id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${food.imgUrl} +'.png'}">
+    			<span id="by-menu">[[${food.deadline}]]</span>
     	</div>
 	</div>
 </div>
