@@ -9,7 +9,9 @@
   		select * from recipe where mno = #{mno}
   	</select>
   	
-  	
+  	<delete id="deleteMyRecipe">
+  		delete from recipe where rcode = #{rcode}
+  	</delete>
   
   	
   

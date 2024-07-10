@@ -16,11 +16,16 @@ public class MyRecipeService {
 	
 	public List<RecipeDto> myRecipeService(int mno){
 		
-		
-		
 		List<RecipeDto> list = dao.myRecipe(mno);
 		
 		return list;
+	}
+	
+	public int deleteMyRecipe(int rcode) {
+		
+		int result = dao.deleteMyRecipe(rcode);
+		
+		return result;
 	}
 
 }
