@@ -15,17 +15,18 @@
 </header>
 <section>
     <div>
-        <button onclick="loadKoreanFood()" class="active">한식</button>
-        <button onclick="loadChineseFood()">중식</button>
-        <button onclick="loadJapaneseFood()">일식</button>
-        <button onclick="loadWesternFood()">양식</button>
+        <button onclick="loadMenu('한식')" class="active">한식</button>
+        <button onclick="loadMenu('중식')">중식</button>
+        <button onclick="loadMenu('일식')">일식</button>
+        <button onclick="loadMenu('양식')">양식</button>
+        <button onclick="loadMenu('기타')">기타</button>
     </div>
     <div id="menuList"></div>
 </section>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        loadKoreanFood();
+        loadMenu('한식');
     });
 
     function loadMenu(category) {
@@ -47,22 +48,7 @@
         .catch(error => console.error('Error:', error));
     }
 
-    function loadKoreanFood() { 
-        loadMenu('한식');
-    }
-
-    function loadChineseFood() {
-        loadMenu('중식');
-    }
-
-    function loadJapaneseFood() {
-        loadMenu('일식');
-    }
-
-    function loadWesternFood() {
-        loadMenu('양식');
-    }
-
+    
     function loadRecipeList(mcode) {
 
         window.location.href = `/menu_all/recipe_list?mcode=${mcode}`;

@@ -47,9 +47,6 @@ public class MenuAllController {
         model.addAttribute("recipeOrderList", recipeOrderList);
         model.addAttribute("recipeIngredientList", recipeIngredientList);
 
-        System.out.println(recipeOrderList + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println(recipeIngredientList + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
         return "menu_all/recipe_detail";
     }
 
