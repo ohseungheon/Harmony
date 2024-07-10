@@ -7,6 +7,19 @@
 .ahover:hover {
     color: red;
 }
+
+table {
+    border-collapse: collapse; /* 테이블의 경계선이 겹치지 않도록 설정 */
+}
+
+table, th, td {
+    border: 1px solid #dcdcdc; /* 연한 회색 외곽선 */
+}
+
+th, td {
+    padding: 8px; /* 셀 내 여백을 추가 */
+    text-align: center; /* 셀 텍스트 가운데 정렬 */
+}
 </style>
 </head>
 <body>
@@ -18,24 +31,33 @@
 
 			<input type="submit" value="재료로 만들 수 있는 메뉴보기2">
 		</form>
-
-		<table  style="margin: 0 auto;text-align: center;">
+		<div id ="totalResult">
+		<table  border="1"  style="margin: 0 auto;text-align: center;">
 			<thead>
+				<th>재료이미지</th>
 				<th>재료이름</th>
 				<th>재료삭제</th>
 			</thead>
 			<tbody>
 				<tr th:each="dto : ${FridgeIngredientList}">
+					<!-- <input type = "hidden" th:value = "${dto.icode}" id="icode">-->
+					<input type="hidden" th:value="${dto.icode}" th:id="'icode' + ${dto.icode}">
 					
 					<td><img src="${dto.imgurl}"></td>
 					<td>[[${dto.name}]]</td>
-					<td><a href = "/menu1/deleteFridgeIngredientList" class="ahover">x</a></td>
+				
+					<!-- <td><a href = "/menu1/deleteFridgeIngredientList" class="ahover">x</a></td> -->
+					<!-- <td><button onclick="deleteIngredient(event)">x</button></td> -->
+					<td><button type="button" th:onclick="'deleteIngredient(event, \'' + ${dto.icode} + '\')'">x</button></td>
+					
+					<!-- <button id="resumeManage" onclick="showResumeList(event)">이력서관리</button> -->
 				</tr>
 			</tbody>
 		</table>
+		</div>
 		
-		
-		<table  style="margin: 0 auto;text-align: center;">
+		<div id ="totalResult2">
+		<table  border="1"  style="margin: 0 auto;text-align: center;">
 			<thead>
 			
 				<th>메뉴이름</th>
@@ -46,13 +68,122 @@
 				</tr>
 			</tbody>
 		</table>
-		
-
+		<div>
+	
 
 	</section>
 
 	<script>
+	
+	function deleteIngredient(event,icode) {
+	    event.preventDefault();
+		console.log("=============");
+		console.log("=============================icode : "+icode);
+		fetch("/menu1/deleteFridgeIngredientList?icode="+icode, { // 서버에 요청을 보냅니다.
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json", // 요청의 헤더 설정
+			},
+		})
+			.then(response => response.json())
+			.then(data => {
+				
+				document.getElementById("totalResult").innerHTML =deleteIngredientTable(data);
+				deleteCanMakeMenu(event,icode)
+			})
+			.catch(error => {
+				document.getElementById("totalResult").innerHTML = error;
+			});
+	}
+	
+	
+	function deleteCanMakeMenu(event,icode) {
+	    event.preventDefault();
+		console.log("=============");
+		console.log("=============================icode : "+icode);
+		fetch("/menu1/deleteCanMakeMenu?icode="+icode, { // 서버에 요청을 보냅니다.
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json", // 요청의 헤더 설정
+			},
+		})
+			.then(response => response.json())
+			.then(data => {
+				document.getElementById("totalResult2").innerHTML =deleteCanMakeMenuTable(data);
+			})
+			.catch(error => {
+				document.getElementById("totalResult2").innerHTML = error;
+			});
+	}
+	
+	
+	function showResumeList(event) {
+		//event.preventDefault();
+		alert("showResume....");
+		console.log("=============");
+		let token = localStorage.getItem("token");
+		console.log(token);
+		fetch("http://localhost:9001/redbean/showResumeList", { // 서버에 요청을 보냅니다.
+			method: "GET",
+			headers: {
+				//"Content-Type": "application/json", // 요청의 헤더 설정
+				"Authorization": "Bearer " + token
+			},
+		})
+			.then(response => response.json())
+			.then(data => {
+				document.getElementById("totalResult").innerHTML = createResumeTable(data);
+			})
+			.catch(error => {
+				document.getElementById("totalResult").innerHTML = error;
+			});
+	}
+	
+	
+	function deleteIngredientTable(jsonData) {
+		var html = '<table  border="1"  style="margin: 0 auto;text-align: center;">';
 		
+		html += '<tr>';
+		html += '<th>재료이미지</th>';
+		html += '<th>재료이름</th>';
+		html += '<th>재료삭제</th>';
+		html += '</tr>';
+		
+		jsonData.forEach(item => {
+			html += '<tr>';
+			html += '<td>' + '<img src="${dto.imgurl}">' + '</td>';
+			html += '<td>' + item.name + '</td>';
+            html += '<td><button type="button" onclick="deleteIngredient(event, \'' + item.icode + '\')">x</button></td>'; // JSON 데이터에서 icode를 사용합니다.
+			
+			html += '</tr>';
+		});
+
+		html += '</table>';
+		
+		return html;
+	}
+	
+	
+
+	function deleteCanMakeMenuTable(jsonData) {
+		var html = '<table  border="1"  style="margin: 0 auto;text-align: center;">';
+		
+		html += '<tr>';
+		html += '<th>재료이름</th>';
+		html += '</tr>';
+		
+		jsonData.forEach(item => {
+			html += '<tr>';
+			html += '<td>' + item.menuName + '</td>';
+			
+			html += '</tr>';
+		});
+
+		html += '</table>';
+		
+		return html;
+	}
+	
 	</script>
 </body>
 </html>
