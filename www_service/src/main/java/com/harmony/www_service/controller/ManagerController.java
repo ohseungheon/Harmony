@@ -27,19 +27,11 @@ public class ManagerController {
 	
 	// 재료 등록 기능
 	@PostMapping("/do_ingredients_regist")
-	public String ingredientRegist(IngredientDto iDto) {
+	public String ingredientRegist(IngredientDtoWithFile iDtoFile) {
 		System.out.println("--------post--------");
 		
-		IngredientDtoWithFile iDtoFile = new IngredientDtoWithFile();
-		
-		iDtoFile.setName(iDto.getName());
-		iDtoFile.setCategory(iDto.getCategory());
-		iDtoFile.setTip(iDto.getTip());
-		iDtoFile.setType(iDto.getType());
-		//iDtoFile.set
-		
-		iService.save(iDtoFile);
-		return "redirect: manager/ingredients_list";
+		iService.addIngredients(iDtoFile);
+		return "redirect:/ingredients_list";
 	}
 	
 //	@RequestMapping("ingredient_update")

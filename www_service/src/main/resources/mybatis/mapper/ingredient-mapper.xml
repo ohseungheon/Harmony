@@ -8,7 +8,7 @@
   		INSERT INTO ingredient 
   		(name, type, tip, imgurl, category ) 
   		values
-  		(#{name}, #{type}, #{tip}, #{imgurl}, #{category})
+  		(#{iDto.name}, #{iDto.type}, #{iDto.tip}, #{iDto.imgurl}, #{iDto.category})
   	</insert>
   	
   	<select id="getList" resultType="com.harmony.www_service.dto.IngredientDto">
