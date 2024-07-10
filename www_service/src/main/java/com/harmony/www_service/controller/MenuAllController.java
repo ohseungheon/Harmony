@@ -27,7 +27,7 @@ public class MenuAllController {
 
     @GetMapping("/menu_all/recipe_list")
     public String recipe_list(@RequestParam("mcode") int mcode, Model model){
-        List<RecipeDto> recipeList = recipeService.getRecipeList(mcode);
+        List<RecipeDto> recipeList = recipeService.getRecipeListByMcode(mcode);
         model.addAttribute("mcode", mcode);
         model.addAttribute("recipeList", recipeList);
 
@@ -36,10 +36,14 @@ public class MenuAllController {
 
     @GetMapping("/menu_all/recipe_detail")
     public String recipe_detail(@RequestParam("rcode") int rcode, Model model){
-        List<RecipeOrderDto> recipeOrderList = recipeService.getRecipeOrder(rcode);
-        List<RecipeIngredientDto> recipeIngredientList = recipeService.getRecipeIngredient(rcode);
+        RecipeDto recipeDto = recipeService.getRecipeByRcode(rcode);
+        List<RecipeOrderDto> recipeOrderList = recipeService.getRecipeOrdersByRcode(rcode);
+        List<RecipeIngredientDto> recipeIngredientList = recipeService.getRecipeIngredientsByRcode(rcode);
 
         model.addAttribute("rcode", rcode);
+        model.addAttribute("recipeName", recipeDto.getRecipeName());
+        model.addAttribute("introduce", recipeDto.getIntroduce());
+        model.addAttribute("url", recipeDto.getUrl());
         model.addAttribute("recipeOrderList", recipeOrderList);
         model.addAttribute("recipeIngredientList", recipeIngredientList);
 

@@ -1,25 +1,21 @@
 package com.harmony.www_service.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.harmony.www_service.dao.Menu1Dao;
-import com.harmony.www_service.dao.MenuListDao;
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.MenuDto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class MenuService {
-    @Autowired
-    private MenuListDao menuListDao;
     
     @Autowired
     private Menu1Dao menu1dao;
     
-
     public List<MenuDto> getMenuList(String category){
         
         return menuListDao.getMenuList(category);
@@ -31,7 +27,7 @@ public class MenuService {
     	return menu1dao.showOneIngredient(icode);
     	
     }
-    
+
     public List<MenuDto> getCanMakeMenu(List<IngredientDto> iList) {
     	List<Integer> icodeList = makeIcodeList(iList);
     	System.out.println("=============================getCanMakeMenu=======================");

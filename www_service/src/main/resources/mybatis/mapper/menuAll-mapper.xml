@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.harmony.www_service.dao.MenuListDao">
-    <select id="getMenuList" parameterType="string" resultType="com.harmony.www_service.dto.MenuDto">
+    <select id="getMenuListByCategory" parameterType="string" resultType="com.harmony.www_service.dto.MenuDto">
         SELECT * FROM menu WHERE category = #{category}
     </select>
 
