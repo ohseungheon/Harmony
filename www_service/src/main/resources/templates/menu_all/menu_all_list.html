@@ -7,6 +7,9 @@
         .menuName{
             cursor: pointer;
         }
+        #filterDiv{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -21,13 +24,61 @@
         <button onclick="loadMenu('양식')">양식</button>
         <button onclick="loadMenu('기타')">기타</button>
     </div>
+    <button onclick="toggleFilter()">필터</button>
+    <div id="filterDiv">
+        <div>
+            <input type="radio" name="type" value="main" id="typeMain" onchange="applyFilter()"> <label for="typeMain">Main</label>
+            <input type="radio" name="type" value="other" id="typeOther" onchange="applyFilter()"> <label for="typeOther">Other</label>
+        </div>
+        <div>
+            <input type="checkbox" name="category" value="한식" id="catKorean" onchange="applyFilter()"> <label for="catKorean">한식</label>
+            <input type="checkbox" name="category" value="중식" id="catChinese" onchange="applyFilter()"> <label for="catChinese">중식</label>
+            <input type="checkbox" name="category" value="일식" id="catJapanese" onchange="applyFilter()"> <label for="catJapanese">일식</label>
+            <input type="checkbox" name="category" value="양식" id="catWestern" onchange="applyFilter()"> <label for="catWestern">양식</label>
+            <input type="checkbox" name="category" value="기타" id="catOther" onchange="applyFilter()"> <label for="catOther">기타</label>
+        </div>
+        <!-- 적용 버튼 제거 -->
+    </div>
+
     <div id="menuList"></div>
+
 </section>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         loadMenu('한식');
     });
+
+    function toggleFilter() {
+        const filterDiv = document.getElementById('filterDiv');
+        if (filterDiv.style.display === 'none' || filterDiv.style.display === '') {
+            filterDiv.style.display = 'block';
+        } else {
+            filterDiv.style.display = 'none';
+        }
+    }
+
+    function applyFilter() {
+        const type = document.querySelector('input[name="type"]:checked')?.value;
+        const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(input => input.value);
+        
+        if (categories.length === 0) {
+            categories.push('한식', '중식', '일식', '양식', '기타');
+        }
+
+        fetch('/api/menu/filtered_menu_list', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ type, categories })
+        })
+        .then(response => response.json())
+        .then(data => {
+            updateMenuList(data);
+        })
+        .catch(error => console.error('Error:', error));
+    }
 
     function loadMenu(category) {
         fetch(`/api/menu/menu_all_list?category=${encodeURIComponent(category)}`, {  // encodeURIComponent:한글이나 특수 문자 등이 포함된 문자열을 URL의 파라미터로 전달할 수 있게 해주는 함수
