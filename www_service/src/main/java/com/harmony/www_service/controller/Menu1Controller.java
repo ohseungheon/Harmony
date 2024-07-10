@@ -1,5 +1,6 @@
 package com.harmony.www_service.controller;
 
+import java.security.Provider.Service;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.service.MenuService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/menu1")
 
@@ -25,81 +28,74 @@ public class Menu1Controller {
 	@Autowired
 	MenuService menuService;
 	//private static List<IngredientDto> InFridgeIngredientList= new ArrayList<>();
-	private static List<IngredientDto> NoInFridgeIngredientList= new ArrayList<>();
+	//private static List<IngredientDto> NoInFridgeIngredientList= new ArrayList<>();
 
-	@RequestMapping("main")
-	public String main(org.springframework.ui.Model model) {
-		List<IngredientDto> FridgeIngredientList = menu1dao.showFridgeIngredient();
-		model.addAttribute("FridgeIngredientList",FridgeIngredientList);
-		System.out.println("======================FridgeIngredientList : "+FridgeIngredientList);
-		
-		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(FridgeIngredientList);
-		System.out.println("======================showCanMakeMenu : "+showCanMakeMenuList);
-    	model.addAttribute("showCanMakeMenuList",showCanMakeMenuList);
-    	int FridgeIngredientListSize =FridgeIngredientList.size();
-    	model.addAttribute("FridgeIngredientListSize",FridgeIngredientListSize);
-    	System.out.println("======================FridgeIngredientListSize : "+FridgeIngredientListSize);
-    	
-		return "menu1/menu_harmony1";
-    }
+	  @RequestMapping("main")
+	    public String main(org.springframework.ui.Model model, HttpSession session) {
+	        session.removeAttribute("NoInFridgeIngredientList");
+	        
+	        List<IngredientDto> FridgeIngredientList = menu1dao.showFridgeIngredient();
+	        model.addAttribute("FridgeIngredientList", FridgeIngredientList);
+	        List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(FridgeIngredientList);
+	        model.addAttribute("showCanMakeMenuList", showCanMakeMenuList);
+
+	        int FridgeIngredientListSize = FridgeIngredientList.size();
+	        model.addAttribute("FridgeIngredientListSize", FridgeIngredientListSize);
+
+	        return "menu1/menu_harmony1";
+	    }
     
 	@RequestMapping("start")
 	public String start(org.springframework.ui.Model model) {
     	return "mypage1/mypage_main";
     }
     
+	@ResponseBody
+	@RequestMapping("reset")
+	public String reset(org.springframework.ui.Model model) {
+		return "mypage1/mypage_main";
+	}
+	
 
 	
-	@ResponseBody
-	@GetMapping("deleteFridgeIngredientList")
-	public List<IngredientDto> deleteFridgeIngredientList(@RequestParam("icode") int icode,org.springframework.ui.Model model) {
-		System.out.println("===========================deleteFridgeIngredientList=========================");
-		
-		IngredientDto getOneIngredient = menuService.getOneIngredient(icode);
-		NoInFridgeIngredientList.add(getOneIngredient);
-		
-		for (int i =0 ;i<NoInFridgeIngredientList.size();i++) {
-			
-			
-			System.out.println("=================NoInFridgeIngredientList==================: "+NoInFridgeIngredientList.get(i));
-		}
-		
-		//InFridgeIngredientList
-		List<IngredientDto> selectExcludeIngredientList = menuService.selectExcludeIngredient(NoInFridgeIngredientList);
-		
-		//List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
-		
-		//System.out.println("=================InFridgeIngredientList==================: "+InFridgeIngredientList);
-		System.out.println("=================NoInFridgeIngredientList==================: "+NoInFridgeIngredientList);
-		//System.out.println("=================showCanMakeMenuList==================: "+showCanMakeMenuList);
-    	return selectExcludeIngredientList;
-    }
-    
-    
-	@ResponseBody
-	@GetMapping("deleteCanMakeMenu")
-	public List<MenuDto> deleteCanMakeMenu(@RequestParam("icode") int icode,org.springframework.ui.Model model) {
-		System.out.println("===========================deleteCanMakeMenu=========================");
-		List<IngredientDto> InFridgeIngredientList = menu1dao.showFridgeIngredient();
-		IngredientDto getOneIngredient = menuService.getOneIngredient(icode);
+	  @ResponseBody
+	    @GetMapping("deleteFridgeIngredientList")
+	    public List<IngredientDto> deleteFridgeIngredientList(@RequestParam("icode") int icode, HttpSession session) {
+	        System.out.println("===========================deleteFridgeIngredientList=========================");
+	        
+	        List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session.getAttribute("NoInFridgeIngredientList");
+	        if (NoInFridgeIngredientList == null) {
+	            NoInFridgeIngredientList = new ArrayList<>();
+	        }
 
-		InFridgeIngredientList.remove(getOneIngredient);
-		
-		for (int i =0 ;i<NoInFridgeIngredientList.size();i++) {
-			
-			System.out.println("=================InFridgeIngredientList==================: "+InFridgeIngredientList.get(i));
-		}
-		
-		//InFridgeIngredientList
-		//List<IngredientDto> selectExcludeIngredientList = menuService.selectExcludeIngredient(NoInFridgeIngredientList);
-		
-		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
-		
-		//System.out.println("=================InFridgeIngredientList==================: "+InFridgeIngredientList);
-		//System.out.println("=================NoInFridgeIngredientList==================: "+NoInFridgeIngredientList);
-		System.out.println("=================showCanMakeMenuList==================: "+showCanMakeMenuList);
-    	return showCanMakeMenuList;
-    }
+	        IngredientDto getOneIngredient = menuService.getOneIngredient(icode);
+	        NoInFridgeIngredientList.add(getOneIngredient);
+	        session.setAttribute("NoInFridgeIngredientList", NoInFridgeIngredientList);
+
+	        List<IngredientDto> selectExcludeIngredientList = menuService.selectExcludeIngredient(NoInFridgeIngredientList);
+
+	        System.out.println("=================NoInFridgeIngredientList==================: " + NoInFridgeIngredientList);
+	        
+	        return selectExcludeIngredientList;
+	    }
+
+    
+    
+	  @ResponseBody
+	    @GetMapping("deleteCanMakeMenu")
+	    public List<MenuDto> deleteCanMakeMenu(@RequestParam("icode") int icode, HttpSession session) {
+	        System.out.println("===========================deleteCanMakeMenu=========================");
+	        
+	        List<IngredientDto> InFridgeIngredientList = menu1dao.showFridgeIngredient();
+	        IngredientDto getOneIngredient = menuService.getOneIngredient(icode);
+	        InFridgeIngredientList.remove(getOneIngredient);
+
+	        List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
+
+	        System.out.println("=================showCanMakeMenuList==================: " + showCanMakeMenuList);
+	        
+	        return showCanMakeMenuList;
+	    }
 
 	
 }
