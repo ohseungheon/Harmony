@@ -4,22 +4,215 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+    #by-section {
+        width: 1000px;
+        height: 1000px;
+        border: 1px solid #eee;
+        margin: 70px auto;
+        
+        display: flex; /* Flexbox 사용 */
+        flex-direction: row; /* 세로 배치 */
+        justify-content: space-between; /* 수평 가운데 정렬 */
+        align-items: row; /* 수직 가운데 정렬 */
+    }
+    #goMenu-btn {
+    	margin:10px;
+    }
+    #goMenu-btn button {
+        width: 130px;
+        height: 40px;
+    }
+    #by-ice-out, #by-cool-out {
+    	display: flex; /* Flexbox 사용 */
+    	flex-direction: row; /* 가로 배치 */
+    	justify-content: center; /* 수평 가운데 정렬 */
+    	align-items: center; /* 수직 가운데 정렬 */
+	}
+    #by-ice-out {
+    	background-color: #66A8D7;
+    	border: 1px solid #eee;
+    	width: 500px;
+        height: 300px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        display: flex; /* Flexbox 사용 */
+        flex-direction: row;
+        justify-content: center; /* 수평 가운데 정렬 */
+        align-items: center; /* 수직 가운데 정렬 */
+    }
+    #by-ice-in {
+    	background-color: #eee;
+    	border: 1px solid #777777;
+    	width: 400px;
+        height: 220px;
+        margin: 20px;
+        border-radius: 5px;
+        
+        display: flex; /* Flexbox 사용 */
+        flex-direction: row;
+        flex-wrap: wrap; /* 줄 바꿈 허용 */
+        justify-content: space-around; /* 공간을 균등하게 배분 */
+        align-items: center; 
+    }
+    #by-cool-out {
+    	background-color: #66A8D7;
+    	border: 1px solid #eee;
+    	width: 500px;
+        height: 500px;
+        border-radius: 5px;
+        display: flex; /* Flexbox 사용 */
+        justify-content: center; /* 수평 가운데 정렬 */
+        align-items: center; /* 수직 가운데 정렬 */	
+    }
+    #by-cool-in {
+    	background-color: #eee;
+    	border: 1px solid #777777;
+    	width: 400px;
+        height: 420px;
+        margin: 10px;
+        border-radius: 5px;
+        
+        display: flex; /* Flexbox 사용 */
+        flex-direction: row;
+        flex-wrap: wrap; /* 줄 바꿈 허용 */
+        justify-content: space-around; /* 공간을 균등하게 배분 */
+        align-items: center;
+    }
+    #by-refrigerator {
+    	margin-top: 70px;
+    	margin-left: 50px;
+    }
+    #by-favo-menu{
+    	background-color: white;
+    	border: 1px solid #777777;
+		width: 100px;
+    	height: 100px;
+    	margin: 10px; 
+    	display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+   	#by-menu-img{
+		width: 100px;
+    	height: 70px;
+    	margin: 5px;
+   	}
+   	#by-menu {
+   		font-size: 15px; /* 폰트 사이즈 조절 */
+   		display: flex; /* Flexbox 사용 */
+   		justify-content: center; /* 수평 가운데 정렬 */
+   	}
+   	
+   	
+   	#by-myInfo{
+   		background-color: white;
+    	border: 1px solid #777777;
+    	width: 200px;
+    	height: 300px;
+    	margin-bottom: 295px;
+   	}
+   	#by-food {
+   		margin: 40px;
+   	}
+   	#by-buk {
+   		background-color: #F9E77F;
+    	border-radius: 5px;
+    	width: 330px;
+    	height: 300px;
+    	margin:10px;
+    	display: flex; /* Flexbox 사용 */
+        flex-direction: row;
+        flex-wrap: wrap; /* 줄 바꿈 허용 */
+        justify-content: center; /* 공간을 균등하게 배분 */
+        align-items: center;
+   	}
     </style>
 </head>
 <body>
 <header>
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
-<section>
 
-<section>
-    <!-- 폼을 사용하여 버튼 클릭 시 요청을 보냅니다. -->
-    <form action="/menu1/main" method="get">
-        <button type="submit">재료로 메뉴추천</button>
-    </form>
-</section>
-
-  
+<section id="by-section">
+<div id="by-refrigerator">
+    <div id="goMenu-btn">
+    	<!-- 폼을 사용하여 버튼 클릭 시 요청을 보냅니다. -->
+    	<form action="/menu1/main" method="get">
+        	<button type="submit">재료로 메뉴추천</button>
+    	</form>
+	</div>
+	<!-- 냉동 -->
+	<div id="by-ice-out">
+		<div id="by-ice-in">
+			<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    		</div>
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    		</div>
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    		</div>
+		</div>
+	</div>
+	<!-- 냉장 -->
+	<div id="by-cool-out">
+		<div id="by-cool-in">
+			<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    		</div>
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    		</div>
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    		</div>
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    		</div>
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    		</div>
+    		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    		</div>
+		</div>
+	</div>
+</div> <!-- 냉장고 -->
+<!-- 상온 -->
+<div id="by-food">
+	<div id="by-myInfo"> 
+	
+	</div>
+	<div id="by-buk"> 
+		<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    	</div>
+    	<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    	</div>
+    	<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    	</div>
+    	<div id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
+    			<span id="by-menu">디데이</span>
+    	</div>
+	</div>
+</div>
 </section>
 
 <script>

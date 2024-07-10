@@ -9,7 +9,7 @@
   		FROM recipe_recommend rr 
   		JOIN recipe r 
   		ON rr.rcode = r.rcode 
-  		WHERE mno = #{mno}
+  		WHERE rr.mno = #{mno}
   	</select>
   	
   	<select id="getMenuLike" resultType="com.harmony.www_service.dto.Menu_favoriteDto_by">
@@ -17,6 +17,6 @@
   		FROM favorite_menu fm 
   		JOIN menu m 
   		ON fm.mcode = m.mcode 
-  		WHERE mno = #{mno}
+  		WHERE fm.mno = #{mno}
   	</select>
   </mapper>
