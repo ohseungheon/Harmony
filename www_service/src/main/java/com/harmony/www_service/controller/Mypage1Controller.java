@@ -40,13 +40,7 @@ public class Mypage1Controller {
 		System.out.println("멤버============="+member);
 		return "mypage1/info_update";
 	}
-	//마이페이지 메인 
-	@RequestMapping("/mypage_main")
-	public String mypageMain() {
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println("아이디==============="+username);
-		return "mypage1/mypage_main";
-	}
+	
 	//좋아요페이지 
 	@RequestMapping("/like_hate_list")
 	public String like_hate_list(Model model) {
@@ -69,6 +63,13 @@ public class Mypage1Controller {
 		return "mypage1/like_hate_list";
 	}
 	
+	//마이페이지 메인 
+	@RequestMapping("/mypage_main")
+	public String mypageMain() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		System.out.println("아이디==============="+username);
+		return "mypage1/mypage_main";
+	}
 	
 	
 }
