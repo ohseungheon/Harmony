@@ -11,7 +11,9 @@ import com.harmony.www_service.dto.MenuDto;
 @Mapper
 public interface Menu1Dao {
 	List<IngredientDto> showFridgeIngredient();
+	IngredientDto showOneIngredient(@Param("icode") int icode);
 	//MenuDto showCanMakeMenu();
     List<MenuDto> showCanMakeMenu(@Param("icodeList") List<Integer> icodeList, @Param("size") Integer size);
+    List<IngredientDto> selectExcludeIngredient(@Param("icodeList") List<Integer> icodeList);
 
 }

@@ -25,6 +25,13 @@ public class MenuService {
         return menuListDao.getMenuList(category);
     }
     
+    
+    public IngredientDto getOneIngredient(int icode) {
+    	System.out.println("=============================getOneIngredient======================= :"+menu1dao.showOneIngredient(icode));
+    	return menu1dao.showOneIngredient(icode);
+    	
+    }
+    
     public List<MenuDto> getCanMakeMenu(List<IngredientDto> iList) {
     	List<Integer> icodeList = makeIcodeList(iList);
     	System.out.println("=============================getCanMakeMenu=======================");
@@ -45,6 +52,11 @@ public class MenuService {
     	}
     	
         return icodeList;
+    }
+    
+    public List<IngredientDto> selectExcludeIngredient(List<IngredientDto> iList){
+    	List<Integer> icodeList = makeIcodeList(iList);
+    	return menu1dao.selectExcludeIngredient(icodeList);
     }
     
 }
