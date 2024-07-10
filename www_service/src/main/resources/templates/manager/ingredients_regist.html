@@ -81,7 +81,7 @@
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
 <section>
-	<h2 class="dally_h2">재료등록</h2>
+	<h2 class="dally_h2">재료 등록</h2>
 	<div class="dally_tab_container">
 		<ul class="dally_tab_btns">
 			<li class="dally_tab_btn active" data-tab="dally_img_meat">육류</li>
@@ -173,17 +173,12 @@
 		<div id="dally_dairy_poducts_info"></div>
 	</div>
 	<div class="dally_ingredient_form">
-		<form id="dally_formData" action="/do_ingredients_regist" method="POST"  enctype="multipart/form-data">
+		<form id="dally_formData" action="/do_ingredients_regist" method="POST" enctype="multipart/form-data">
 			<div class="dally_form_img">
 				<label for="imgurl">재료 이미지</label>
-				<input type="file" name="imgurl" placeholder="이미지 주소를 등록하세요." width="150" height="200">
+				<input type="file" name="file" placeholder="이미지 주소를 등록하세요." width="150" height="200">
 			</div>
-			<div class="dally_category_selectbox">
-				<label for="dally_select_category">카테고리</label>
-				<select name="category" id="dally_select_category">
-					<option value="">선택해주세요</option>
-				</select>
-			</div>
+			카테고리 <input type="text" name="category" id="dally_category" placeholder="ex) 소고기, 채소 / 과일"><br>
 			재료 이름 <input type="text" name="name" placeholder="재료 이름을 입력하세요."><br>
 			<label for="type">단위</label>
 			<select name="type" id="dally_ingredient_type">
@@ -225,7 +220,14 @@
 
 			});
 		});
+		//getCategory();
 	});
+
+	
+	//function getCategory() {
+	//		let category = document.getElementById('dally_category');
+	//		category.value = "";
+	//	}
 
 	// 카테고리 선택 시 재료 등록 페이지에서 카테고리 select 값(option) 정해놓기 - 작동안됨 ^^
 	// let xhr = new XMLHttpRequest();

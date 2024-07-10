@@ -12,13 +12,13 @@ import com.harmony.www_service.dto.IngredientDtoWithFile;
 public interface IIngredientDao {
 
 	// 재료 등록
-	public void registIngredient(@Param("iDtoFile") IngredientDtoWithFile iDtoFile);
+	public void registIngredient(@Param("iDto") IngredientDto iDto);
 	// 재료 수정
-	public IngredientDto updateIngredient(@Param("iDtoFile") IngredientDtoWithFile iDtoFile);
+	public IngredientDto updateIngredient(@Param("iDto") IngredientDto iDto);
 	// 재료 삭제
 	public void deleteIgredient(@Param("icode") int icode);
 	// 재료 리스트 조회
-	public List<IngredientDto> getList(@Param("category") String category);
+	public List<IngredientDto> findByCategory(@Param("category") String category);
 	// 재료 상세 조회
 	public IngredientDto getDetail(@Param("icode") int icode);
 	
