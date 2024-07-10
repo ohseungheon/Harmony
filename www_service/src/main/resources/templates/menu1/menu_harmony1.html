@@ -31,6 +31,9 @@ th, td {
 
 			<input type="submit" value="재료로 만들 수 있는 메뉴보기2">
 		</form>
+		
+	<br>
+		<button type="submit" onclick="reset()">초기화</button>
 		<div id ="totalResult">
 		<table  border="1"  style="margin: 0 auto;text-align: center;">
 			<thead>
@@ -55,12 +58,12 @@ th, td {
 			</tbody>
 		</table>
 		</div>
-		
+		<br>
 		<div id ="totalResult2">
 		<table  border="1"  style="margin: 0 auto;text-align: center;">
 			<thead>
 			
-				<th>메뉴이름</th>
+				<th>회원님의 재료로 만들수 있는 메뉴</th>
 			</thead>
 			<tbody>
 				<tr th:each="dto : ${showCanMakeMenuList}">
@@ -74,6 +77,8 @@ th, td {
 	</section>
 
 	<script>
+	
+	let excludeList;
 	
 	function deleteIngredient(event,icode) {
 	    event.preventDefault();
@@ -98,6 +103,25 @@ th, td {
 	
 	
 	function deleteCanMakeMenu(event,icode) {
+	    event.preventDefault();
+		console.log("=============");
+		console.log("=============================icode : "+icode);
+		fetch("/menu1/deleteCanMakeMenu?icode="+icode, { // 서버에 요청을 보냅니다.
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json", // 요청의 헤더 설정
+			},
+		})
+			.then(response => response.json())
+			.then(data => {
+				document.getElementById("totalResult2").innerHTML =deleteCanMakeMenuTable(data);
+			})
+			.catch(error => {
+				document.getElementById("totalResult2").innerHTML = error;
+			});
+	}
+	
+	function reset(event,icode) {
 	    event.preventDefault();
 		console.log("=============");
 		console.log("=============================icode : "+icode);
@@ -169,7 +193,7 @@ th, td {
 		var html = '<table  border="1"  style="margin: 0 auto;text-align: center;">';
 		
 		html += '<tr>';
-		html += '<th>재료이름</th>';
+		html += '<th>회원님의 재료로 만들수 있는 메뉴</th>';
 		html += '</tr>';
 		
 		jsonData.forEach(item => {
@@ -183,6 +207,7 @@ th, td {
 		
 		return html;
 	}
+	
 	
 	</script>
 </body>
