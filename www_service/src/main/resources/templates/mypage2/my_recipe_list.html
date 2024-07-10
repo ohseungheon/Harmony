@@ -1,22 +1,159 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <style>
-    </style>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+	.queen-page-title{
+		margin:50px 0;
+		text-align:center;
+	}
+	
+	#recipe-list-area{
+		width:100%;
+		margin:0 auto;
+		background:rgb(190, 227, 241, 0.1);
+		border:1px solid #bee3f1;
+		border-radius:5px;
+		padding:20px;
+		box-sizing:border-box;
+	}
+	
+	.recipe-list-box{
+		width:100%;
+		height:100%;
+		border:1px solid #eee;
+		border-radius:5px;
+		background:#fff;
+		padding:20px;
+		box-sizing:border-box;
+		margin-bottom:20px;
+		display:flex;
+		position:relative;
+	}
+	.recipe-list-box .recipe-urlimg{
+		width:210px;
+		height:auto;
+	}
+	.recipe-list-box .recipe-urlimg img{
+		width:100%;
+		height:100%;
+	}
+	
+	.recipe-list-content h3{
+		padding:20px;
+		padding-bottom:10px;
+	}
+	.recipe-list-content p{
+		padding:20px;
+		font-size:14px;
+	}
+	
+	.recipe-list-del{
+		position:absolute;
+		right:50px;
+		top:80px;
+	}
+	.recipe-list-del a{
+		padding:10px 20px;
+		border:1px solid #eee;
+		border-radius:5px;
+		background:#f9f9f9;
+		box-sizing:border-box;
+		font-size:13px;
+		color:#999;
+	}
+	.recipe-list-del a:hover{
+		background:#bee3f1;
+		color:#333;
+		border:1px solid #bee3f1;
+	}
+</style>
 </head>
 <body>
-<header>
-<th:block th:insert="~{/sub/header.html}"></th:block>
-</header>
-<section>
+	<header>
+		<th:block th:insert="~{/sub/header.html}"></th:block>
+	</header>
+	<section>
 
-<h1>마이 레시피 리스트</h1>
-    
-</section>
+		<h1 class="queen-page-title">나의 레시피</h1>
+		<div id="recipe-list-area"></div>
 
-<script>
+	</section>
+
+	<script>
+document.addEventListener('DOMContentLoaded', function() {
+	recipeList();
+});
+
+function recipeList() {
+	const urlParams = new URLSearchParams(window.location.search);
+	const mno = urlParams.get("mno");
+	
+    fetch(`/api/recipe/recipeList?mno=` + mno, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+    	console.log(data);
+    	
+    	
+    	let output = "";
+    	
+        data.forEach(recipe => {
+        	// redipe.url이 null이 아니면 slice, null이면 'default' 사용
+    	let url = recipe.url ? recipe.url.slice(-11) : 'default';
+    	
+        	output += '<div class="recipe-list-box">';
+        	output += `<div class="recipe-urlimg">`;
+        	output += `<img src="https://img.youtube.com/vi/${url}/mqdefault.jpg">`;
+        	output += `</div>`;
+        	output += '<div class="recipe-list-content">';
+        	output += `<a href="#">`;
+        	output += `<h3>${recipe.recipeName}</h3>`;
+        	output += `<p>${recipe.introduce}</p>`;
+        	output += '</a>';
+        	output += '</div>'; //recipe-list-content
+        	output += '<div class="recipe-list-del">';
+        	output += `<a href="#" class="delete-recipe" data-rcode="${recipe.rcode}">삭제</a>`;
+        	output += '</div>';
+        	output += '</div>'; //recipe-list-box
+        });
+        document.getElementById('recipe-list-area').innerHTML = output;
+        
+        document.querySelectorAll('.delete-recipe').forEach(link => {
+        	link.addEventListener("click", function(event){
+        		event.preventDefault();
+        		const rcode = this.getAttribute('data-rcode');
+        		deleteRecipe(rcode)
+        	});
+        });
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function deleteRecipe(rcode){
+	fetch(`/api/recipe/recipeDelete?rcode=${rcode}`,{
+		method: 'DELETE',
+		headers: {
+			'Content-Type' : 'application/json',
+		},
+	})
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+		recipeList();
+	})
+	.catch(error => console.error("Error: ", error));
+}
+
+
+
+
+
 
 </script>
 </body>

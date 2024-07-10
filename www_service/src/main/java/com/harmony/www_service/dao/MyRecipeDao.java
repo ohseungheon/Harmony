@@ -11,5 +11,7 @@ import com.harmony.www_service.dto.RecipeDto;
 public interface MyRecipeDao {
 	
 	public List<RecipeDto> myRecipe(@Param("mno") int mno);
+	
+	public int deleteMyRecipe(@Param("rcode") int rcode);
 
 }
