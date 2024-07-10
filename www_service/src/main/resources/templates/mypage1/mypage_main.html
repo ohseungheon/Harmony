@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+    .all-section{
+    	width:1300px;
+    	margin:0 auto;
+    	position:relative;
+    }
+    
     #by-section {
         width: 1000px;
-        height: 1000px;
+        min-height: 1000px;
         border: 1px solid #eee;
         margin: 70px auto;
-        
         display: flex; /* Flexbox 사용 */
         flex-direction: row; /* 세로 배치 */
         justify-content: space-between; /* 수평 가운데 정렬 */
@@ -107,12 +112,36 @@
    	
    	
    	#by-myInfo{
-   		background-color: white;
-    	border: 1px solid #777777;
     	width: 200px;
-    	height: 300px;
-    	margin-bottom: 295px;
+   		background-color:#f9f9f9;
+    	border: 1px solid #ccc;
+    	border-radius:10px;
+    	padding:25px 0;
+    	position:absolute;
+    	top:0;
+    	right:-70px;
    	}
+   	#by-myInfo .img{
+   		width:60px;
+   		height:60px;
+   		border-radius:50%;
+   		background:#ccc;
+   		margin-right:20px;
+   	}
+   	#by-myInfo .info-inbox{
+   		display:flex;
+   		justify-content:center;
+   		align-items:center;
+   		margin-bottom:30px;
+   	}
+   	#by-myInfo .info-inbox2{
+   		
+   	}
+   	#by-myInfo .info-inbox2 p{
+   		padding-left:40px;
+		margin-bottom:20px;
+   	}
+   	
    	#by-food {
    		margin: 40px;
    	}
@@ -134,7 +163,7 @@
 <header>
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
-
+<div class="all-section">
 <section id="by-section">
 <a th:href="@{/material_page}">
 <div id="by-refrigerator">
@@ -167,9 +196,6 @@
 <!-- 냉장고 -->
 <!-- 상온 -->
 <div id="by-food">
-	<div id="by-myInfo"> 
-	
-	</div>
 	<div id="by-buk"> 
 		<div th:each="food : ${food}" id="by-favo-menu">
     			<img id="by-menu-img" th:src="@{'/img/material/'+ ${food.imgUrl} +'.png'}">
@@ -178,7 +204,23 @@
 	</div>
 </div>
 </section>
-
+<!-- 내정보 -->
+	<div id="by-myInfo"> 
+		<div class="info-inbox">
+			<span>
+				<img src="" class="img">
+			</span>
+			<span>
+				이지은
+			</span>
+		</div>
+		<div class="info-inbox2">
+			<p><a th:href="@{#}">회원 정보 관리</a></p>
+			<p><a th:href="@{#}">나의 레시피 관리</a></p>
+			<p><a th:href="@{#}">나의 좋아요 관리</a></p>
+		</div>
+	</div>
+</div>
 <script>
 
 </script>
