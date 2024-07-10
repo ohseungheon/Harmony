@@ -25,8 +25,8 @@ public class MenuService {
         return menuListDao.getMenuList(category);
     }
     
-    public List<MenuDto> getCanMakeMenu(List<Integer> icodeList) {
-    	
+    public List<MenuDto> getCanMakeMenu(List<IngredientDto> iList) {
+    	List<Integer> icodeList = makeIcodeList(iList);
     	System.out.println("=============================getCanMakeMenu=======================");
     	System.out.println("=============================getCanMakeMenu icodeList======================= :"+icodeList);
     	int size = icodeList.size();

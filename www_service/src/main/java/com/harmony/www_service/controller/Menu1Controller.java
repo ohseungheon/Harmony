@@ -27,12 +27,7 @@ public class Menu1Controller {
 		model.addAttribute("FridgeIngredientList",FridgeIngredientList);
 		System.out.println("======================FridgeIngredientList : "+FridgeIngredientList);
 		
-		List<Integer> icodeList =  menuService.makeIcodeList(FridgeIngredientList);
-		System.out.println("======================icodeList : "+icodeList);
-		
-		
-		
-		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(icodeList);
+		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(FridgeIngredientList);
 		System.out.println("======================showCanMakeMenu : "+showCanMakeMenuList);
     	model.addAttribute("showCanMakeMenuList",showCanMakeMenuList);
 		return "menu1/menu_harmony1";
