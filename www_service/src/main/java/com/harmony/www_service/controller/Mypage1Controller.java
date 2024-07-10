@@ -92,6 +92,12 @@ public class Mypage1Controller {
 		return "mypage1/mypage_main";
 	}
 	
+	//재료상세페이지
+	@RequestMapping("/material_page")
+	public String goMaterial() {
+		return "mypage1/material_page";
+	}
+	
 	
 }
 
