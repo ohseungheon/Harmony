@@ -13,8 +13,14 @@
 <section>
     <h1>recipe_detail</h1>
     <hr>
-    <p>rcode : <span th:text="${rcode}"></span></p>
-    <h2>Ingredient</h2>
+    <h2></h2>
+    <div>
+        <p>rcode : <span th:text="${rcode}"></span></p>
+        <p>recipeName : <span th:text="${recipeName}"></span></p>
+        <p>introduce : <span th:text="${introduce}"></span></p>
+        <iframe th:src="'https://www.youtube.com/embed/' + ${url}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <h2>Ingredients</h2>
     <div th:each="ingredient : ${recipeIngredientList}">
         <p>Name: <span th:text="${ingredient?.name}"></span></p>
         <p>Amount: <span th:text="${ingredient?.amount}"></span></p>

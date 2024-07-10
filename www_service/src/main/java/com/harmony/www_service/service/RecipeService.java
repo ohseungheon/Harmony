@@ -16,19 +16,24 @@ public class RecipeService {
     @Autowired
     private RecipeDao recipeDao;
 
-    public List<RecipeDto> getRecipeList(int mcode){
+    public List<RecipeDto> getRecipeListByMcode(int mcode){
         
-        return recipeDao.getRecipeList(mcode);
+        return recipeDao.getRecipeListByMcode(mcode);
     }
 
-    public List<RecipeOrderDto> getRecipeOrder(int rcode){
+    public RecipeDto getRecipeByRcode(int rcode){
 
-        return recipeDao.getRecipeOrder(rcode);
+        return recipeDao.getRecipeByRcode(rcode);
     }
 
-    public List<RecipeIngredientDto> getRecipeIngredient(int rcode){
+    public List<RecipeOrderDto> getRecipeOrdersByRcode(int rcode){
 
-        return recipeDao.getRecipeIngredient(rcode);
+        return recipeDao.getRecipeOrdersByRcode(rcode);
+    }
+
+    public List<RecipeIngredientDto> getRecipeIngredientsByRcode(int rcode){
+
+        return recipeDao.getRecipeIngredientsByRcode(rcode);
     }
 
 }

@@ -17,9 +17,9 @@ public class MenuAllRestController {
     private MenuListService menuListService;
 
     @GetMapping("/menu_all_list")
-    public List<MenuDto> getMenuList(@RequestParam("category") String category){
+    public List<MenuDto> getMenuListByCategory(@RequestParam("category") String category){
 
-        return menuListService.getMenuList(category);
+        return menuListService.getMenuListByCategory(category);
     }
 
 }

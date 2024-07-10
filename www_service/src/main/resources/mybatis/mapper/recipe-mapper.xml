@@ -3,15 +3,19 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.harmony.www_service.dao.RecipeDao">
-    <select id="getRecipeList" parameterType="int" resultType="com.harmony.www_service.dto.RecipeDto">
+    <select id="getRecipeListByMcode" parameterType="int" resultType="com.harmony.www_service.dto.RecipeDto">
         SELECT * FROM recipe WHERE mcode = #{mcode}
     </select>
 
-    <select id="getRecipeIngredient" parameterType="int" resultType="com.harmony.www_service.dto.RecipeIngredientDto">
+    <select id="getRecipeByRcode" parameterType="int" resultType="com.harmony.www_service.dto.RecipeDto">
+        SELECT * FROM recipe WHERE rcode = #{rcode}
+    </select>
+
+    <select id="getRecipeIngredientsByRcode" parameterType="int" resultType="com.harmony.www_service.dto.RecipeIngredientDto">
         SELECT ri.ricode AS ricode, ri.rcode, ri.icode, ri.amount, i.name FROM recipe_ingredient ri JOIN ingredient i ON ri.icode = i.icode WHERE ri.rcode = #{rcode}
     </select>
 
-    <select id="getRecipeOrder" parameterType="int" resultType="com.harmony.www_service.dto.RecipeOrderDto">
+    <select id="getRecipeOrdersByRcode" parameterType="int" resultType="com.harmony.www_service.dto.RecipeOrderDto">
         SELECT rocode, rcode, content, orderNum, cookingImg FROM recipe_order WHERE rcode = #{rcode} ORDER BY orderNum
     </select>
 

@@ -13,8 +13,8 @@ public class MenuListService {
     @Autowired
     private MenuListDao menuListDao;
 
-    public List<MenuDto> getMenuList(String category){
+    public List<MenuDto> getMenuListByCategory(String category){
         
-        return menuListDao.getMenuList(category);
+        return menuListDao.getMenuListByCategory(category);
     }
 }
