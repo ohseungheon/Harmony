@@ -13,7 +13,15 @@ public class IngredientDtoWithFile {
 	private String tip;
 	private String category;
 	private MultipartFile file;
-    
+//    
+//	public MultipartFile getFile() {
+//		return file;
+//	}
+//	
+//	public void setFile(MultipartFile file) {
+//		this.file = file;
+//	}
+	
     public String getFileName() {
 		return file.getOriginalFilename();
 	}

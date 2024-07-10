@@ -100,8 +100,11 @@ header {
 		fetch('/api/login/nickname')
 		.then(response => response.text())
 		.then(data => {
-			document.getElementById("nick").innerHTML = data + " 님";
-		});
+			if(data !== null && data.trim() !== ''){
+				document.getElementById("nick").innerHTML = data + " 님";
+			}
+		})
+		
 		
 		});
 	

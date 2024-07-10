@@ -15,6 +15,9 @@ public interface LoginDao {
 	//로그인
 	public UserDto loginCheck(UserDto userDto);
 	
+	//로그인 체크
+	public UserDto loginCheck(@Param("username") String username, @Param("password") String password);
+	
 	//회원가입 user
 	public int registUser(UserMemberDto userMemberDto);
 	

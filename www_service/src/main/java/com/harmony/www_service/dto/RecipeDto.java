@@ -6,6 +6,7 @@ import lombok.Data;
 public class RecipeDto {
     private int rcode;
     private int mcode;
+    private int mno;
     private String recipeName;
     private String introduce;
     private String url;

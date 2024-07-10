@@ -4,16 +4,22 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+    .all-section{
+    	width:1300px;
+    	margin:0 auto;
+    	position:relative;
+    }
+    
     #by-section {
         width: 1000px;
-        height: 1000px;
+        min-height: 1000px;
         border: 1px solid #eee;
         margin: 70px auto;
-        
         display: flex; /* Flexbox 사용 */
         flex-direction: row; /* 세로 배치 */
         justify-content: space-between; /* 수평 가운데 정렬 */
         align-items: row; /* 수직 가운데 정렬 */
+        position:relative;
     }
     #goMenu-btn {
     	margin:10px;
@@ -22,6 +28,7 @@
         width: 130px;
         height: 40px;
     }
+     /* 냉동/냉장 섹션 외부 스타일 */
     #by-ice-out, #by-cool-out {
     	display: flex; /* Flexbox 사용 */
     	flex-direction: row; /* 가로 배치 */
@@ -69,7 +76,7 @@
     	border: 1px solid #777777;
     	width: 400px;
         height: 420px;
-        margin: 10px;
+        margin: 5px;
         border-radius: 5px;
         
         display: flex; /* Flexbox 사용 */
@@ -85,7 +92,7 @@
     #by-favo-menu{
     	background-color: white;
     	border: 1px solid #777777;
-		width: 100px;
+		width: 110px;
     	height: 100px;
     	margin: 10px; 
     	display: flex;
@@ -106,26 +113,70 @@
    	
    	
    	#by-myInfo{
-   		background-color: white;
-    	border: 1px solid #777777;
     	width: 200px;
-    	height: 300px;
-    	margin-bottom: 295px;
+   		background-color:#f9f9f9;
+    	border: 1px solid #ccc;
+    	border-radius:10px;
+    	padding:25px 0;
+    	position:absolute;
+    	top:0;
+    	right:-70px;
    	}
+   	#by-myInfo .img{
+   		width:60px;
+   		height:60px;
+   		border-radius:50%;
+   		background:#ccc;
+   		margin-right:20px;
+   	}
+   	#by-myInfo .info-inbox{
+   		display:flex;
+   		justify-content:center;
+   		align-items:center;
+   		margin-bottom:30px;
+   	}
+   	
+   	#by-myInfo .info-inbox2 p{
+   		padding-left:40px;
+		margin-bottom:20px;
+   	}
+   	
    	#by-food {
    		margin: 40px;
    	}
    	#by-buk {
-   		background-color: #F9E77F;
-    	border-radius: 5px;
-    	width: 330px;
-    	height: 300px;
-    	margin:10px;
+   		position:absolute;
+   		bottom:65px;
+   		right:10px;
+    	width: 300px;
+    	height:0px;
+    	border-style:solid;
+    	border-width:20px 40px 200px 40px;
+    	border-color:#F9E77F transparent #F9E77F transparent;
     	display: flex; /* Flexbox 사용 */
         flex-direction: row;
         flex-wrap: wrap; /* 줄 바꿈 허용 */
         justify-content: center; /* 공간을 균등하게 배분 */
         align-items: center;
+   	}
+   	
+   	.recipe-info{
+   		width:200px;
+   		position:absolute;
+   		top:300px;
+   		right:-70px;
+   		border:1px solid #ccc;
+   		border-radius:10px;
+   		background:#f9f9f9;
+   		padding:30px 0;
+   		box-sizing:border-box;
+   		padding-left:40px;
+   	}
+   	.recipe-info ul li{
+   		margin-bottom:15px;
+   	}
+   	.recipe-info ul li:last-child{
+   		margin-bottom:0;
    	}
     </style>
 </head>
@@ -133,8 +184,9 @@
 <header>
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
-
+<div class="all-section">
 <section id="by-section">
+<a th:href="@{/material_page}">
 <div id="by-refrigerator">
     <div id="goMenu-btn">
     	<!-- 폼을 사용하여 버튼 클릭 시 요청을 보냅니다. -->
@@ -145,76 +197,58 @@
 	<!-- 냉동 -->
 	<div id="by-ice-out">
 		<div id="by-ice-in">
-			<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
+			<div th:each="ice : ${ice}" id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${ice.imgUrl} +'.png'}">
+    			<span id="by-menu">[[${ice.deadline}]]</span>
     		</div>
 		</div>
 	</div>
 	<!-- 냉장 -->
 	<div id="by-cool-out">
 		<div id="by-cool-in">
-			<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    		</div>
-    		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
+			<div th:each="cool : ${cool}" id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${cool.imgUrl} +'.png'}">
+    			<span id="by-menu">[[${cool.deadline}]]</span>
     		</div>
 		</div>
 	</div>
-</div> <!-- 냉장고 -->
+</div>
+</a> 
+<!-- 냉장고 -->
 <!-- 상온 -->
 <div id="by-food">
-	<div id="by-myInfo"> 
-	
-	</div>
 	<div id="by-buk"> 
-		<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    	</div>
-    	<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    	</div>
-    	<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
-    	</div>
-    	<div id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{/img/ingredient/meat/chicken.png}">
-    			<span id="by-menu">디데이</span>
+		<div th:each="food : ${food}" id="by-favo-menu">
+    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${food.imgUrl} +'.png'}">
+    			<span id="by-menu">[[${food.deadline}]]</span>
     	</div>
 	</div>
 </div>
 </section>
-
+<!-- 내정보 -->
+	<div id="by-myInfo"> 
+		<div class="info-inbox">
+			<span>
+				<img src="" class="img">
+			</span>
+			<span>
+				이지은
+			</span>
+		</div>
+		<div class="info-inbox2">
+			<p><a th:href="@{#}">회원 정보 관리</a></p>
+			<p><a th:href="@{#}">나의 레시피 관리</a></p>
+			<p><a th:href="@{#}">나의 좋아요 관리</a></p>
+		</div>
+	</div>
+	<div class="recipe-info">
+		<ul>
+			<li><a href="#"></a>레시피 등록</li>
+			<li><a href="#"></a>레시피 수정</li>
+			<li><a href="#"></a>레시피 삭제</li>
+		</ul>
+	</div>
+	</div>
 <script>
 
 </script>
