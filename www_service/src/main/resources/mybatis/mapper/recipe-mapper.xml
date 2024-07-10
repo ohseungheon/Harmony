@@ -7,4 +7,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * FROM recipe WHERE mcode = #{mcode}
     </select>
 
+    <select id="getRecipeIngredient" parameterType="int" resultType="com.harmony.www_service.dto.RecipeIngredientDto">
+        SELECT ri.ricode AS ricode, ri.rcode, ri.icode, ri.amount, i.name FROM recipe_ingredient ri JOIN ingredient i ON ri.icode = i.icode WHERE ri.rcode = #{rcode}
+    </select>
+
+    <select id="getRecipeOrder" parameterType="int" resultType="com.harmony.www_service.dto.RecipeOrderDto">
+        SELECT rocode, rcode, content, orderNum, cookingImg FROM recipe_order WHERE rcode = #{rcode} ORDER BY orderNum
+    </select>
+
 </mapper>
