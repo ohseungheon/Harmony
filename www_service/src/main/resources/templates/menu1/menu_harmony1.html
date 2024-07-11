@@ -4,22 +4,38 @@
 <meta charset="UTF-8">
 <title>Document</title>
 <style>
-.ahover:hover {
-	color: red;
-}
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-table {
-	border-collapse: collapse; /* 테이블의 경계선이 겹치지 않도록 설정 */
-}
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd; /* 셀 테두리 색상 연하게 */
+        border-color: rgba(0, 0, 0, 0.1); /* 연한 테두리 색상 */
+    }
 
-table, th, td {
-	border: 1px solid #dcdcdc; /* 연한 회색 외곽선 */
-}
+    th {
+        background-color: #00acc1;
+        color: white;
+    }
 
-th, td {
-	padding: 8px; /* 셀 내 여백을 추가 */
-	text-align: center; /* 셀 텍스트 가운데 정렬 */
-}
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tbody tr:hover td {
+        background-color: #f1f1f1;
+    }
+
+    td img {
+        max-width: 100px;
+        height: auto;
+        border-radius: 5px;
+    }
 </style>
 </head>
 <body>
