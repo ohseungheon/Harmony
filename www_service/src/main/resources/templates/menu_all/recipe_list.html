@@ -1,11 +1,56 @@
+
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+        .elsa-page-title{
+            margin:50px 0;
+            text-align: center;
+        }
+        
+        #recipeList{
+            width: 100%;
+            margin: 0 auto;
+            background: rgb(190, 227, 241, 0.1);
+            border: 1px solid #bee3f1;
+            border-radius: 5px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
         .recipeList{
-            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            display: flex;
+            position: relative;
+        }
+
+        .recipeList .recipe-urlimg{
+            width: 210px;
+            height: auto;
+        }
+
+        .recipeList .recipe-urlimg img{
+            width: 100%;
+            height: 100%;
+        }
+
+        .recipeList-content h3{
+            padding: 20px;
+            padding-bottom: 10px;
+        }
+
+        .recipeList-content p{
+            padding: 20px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -14,12 +59,17 @@
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
 <section>
-    <h1>recipe_list</h1>
-    <hr>
-    <p>mcode : <span th:text="${mcode}"></span></p>
+    <h1 class="elsa-page-title">뭐뭐뭐 레시피</h1>
     <div id="recipeList">
         <div th:each="recipe : ${recipeList}" class="recipeList" th:onclick="'loadRecipeDetail(\'' + ${recipe.rcode} + '\')'">
-            <p th:text="${recipe.recipeName}"></p>
+            <div class="recipe-urlimg">
+            </div>
+            <div class="recipeList-content">
+                <a href="#">
+                    <h3 th:text="${recipe.recipeName}"></h3>
+                    <p th:text="${recipe.introduce}"></p>
+                </a>
+            </div>
         </div>
     </div>
 </section>

@@ -5,20 +5,20 @@
 <title>Document</title>
 <style>
 .ahover:hover {
-    color: red;
+	color: red;
 }
 
 table {
-    border-collapse: collapse; /* 테이블의 경계선이 겹치지 않도록 설정 */
+	border-collapse: collapse; /* 테이블의 경계선이 겹치지 않도록 설정 */
 }
 
 table, th, td {
-    border: 1px solid #dcdcdc; /* 연한 회색 외곽선 */
+	border: 1px solid #dcdcdc; /* 연한 회색 외곽선 */
 }
 
 th, td {
-    padding: 8px; /* 셀 내 여백을 추가 */
-    text-align: center; /* 셀 텍스트 가운데 정렬 */
+	padding: 8px; /* 셀 내 여백을 추가 */
+	text-align: center; /* 셀 텍스트 가운데 정렬 */
 }
 </style>
 </head>
@@ -27,78 +27,91 @@ th, td {
 		<th:block th:insert="~{/sub/header.html}"></th:block>
 	</header>
 	<section>
-		<form id="mainForm" action="showMenu" method="get">
 
-			<input type="submit" value="재료로 만들 수 있는 메뉴보기2">
+		<form id="mainForm" action="/menu1/main" method="get">
+
+			<input type="submit" value="초기화">
 		</form>
-		
-	<br>
-		<button type="submit" onclick="reset()">초기화</button>
-		<div id ="totalResult">
-		<table  border="1"  style="margin: 0 auto;text-align: center;">
-			<thead>
-				<th>재료이미지</th>
-				<th>재료이름</th>
-				<th>재료삭제</th>
-			</thead>
-			<tbody>
-				<tr th:each="dto : ${FridgeIngredientList}">
-					<!-- <input type = "hidden" th:value = "${dto.icode}" id="icode">-->
-					<input type="hidden" th:value="${dto.icode}" th:id="'icode' + ${dto.icode}">
-					
-					<td><img src="${dto.imgurl}"></td>
-					<td>[[${dto.name}]]</td>
-				
-					<!-- <td><a href = "/menu1/deleteFridgeIngredientList" class="ahover">x</a></td> -->
-					<!-- <td><button onclick="deleteIngredient(event)">x</button></td> -->
-					<td><button type="button" th:onclick="'deleteIngredient(event, \'' + ${dto.icode} + '\')'">x</button></td>
-					
-					<!-- <button id="resumeManage" onclick="showResumeList(event)">이력서관리</button> -->
-				</tr>
-			</tbody>
-		</table>
+
+		<br>
+		<div id="haveIngredient">
+			<table border="1" style="margin: 0 auto; text-align: center;">
+				<thead>
+					<th>재료이미지</th>
+					<th>재료이름</th>
+					<th>재료삭제</th>
+				</thead>
+				<tbody>
+					<tr th:each="dto : ${FridgeIngredientList}">
+						<!-- <input type = "hidden" th:value = "${dto.icode}" id="icode">-->
+						<input type="hidden" th:value="${dto.icode}"
+							th:id="'icode' + ${dto.icode}">
+
+						<td><img src="${dto.imgurl}"></td>
+						<td>[[${dto.name}]]</td>
+
+						<!-- <td><a href = "/menu1/deleteFridgeIngredientList" class="ahover">x</a></td> -->
+						<!-- <td><button onclick="deleteIngredient(event)">x</button></td> -->
+						<td><button type="button"
+								th:onclick="'deleteIngredient(event, \'' + ${dto.icode} + '\')'">x</button></td>
+
+						<!-- <button id="resumeManage" onclick="showResumeList(event)">이력서관리</button> -->
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		<br>
-		<div id ="totalResult2">
-		<table  border="1"  style="margin: 0 auto;text-align: center;">
-			<thead>
-			
-				<th>회원님의 재료로 만들수 있는 메뉴</th>
-			</thead>
-			<tbody>
-				<tr th:each="dto : ${showCanMakeMenuList}">
-					<td id = "">[[${dto.menuName}]]</td>
-				</tr>
-			</tbody>
-		</table>
-		<div>
-	
+		<div id="canMakeMenuDiv">
+			<table border="1" style="margin: 0 auto; text-align: center;">
+				<thead>
+
+					<th>회원님의 재료로 만들수 있는 메뉴</th>
+				</thead>
+				<tbody>
+					<tr th:each="dto : ${showCanMakeMenuList}">
+						<td id="">[[${dto.menuName}]]</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br>
+		<div id=NoUseIngredientList></div>
 
 	</section>
 
 	<script>
 	
-	let excludeList;
-	
-	function deleteIngredient(event,icode) {
+
+	function deleteIngredient(event, icode) {
 	    event.preventDefault();
-		console.log("=============");
-		console.log("=============================icode : "+icode);
-		fetch("/menu1/deleteFridgeIngredientList?icode="+icode, { // 서버에 요청을 보냅니다.
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json", // 요청의 헤더 설정
-			},
-		})
-			.then(response => response.json())
-			.then(data => {
-				
-				document.getElementById("totalResult").innerHTML =deleteIngredientTable(data);
-				deleteCanMakeMenu(event,icode)
-			})
-			.catch(error => {
-				document.getElementById("totalResult").innerHTML = error;
-			});
+	    console.log("============================icode : " + icode);
+	    
+	    fetch("/menu1/deleteFridgeIngredientList?icode=" + icode, { // 서버에 요청을 보냅니다.
+	        method: "GET",
+	        headers: {
+	            "Content-Type": "application/json", // 요청의 헤더 설정
+	        },
+	    })
+	    .then(response => response.json())
+	    .then(data => {
+	        document.getElementById("haveIngredient").innerHTML = deleteIngredientTable(data);
+	        return fetch("/menu1/deleteCanMakeMenu?icode=" + icode, { // 서버에 요청을 보냅니다.
+	            method: "GET",
+	            headers: {
+	                "Content-Type": "application/json", // 요청의 헤더 설정
+	            },
+	        });
+	    })
+	    .then(response => response.json())
+	    .then(data => {
+	        document.getElementById("canMakeMenuDiv").innerHTML = deleteCanMakeMenuTable(data);
+	        deleteCanMakeMenu(event,icode)
+			NoUseIngredient(event)
+	    })
+	    .catch(error => {
+	        console.error('Error:', error);
+	        document.getElementById("canMakeMenuDiv").innerHTML = error;
+	    });
 	}
 	
 	
@@ -114,17 +127,35 @@ th, td {
 		})
 			.then(response => response.json())
 			.then(data => {
-				document.getElementById("totalResult2").innerHTML =deleteCanMakeMenuTable(data);
+				document.getElementById("canMakeMenuDiv").innerHTML =deleteCanMakeMenuTable(data);
+				
 			})
 			.catch(error => {
-				document.getElementById("totalResult2").innerHTML = error;
+				document.getElementById("canMakeMenuDiv").innerHTML = error;
+			});
+	}
+	function NoUseIngredient(event) {
+	    event.preventDefault();
+		console.log("=============");
+		fetch("/menu1/NoUseIngredient", { // 서버에 요청을 보냅니다.
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json", // 요청의 헤더 설정
+			},
+		})
+			.then(response => response.json())
+			.then(data => {
+				document.getElementById("NoUseIngredientList").innerHTML =CreateNoUseIngredientTable(data);
+			})
+			.catch(error => {
+				document.getElementById("NoUseIngredientList").innerHTML = error;
 			});
 	}
 	
-	function reset(event,icode) {
+	
+	function reset(event) {
 	    event.preventDefault();
 		console.log("=============");
-		console.log("=============================icode : "+icode);
 		fetch("/menu1/reset", { // 서버에 요청을 보냅니다.
 			method: "GET",
 			headers: {
@@ -133,13 +164,68 @@ th, td {
 		})
 			.then(response => response.json())
 			.then(data => {
-				document.getElementById("totalResult2").innerHTML =deleteCanMakeMenuTable(data);
+				document.getElementById("canMakeMenuDiv").innerHTML =deleteCanMakeMenuTable(data);
 			})
 			.catch(error => {
-				document.getElementById("totalResult2").innerHTML = error;
+				document.getElementById("canMakeMenuDiv").innerHTML = error;
 			});
 	}
 	
+	function undoIngredient(event,icode) {
+	    event.preventDefault();
+		console.log("=============undoIngredient =================: "+icode);
+		fetch("/menu1/undoIngredient?icode="+icode, { // 서버에 요청을 보냅니다.
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json", // 요청의 헤더 설정
+			},
+		})
+			.then(response => response.json())
+			.then(data => {
+				document.getElementById("NoUseIngredientList").innerHTML =CreateNoUseIngredientTable(data);
+				undoHavingIngredient(event,icode);
+				undoCanMakeMenu(event);
+			})
+			.catch(error => {
+				document.getElementById("NoUseIngredientList").innerHTML = error;
+			});
+	}
+	
+	function undoHavingIngredient(event,icode) {
+	    event.preventDefault();
+		console.log("=============undoIngredient =================: "+icode);
+		fetch("/menu1/undoHavingIngredient?icode="+icode, { // 서버에 요청을 보냅니다.
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json", // 요청의 헤더 설정
+			},
+		})
+			.then(response => response.json())
+			.then(data => {
+				document.getElementById("haveIngredient").innerHTML =CreateHavingIngredientTable(data);
+			})
+			.catch(error => {
+				document.getElementById("haveIngredient").innerHTML = error;
+			});
+	}
+	function undoCanMakeMenu(event,icode) {
+	    event.preventDefault();
+		console.log("=============undoIngredient =================: "+icode);
+		fetch("/menu1/undoCanMakeMenu", { // 서버에 요청을 보냅니다.
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json", // 요청의 헤더 설정
+			},
+		})
+			.then(response => response.json())
+			.then(data => {
+				document.getElementById("canMakeMenuDiv").innerHTML = deleteCanMakeMenuTable(data);
+			})
+			.catch(error => {
+				document.getElementById("canMakeMenuDiv").innerHTML = error;
+			});
+	}
+		
 	
 	function showResumeList(event) {
 		//event.preventDefault();
@@ -156,12 +242,15 @@ th, td {
 		})
 			.then(response => response.json())
 			.then(data => {
-				document.getElementById("totalResult").innerHTML = createResumeTable(data);
+				document.getElementById("haveIngredient").innerHTML = createResumeTable(data);
 			})
 			.catch(error => {
-				document.getElementById("totalResult").innerHTML = error;
+				document.getElementById("haveIngredient").innerHTML = error;
 			});
 	}
+	
+	
+	
 	
 	
 	function deleteIngredientTable(jsonData) {
@@ -190,24 +279,93 @@ th, td {
 	
 
 	function deleteCanMakeMenuTable(jsonData) {
-		var html = '<table  border="1"  style="margin: 0 auto;text-align: center;">';
-		
-		html += '<tr>';
-		html += '<th>회원님의 재료로 만들수 있는 메뉴</th>';
-		html += '</tr>';
-		
-		jsonData.forEach(item => {
-			html += '<tr>';
-			html += '<td>' + item.menuName + '</td>';
-			
-			html += '</tr>';
-		});
+	    var html = '<table border="1" style="margin: 0 auto; text-align: center;">';
+	    
+	    html += '<tr>';
+	    html += '<th>회원님의 재료로 만들 수 있는 메뉴</th>';
+	    html += '</tr>';
 
-		html += '</table>';
-		
-		return html;
+	    // 배열인지 확인
+	    if (Array.isArray(jsonData)) {
+	        // 배열이지만 비어있는 경우
+	        if (jsonData.length === 0) {
+	            html += '<tr><td>만들 수 있는 메뉴가 없습니다.</td></tr>';
+	        } else {
+	            // 배열이 있고 데이터가 있는 경우
+	            jsonData.forEach(item => {
+	                html += '<tr>';
+	                html += '<td>' + item.menuName + '</td>';
+	                html += '</tr>';
+	            });
+	        }
+	    } else {
+	        // 배열이 아닌 경우
+	        html += '<tr><td>재료가 없습니다.</td></tr>';
+	    }
+
+	    html += '</table>';
+	    
+	    return html;
 	}
+
 	
+	
+	function CreateNoUseIngredientTable(jsonData) {
+	    var html = '';
+
+	    if (Array.isArray(jsonData)) {
+	        // 배열이지만 비어있는 경우
+	        if (jsonData.length === 0) {
+	            html += '';
+	        } else {
+	            // 배열이 있고 데이터가 있는 경우
+	            html += '<table border="1" style="margin: 0 auto; text-align: center;">';
+	            html += '<tr>';
+	            html += '<th>메뉴추천에서 제외한 메뉴</th>';
+	            html += '<th>복원</th>';
+	            html += '</tr>';
+
+	            jsonData.forEach(item => {
+	                html += '<tr>';
+	                html += '<td>' + item.name + '</td>';
+	                html += '<td><button type="button" onclick="undoIngredient(event, \'' + item.icode + '\')">복원</button></td>';
+	                html += '</tr>';
+	            });
+
+	            html += '</table>';
+	        }
+	    } else {
+	        // 배열이 아닌 경우
+	        html += '<p>유효하지 않은 데이터입니다.</p>';
+	    }
+
+	    return html;
+	}
+
+	
+	function CreateHavingIngredientTable(jsonData) {
+	    var html = '<table border="1" style="margin: 0 auto; text-align: center;">';
+	    
+	    html += '<thead>';
+	    html += '<tr><th>재료이미지</th><th>재료이름</th><th>재료삭제</th></tr>';
+	    html += '</thead>';
+	    
+	    html += '<tbody>'; // <tbody> 태그 추가
+
+	    jsonData.forEach(item => {
+	        html += '<tr>';
+	        html += '<td><img src="item.imgurl"></td>'; 
+	        html += '<td>' + item.name + '</td>';
+	        html += '<td><button type="button" onclick="deleteIngredient(event, \'' + item.icode + '\')">x</button></td>';
+	        html += '</tr>';
+	    });
+
+	    html += '</tbody>'; // <tbody> 태그 닫기
+	    html += '</table>';
+	    
+	    return html;
+	}
+
 	
 	</script>
 </body>

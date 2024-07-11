@@ -4,18 +4,272 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+    #by-section {
+        width: 1000px;
+        height: 1000px;
+        margin: 80px auto;
+        
+        display: flex; /* Flexbox 사용 */
+        flex-direction: column; /* 세로 배치 */
+        justify-content: center; /* 수평 가운데 정렬 */
+        align-items: center; /* 수직 가운데 정렬 */
+    }
+    #by-tab{
+    	width: 800px;
+    	height: 800px;
+    	border-radius: 20px;
+    }
+    #by-tab2 {
+    	background-color: #A7BCF2;
+    	width: 800px;
+    	height: 800px;
+    	border-bottom-left-radius: 20px; /* 왼쪽 아래 반경 */
+        border-bottom-right-radius: 20px; /* 오른쪽 아래 반경 */
+        
+        display: flex;
+        align-items: flex-start;
+	    justify-content: center;
+	    
+	    overflow: auto;
+	    scrollbar-width: thin;
+	    scrollbar-color: #ffffff #A7BCF2; 
+    }
+    .tabs {
+        display: flex;
+        border-bottom: 1px solid #ccc;
+    }
+    .tabs button {
+        flex: 1;
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        outline: none;
+        transition: background-color 0.3s ease;
+        font-size: 15px;
+        border-top-left-radius: 5px; 
+        border-top-right-radius: 5px;
+    }
+    .tabs button:hover {
+        background-color: #ddd;
+   	}
+   	/* 활성화된 탭 버튼 스타일 */
+	.tabs button.active {
+		background-color: white;
+		border: 2px solid #A7BCF2;
+		border-radius: 5px;
+	}
+	/* 탭 콘텐츠 기본 스타일 - 숨김 */
+	.tab-content {
+		display: none;
+		padding: 20px;
+	}
+	/* 활성화된 탭 콘텐츠 스타일 - 표시 */
+	.tab-content.active {
+		display: block;
+	}
+	
+	.by-list {
+	    border: 1px solid #ddd;
+	    background-color: #fff;
+	    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.12); /* 우하단에 그림자 추가 */
+	    width: 720px;
+	    height: 160px;
+	    padding: 10px;
+	    margin: 20px;
+	    box-sizing: border-box;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center; /* 수평 가운데 정렬 */
+	}
+	.by-mImg {
+	    border: 2px solid #ddd;
+	    width: 130px;
+	    height: 130px;
+	    box-sizing: border-box;
+	    margin-left: 3px;
+	}
+	.by-list img {
+	    width: 100%;
+	    height: 100%;
+	    object-fit: cover;
+	    box-sizing: border-box; 
+	}
+	.by-mInfo {
+	    flex-grow: 1;
+	    padding-left: 30px;
+	}
+	
+	#by-mName {
+	    font-size: 25px;
+	    text-align: left;
+	}
+	
+	.by-form {
+	    font-size: 18px;
+	    margin-right: 20px;
+	    margin-left: 10px;
+	    display:felx;
+	    flex-direction: column;
+	    width: 200px;
+	}
+	.by-form label, .by-form input {
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    .by-form label {
+        width: 130px;
+        text-align: right;
+        margin-right: 7px;
+    }
+    .by-form .form-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .by-form input[type="text"] {
+        width: 100%;
+        height: 40px;
+        padding: 5px;
+        border: 2px solid #ccc;
+        box-sizing: border-box;
+        text-align: center;
+        margin-right: 10px;
+    }
+	.by-mbtn {
+		width: 80px;
+	    padding: 10px 10px;
+	    font-size: 16px;
+	    background-color: #FF9A8B;
+	    color: white;
+	    border: none;
+	    cursor: pointer;
+	    margin-right: 20px; /* 추가: 버튼을 왼쪽으로 이동 */
+	}
+	.by-mbtn:hover {
+	    background-color: #FF6F61;
+	}
     </style>
 </head>
 <body>
 <header>
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
-<section>
-    <h2>재료상세페이지</h2>
+<section id="by-section">
+    <div id="by-tab">
+    	<div class="tabs">
+            <button class="tab-button active" data-tab="cool">냉장</button>
+            <button class="tab-button" data-tab="ice">냉동</button>
+            <button class="tab-button" data-tab="food">상온</button>
+        </div>
+        <div id="by-tab2">
+        	<!-- 냉장 -->
+	        <div class="tab-content active" id="cool">
+	            <div th:each="cool : ${cool}" class="by-list">
+	            	<div class="by-mImg">
+	            		<img th:src="@{'/img/material/'+ ${cool.imgUrl} +'.png'}">
+	            	</div>
+	            	<div class="by-mInfo">
+	            		<div id="by-mName">
+	            			[[${cool.name}]]
+	            		</div>
+	            	</div>
+	            	<div class="by-form">
+	            		<div class="form-row">
+		            		<label for="by-count">수량</label>
+		            		<input type="text" id="by-count" th:value="${cool.amount}">
+	            		</div>
+	            		<div class="form-row">
+		            		<label for="by-deadline">유통기한</label>
+		            		<input type="text" id="by-deadline" th:value="${cool.deadline}">
+	            		</div>
+	            	</div>
+	            	<!-- hidden input 추가 -->
+                    <input type="hidden" name="fcode" th:value="${cool.fcode}">
+                    <input type="hidden" name="icode" th:value="${cool.icode}">
+	            	<a th:href="@{/material_update(fcode=${cool.fcode}, icode=${cool.icode})}"><button class="by-mbtn">수정</button></a>
+	            	<button class="by-mbtn">삭제</button>
+	            </div>
+	        </div>
+	        <!-- 냉동 -->
+	        <div class="tab-content" id="ice">
+	            <div th:each="ice : ${ice}" class="by-list">
+                    <div class="by-mImg">
+                        <img th:src="@{'/img/material/'+ ${ice.imgUrl} +'.png'}">
+                    </div>
+                    <div class="by-mInfo">
+                        <div id="by-mName">
+                            [[${ice.name}]]
+                        </div>
+                    </div>
+                    <div class="by-form">
+                        <div class="form-row">
+                            <label for="by-count">수량</label>
+                            <input type="text" id="by-count" th:value="${ice.amount}">
+                        </div>
+                        <div class="form-row">
+                            <label for="by-deadline">유통기한</label>
+                            <input type="text" id="by-deadline" th:value="${ice.deadline}">
+                        </div>
+                    </div>
+                    <!-- hidden input 추가 -->
+                    <input type="hidden" name="fcode" th:value="${ice.fcode}">
+                    <input type="hidden" name="icode" th:value="${ice.icode}">
+                    <a th:href="@{/material_update(fcode=${ice.fcode}, icode=${ice.icode})}"><button class="by-mbtn">수정</button></a>
+                    <button class="by-mbtn">삭제</button>
+                </div>
+	        </div>
+	        <!-- 상온 -->
+	        <div class="tab-content" id="food">
+	            <div th:each="food : ${food}" class="by-list">
+                    <div class="by-mImg">
+                        <img th:src="@{'/img/material/'+ ${food.imgUrl} +'.png'}">
+                    </div>
+                    <div class="by-mInfo">
+                        <div id="by-mName">
+                            [[${food.name}]]
+                        </div>
+                    </div>
+                    <div class="by-form">
+                        <div class="form-row">
+                            <label for="by-count">수량</label>
+                            <input type="text" id="by-count" th:value="${food.amount}">
+                        </div>
+                        <div class="form-row">
+                            <label for="by-deadline">유통기한</label>
+                            <input type="text" id="by-deadline" th:value="${food.deadline}">
+                        </div>
+                    </div>
+                    <!-- hidden input 추가 -->
+                    <input type="hidden" name="fcode" th:value="${food.fcode}">
+                    <input type="hidden" name="icode" th:value="${food.icode}">
+                    <a th:href="@{/material_update(fcode=${food.fcode}, icode=${food.icode})}"><button class="by-mbtn">수정</button></a>
+                    <button class="by-mbtn">삭제</button>
+                </div>
+	        </div>
+        </div>
+    </div>
 </section>
 
 <script>
+//DOMContentLoaded : 문서의 모든 요소가 로드되고 파싱되었을 때 실행
+document.addEventListener('DOMContentLoaded', function() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+ 	// 각 탭 버튼에 클릭 이벤트 리스너 추가
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+        	// 모든 버튼과 콘텐츠에서 'active' 클래스 제거
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
 
+         	// 클릭된 버튼과 연결된 콘텐츠에 'active' 클래스 추가
+            button.classList.add('active');
+            const selectedTab = button.getAttribute('data-tab');
+            document.getElementById(selectedTab).classList.add('active');
+        });
+    });
+});
 </script>
 </body>
 </html>
