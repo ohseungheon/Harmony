@@ -3,11 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>레시피 등록</title>
+    <link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
     <style>
+    
     .queen-page-title{
     	margin:50px 0;
     	text-align:center;
     	font-weight:500;
+    }
+    
+    .choice-menu-img{
+    	width:300px;
+    	margin:0 auto;
+    	height:300px;
+    	border-radius:50%;
+    	background:#eee;
+    }
+    .choice-menu-name{
+    	text-align:center;
+    	margin:20px 0 40px;
     }
     
     .recipe-regist-box1{
@@ -29,6 +44,7 @@
     }
     
     .recipe-regist-box1 input[type="text"]{
+    font-family: "Pretendard Variable", Pretendard;
     	width:600px;
     	height:50px;
     	border:1px solid #ececec;
@@ -39,6 +55,7 @@
     	color:#666;
     }
     .recipe-regist-box1 select{
+    font-family: "Pretendard Variable", Pretendard;
     	width:120px;
     	height:50px;
     	border:1px solid #ececec;
@@ -65,6 +82,7 @@
     }
     
     .recipe-regist-box2 select{
+    font-family: "Pretendard Variable", Pretendard;
     	width:200px;
     	height:50px;
     	border:1px solid #ececec;
@@ -72,6 +90,7 @@
     	padding:0 10px;
     }
     .recipe-regist-box2 input[type="text"]{
+    font-family: "Pretendard Variable", Pretendard;
     	width:120px;
     	height:50px;
     	border:1px solid #ececec;
@@ -121,6 +140,7 @@
     }
     
     .recipe-regist-box3 textarea{
+    font-family: "Pretendard Variable", Pretendard;
     	width:410px;
     	height:100px;
     	resize:none;
@@ -180,12 +200,35 @@
     	text-align:left;
     }
     .recipe-regist-box4 input[type="text"]{
+    font-family: "Pretendard Variable", Pretendard;
     	width:600px;
     	height:50px;
     	border:1px solid #ececec;
     	border-radius:5px;
     	box-sizing:border-box;
     	padding-left:10px;
+    }
+    
+    .recipe-regist-btns{
+    	text-align:center;
+    }
+    .recipe-regist-btns input[type="submit"]{
+    font-family: "Pretendard Variable", Pretendard;
+    	width:133px;
+    	height:44px;
+    	background:#F5A47D;
+    	border:1px solid #F5A47D;
+    	border-radius:5px;
+    	color:#fff;
+    }
+    .recipe-regist-btns input[type="button"]{
+    font-family: "Pretendard Variable", Pretendard;
+    	width:133px;
+    	height:44px;
+    	background:#fff;
+    	border:1px solid #F5A47D;
+    	border-radius:5px;
+    	color:#F5A47D;
     }
     </style>
 </head>
@@ -196,7 +239,13 @@
 <section>
     
     <h1 class="queen-page-title">레시피 등록</h1>
-    <form action="" method="">
+    <div class="choice-menu-img">
+    	<img src="">
+    </div>
+    <div class="choice-menu-name">
+    	<h4>메뉴이름</h4>
+    </div>
+    <form action="" method="post">
     <div class="recipe-regist-box1">
     	<table>
     		<tr>
@@ -258,7 +307,7 @@
     				<select name="icode">
     					<option value="0">재료 이름</option>
     					<option value="1">레몬</option>
-    					<option value="2">칠면조고</option>
+    					<option value="2">칠면조고기</option>
     					<option value="3">대파</option>
     					<option value="4">쪽파</option>
     					<option value="5">생강</option>
@@ -340,7 +389,7 @@
     				<textarea name="content" placeholder="예) 소고기를 숭덩숭덩 썰어주세요"></textarea>
     			</td>
     			<td class="order-img">
-    				<input type="file" accept="image/*" style="display:none;">
+    				<input type="file" name="cookingImg" accept="image/*" style="display:none;">
     				<img src="" style="display:none;">
     			</td>
     			<td>
@@ -364,9 +413,9 @@
     	</table>
     </div>
     
-    <div>
-    	<button>등록</button>
-    	<button>취소</button>
+    <div class="recipe-regist-btns">
+    	<input type="submit" value="등록">
+    	<input type="button" value="취소">
     </div>
     </form>
 </section>
@@ -395,7 +444,7 @@ document.getElementById('recipe-ingredient-add').addEventListener('click', () =>
 	newSelect.innerHTML = `
 		<option value="0">재료 이름</option>
 		<option value="1">레몬</option>
-        <option value="2">칠면조고</option>
+        <option value="2">칠면조고기</option>
         <option value="3">대파</option>
         <option value="4">쪽파</option>
         <option value="5">생강</option>
@@ -548,6 +597,7 @@ document.getElementById('recipe-ingredient-add').addEventListener('click', () =>
 		newImageCell.className = 'order-img';
 		const newImageInput = document.createElement('input');
 		newImageInput.type = 'file';
+		newImageInput.name = 'cookingImg';
 		newImageInput.accept = 'image/*';
 		newImageInput.style.display = 'none';
 		const newImage = document.createElement('img');
