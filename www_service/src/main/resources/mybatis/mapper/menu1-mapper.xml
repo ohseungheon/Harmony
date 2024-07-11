@@ -75,7 +75,7 @@
     WHERE icode IN (
         SELECT icode
         FROM Fridge
-        WHERE mno = 1
+        WHERE mno = #{mno}
     )
     <choose>
         <!-- When icodeList is not empty -->

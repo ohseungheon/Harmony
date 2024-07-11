@@ -89,8 +89,9 @@ public class Menu1Controller {
 		
 		InFridgeIngredientList.remove(getOneIngredient);
 		session.setAttribute("NoInFridgeIngredientList", NoInFridgeIngredientList);
-
-		List<IngredientDto> selectExcludeIngredientList = menuService.selectExcludeIngredient(NoInFridgeIngredientList);
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		int mno = menu1dao.getMno(username);
+		List<IngredientDto> selectExcludeIngredientList = menuService.selectExcludeIngredient(NoInFridgeIngredientList,mno);
 
 		System.out.println("=================NoInFridgeIngredientList==================: " + NoInFridgeIngredientList);
 		System.out.println("=================InFridgeIngredientList==================: " + InFridgeIngredientList);
@@ -194,8 +195,9 @@ public class Menu1Controller {
 		}
 		
 		InFridgeIngredientList.add(getOneIngredient);
-		
-		List<IngredientDto> selectExcludeIngredientList = menuService.selectExcludeIngredient(NoInFridgeIngredientList);
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		int mno = menu1dao.getMno(username);
+		List<IngredientDto> selectExcludeIngredientList = menuService.selectExcludeIngredient(NoInFridgeIngredientList,mno);
 		//List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(selectExcludeIngredientList);
 		return selectExcludeIngredientList;
 	}

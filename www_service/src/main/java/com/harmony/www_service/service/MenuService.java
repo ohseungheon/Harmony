@@ -53,9 +53,9 @@ public class MenuService {
         return icodeList;
     }
     
-    public List<IngredientDto> selectExcludeIngredient(List<IngredientDto> iList){
+    public List<IngredientDto> selectExcludeIngredient(List<IngredientDto> iList,int mno){
     	List<Integer> icodeList = makeIcodeList(iList);
-    	return menu1dao.selectExcludeIngredient(icodeList);
+    	return menu1dao.selectExcludeIngredient(icodeList,mno);
     }
     public int getMno(String username) {
     	return  menu1dao.getMno(username);
