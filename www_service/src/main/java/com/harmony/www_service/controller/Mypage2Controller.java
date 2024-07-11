@@ -13,7 +13,7 @@ public class Mypage2Controller {
 		return "mypage2/my_recipe_list";
 	}
 	
-	@RequestMapping("/regist")
+	@RequestMapping("/registForm")
 	public String myRecipeRegist() {
 	
 		
