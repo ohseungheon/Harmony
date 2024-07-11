@@ -45,13 +45,7 @@ public class ManagerController {
 	public String goList() {
 		return "manager/ingredients_list";
 	}
-	
-	// 재료 리스트 기능 구현
-	@RequestMapping("do_ingredients_list")
-	public List<IngredientDto> getList(@RequestParam("category") String category){
-		List<IngredientDto> iList = iService.showList(category);
-		return iList;
-	}
+
 	
 	
 }

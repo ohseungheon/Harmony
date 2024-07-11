@@ -88,6 +88,7 @@
 			<li class="dally_tab_btn" data-tab="dally_img_seafood">해산물</li>
 			<li class="dally_tab_btn" data-tab="dally_img_vegi_fruit">채소 / 과일</li>
 			<li class="dally_tab_btn" data-tab="dally_img_dairy_poducts">유제품</li>
+			<li class="dally_tab_btn" data-tab="dally_img_etc">기타</li>
 		</ul>
 	</div>
 	<div class="dally_tab_content active" id="dally_img_meat">
@@ -166,11 +167,20 @@
 			</div>
 		</div>
 	</div>
+	<div class="dally_tab_content" id="dally_img_etc">
+		<div class="dally_category_etc">
+			<div class="dally_li" id="etc" data-tab="dally_etc_info">
+				<img class="dally_img" th:src="@{/img/ingredient/etc/etc.png}">
+				<p class="dally_text">기타</p>
+			</div>
+		</div>
+	</div>
 	<div class="dally_ingredient_info">
 		<div id="dally_meat_info"></div>
 		<div id="dally_seafood_info"></div>
 		<div id="dally_vegi_fruit_info"></div>
 		<div id="dally_dairy_poducts_info"></div>
+		<div id="dally_etc_info"></div>
 	</div>
 	<div class="dally_ingredient_form">
 		<form id="dally_formData" action="/do_ingredients_regist" method="POST" enctype="multipart/form-data">
@@ -189,6 +199,7 @@
 			<input type="submit" value="재료 등록">
 		</form>
 	</div>
+
 </section>
 
 <script>
@@ -223,7 +234,7 @@
 		//getCategory();
 	});
 
-	
+
 	//function getCategory() {
 	//		let category = document.getElementById('dally_category');
 	//		category.value = "";
