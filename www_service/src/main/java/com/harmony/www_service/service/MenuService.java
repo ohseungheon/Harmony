@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.harmony.www_service.dao.Menu1Dao;
+import com.harmony.www_service.dao.MenuListDao;
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.MenuDto;
 
@@ -15,11 +16,13 @@ public class MenuService {
     
     @Autowired
     private Menu1Dao menu1dao;
+    @Autowired
+    private MenuListDao menuListDao;
     
-    public List<MenuDto> getMenuList(String category){
-        
-        return menuListDao.getMenuList(category);
-    }
+//    public List<MenuDto> getMenuList(String category){
+//        
+//        return menuListDao.getMenuList(category);
+//    }
     
     
     public IngredientDto getOneIngredient(int icode) {
@@ -53,6 +56,9 @@ public class MenuService {
     public List<IngredientDto> selectExcludeIngredient(List<IngredientDto> iList){
     	List<Integer> icodeList = makeIcodeList(iList);
     	return menu1dao.selectExcludeIngredient(icodeList);
+    }
+    public int getMno(String username) {
+    	return  menu1dao.getMno(username);
     }
     
 }

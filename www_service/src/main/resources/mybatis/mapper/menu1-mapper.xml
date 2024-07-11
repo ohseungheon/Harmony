@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.harmony.www_service.dao.Menu1Dao">
-	<select id="showFridgeIngredient"
+	<select id="showFridgeIngredient" parameterType="int"
 		resultType="com.harmony.www_service.dto.IngredientDto">
 
 		SELECT *
@@ -12,10 +12,19 @@
 		SELECT icode
 		FROM
 		Fridge
-		WHERE mno = 1
+		WHERE mno = #{mno}
 		);
 
 	</select>
+	<select id="getMno"
+		resultType="int">
+
+		SELECT mno
+		 FROM Member
+		 WHERE username =#{username};
+
+	</select>
+
 
 	<select id="showCanMakeMenu" parameterType="java.util.List"
 		resultType="com.harmony.www_service.dto.MenuDto">
