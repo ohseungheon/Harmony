@@ -27,40 +27,45 @@
 
 
 	<select id="showCanMakeMenu" parameterType="java.util.List"
-		resultType="com.harmony.www_service.dto.MenuDto">
-		SELECT *
-		FROM menu
-		WHERE mcode IN (
-		SELECT mcode
-		FROM recipe
-		WHERE rcode IN
-		(
-		SELECT rcode
-		FROM (
-		SELECT ri1.rcode
-		FROM recipe_ingredient ri1
-		WHERE
-		ri1.icode IN
-		<foreach item="item" index="index" collection="icodeList"
-			open="(" separator="," close=")">
-			#{item}
-		</foreach>
-		AND NOT EXISTS (
-		SELECT icode
-		FROM recipe_ingredient ri2
-		WHERE ri2.rcode
-		= ri1.rcode
-		AND ri2.icode NOT IN
-		<foreach item="item" index="index" collection="icodeList"
-			open="(" separator="," close=")">
-			#{item}
-		</foreach>
-		)
-
-		) AS filtered_rcodes
-		)
-		);
-	</select>
+        resultType="com.harmony.www_service.dto.MenuDto">
+    SELECT *
+    FROM menu
+    WHERE mcode IN (
+        SELECT mcode
+        FROM recipe
+        WHERE rcode IN (
+            SELECT rcode
+            FROM (
+                SELECT ri1.rcode
+                FROM recipe_ingredient ri1
+                WHERE
+                <choose>
+                    <when test="icodeList != null and !icodeList.isEmpty()">
+                        ri1.icode IN
+                        <foreach item="item" index="index" collection="icodeList"
+                                 open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                        AND NOT EXISTS (
+                            SELECT 1
+                            FROM recipe_ingredient ri2
+                            WHERE ri2.rcode = ri1.rcode
+                            AND ri2.icode NOT IN
+                            <foreach item="item" index="index" collection="icodeList"
+                                     open="(" separator="," close=")">
+                                #{item}
+                            </foreach>
+                        )
+                    </when>
+                    <otherwise>
+                        -- Use a condition that always fails if the list is empty
+                        1 = 0
+                    </otherwise>
+                </choose>
+            ) AS filtered_rcodes
+        )
+    );
+</select>
 	<select id="showOneIngredient" parameterType="int"
 		resultType="com.harmony.www_service.dto.IngredientDto">
 		SELECT *
