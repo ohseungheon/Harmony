@@ -48,7 +48,6 @@
             border-radius: 10px;
             box-shadow: inset 0 0 5px grey;
         }
-
     </style>
 </head>
 
@@ -72,8 +71,6 @@
             <div class="king-ingredient-card">12</div>
         </div>
 
-
-        <!-- <iframe width="768" height="432" src="https://www.youtube.com/embed/ez14wJep4Zw?controls=0&loop=1&autoplay=1" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen id="king-video" > </iframe> -->
     </section>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -86,7 +83,7 @@
             cardlist.forEach(card => {
                 card.addEventListener("click", () => {
                     // id="deactivation" 속성 추가
-                    if(card.getAttribute("id") == "deactivation") card.removeAttribute("id", "deactivation");
+                    if (card.getAttribute("id") == "deactivation") card.removeAttribute("id", "deactivation");
                     else card.setAttribute("id", "deactivation");
                 });
             });
@@ -95,11 +92,13 @@
         function getIngredients() {
             console.log('사용자 냉장고의 재료 불러오기');
 
-            // fetch('')
-            //     .then(res => res.json())
-            //     .then(list => {
-
-            //})
+            fetch('/menu2-api/my-ingredients')
+                .then(res => res.json())
+                .then(list => {
+                    list.forEach(ingredient => {
+                        console.log(ingredient);
+                    });
+                })
         }
     </script>
 </body>
