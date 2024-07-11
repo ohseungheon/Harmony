@@ -25,7 +25,6 @@ public class ManagerRestController {
 		System.out.println("...........재료 리스트 컨트롤러 진입............");
 		
 		List<IngredientDto> result = iService.showList(category);
-		System.out.println("...........컨츠롤러에서 보냄............");
 		
 		return result;
 	}

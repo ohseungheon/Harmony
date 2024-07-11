@@ -241,12 +241,7 @@
         </div>
       </div>
       <!------------------ 재료 리스트 -------------------->
-      <div class="dally_ingredient_info">
-        <div class="dally_meat_info"></div>
-        <div class="dally_seafood_info"></div>
-        <div class="dally_vegi_fruit_info"></div>
-        <div class="dally_dairy_poducts_info"></div>
-      </div>
+      <div class="dally_ingredient_info"></div>
     </section>
 
     <script>
@@ -318,18 +313,18 @@
             return response.json();
           })
           .then((data) => {
-            var meatInfoDiv = document.querySelector(".dally_meat_info");
+            var meatInfoDiv = document.querySelector(".dally_ingredient_info");
             meatInfoDiv.innerHTML = "";
 			console.log(data)
 
            for (var i = 0; i < data.length; i++) {
               var meat_info_content =
                 '<span class="dally_info_box">' +
-                '<img src="/img/ingredients/' +
+                '<img src="/img/ingredient/' +
                 data[i].imgurl +
-                '">';
+                '"> ' + 
               	data[i].name +
-                data[i].category +
+				data[i].category +
                 data[i].type +
                 data[i].tip +
                 "</span>";
