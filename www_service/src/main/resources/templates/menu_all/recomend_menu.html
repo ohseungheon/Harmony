@@ -8,14 +8,93 @@
 </head>
 <body>
 <header>
-<th:block th:insert="~{/sub/header.html}"></th:block>
+    <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
 <section>
-    
+    <h1 style="text-align: center;">현재 날씨</h1>
+    <table id="weather-table">
+        <thead>
+            <tr>
+                <th>날짜</th>
+                <th>현재 온도(°C)</th>
+                <th>날씨</th>
+                <th>추천 메뉴</th>
+            </tr>
+        </thead>
+        <tbody id="weather-body">
+        </tbody>
+    </table>
 </section>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const apiKey = '5ec2a8343328554022efe9f92a7fdfa3';
+        const cityName = 'Busan';
+        const url = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
 
+        const weatherMapping = {
+            'clear sky': '맑음',
+            'few clouds': '맑음',
+            'scattered clouds': '맑음',
+            'broken clouds': '흐림',
+            'overcast clouds': '흐림',
+            'light rain': '비',
+            'moderate rain': '비',
+            'heavy intensity rain': '비',
+            'shower rain': '비',
+            'rain': '비',
+            'thunderstorm': '비',
+            'snow': '눈',
+            'mist': '안개',
+            'fog': '안개',
+            'haze': '안개',
+            'smoke': '안개',
+            'dust': '안개',
+            'sand': '안개',
+            'ash': '안개',
+            'squalls': '비',
+            'tornado': '비'
+        };
+
+        const weatherIcons = {
+            '맑음': '☀️',
+            '흐림': '☁️',
+            '비': '🌧️',
+            '눈': '❄️',
+            '안개': '🌫️'
+        };
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const weatherBody = document.getElementById('weather-body');
+            const date = new Date(data.dt * 1000);
+            const formattedDate = date.toISOString().split('T')[0];
+            const formattedTime = date.toTimeString().split(' ')[0];
+            const temp = (data.main.temp - 273.15).toFixed(2);
+            const description = data.weather[0].description;
+            const simplifiedDescription = weatherMapping[description] || '맑음';
+            const icon = weatherIcons[simplifiedDescription] || '☀️';
+
+            const recommendedMenu = temp >= 20 ? '불고기, 삼겹살' : '';
+            // loadRecomendMenu();
+            const tableContent = `
+                <tr>
+                    <td>${formattedDate}</td>
+                    <td>${temp}</td>
+                    <td>${icon} ${simplifiedDescription}</td>
+                    <td>${recommendedMenu}</td>
+                </tr>
+            `;
+
+            weatherBody.innerHTML = tableContent;
+        })
+        .catch(error => console.error('Error fetching weather data:', error));
+    });
+
+    
+
+    
 </script>
 </body>
 </html>
