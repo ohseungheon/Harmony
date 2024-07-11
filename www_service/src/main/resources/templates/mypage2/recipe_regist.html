@@ -2,8 +2,191 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>레시피 등록</title>
     <style>
+    .queen-page-title{
+    	margin:50px 0;
+    	text-align:center;
+    	font-weight:500;
+    }
+    
+    .recipe-regist-box1{
+    	width:100%;
+    	margin:30px auto;
+    	background:rgb(190, 227, 241, 0.1);
+		border:1px solid #bee3f1;
+		border-radius:5px;
+		padding:30px 0;
+    }
+    .recipe-regist-box1 table{
+    	margin:0 auto;
+    	border-spacing:30px 30px;
+    }
+    .recipe-regist-box1 table th{
+    	text-align:left;
+    	font-weight:500;
+    	font-size:16px;
+    }
+    
+    .recipe-regist-box1 input[type="text"]{
+    	width:600px;
+    	height:50px;
+    	border:1px solid #ececec;
+    	background:#fff;
+    	box-sizing:border-box;
+    	border-radius:5px;
+    	padding-left:10px;
+    	color:#666;
+    }
+    .recipe-regist-box1 select{
+    	width:120px;
+    	height:50px;
+    	border:1px solid #ececec;
+    	border-radius:5px;
+    	padding:0 10px;
+    }
+    
+    .recipe-regist-box2{
+    	width:100%;
+    	margin:30px auto;
+    	background:rgb(190, 227, 241, 0.1);
+		border:1px solid #bee3f1;
+		padding:30px 0;
+		border-radius:5px;
+    }
+    .recipe-regist-box2 table{
+    	margin:0 auto;
+    	border-spacing:20px 30px;
+    }
+    .recipe-regist-box2 table th{
+    	text-align:left;
+    	font-weight:500;
+    	font-size:16px;
+    }
+    
+    .recipe-regist-box2 select{
+    	width:200px;
+    	height:50px;
+    	border:1px solid #ececec;
+    	border-radius:5px;
+    	padding:0 10px;
+    }
+    .recipe-regist-box2 input[type="text"]{
+    	width:120px;
+    	height:50px;
+    	border:1px solid #ececec;
+    	border-radius:5px;
+    	box-sizing:border-box;
+    	padding-left:10px;
+    }
+    .recipe-regist-box2 .addBtn{
+    	text-align:center;
+    }
+    .recipe-regist-box2 .addBtn img{
+    	display:inline-block;
+    	cursor:pointer;
+    }
+    .recipe-regist-box2 .ingredient-delete-btn{
+    	font-size:16px;
+    	font-weight:500;
+    	cursor:pointer;
+    	padding:2px 7px;
+    	border:2px solid #F5A47D;
+    	color:#F5A47D;
+    	border-radius:50%;
+    }
+    
+    
+    .recipe-regist-box3{
+    	width:100%;
+    	margin:30px auto;
+    	background:rgb(190, 227, 241, 0.1);
+		border:1px solid #bee3f1;
+		padding:30px 0;
+		border-radius:5px;
+    }
+    .recipe-regist-box3 h4{
+    	padding-left:155px;
+    	font-weight:500;
+    }
+    
+    .recipe-regist-box3 table{
+    	margin:0 auto;
+    	border-spacing:20px 30px;
+    }
+    .recipe-regist-box3 table th{
+    	font-size:20px;
+    	font-weight:400;
+    	text-align:left;
+    }
+    
+    .recipe-regist-box3 textarea{
+    	width:410px;
+    	height:100px;
+    	resize:none;
+    	border:1px solid #ececec;
+    	border-radius:5px;
+    	padding:10px;
+    	box-sizing:border-box;
+    }
+    
+    .recipe-regist-box3 .order-img{
+    	width:160px;
+    	height:100px;
+    	border:1px solid #eee;
+    	border-radius:5px;
+    	overflow:hidden;
+    }
+    .recipe-regist-box3 .order-img img{
+    	width:100%;
+    	height:100%;
+    	object-fit:cover;
+    	
+    }
+    
+    .recipe-regist-box3 .addBtn{
+    	text-align:center;
+    }
+    .recipe-regist-box3 .addBtn img{
+    	display:inline-block;
+    	cursor:pointer;
+    }
+    .recipe-regist-box3 .delete-btn{
+    	font-size:16px;
+    	font-weight:500;
+    	cursor:pointer;
+    	padding:2px 7px;
+    	border:2px solid #F5A47D;
+    	color:#F5A47D;
+    	border-radius:50%;
+    }
+    
+    .recipe-regist-box4{
+    	width:100%;
+    	margin:30px auto;
+    	background:rgb(190, 227, 241, 0.1);
+		border:1px solid #bee3f1;
+		padding:30px 0;
+		border-radius:5px;
+    }
+    .recipe-regist-box4 table{
+    	margin:0 auto;
+    	border-spacing:20px 30px;
+    }
+    .recipe-regist-box4 table th{
+    	text-align:left;
+    	font-weight:500;
+    	font-size:16px;
+    	text-align:left;
+    }
+    .recipe-regist-box4 input[type="text"]{
+    	width:600px;
+    	height:50px;
+    	border:1px solid #ececec;
+    	border-radius:5px;
+    	box-sizing:border-box;
+    	padding-left:10px;
+    }
     </style>
 </head>
 <body>
@@ -12,10 +195,405 @@
 </header>
 <section>
     
+    <h1 class="queen-page-title">레시피 등록</h1>
+    <form action="" method="">
+    <div class="recipe-regist-box1">
+    	<table>
+    		<tr>
+    			<th>레시피 제목</th>
+    			<td><input type="text" name="recipeName"></td>
+    		</tr>
+    		<tr>
+    			<th>요리 소개</th>
+    			<td><input type="text" name="introduce"></td>
+    		</tr>
+    		<tr>
+    			<th>동영상 주소</th>
+    			<td><input type="text" name="url"></td>
+    		</tr>
+    		<tr>
+    			<th>카테고리</th>
+    			<td>
+    				<select name="category">
+    					<option value="none">종류별</option>
+    					<option value="밑반찬">밑반찬</option>
+    					<option value="메인반">메인반찬</option>
+    					<option value="국/탕">국/탕</option>
+    					<option value="찌개">찌개</option>
+    					<option value="디저트">디저트</option>
+    					<option value="면/만두">면/만두</option>
+    					<option value="밥/죽/떡">밥/죽/떡</option>
+    					<option value="퓨전">퓨전</option>
+    					<option value="김치/젓갈/장류">김치/젓갈/장류</option>
+    					<option value="양념/소스/잼">양념/소스/잼</option>
+    					<option value="양식">양식</option>
+    					<option value="샐러드">샐러드</option>
+    					<option value="스프">스프</option>
+    					<option value="빵">빵</option>
+    					<option value="과자">과자</option>
+    					<option value="차/음료/술">차/음료/술</option>
+    					<option value="기타">기타</option>
+    				</select>
+    			</td>
+    		</tr>
+    		<tr>
+    			<th>인원</th>
+    			<td>
+    				<select name="portions">
+    					<option value="0">인원 선택</option>
+    					<option value="1">1인</option>
+    					<option value="2">2인</option>
+    					<option value="3">3인 이상</option>
+    				</select>
+    			</td>
+    		</tr>
+    	</table>
+    </div>
+    
+    <div class="recipe-regist-box2">
+    	<table id="ingredient-table">
+    		<tr>
+    			<th>재료 정보</th>
+    			<td>
+    				<select name="icode">
+    					<option value="0">재료 이름</option>
+    					<option value="1">레몬</option>
+    					<option value="2">칠면조고</option>
+    					<option value="3">대파</option>
+    					<option value="4">쪽파</option>
+    					<option value="5">생강</option>
+    					<option value="6">마늘</option>
+    					<option value="7">감자</option>
+    					<option value="8">당근</option>
+    					<option value="9">브로콜리</option>
+    					<option value="10">배추</option>
+    					<option value="11">시금치</option>
+    					<option value="12">애호박</option>
+    					<option value="13">오이</option>
+    					<option value="14">토마토</option>
+    					<option value="15">피망</option>
+    					<option value="16">상추</option>
+    					<option value="17">양배추</option>
+    					<option value="18">호박</option>
+    					<option value="19">콜리플라워</option>
+    					<option value="20">무</option>
+    					<option value="21">파프리카</option>
+    					<option value="22">소고기</option>
+    					<option value="23">돼지고기</option>
+    					<option value="24">닭고기</option>
+    					<option value="25">오리고기</option>
+    					<option value="26">양고기</option>
+    					<option value="27">명태</option>
+    					<option value="28">고등어</option>
+    					<option value="29">연어</option>
+    					<option value="30">새우</option>
+    					<option value="31">굴</option>
+    					<option value="32">양송이 버섯</option>
+    					<option value="33">호두</option>
+    					<option value="34">아몬드</option>
+    					<option value="35">땅콩</option>
+    					<option value="36">파인애플</option>
+    					<option value="37">바나나</option>
+    					<option value="38">사과</option>
+    					<option value="39">딸기</option>
+    					<option value="40">포도</option>
+    					<option value="41">수박</option>
+    					<option value="42">옥수수</option>
+    					<option value="43">검은콩</option>
+    					<option value="44">완두콩</option>
+    					<option value="45">고구마</option>
+    					<option value="46">청경채</option>
+    					<option value="47">무화과</option>
+    					<option value="48">블루베리</option>
+    					<option value="49">참외</option>
+    					<option value="50">키위</option>
+    					<option value="51">깻잎</option>
+    					<option value="52">고추</option>
+    					<option value="53">가지</option>
+    					<option value="54">양파</option>
+    				</select>
+    			</td>
+    			<td>
+    				<input type="text" name="amount" placeholder="수량">
+    			</td>
+    			<td>
+    				<input type="text" name="type" placeholder="단위(개/g)">
+    			</td>
+    			<td>
+    				<span class="ingredient-delete-btn">X</span>
+    			</td>
+    		</tr>
+    	</table>
+    	<div class="addBtn">
+    			<img src="/img/addBtn.png" id="recipe-ingredient-add">
+    	</div>
+    </div>
+    
+    <div class="recipe-regist-box3">
+    	<h4>요리 순서</h4>
+    	<table id="recipe-steps">
+    		<tr>
+    			<th>Step 1
+    				<input type="hidden" name="orderNum" value="1">
+    			</th>
+    			<td>
+    				<textarea name="content" placeholder="예) 소고기를 숭덩숭덩 썰어주세요"></textarea>
+    			</td>
+    			<td class="order-img">
+    				<input type="file" accept="image/*" style="display:none;">
+    				<img src="" style="display:none;">
+    			</td>
+    			<td>
+    				<span class="delete-btn">X</span>
+    			</td>
+    		</tr>
+    	</table>
+    	<div class="addBtn">
+    			<img src="/img/addBtn.png" id="recipe-order-add">
+    	</div>
+    </div>
+    
+    <div class="recipe-regist-box4">
+    	<table>
+    		<tr>
+    			<th>태그</th>
+    			<td>
+    				<input type="text" name="content" placeholder="예) 한식, 닭볶음탕">
+    			</td>
+    		</tr>
+    	</table>
+    </div>
+    
+    <div>
+    	<button>등록</button>
+    	<button>취소</button>
+    </div>
+    </form>
 </section>
 
 <script>
 
+// 재료정보 추가 삭제 버튼 스크립트
+	function addDeleteEvent(deleteBtn){
+	deleteBtn.addEventListener('click', () => {
+		const row = deleteBtn.colsest('tr');
+		row.remove();
+	});
+}
+
+document.getElementById('recipe-ingredient-add').addEventListener('click', () => {
+	const table = document.getElementById('ingredient-table');
+	const newRow = document.createElement('tr');
+	
+	const newStepCell = document.createElement('th');
+	newStepCell.textContent = '재료 정보';
+	newRow.appendChild(newStepCell);
+	
+	const newSelectCell = document.createElement('td');
+	const newSelect = document.createElement('select');
+	newSelect.name = 'icode';
+	newSelect.innerHTML = `
+		<option value="0">재료 이름</option>
+		<option value="1">레몬</option>
+        <option value="2">칠면조고</option>
+        <option value="3">대파</option>
+        <option value="4">쪽파</option>
+        <option value="5">생강</option>
+        <option value="6">마늘</option>
+        <option value="7">감자</option>
+        <option value="8">당근</option>
+        <option value="9">브로콜리</option>
+        <option value="10">배추</option>
+        <option value="11">시금치</option>
+        <option value="12">애호박</option>
+        <option value="13">오이</option>
+        <option value="14">토마토</option>
+        <option value="15">피망</option>
+        <option value="16">상추</option>
+        <option value="17">양배추</option>
+        <option value="18">호박</option>
+        <option value="19">콜리플라워</option>
+        <option value="20">무</option>
+        <option value="21">파프리카</option>
+        <option value="22">소고기</option>
+        <option value="23">돼지고기</option>
+        <option value="24">닭고기</option>
+        <option value="25">오리고기</option>
+        <option value="26">양고기</option>
+        <option value="27">명태</option>
+        <option value="28">고등어</option>
+        <option value="29">연어</option>
+        <option value="30">새우</option>
+        <option value="31">굴</option>
+        <option value="32">양송이 버섯</option>
+        <option value="33">호두</option>
+        <option value="34">아몬드</option>
+        <option value="35">땅콩</option>
+        <option value="36">파인애플</option>
+        <option value="37">바나나</option>
+        <option value="38">사과</option>
+        <option value="39">딸기</option>
+        <option value="40">포도</option>
+        <option value="41">수박</option>
+        <option value="42">옥수수</option>
+        <option value="43">검은콩</option>
+        <option value="44">완두콩</option>
+        <option value="45">고구마</option>
+        <option value="46">청경채</option>
+        <option value="47">무화과</option>
+        <option value="48">블루베리</option>
+        <option value="49">참외</option>
+        <option value="50">키위</option>
+        <option value="51">깻잎</option>
+        <option value="52">고추</option>
+        <option value="53">가지</option>
+        <option value="54">양파</option>
+    `;
+    newSelectCell.appendChild(newSelect);
+    newRow.appendChild(newSelectCell);
+    
+    const newAmountCell = document.createElement('td');
+    const newAmountInput = document.createElement('input');
+    newAmountInput.type = 'text';
+    newAmountInput.name = 'amount';
+    newAmountInput.placeholder = '수량';
+    newAmountCell.appendChild(newAmountInput);
+    newRow.appendChild(newAmountCell);
+    
+    const newTypeCell = document.createElement('td');
+    const newTypeInput = document.createElement('input');
+    newTypeInput.type = 'text';
+    newTypeInput.name = 'type';
+    newTypeInput.placeholder = '단위(개/g)';
+    newTypeCell.appendChild(newTypeInput);
+    newRow.appendChild(newTypeCell);
+    
+    const newDeleteCell = document.createElement('td');
+    const newDeleteBtn = document.createElement('span');
+    newDeleteBtn.className = 'ingredient-delete-btn';
+    newDeleteBtn.textContent = 'X';
+    newDeleteCell.appendChild(newDeleteBtn);
+    newRow.appendChild(newDeleteCell);
+    
+    table.appendChild(newRow);
+    
+    addDeleteEvent(newDeleteBtn);
+});
+
+	document.querySelectorAll('.ingredient-delete-btn').forEach(function(btn){
+		addDeleteEvent(btn);
+	});
+
+
+
+
+// 요리순서 추가 삭제 버튼 스크립
+	function addImageUploadEvent(orderImgCell){
+		const imageInput = orderImgCell.querySelector('input[type="file"]');
+		const imageDisplay = orderImgCell.querySelector('img');
+		
+		orderImgCell.addEventListener('click', () => {
+			imageInput.click();
+		});
+		
+		imageInput.addEventListener('change', () => {
+			if(imageInput.files && imageInput.files[0]){
+				const reader = new FileReader();
+				reader.onload = function(e) {
+					imageDisplay.src = e.target.result;
+					imageDisplay.style.display = 'block';
+				}
+				reader.readAsDataURL(imageInput.files[0]);
+			}
+		});
+	}
+	
+	function addDeleteEvent(deleteBtn){
+		deleteBtn.addEventListener('click', () => {
+			const row = deleteBtn.closest('tr');
+			row.remove();
+			updateStepNumbers();
+		});
+	}
+	
+	function updateStepNumbers(){
+		const rows = document.querySelectorAll('#recipe-steps tr');
+		rows.forEach((row, index) => {
+			const stepCell = row.querySelector('th');
+			const orderNumInputl = stepCell.querySelector('input[name="orderNum"]');
+			stepCell.childNodes[0].textContent = `Step ${index + 1}`;
+			orderNumInput.value = index + 1;
+		});
+	}
+
+// 요리 순서에서 추가 버튼 클릭하면 요소 추가
+	document.getElementById("recipe-order-add").addEventListener('click', () => {
+		
+		const table = document.getElementById("recipe-steps");
+		const currentStepCount = table.getElementsByTagName('tr').length;
+		
+		const newRow = document.createElement('tr');
+		
+		const newStepCell = document.createElement('th');
+		newStepCell.innerHTML = `Step ${currentStepCount + 1}<input type="hidden" name="orderNum" value="${currentStepCount + 1}">`;
+		newRow.appendChild(newStepCell);
+		
+		const newTextareaCell = document.createElement('td');
+		const newTextarea = document.createElement('textarea');
+		newTextarea.name = "content";
+		newTextareaCell.appendChild(newTextarea);
+		newRow.appendChild(newTextareaCell);
+		
+		const newImageCell = document.createElement('td');
+		newImageCell.className = 'order-img';
+		const newImageInput = document.createElement('input');
+		newImageInput.type = 'file';
+		newImageInput.accept = 'image/*';
+		newImageInput.style.display = 'none';
+		const newImage = document.createElement('img');
+		newImage.style.display = 'none';
+		newImageCell.appendChild(newImageInput);
+		newImageCell.appendChild(newImage);
+		
+		
+		newRow.appendChild(newImageCell);
+		
+		const newDeleteCell = document.createElement('td');
+		const newDeleteBtn = document.createElement('span');
+		newDeleteBtn.className = 'delete-btn';
+		newDeleteBtn.textContent = 'X';
+		newDeleteCell.appendChild(newDeleteBtn);
+		newRow.appendChild(newDeleteCell);
+		
+		table.appendChild(newRow);
+		
+		addImageUploadEvent(newImageCell);
+		addDeleteEvent(newDeleteBtn);
+	});
+	
+	document.querySelectorAll('.order-img').forEach(function(cell){
+		addImageUploadEvent(cell);
+	});
+	
+	document.querySelectorAll('.delete-btn').forEach(function(btn){
+		addDeleteEvent(btn);
+	});
+
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
