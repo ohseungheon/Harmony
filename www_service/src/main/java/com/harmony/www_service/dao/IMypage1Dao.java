@@ -15,4 +15,6 @@ public interface IMypage1Dao {
 	public List<FridgeIngredientDto> getCoolList(@Param("mno") int mno);
 	//상온
 	public List<FridgeIngredientDto> getFoodList(@Param("mno") int mno);
+	// 회원의 냉장고 재료 전체 불러오기
+	public List<FridgeIngredientDto> getAllFoodList(@Param("mno") int mno);
 }

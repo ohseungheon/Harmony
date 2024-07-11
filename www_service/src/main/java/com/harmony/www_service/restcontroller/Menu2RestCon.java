@@ -8,5 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("*")
 @RequestMapping("/menu2-api")
 public class Menu2RestCon {
+    
+    @Autowired
+    IMypage1Dao myIngredientDao;
+    
+    // @GetMapping("/my-ingredients")
+    
+    
 
 }
