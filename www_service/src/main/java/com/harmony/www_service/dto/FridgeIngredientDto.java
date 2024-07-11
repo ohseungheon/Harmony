@@ -15,7 +15,7 @@ public class FridgeIngredientDto {
 	private String keeptype; //보관상태 
 	
 	private String name; //재료이름
-	private char type; //단위구분
+	private String type; //단위구분
 	private String tip;
 	private String imgUrl;
 	private String category; 

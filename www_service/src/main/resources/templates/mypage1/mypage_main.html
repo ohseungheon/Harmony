@@ -91,7 +91,7 @@
     }
     #by-favo-menu{
     	background-color: white;
-    	border: 1px solid #777777;
+    	border: 1px solid #ccc;
 		width: 110px;
     	height: 100px;
     	margin: 10px; 
@@ -99,6 +99,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
     }
    	#by-menu-img{
 		width: 100px;
@@ -186,8 +188,8 @@
 </header>
 <div class="all-section">
 <section id="by-section">
-<a th:href="@{/material_page}">
 <div id="by-refrigerator">
+<a th:href="@{/material_page}">
     <div id="goMenu-btn">
     	<!-- 폼을 사용하여 버튼 클릭 시 요청을 보냅니다. -->
     	<form action="/menu1/main" method="get">
@@ -212,8 +214,8 @@
     		</div>
 		</div>
 	</div>
-</div>
 </a> 
+</div>
 <!-- 냉장고 -->
 <!-- 상온 -->
 <div id="by-food">
@@ -236,9 +238,9 @@
 			</span>
 		</div>
 		<div class="info-inbox2">
-			<p><a th:href="@{#}">회원 정보 관리</a></p>
+			<p><a th:href="@{/info_update}">회원 정보 관리</a></p>
 			<p><a th:href="@{#}">나의 레시피 관리</a></p>
-			<p><a th:href="@{#}">나의 좋아요 관리</a></p>
+			<p><a th:href="@{/like_hate_list}">나의 좋아요 관리</a></p>
 		</div>
 	</div>
 	<div class="recipe-info">
