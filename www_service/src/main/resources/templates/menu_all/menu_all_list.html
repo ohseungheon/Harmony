@@ -25,10 +25,11 @@
         <button onclick="loadMenu('기타')">기타</button>
     </div>
     <button onclick="toggleFilter()">필터</button>
+    <button onclick="loadRecomendMenu()">날씨별 추천</button>
     <div id="filterDiv">
         <div>
-            <input type="radio" name="type" value="main" id="typeMain" onchange="applyFilter()"> <label for="typeMain">Main</label>
-            <input type="radio" name="type" value="other" id="typeOther" onchange="applyFilter()"> <label for="typeOther">Other</label>
+            <input type="checkbox" name="type" value="main" id="typeMain" onchange="applyFilter()"> <label for="typeMain">Main</label>
+            <input type="checkbox" name="type" value="other" id="typeOther" onchange="applyFilter()"> <label for="typeOther">Other</label>
         </div>
         <div>
             <input type="checkbox" name="category" value="한식" id="catKorean" onchange="applyFilter()"> <label for="catKorean">한식</label>
@@ -103,6 +104,10 @@
     function loadRecipeList(mcode) {
 
         window.location.href = `/menu_all/recipe_list?mcode=${mcode}`;
+    }
+    
+    function loadRecomendMenu(){
+        window.location.href = 'recomend_menu';
     }
 </script>
 </body>

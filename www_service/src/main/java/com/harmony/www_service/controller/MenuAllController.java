@@ -50,6 +50,11 @@ public class MenuAllController {
         return "menu_all/recipe_detail";
     }
 
+    @GetMapping("/menu_all/recomend_menu")
+    public String recomend_menu(){
+
+        return "menu_all/recomend_menu";
+    }
 
 
 }
