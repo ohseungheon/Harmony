@@ -1,56 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.harmony.www_service.dao.IMypage1Dao">
-  
-  	<select id="getIceList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
-  		SELECT i.*, f.* FROM fridge f 
-  		JOIN ingredient i 
-  		ON f.icode = i.icode 
-  		WHERE f.keeptype = '냉동' AND f.mno = #{mno}
-  		ORDER BY f.deadline ASC LIMIT 3
-  	</select>
-  	
-  	<select id="getCoolList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
-  		SELECT i.*, f.* FROM fridge f 
-  		JOIN ingredient i 
-  		ON f.icode = i.icode 
-  		WHERE f.keeptype = '냉장' AND f.mno = #{mno}
-  		ORDER BY f.deadline ASC
-  	</select>
-  	
-  	<select id="getFoodList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
-  		SELECT i.*, f.* FROM fridge f 
-  		JOIN ingredient i 
-  		ON f.icode = i.icode 
-  		WHERE f.keeptype = '상온' AND f.mno = #{mno} 
-  		ORDER BY f.deadline ASC LIMIT 4
-  	</select>
-  	
-  	<!-- ALL -->
-  	<select id="getAllCoolList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
-  		SELECT i.*, f.* FROM fridge f 
-  		JOIN ingredient i 
-  		ON f.icode = i.icode 
-  		WHERE f.keeptype = '냉장' AND f.mno = #{mno}
-  		ORDER BY f.deadline ASC
-  	</select>
-  	
-  	<select id="getAllIceList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
-  		SELECT i.*, f.* FROM fridge f 
-  		JOIN ingredient i 
-  		ON f.icode = i.icode 
-  		WHERE f.keeptype = '냉동' AND f.mno = #{mno}
-  		ORDER BY f.deadline ASC
-  	</select>
-  	
-  	<select id="getAllFoodList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
-  		SELECT i.*, f.* FROM fridge f 
-  		JOIN ingredient i 
-  		ON f.icode = i.icode 
-  		WHERE f.keeptype = '상온' AND f.mno = #{mno} 
-  		ORDER BY f.deadline ASC
-  	</select>
-  	
-  </mapper>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.harmony.www_service.dao.IMypage1Dao">
+
+	<select id="getIceList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+		SELECT i.*, f.* FROM fridge f 
+		JOIN ingredient i 
+		ON f.icode = i.icode 
+		WHERE f.keeptype = '냉동' AND f.mno = #{mno}
+		ORDER BY f.deadline ASC LIMIT 3
+	</select>
+
+	<select id="getCoolList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+		SELECT i.*, f.* FROM fridge f 
+		JOIN ingredient i 
+		ON f.icode = i.icode 
+		WHERE f.keeptype = '냉장' AND f.mno = #{mno}
+		ORDER BY f.deadline ASC
+	</select>
+
+	<select id="getFoodList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+		SELECT i.*, f.* FROM fridge f 
+		JOIN ingredient i 
+		ON f.icode = i.icode 
+		WHERE f.keeptype = '상온' AND f.mno = #{mno} 
+		ORDER BY f.deadline ASC LIMIT 4
+	</select>
+
+	<!-- ALL -->
+	<select id="getAllCoolList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+		SELECT i.*, f.* FROM fridge f 
+		JOIN ingredient i 
+		ON f.icode = i.icode 
+		WHERE f.keeptype = '냉장' AND f.mno = #{mno}
+		ORDER BY f.deadline ASC
+	</select>
+
+	<select id="getAllIceList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+		SELECT i.*, f.* FROM fridge f 
+		JOIN ingredient i 
+		ON f.icode = i.icode 
+		WHERE f.keeptype = '냉동' AND f.mno = #{mno}
+		ORDER BY f.deadline ASC
+	</select>
+
+	<select id="getAllFoodList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+		SELECT i.*, f.* FROM fridge f 
+		JOIN ingredient i 
+		ON f.icode = i.icode 
+		WHERE f.keeptype = '상온' AND f.mno = #{mno} 
+		ORDER BY f.deadline ASC
+	</select>
+
+	<select id="getAllList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+		SELECT i.*, f.* FROM fridge f 
+		JOIN ingredient i 
+		ON f.icode = i.icode 
+		WHERE f.mno = #{mno} 
+		ORDER BY f.deadline ASC
+	</select>
+
+</mapper>
