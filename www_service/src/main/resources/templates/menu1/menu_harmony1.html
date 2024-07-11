@@ -279,10 +279,10 @@ th, td {
 	
 
 	function deleteCanMakeMenuTable(jsonData) {
-	    var html = '<table border="1" style="margin: 0 auto;text-align: center;">';
+	    var html = '<table border="1" style="margin: 0 auto; text-align: center;">';
 	    
 	    html += '<tr>';
-	    html += '<th>회원님의 재료로 만들수 있는 메뉴</th>';
+	    html += '<th>회원님의 재료로 만들 수 있는 메뉴</th>';
 	    html += '</tr>';
 
 	    // 배열인지 확인
@@ -300,32 +300,48 @@ th, td {
 	        }
 	    } else {
 	        // 배열이 아닌 경우
-	        html += '<tr><td>만들 수 있는 메뉴가 없습니다.</td></tr>';
+	        html += '<tr><td>재료가 없습니다.</td></tr>';
 	    }
 
 	    html += '</table>';
 	    
 	    return html;
 	}
-	function CreateNoUseIngredientTable(jsonData) {
-		var html = '<table  border="1"  style="margin: 0 auto;text-align: center;">';
-		
-		html += '<tr>';
-		html += '<th>메뉴추천에서 제외한 메뉴</th>';
-		html += '<th>복원</th>';
-		html += '</tr>';
-		
-		jsonData.forEach(item => {
-			html += '<tr>';
-			html += '<td>' + item.name + '</td>';
-			html += '<td><button type="button" onclick="undoIngredient(event, \'' + item.icode + '\')">복원</button></td>'; 
-			html += '</tr>';
-		});
 
-		html += '</table>';
-		
-		return html;
+	
+	
+	function CreateNoUseIngredientTable(jsonData) {
+	    var html = '';
+
+	    if (Array.isArray(jsonData)) {
+	        // 배열이지만 비어있는 경우
+	        if (jsonData.length === 0) {
+	            html += '';
+	        } else {
+	            // 배열이 있고 데이터가 있는 경우
+	            html += '<table border="1" style="margin: 0 auto; text-align: center;">';
+	            html += '<tr>';
+	            html += '<th>메뉴추천에서 제외한 메뉴</th>';
+	            html += '<th>복원</th>';
+	            html += '</tr>';
+
+	            jsonData.forEach(item => {
+	                html += '<tr>';
+	                html += '<td>' + item.name + '</td>';
+	                html += '<td><button type="button" onclick="undoIngredient(event, \'' + item.icode + '\')">복원</button></td>';
+	                html += '</tr>';
+	            });
+
+	            html += '</table>';
+	        }
+	    } else {
+	        // 배열이 아닌 경우
+	        html += '<p>유효하지 않은 데이터입니다.</p>';
+	    }
+
+	    return html;
 	}
+
 	
 	function CreateHavingIngredientTable(jsonData) {
 	    var html = '<table border="1" style="margin: 0 auto; text-align: center;">';
