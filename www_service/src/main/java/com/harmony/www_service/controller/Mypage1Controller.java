@@ -94,8 +94,33 @@ public class Mypage1Controller {
 	
 	//재료상세페이지
 	@RequestMapping("/material_page")
-	public String goMaterial() {
+	public String goMaterial(Model model) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		System.out.println("아이디==============="+username);
+		MemberDto_by member = memberService.getMemberByUsername(username);
+		int mno = member.getMno();
+		model.addAttribute("mno", mno);
+		
+		//all냉동
+		List<FridgeIngredientDto> ice = myDao.getAllIceList(mno);
+		System.out.println("냉동all===="+ice);
+		model.addAttribute("ice", ice);
+		//all냉장
+		List<FridgeIngredientDto> cool = myDao.getAllCoolList(mno);
+		System.out.println("냉장all+++"+cool);
+		model.addAttribute("cool", cool);
+		//all상온
+		List<FridgeIngredientDto> food = myDao.getAllFoodList(mno);
+		System.out.println("상온all>>>>"+food);
+		model.addAttribute("food", food);
+		
 		return "mypage1/material_page";
+	}
+	
+	//재료수정페이지
+	@RequestMapping("/material_update")
+	public String goMaterialUpdate() {
+		return "mypage1/material_update";
 	}
 	
 	
