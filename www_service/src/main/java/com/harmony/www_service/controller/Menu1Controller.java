@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,8 +34,10 @@ public class Menu1Controller {
 	  @RequestMapping("main")
 	    public String main(org.springframework.ui.Model model, HttpSession session) {
 	        session.removeAttribute("NoInFridgeIngredientList");
-	        
-	        List<IngredientDto> FridgeIngredientList = menu1dao.showFridgeIngredient();
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			int mno = menu1dao.getMno(username);
+			System.out.println("==============================================================mno"+mno);
+	        List<IngredientDto> FridgeIngredientList = menu1dao.showFridgeIngredient(mno);
 	        model.addAttribute("FridgeIngredientList", FridgeIngredientList);
 	        List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(FridgeIngredientList);
 	        model.addAttribute("showCanMakeMenuList", showCanMakeMenuList);
@@ -52,7 +55,9 @@ public class Menu1Controller {
     
 	@ResponseBody
 	@RequestMapping("reset")
-	public String reset(org.springframework.ui.Model model) {
+	public String reset(org.springframework.ui.Model model,HttpSession session) {
+        session.removeAttribute("NoInFridgeIngredientList");
+
 		return "mypage1/mypage_main";
 	}
 	
@@ -85,8 +90,9 @@ public class Menu1Controller {
 	    @GetMapping("deleteCanMakeMenu")
 	    public List<MenuDto> deleteCanMakeMenu(@RequestParam("icode") int icode, HttpSession session) {
 	        System.out.println("===========================deleteCanMakeMenu=========================");
-	        
-	        List<IngredientDto> InFridgeIngredientList = menu1dao.showFridgeIngredient();
+	        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			int mno = menu1dao.getMno(username);
+	        List<IngredientDto> InFridgeIngredientList = menu1dao.showFridgeIngredient(mno);
 	        IngredientDto getOneIngredient = menuService.getOneIngredient(icode);
 	        InFridgeIngredientList.remove(getOneIngredient);
 

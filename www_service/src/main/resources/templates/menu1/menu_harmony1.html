@@ -125,7 +125,7 @@ th, td {
 	    event.preventDefault();
 		console.log("=============");
 		console.log("=============================icode : "+icode);
-		fetch("/menu1/deleteCanMakeMenu?icode="+icode, { // 서버에 요청을 보냅니다.
+		fetch("/menu1/reset", { // 서버에 요청을 보냅니다.
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json", // 요청의 헤더 설정
