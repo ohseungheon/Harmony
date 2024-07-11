@@ -92,7 +92,16 @@ public class IngredientService_dally {
 	}
 	
 	public List<IngredientDto> showList(String category){
+		System.out.println("++++++++++++++++ 재료 리스트 출력 +++++++++++++++");
+		
 		List<IngredientDto> iList = iDao.findByCategory(category);
+		
+		System.out.println("++++++++++++++++ iList : "+iList +"+++++++++++++++");
+		
+		
+		// 화면에 표출할 수 있게 데이터 가공.....안해도 되나?
+//		IngredientDtoWithFile iDtoFile =new IngredientDtoWithFile(); : 안해도됨
+		
 		
 		return iList;
 	}

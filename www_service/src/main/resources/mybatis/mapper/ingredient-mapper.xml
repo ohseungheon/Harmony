@@ -11,8 +11,8 @@
   		(#{iDto.name}, #{iDto.type}, #{iDto.tip}, #{iDto.imgurl}, #{iDto.category})
   	</insert>
   	
-  	<select id="getList" resultType="com.harmony.www_service.dto.IngredientDto">
-  		SELECT name, type, imgurl, category FROM ingredient WHERE category = #{category}
+  	<select id="findByCategory" resultType="com.harmony.www_service.dto.IngredientDto">
+  		SELECT name, type, tip, imgurl, category FROM ingredient WHERE category = #{category}
   	</select>
   
 	<update id="updateIngredient">
@@ -28,7 +28,7 @@
 	
 	<delete id="deleteIgredient">
 		DELETE FROM ingredient
-		WHERE icode = #{iDto.icode}
+		WHERE icode = #{icode}
 	</delete>
   
   </mapper>
