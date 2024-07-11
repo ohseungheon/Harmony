@@ -32,7 +32,9 @@ public class SecurityConfig {
 
 		http
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/", "/**", "/login_page", "/regist_page", "/doLogin", "/doRegist", "loginProc").permitAll()
+						.requestMatchers("/", "/login_page", "/regist_page", "/doLogin", "/doRegist", "/loginProc").permitAll()
+						.requestMatchers("/src/**", "/main/**","/resources/**", "/static/**", "/img/**", "/json/**").permitAll()
+						.requestMatchers("/api/**").permitAll()
 						.requestMatchers("/admin").hasRole("ADMIN")
 						.requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
 						.anyRequest().authenticated()
