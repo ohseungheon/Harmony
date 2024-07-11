@@ -34,19 +34,19 @@
 	    scrollbar-width: thin;
 	    scrollbar-color: #ffffff #A7BCF2; 
     }
+    
     .tabs {
         display: flex;
-        border-bottom: 1px solid #ccc;
     }
     .tabs button {
         flex: 1;
-        padding: 10px;
+        padding: 13px;
         cursor: pointer;
         background-color: #fff;
         border: 1px solid #ddd;
         outline: none;
         transition: background-color 0.3s ease;
-        font-size: 15px;
+        font-size: 19px;
         border-top-left-radius: 5px; 
         border-top-right-radius: 5px;
     }
@@ -56,7 +56,7 @@
    	/* 활성화된 탭 버튼 스타일 */
 	.tabs button.active {
 		background-color: white;
-		border: 2px solid #A7BCF2;
+		border: 5px solid #A7BCF2;
 		border-radius: 5px;
 	}
 	/* 탭 콘텐츠 기본 스타일 - 숨김 */
@@ -72,7 +72,7 @@
 	.by-list {
 	    border: 1px solid #ddd;
 	    background-color: #fff;
-	    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.12); /* 우하단에 그림자 추가 */
+	    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15); /* 우하단에 그림자 추가 */
 	    width: 720px;
 	    height: 160px;
 	    padding: 10px;
@@ -81,6 +81,7 @@
 	    display: flex;
 	    align-items: center;
 	    justify-content: center; /* 수평 가운데 정렬 */
+	    border-radius: 5px;
 	}
 	.by-mImg {
 	    border: 2px solid #ddd;
@@ -88,6 +89,8 @@
 	    height: 130px;
 	    box-sizing: border-box;
 	    margin-left: 3px;
+	    border-radius: 5px;
+	    padding: 5px;
 	}
 	.by-list img {
 	    width: 100%;
@@ -135,6 +138,8 @@
         box-sizing: border-box;
         text-align: center;
         margin-right: 10px;
+        border-radius: 5px;
+        font-size: 18px;
     }
 	.by-mbtn {
 		width: 80px;
@@ -145,6 +150,7 @@
 	    border: none;
 	    cursor: pointer;
 	    margin-right: 20px; /* 추가: 버튼을 왼쪽으로 이동 */
+	    border-radius: 5px;
 	}
 	.by-mbtn:hover {
 	    background-color: #FF6F61;
@@ -176,7 +182,7 @@
 	            	</div>
 	            	<div class="by-form">
 	            		<div class="form-row">
-		            		<label for="by-count">수량</label>
+		            		<label for="by-count">[[${cool.type}]]</label>
 		            		<input type="text" id="by-count" th:value="${cool.amount}">
 	            		</div>
 	            		<div class="form-row">
@@ -204,7 +210,7 @@
                     </div>
                     <div class="by-form">
                         <div class="form-row">
-                            <label for="by-count">수량</label>
+                            <label for="by-count">[[${ice.type}]]</label>
                             <input type="text" id="by-count" th:value="${ice.amount}">
                         </div>
                         <div class="form-row">
@@ -232,7 +238,7 @@
                     </div>
                     <div class="by-form">
                         <div class="form-row">
-                            <label for="by-count">수량</label>
+                            <label for="by-count">[[${food.type}]]</label>
                             <input type="text" id="by-count" th:value="${food.amount}">
                         </div>
                         <div class="form-row">
