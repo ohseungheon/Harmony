@@ -27,4 +27,30 @@
   		WHERE f.keeptype = '상온' AND f.mno = #{mno} 
   		ORDER BY f.deadline ASC LIMIT 4
   	</select>
+  	
+  	<!-- ALL -->
+  	<select id="getAllCoolList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+  		SELECT i.*, f.* FROM fridge f 
+  		JOIN ingredient i 
+  		ON f.icode = i.icode 
+  		WHERE f.keeptype = '냉장' AND f.mno = #{mno}
+  		ORDER BY f.deadline ASC
+  	</select>
+  	
+  	<select id="getAllIceList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+  		SELECT i.*, f.* FROM fridge f 
+  		JOIN ingredient i 
+  		ON f.icode = i.icode 
+  		WHERE f.keeptype = '냉동' AND f.mno = #{mno}
+  		ORDER BY f.deadline ASC
+  	</select>
+  	
+  	<select id="getAllFoodList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+  		SELECT i.*, f.* FROM fridge f 
+  		JOIN ingredient i 
+  		ON f.icode = i.icode 
+  		WHERE f.keeptype = '상온' AND f.mno = #{mno} 
+  		ORDER BY f.deadline ASC
+  	</select>
+  	
   </mapper>

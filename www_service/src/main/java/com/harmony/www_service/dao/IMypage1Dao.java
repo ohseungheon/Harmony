@@ -15,4 +15,11 @@ public interface IMypage1Dao {
 	public List<FridgeIngredientDto> getCoolList(@Param("mno") int mno);
 	//상온
 	public List<FridgeIngredientDto> getFoodList(@Param("mno") int mno);
+	
+	//ALL 냉장
+	public List<FridgeIngredientDto> getAllIceList(@Param("mno") int mno);
+	//ALL 냉동
+	public List<FridgeIngredientDto> getAllCoolList(@Param("mno") int mno);
+	//ALL 상온
+	public List<FridgeIngredientDto> getAllFoodList(@Param("mno") int mno);
 }
