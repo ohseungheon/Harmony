@@ -28,4 +28,6 @@ public interface IMypage1Dao {
 	
 	//등록했던 재료 삭제 
 	public void deleteMaterial(@Param("fcode") int fcode);
+	//등록했던 재료 수정 위한 조회
+	public FridgeIngredientDto getMaterialList(@Param("fcode") int fcode);
 }

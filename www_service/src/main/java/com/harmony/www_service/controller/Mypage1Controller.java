@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.harmony.www_service.dao.ILikeDao;
 import com.harmony.www_service.dao.IMemberDao;
@@ -122,7 +123,10 @@ public class Mypage1Controller {
 	
 	//재료수정페이지
 	@RequestMapping("/material_update")
-	public String goMaterialUpdate() {
+	public String goMaterialUpdate(@RequestParam("fcode") int fcode, Model model) {
+		FridgeIngredientDto fi = myDao.getMaterialList(fcode);
+		System.out.println("수정할재료정보리스트"+fi);
+		model.addAttribute("material", fi);
 		return "mypage1/material_update";
 	}
 	

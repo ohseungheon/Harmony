@@ -63,4 +63,12 @@
 	<delete id="deleteMaterial">
 		DELETE FROM fridge WHERE fcode= #{fcode}
 	</delete>
+	
+	<!-- 재료수정 위한 조회 -->
+	<select id="getMaterialList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+		SELECT i.*, f.* FROM fridge f 
+		JOIN ingredient i 
+		ON f.icode = i.icode 
+		WHERE f.fcode = #{fcode} 
+	</select>
 </mapper>
