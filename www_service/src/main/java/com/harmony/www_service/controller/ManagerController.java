@@ -1,9 +1,9 @@
 package com.harmony.www_service.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.IngredientDtoWithFile;
 import com.harmony.www_service.service.IngredientService_dally;
+
+
 
 @Controller
 public class ManagerController {
@@ -44,25 +46,35 @@ public class ManagerController {
 	// 재료 디테일 페이지
 	@RequestMapping("/ingredient_detail")
 	public String goDetail() {
-		return "manager/ingredients_detail";
+		return "manager/ingredient_detail";
 	}
 	
 	// 재료 디테일 기능 구현
 	@RequestMapping("/do_ingredient_detail")
-	public IngredientDto showDetail(@RequestParam("icode") int icode) {
+	public String showDetail(@RequestParam("icode") int icode, Model model) {
 		IngredientDto result = iService.showDetail(icode);
-		return result;
+		model.addAttribute("detail", result);
+		
+		return "redirect:/ingredient_detail";
 	} 
 	
+	// 재료 수정 페이지
+	@RequestMapping("/ingredient_update")
+	public String updatePage() {
+		return "manager/ingredeints_update";
+	}
 	
-//	// 재료 수정 기능 구현
-//	@RequestMapping("/do_ingredient_update")
-//	public IngredientDto update(IngredientDtoWithFile iDtoFile, Model model){
-//		System.out.println("--------update--------");
-//		return  ;
-//	}
-//	
 	
+	// 재료 삭제 기능 구현
+	@RequestMapping("/do_ingredient_delete")
+	public String delete(@RequestParam("icode") int icode) {
+		iService.IgredientIsGone(icode);
+		
+		return "redirect:/ingredients_list";
+	}
+	
+	
+
 	
 	
 	

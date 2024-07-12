@@ -3,7 +3,9 @@ package com.harmony.www_service.restcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +31,16 @@ public class ManagerRestController {
 		return result;
 	}
 	
+	// 재료 수정 기능 구현
+	@PutMapping("/new-ingredient")
+	public IngredientDto update(IngredientDto iDto){
+		System.out.println("--------update--------");
+		IngredientDto update_result = iService.updateIngredient(iDto);
+		
+		System.out.println("****************iDto : " + iDto);
+		
+		return update_result;
+	}
 
-	
+
 }
