@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.RecipeIngredientDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
@@ -30,5 +31,8 @@ public interface MyRecipeDao {
 	
 	// 레시피 태그 등록
 	public int registMyRecipeTag(RecipeTagDto recipeTagDto);
+	
+	// 재료선택하면 재료의 type 불러오기
+	public IngredientDto getTypeByIcode(@Param("icode") int icode);
 
 }

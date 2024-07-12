@@ -228,6 +228,7 @@
     	border:1px solid #F5A47D;
     	border-radius:5px;
     	color:#fff;
+    	cursor:pointer;
     }
     .recipe-regist-btns input[type="button"]{
     font-family: "Pretendard Variable", Pretendard;
@@ -237,6 +238,7 @@
     	border:1px solid #F5A47D;
     	border-radius:5px;
     	color:#F5A47D;
+    	cursor:pointer;
     }
     
     .recipe-menu-list{
@@ -288,12 +290,12 @@
     				<li id="recipe-menu-name" th:text="${menu.menuName}" th:attr="mcode=${menu.mcode}"></li>
     			</th:block>
     		</ul>
-    		<!-- <img th:src="@{'/img/menu/' + ${menu.imgurl} + '.jpg'}"> -->
     	</div>
     </div>
     
    	<!-- 레시피 등록 폼 -->
     <form action="/my/recipe/regist" method="post">
+    <input type="hidden" name="mcode" id="mcode">
     <div class="recipe-regist-box1">
     	<table>
     		<tr>
@@ -352,7 +354,7 @@
     		<tr>
     			<th>재료 정보</th>
     			<td>
-    				<select name="icode">
+    				<select name="icode" id="ingredient-select">
     					<option value="0">재료 이름</option>
     					<option value="1">레몬</option>
     					<option value="2">칠면조고기</option>
@@ -472,6 +474,29 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 	
+	document.getElementById("ingredient-select").addEventListener("change", (event) => {
+		
+		const selectedIcode = event.target.value;
+		
+		fetch(`/getTypeByIcode?icode=${selectedIcode}`)
+		.then(response => {
+			if(!response.ok){
+				throw new Error(response.status);
+			}
+			return response.json();
+		})
+		.then(data => {
+			// 단위 데이터를 type 필드에 설정
+			document.querySelector("input[name='type']").value = data.type;
+		})
+		.catch(error => {
+			console.error(error);
+		});
+		
+	});
+	
+	
+	
 	let selectedMenuItem = null;
 	
 	// 메뉴 이름 클릭 이벤트 처리
@@ -491,6 +516,9 @@ document.addEventListener("DOMContentLoaded", () => {
 			
 			// 클릭한 메뉴 아이템의 mcode 가져오기
 			var mcode = menuItem.getAttribute("mcode");
+			
+			// mcode 값을 hidden input에 설정
+			document.getElementById("mcode").value = mcode;
 			
 			fetch(`/getMenuImage?mcode=${mcode}`)
 			.then(response => {

@@ -3,6 +3,7 @@ package com.harmony.www_service.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.harmony.www_service.dto.MemberDto;
 import com.harmony.www_service.dto.UserDto;
 import com.harmony.www_service.dto.UserMemberDto;
 
@@ -15,8 +16,8 @@ public interface LoginDao {
 	//로그인
 	public UserDto loginCheck(UserDto userDto);
 	
-	//로그인 체크
-	public UserDto loginCheck(@Param("username") String username, @Param("password") String password);
+	//username 으로 mno 가져오기
+	public MemberDto getMnoByUsername(@Param("username") String username);
 	
 	//회원가입 user
 	public int registUser(UserMemberDto userMemberDto);

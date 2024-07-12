@@ -33,5 +33,9 @@
   		values (#{rcode}, #{content})
   	</insert>
   	
+  	<select id="getTypeByIcode">
+  		select type from ingredient where icode = #{icode}
+  	</select>
+  	
   
   </mapper>
