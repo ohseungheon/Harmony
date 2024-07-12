@@ -331,49 +331,15 @@
         </div>
       </div>
       <div class="dally_ingredient_info"> </div>
-      <div class="dally_ingredient_form">
-        <form
-          id="dally_formData"
-          action="/do_ingredients_regist"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          <div class="dally_form_img">
-            <label for="imgurl">재료 이미지</label>
-            <input
-              type="file"
-              name="file"
-              placeholder="이미지 주소를 등록하세요."
-              width="150"
-              height="200"
-            />
-          </div>
-          카테고리
-          <input
-            type="text"
-            name="category"
-            id="dally_category"
-            placeholder="ex) 소고기, 어패류, 잎채소"
-          /><br />
-          재료 이름
-          <input
-            type="text"
-            name="name"
-            placeholder="재료 이름을 입력하세요."
-          /><br />
-          <label for="type">단위</label>
-          <select name="type" id="dally_ingredient_type">
-            <option value="수량">수량</option>
-            <option value="중량">중량</option></select
-          ><br />
-          tip
-          <input
-            type="text"
-            name="tip"
-            placeholder="유통기한 등의 tip!"
-          /><br />
-          <input type="submit" value="재료 등록" />
-        </form>
+
+      <!-- 재료 디테일 출력 -->
+      <div class="dally_ingredient_detail">
+        <p>재료 이미지<span th:text="${detail.imgurl}">console.log(${detail})</span></p>
+        <p> 재료 이름<span th:text="${detail.name}"></span></p>
+        <p>카테고리<span th:text="${detail.category}"></span></p>
+        <p>단위<span th:text="${detail.type}"></span></p>
+        <p>tip<span th:text="${detail.tip}"></span></p>
+        <span><a th:href="@{/ingredient_update}">수정</a></span> <span><a th:href="@{}">삭제</a></span>
       </div>
     </section>
 

@@ -25,6 +25,8 @@ public class IngredientService_dally {
 	@Autowired
 	IIngredientDao iDao;
 	
+	
+	// 재료 등록
 	public void addIngredients(IngredientDtoWithFile iDtoFile) {
 		System.out.println("------service 진입-------");
 		
@@ -96,6 +98,7 @@ public class IngredientService_dally {
 		System.out.println("++++++++++++++++ 재료 리스트 출력 +++++++++++++++");
 		List<IngredientDto> iList = iDao.findByCategory(category);
 	
+		System.out.println("icode = " +iList.get(0));
 		// 화면에 표출할 수 있게 데이터 가공.....안해도 되나?
 		//IngredientDtoWithFile iDtoFile =new IngredientDtoWithFile(); : 안해도됨
 		
@@ -110,10 +113,18 @@ public class IngredientService_dally {
 		return ingred_info;
 	}
 	
+	// 재료 수정 기능
+	public IngredientDto updateIngredient(IngredientDto iDto) {
+		IngredientDto update_data= iDao.updateIngredient(iDto);
+		
+		return update_data;
+	}
 	
-	
-	
-	
+	// 재료 삭제 기능
+	public void IgredientIsGone(int icode) {
+		System.out.println("------------- 재료 삭제 기능 -------------");
+		iDao.deleteIgredient(icode);
+	}
 	
 	
 }

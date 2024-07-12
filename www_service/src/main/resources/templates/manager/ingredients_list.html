@@ -241,9 +241,7 @@
         </div>
       </div>
       <!------------------ 재료 리스트 출력-------------------->
-      <a th:href="@{/ingredient_detail}">
-        <div class="dally_ingredient_info"></div> 
-      </a>
+      <div class="dally_ingredient_info"></div>
     </section>
 
     <script>
@@ -314,22 +312,23 @@
             return response.json();
           })
           .then((data) => {
-            var meatInfoDiv = document.querySelector(".dally_ingredient_info");
-            meatInfoDiv.innerHTML = "";
+            var ingreInfoDiv = document.querySelector(".dally_ingredient_info");
+            ingreInfoDiv.innerHTML = "";
 			console.log(data)
 
            for (var i = 0; i < data.length; i++) {
-              var meat_info_content =
+            console.log("icode 전달 유무 확인 " +data[i].icode);
+              var ingre_info_content =
                 '<span class="dally_info_box">' +
+                '<a href="/ingredient_detail?icode=' + data[i].icode + '">' +
                 '<img src="/img/ingredient/' +
-                data[i].imgurl +
-                '"> ' + 
+                data[i].imgurl +'"> ' + 
               	data[i].name +
-				data[i].category +
+				        data[i].category +
                 data[i].type +
                 data[i].tip +
-                "</span>";
-              meatInfoDiv.innerHTML += meat_info_content;
+                "</a></span>";
+                ingreInfoDiv.innerHTML += ingre_info_content;
             }
           })
           .catch((error) => console.error("Error:" + error));
