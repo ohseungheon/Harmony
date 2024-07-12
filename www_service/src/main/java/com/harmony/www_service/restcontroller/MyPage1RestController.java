@@ -15,7 +15,7 @@ import com.harmony.www_service.service.MemberService;
 
 @RestController
 @RequestMapping("/mypage1")
-public class MemberRestController {
+public class MyPage1RestController {
 	@Autowired
 	MemberService memberService;
 	@Autowired
