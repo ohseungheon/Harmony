@@ -17,7 +17,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
     	
-        request.getSession().setAttribute("errormsg", "아이디 또는 비밀번호가 틀렸습니다.");
-        getRedirectStrategy().sendRedirect(request, response, "/login_page");
+    	// 사용자 인증 실패 시 '/login_page?error=1'로 리다이렉트
+        getRedirectStrategy().sendRedirect(request, response, "/login_page?error=1");
     }
 }

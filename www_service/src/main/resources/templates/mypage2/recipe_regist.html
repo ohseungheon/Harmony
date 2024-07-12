@@ -22,7 +22,7 @@
     }
     .choice-menu-name{
     	text-align:center;
-    	margin:20px 0 40px;
+    	margin:40px 0;
     }
     
     .recipe-regist-box1{
@@ -230,6 +230,29 @@
     	border-radius:5px;
     	color:#F5A47D;
     }
+    
+    .recipe-menu-list{
+    	margin:20px 0;
+    }
+    .recipe-menu-list ul{
+    	width:100%;
+    	display:flex;
+    	flex-wrap:wrap;
+    	gap:10px;
+    	border:1px solid #DAC0DE;
+    	padding:40px;
+    	box-sizing:border-box;
+    	border-radius:5px;
+    }
+    .recipe-menu-list ul li{
+    	text-align:center;
+    	padding:10px;
+    	cursor:pointer;
+    }
+    .recipe-menu-list ul li:hover{
+    	background:#DAC0DE;
+    	border-radius:5px;
+    }
     </style>
 </head>
 <body>
@@ -242,10 +265,22 @@
     <div class="choice-menu-img">
     	<img src="">
     </div>
+    
+     <!-- 레시피를 등록할 메뉴 전체 리스트 -->
     <div class="choice-menu-name">
-    	<h4>메뉴이름</h4>
+    	<h4>메뉴 선택</h4>
+    	<div class="recipe-menu-list">
+    		<ul>
+    			<th:block th:each="menu : ${list}">
+    				<li id="recipe-menu-name">[[${menu.menuName}]]</li>
+    			</th:block>
+    		</ul>
+    		<!-- <img th:src="@{'/img/menu/' + ${menu.imgurl} + '.jpg'}"> -->
+    	</div>
     </div>
-    <form action="" method="post">
+    
+   	<!-- 레시피 등록 폼 -->
+    <form action="/my/recipe/regist" method="post">
     <div class="recipe-regist-box1">
     	<table>
     		<tr>
@@ -421,6 +456,11 @@
 </section>
 
 <script>
+
+document.getElementById("recipe-menu-name").addEventListener("click", () => {
+	
+});
+
 
 // 재료정보 추가 삭제 버튼 스크립트
 	function addDeleteEvent(deleteBtn){
