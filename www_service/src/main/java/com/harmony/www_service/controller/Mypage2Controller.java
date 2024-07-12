@@ -76,4 +76,5 @@ public class Mypage2Controller {
 	
 	
 	
+	
 }

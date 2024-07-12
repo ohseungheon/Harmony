@@ -17,9 +17,17 @@
     	width:300px;
     	margin:0 auto;
     	height:300px;
+    	border:1px solid #eee;
     	border-radius:50%;
-    	background:#eee;
+    	background:#fff;
+    	overflow:hidden;
     }
+    .choice-menu-img img{
+    	width:100%;
+    	height:100%;
+    	object-fit:cover;
+    }
+    
     .choice-menu-name{
     	text-align:center;
     	margin:40px 0;
@@ -253,6 +261,11 @@
     	background:#DAC0DE;
     	border-radius:5px;
     }
+    
+    .selected{
+    	background:#DAC0DE;
+    	border-radius:5px;
+    }
     </style>
 </head>
 <body>
@@ -263,7 +276,7 @@
     
     <h1 class="queen-page-title">레시피 등록</h1>
     <div class="choice-menu-img">
-    	<img src="">
+    	<img id="menu-image" src="" onerror="this.onerror=null; this.src='/img/imgNone.png';">
     </div>
     
      <!-- 레시피를 등록할 메뉴 전체 리스트 -->
@@ -272,7 +285,7 @@
     	<div class="recipe-menu-list">
     		<ul>
     			<th:block th:each="menu : ${list}">
-    				<li id="recipe-menu-name">[[${menu.menuName}]]</li>
+    				<li id="recipe-menu-name" th:text="${menu.menuName}" th:attr="mcode=${menu.mcode}"></li>
     			</th:block>
     		</ul>
     		<!-- <img th:src="@{'/img/menu/' + ${menu.imgurl} + '.jpg'}"> -->
@@ -457,7 +470,49 @@
 
 <script>
 
-document.getElementById("recipe-menu-name").addEventListener("click", () => {
+document.addEventListener("DOMContentLoaded", () => {
+	
+	let selectedMenuItem = null;
+	
+	// 메뉴 이름 클릭 이벤트 처리
+	document.querySelectorAll("#recipe-menu-name").forEach(menuItem => {
+		menuItem.addEventListener("click", () => {
+			
+			if(selectedMenuItem){
+				selectedMenuItem.classList.remove("selected");
+			}
+			
+			//선택된 메뉴 스타일 적용
+			menuItem.classList.add("selected");
+			
+			//현재 선택된 메뉴 항목을 업데이트
+			selectedMenuItem = menuItem;
+			
+			
+			// 클릭한 메뉴 아이템의 mcode 가져오기
+			var mcode = menuItem.getAttribute("mcode");
+			
+			fetch(`/getMenuImage?mcode=${mcode}`)
+			.then(response => {
+				if(!response.ok){
+					throw new Error(response.status);
+				}
+				return response.json(); //JSON 형태로 응답을 파싱하여 반환
+			})
+			.then(data => {
+				const imageUrl = data.imgurl;
+				console.log(data.imgurl);
+				console.log(imageUrl);
+				// 이미지 URL을 이미지 요소에 설정
+				document.getElementById("menu-image").setAttribute("src", "/img/menu/" + imageUrl + ".jpg");
+				document.getElementById("menu-image").setAttribute("onerror", "this.onerror=null; this.src='/img/imgNone.png';");
+			})
+			.catch(error => {
+				console.error(error);
+			});
+			
+		});
+	});
 	
 });
 
