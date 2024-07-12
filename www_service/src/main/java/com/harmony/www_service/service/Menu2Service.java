@@ -8,11 +8,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.harmony.www_service.dao.Menu2Dao;
+import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.MenuReqDto;
 import com.harmony.www_service.dto.MenuReqWithMember;
 import com.harmony.www_service.dto.MenuRequestWithFile;
@@ -82,5 +84,14 @@ public class Menu2Service {
 
         return dao.findAll();
     }
+
+    /**
+     * 냉장고를 부탁해 시즌 2
+     * @param icodeList
+     * @return List<MenuDto>
+     */
+    public List<MenuDto> canMakeMenuThatLack2(@Param("icodeList")List<Integer> icodeList){
+		return dao.canMakeMenuThatLack2(icodeList);
+	}
 
 }

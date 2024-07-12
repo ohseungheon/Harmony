@@ -17,4 +17,30 @@
 		ON m.mno = mr.mno
 	</select>
 
+	<select id="canMakeMenuThatLack2" parameterType="java.util.List" resultType="com.harmony.www_service.dto.MenuDto">
+		SELECT *
+		FROM menu
+		WHERE mcode IN (
+			SELECT mcode
+			FROM recipe
+			WHERE rcode IN (
+				SELECT ri1.rcode
+				FROM recipe_ingredient ri1
+				WHERE ri1.icode IN 
+				<foreach item="item" index="index" collection="icodeList" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+				AND (
+					SELECT COUNT(*)
+					FROM recipe_ingredient ri2
+					WHERE ri2.rcode = ri1.rcode
+					AND ri2.icode NOT IN 
+					<foreach item="item" index="index" collection="icodeList" open="(" separator="," close=")">
+						#{item}
+					</foreach>
+				) &lt;= 2
+			)
+		)
+	</select>
+
 </mapper>
