@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.harmony.www_service.dao.Menu1Dao;
 import com.harmony.www_service.dao.MenuListDao;
@@ -59,6 +60,13 @@ public class MenuService {
     }
     public int getMno(String username) {
     	return  menu1dao.getMno(username);
+    }
+    
+    
+    @ResponseBody
+    public List<Integer> getRcodeForMcode(int mcode){
+    	List<Integer> rcodeList= menu1dao.getRcodeForMcode(mcode);
+    	return rcodeList;
     }
     
 }

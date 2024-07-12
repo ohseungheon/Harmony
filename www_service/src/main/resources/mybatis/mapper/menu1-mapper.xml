@@ -99,6 +99,14 @@
 </select>
 
 
+<select id="getRcodeForMcode" parameterType="int"
+		resultType="com.harmony.www_service.dto.RecipeDto">
+		SELECT rcode
+		FROM recipe
+		WHERE mcode = #{mcode}
+	</select>
+
+
 
 	<!-- <select id="showCanMakeMenu" parameterType="java.util.List" resultType="com.harmony.www_service.dto.MenuDto"> 
 		SELECT menuName FROM menu WHERE mcode IN ( SELECT mcode FROM recipe WHERE 

@@ -4,38 +4,38 @@
 <meta charset="UTF-8">
 <title>Document</title>
 <style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 20px 0;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-    th, td {
-        padding: 12px;
-        text-align: center;
-        border: 1px solid #ddd; /* 셀 테두리 색상 연하게 */
-        border-color: rgba(0, 0, 0, 0.1); /* 연한 테두리 색상 */
-    }
+th, td {
+	padding: 12px;
+	text-align: center;
+	border: 1px solid #ddd; /* 셀 테두리 색상 연하게 */
+	border-color: rgba(0, 0, 0, 0.1); /* 연한 테두리 색상 */
+}
 
-    th {
-        background-color: #00acc1;
-        color: white;
-    }
+th {
+	background-color: #00acc1;
+	color: white;
+}
 
-    tr:last-child td {
-        border-bottom: none;
-    }
+tr:last-child td {
+	border-bottom: none;
+}
 
-    tbody tr:hover td {
-        background-color: #f1f1f1;
-    }
+tbody tr:hover td {
+	background-color: #f1f1f1;
+}
 
-    td img {
-        max-width: 100px;
-        height: auto;
-        border-radius: 5px;
-    }
+td img {
+	max-width: 100px;
+	height: auto;
+	border-radius: 5px;
+}
 </style>
 </head>
 <body>
@@ -51,6 +51,7 @@
 
 		<br>
 		<div id="haveIngredient">
+			<!-- 가지고 있는 재료 테이블 생성 -->
 			<table border="1" style="margin: 0 auto; text-align: center;">
 				<thead>
 					<th>재료이미지</th>
@@ -66,26 +67,30 @@
 						<td><img src="${dto.imgurl}"></td>
 						<td>[[${dto.name}]]</td>
 
-						<!-- <td><a href = "/menu1/deleteFridgeIngredientList" class="ahover">x</a></td> -->
-						<!-- <td><button onclick="deleteIngredient(event)">x</button></td> -->
 						<td><button type="button"
 								th:onclick="'deleteIngredient(event, \'' + ${dto.icode} + '\')'">x</button></td>
+						<!-- x를 누르면 가지고 있는 재료 삭제됨-->
 
-						<!-- <button id="resumeManage" onclick="showResumeList(event)">이력서관리</button> -->
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<br>
 		<div id="canMakeMenuDiv">
+			<!-- 만들 수 있는 메뉴 테이블 생성-->
 			<table border="1" style="margin: 0 auto; text-align: center;">
 				<thead>
 
 					<th>회원님의 재료로 만들수 있는 메뉴</th>
+					<th>레시피</th>
 				</thead>
 				<tbody>
 					<tr th:each="dto : ${showCanMakeMenuList}">
-						<td id="">[[${dto.menuName}]]</td>
+						<td>[[${dto.menuName}]]</td>
+						<td><button type="button"
+								th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
+								보러가기</button></td>
+						<!-- 누르면 레시피 리스트 화면으로 이동-->
 					</tr>
 				</tbody>
 			</table>
@@ -96,42 +101,37 @@
 	</section>
 
 	<script>
-	
 
-	function deleteIngredient(event, icode) {
+	  function goRecipeList(event,mcode) {
+		  console.log("================================mcode"+mcode)
+	      event.preventDefault();
+		  window.location.href = '/menu_all/recipe_list?mcode=' + mcode;
+	    }
+
+
+	function deleteIngredient(event, icode) {                  // 재료를 지우면
 	    event.preventDefault();
 	    console.log("============================icode : " + icode);
 	    
-	    fetch("/menu1/deleteFridgeIngredientList?icode=" + icode, { // 서버에 요청을 보냅니다.
+	    fetch("/menu1/deleteFridgeIngredientList?icode=" + icode, { // 가진 재료에서 icode에 해당하는 재료 삭제
 	        method: "GET",
 	        headers: {
-	            "Content-Type": "application/json", // 요청의 헤더 설정
+	            "Content-Type": "application/json",
 	        },
 	    })
 	    .then(response => response.json())
 	    .then(data => {
-	        document.getElementById("haveIngredient").innerHTML = deleteIngredientTable(data);
-	        return fetch("/menu1/deleteCanMakeMenu?icode=" + icode, { // 서버에 요청을 보냅니다.
-	            method: "GET",
-	            headers: {
-	                "Content-Type": "application/json", // 요청의 헤더 설정
-	            },
-	        });
-	    })
-	    .then(response => response.json())
-	    .then(data => {
-	        document.getElementById("canMakeMenuDiv").innerHTML = deleteCanMakeMenuTable(data);
-	        deleteCanMakeMenu(event,icode)
-			NoUseIngredient(event)
+	        document.getElementById("haveIngredient").innerHTML = deleteIngredientTable(data); // 해당재료가 빠진 가진재료 리스트를 가진재료 영역에 나타냄
+	        deleteCanMakeMenu(event,icode)             // icode에 해당하는 재료를 빼고 만들수 있는 메뉴를 보여주는 함수
+			NoUseIngredient(event) // 사용할 목록에서 뺀 재료 리스트를 나타내주는 함수
 	    })
 	    .catch(error => {
 	        console.error('Error:', error);
-	        document.getElementById("canMakeMenuDiv").innerHTML = error;
+	        document.getElementById("haveIngredient").innerHTML = error;
 	    });
 	}
 	
-	
-	function deleteCanMakeMenu(event,icode) {
+	function deleteCanMakeMenu(event,icode) {                  // icode에 해당하는 재료를 빼고 만들수 있는 메뉴를 보여주는 함수
 	    event.preventDefault();
 		console.log("=============");
 		console.log("=============================icode : "+icode);
@@ -150,13 +150,13 @@
 				document.getElementById("canMakeMenuDiv").innerHTML = error;
 			});
 	}
-	function NoUseIngredient(event) {
+	function NoUseIngredient(event) { //사용하지 않을 재료 리스트 생성함수
 	    event.preventDefault();
 		console.log("=============");
-		fetch("/menu1/NoUseIngredient", { // 서버에 요청을 보냅니다.
+		fetch("/menu1/NoUseIngredient", { 
 			method: "GET",
 			headers: {
-				"Content-Type": "application/json", // 요청의 헤더 설정
+				"Content-Type": "application/json", 
 			},
 		})
 			.then(response => response.json())
@@ -169,13 +169,13 @@
 	}
 	
 	
-	function reset(event) {
+	function reset(event) {                                 //사용할 수 있는 재료 리스트 초기화 함수
 	    event.preventDefault();
 		console.log("=============");
-		fetch("/menu1/reset", { // 서버에 요청을 보냅니다.
+		fetch("/menu1/reset", { 
 			method: "GET",
 			headers: {
-				"Content-Type": "application/json", // 요청의 헤더 설정
+				"Content-Type": "application/json",
 			},
 		})
 			.then(response => response.json())
@@ -186,21 +186,23 @@
 				document.getElementById("canMakeMenuDiv").innerHTML = error;
 			});
 	}
-	
-	function undoIngredient(event,icode) {
+	// 취소한 재료 복원
+	// 취소한 재료 복원을 누르면 사용하지 않을 재료 리스트에서 사라짐
+	// 사라지면서 사용할수 있는 재료 리스트에 다시 추가가 되어야 함
+	function undoIngredient(event,icode) {                        //복원을 눌렀을 때 실행되는 함수
 	    event.preventDefault();
 		console.log("=============undoIngredient =================: "+icode);
-		fetch("/menu1/undoIngredient?icode="+icode, { // 서버에 요청을 보냅니다.
+		fetch("/menu1/undoIngredient?icode="+icode, { 
 			method: "GET",
 			headers: {
-				"Content-Type": "application/json", // 요청의 헤더 설정
+				"Content-Type": "application/json", 
 			},
 		})
 			.then(response => response.json())
 			.then(data => {
 				document.getElementById("NoUseIngredientList").innerHTML =CreateNoUseIngredientTable(data);
-				undoHavingIngredient(event,icode);
-				undoCanMakeMenu(event);
+				undoHavingIngredient(event,icode);     // 가진재료가 추가됨
+				deleteCanMakeMenu(event,icode);				   // 복원을 누르면 만들 수 있는 메뉴 바뀌는 함수
 			})
 			.catch(error => {
 				document.getElementById("NoUseIngredientList").innerHTML = error;
@@ -210,10 +212,10 @@
 	function undoHavingIngredient(event,icode) {
 	    event.preventDefault();
 		console.log("=============undoIngredient =================: "+icode);
-		fetch("/menu1/undoHavingIngredient?icode="+icode, { // 서버에 요청을 보냅니다.
+		fetch("/menu1/undoHavingIngredient?icode="+icode, { 
 			method: "GET",
 			headers: {
-				"Content-Type": "application/json", // 요청의 헤더 설정
+				"Content-Type": "application/json", 
 			},
 		})
 			.then(response => response.json())
@@ -224,100 +226,71 @@
 				document.getElementById("haveIngredient").innerHTML = error;
 			});
 	}
-	function undoCanMakeMenu(event,icode) {
-	    event.preventDefault();
-		console.log("=============undoIngredient =================: "+icode);
-		fetch("/menu1/undoCanMakeMenu", { // 서버에 요청을 보냅니다.
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json", // 요청의 헤더 설정
-			},
-		})
-			.then(response => response.json())
-			.then(data => {
-				document.getElementById("canMakeMenuDiv").innerHTML = deleteCanMakeMenuTable(data);
-			})
-			.catch(error => {
-				document.getElementById("canMakeMenuDiv").innerHTML = error;
-			});
-	}
-		
 	
-	function showResumeList(event) {
-		//event.preventDefault();
-		alert("showResume....");
-		console.log("=============");
-		let token = localStorage.getItem("token");
-		console.log(token);
-		fetch("http://localhost:9001/redbean/showResumeList", { // 서버에 요청을 보냅니다.
-			method: "GET",
-			headers: {
-				//"Content-Type": "application/json", // 요청의 헤더 설정
-				"Authorization": "Bearer " + token
-			},
-		})
-			.then(response => response.json())
-			.then(data => {
-				document.getElementById("haveIngredient").innerHTML = createResumeTable(data);
-			})
-			.catch(error => {
-				document.getElementById("haveIngredient").innerHTML = error;
-			});
-	}
-	
-	
-	
-	
-	
+   // 테이블 생성 함수 부분	
 	function deleteIngredientTable(jsonData) {
 		var html = '<table  border="1"  style="margin: 0 auto;text-align: center;">';
 		
-		html += '<tr>';
+		html += '<thead>';
 		html += '<th>재료이미지</th>';
 		html += '<th>재료이름</th>';
 		html += '<th>재료삭제</th>';
-		html += '</tr>';
+		html += '</thead>';
 		
-		jsonData.forEach(item => {
-			html += '<tr>';
-			html += '<td>' + '<img src="${dto.imgurl}">' + '</td>';
-			html += '<td>' + item.name + '</td>';
-            html += '<td><button type="button" onclick="deleteIngredient(event, \'' + item.icode + '\')">x</button></td>'; // JSON 데이터에서 icode를 사용합니다.
-			
-			html += '</tr>';
-		});
 
+	    // 배열인지 확인
+	    if (Array.isArray(jsonData)) {
+	        // 배열이지만 비어있는 경우
+	        if (jsonData.length === 0) {
+	            html += '<tr><td colspan="1"><td>사용할 수 있는 재료가 없습니다.</td></tr>';
+	        } else {
+	            // 배열이 있고 데이터가 있는 경우
+	            jsonData.forEach(item => {
+	            	html += '<tr>';
+	    			html += '<td>' + '<img src="${dto.imgurl}">' + '</td>';
+	    			html += '<td>' + item.name + '</td>';
+	                html += '<td><button type="button" onclick="deleteIngredient(event, \'' + item.icode + '\')">x</button></td>'; // JSON 데이터에서 icode를 사용합니다.
+	    			
+	    			html += '</tr>';
+	            });
+	        }
+	        
+	    } else {
+	        // 배열이 아닌 경우
+	        html += '<tr><td colspan="1">사용할 수 있는 재료가 없습니다.</td></tr>';
+	    }
 		html += '</table>';
 		
 		return html;
 	}
 	
 	
+		
 
 	function deleteCanMakeMenuTable(jsonData) {
 	    var html = '<table border="1" style="margin: 0 auto; text-align: center;">';
 	    
 	    html += '<tr>';
 	    html += '<th>회원님의 재료로 만들 수 있는 메뉴</th>';
+	    html += '<th>레시피</th>';
 	    html += '</tr>';
 
-	    // 배열인지 확인
-	    if (Array.isArray(jsonData)) {
-	        // 배열이지만 비어있는 경우
-	        if (jsonData.length === 0) {
+	    
+	    
+	        if (jsonData.length === 0) {     // 데이터가 길이가 0(빈 배열인지 확인)
 	            html += '<tr><td>만들 수 있는 메뉴가 없습니다.</td></tr>';
 	        } else {
-	            // 배열이 있고 데이터가 있는 경우
+	            // 데이터가 있는 경우
 	            jsonData.forEach(item => {
 	                html += '<tr>';
 	                html += '<td>' + item.menuName + '</td>';
+          			html += '<td><button type="button" onclick="goRecipeList(event, \'' + item.mcode + '\')">레시피 보러가기</button></td>'; // JSON 데이터에서 icode를 사용합니다.
+	               
 	                html += '</tr>';
 	            });
 	        }
-	    } else {
-	        // 배열이 아닌 경우
-	        html += '<tr><td>재료가 없습니다.</td></tr>';
-	    }
+	        
+	    
 
 	    html += '</table>';
 	    
@@ -329,8 +302,7 @@
 	function CreateNoUseIngredientTable(jsonData) {
 	    var html = '';
 
-	    if (Array.isArray(jsonData)) {
-	        // 배열이지만 비어있는 경우
+	
 	        if (jsonData.length === 0) {
 	            html += '';
 	        } else {
@@ -350,10 +322,7 @@
 
 	            html += '</table>';
 	        }
-	    } else {
-	        // 배열이 아닌 경우
-	        html += '<p>유효하지 않은 데이터입니다.</p>';
-	    }
+	     
 
 	    return html;
 	}
