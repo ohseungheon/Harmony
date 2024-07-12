@@ -13,6 +13,25 @@
   		delete from recipe where rcode = #{rcode}
   	</delete>
   
+  	<insert id="registMyRecipe">
+  		insert into recipe (mcode, mno, recipeName, introduce, url, category, portions, view)
+  		values(#{mcode}, #{mno}, #{recipeName}, #{introduce}, #{url}, #{category}, #{portions}, #{view})
+  	</insert>
+  	
+  	<insert id="registMyRecipeIngredient">
+  		insert into recipe_ingredient (rcode, icode, amount)
+  		values(#{rcode}, #{icode}, #{amount})
+  	</insert>
+  	
+  	<insert id="registMyRecipeOrder">
+  		insert into recipe_order (rcode, content, orderNum, cookingImg)
+  		values (#{rcode}, #{content}, #{orderNum}, #{cookingImg})
+  	</insert>
+  	
+  	<insert id="registMyRecipeTag">
+  		insert into recipe_tag (rcode, content)
+  		values (#{rcode}, #{content})
+  	</insert>
   	
   
   </mapper>

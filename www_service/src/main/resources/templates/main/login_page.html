@@ -66,6 +66,12 @@
 .queen_regist-page a {
 	color: #888;
 }
+.err-box{
+	margin-top:20px;
+}
+.err-box p{
+	font-size:14px;
+}
 </style>
 </head>
 <body>
@@ -75,8 +81,11 @@
 
 	<section class="loginForm">
 		<form action="/loginProc" method="post">
-			<input type="text" name="username" placeholder="아이디"> <input
-				type="text" name="password" placeholder="비밀번호">
+			<input type="text" name="username" placeholder="아이디">
+			<input type="text" name="password" placeholder="비밀번호">
+			<div th:if="${err_msg != null}" class="err-box">
+				<p th:text="${err_msg}"></p>
+			</div>
 			<input type="submit" value="로그인">
 		</form>
 		<div class="queen_regist-page">
@@ -84,31 +93,7 @@
 		</div>
 	</section>
 
-	<!-- 로그인 실패 메시지 처리 스크립트 -->
-    <script th:inline="javascript">
-    /*<![CDATA[*/
-	window.onload = function(){
-		/* 서버에서 전달된 에러 메시지를 읽어옴 */
-		const errormsg = /*[[${session.errormsg} ?: 'null']]*/ 'null';
-		if(errormsg && errormsg !== 'null'){
-			alert(errormsg);
-			
-			const userInput = document.querySelector("input[name='username']");
-			console.log(userInput);
-			if(userInput){
-				userInput.focus();
-			}
-			
-			/* 메시지를 출력 후 세션에서 제거 */
-			fetch('/clearErrorMessage', {
-				method: 'POST'
-			}).then(() => {
-				// 세션에서 메시지 제거 후 페이지 새로고침
-				window.location.href = "/login_page";
-			});
-		}
-	}
-/*]]>*/
+    <script>
     </script>
 </body>
 </html>

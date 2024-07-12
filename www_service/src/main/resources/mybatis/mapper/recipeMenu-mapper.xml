@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.harmony.www_service.dao.RecipeMenuDao">
+  
+  	<!-- 내가 등록한 레시피 -->
+  	<select id="getMenu" resultType="com.harmony.www_service.dto.MenuDto">
+  		select * from menu
+  	</select>
+  	
+  	
+  
+  </mapper>
