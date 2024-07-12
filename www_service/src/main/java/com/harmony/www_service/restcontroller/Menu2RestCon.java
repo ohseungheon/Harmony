@@ -19,18 +19,18 @@ import com.harmony.www_service.service.MemberService;
 @CrossOrigin("*")
 @RequestMapping("/menu2-api")
 public class Menu2RestCon {
-    
-@Autowired
+
+    @Autowired
     IMypage1Dao myIngredientDao;
 
     @Autowired
     MemberService memberService;
-    
+
     @GetMapping("/my-ingredients")
     public ResponseEntity<?> getMyIngredients() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName(); 
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<Integer> mno_ = memberService.getMnoByUsername(username);
-    
+
         if (mno_.isPresent()) {
             List<FridgeIngredientDto> ingredients = myIngredientDao.getAllList(mno_.get());
             return ResponseEntity.ok().body(ingredients);
