@@ -90,6 +90,24 @@
             cardListAddClickEvent();
         });
 
+        function refreshMenuList(){
+            // menu-selections
+            fetch('/menu2-api/menu-selections',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ icodeList: selections })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
         /**
          * 재료 카드마다 클릭 이벤트 추가
          * 클릭 시 css active, 해당 재료 id 값 unslections 배열에 저장  
@@ -110,7 +128,7 @@
                         unselections = unselections.filter(id => id !== icode);
                         selections.push(icode);
                     }
-
+                    refreshMenuList()
                     console.log("선택된 항목들 : ", selections);
                     console.log("제외된 항목들 : ", unselections);
                 });
