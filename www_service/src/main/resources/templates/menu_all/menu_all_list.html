@@ -9,7 +9,6 @@
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
-            justify-content: center;
             padding: 20px;
         }
         .menuItem {
@@ -137,12 +136,10 @@
         .then(data => {
             let html = '';
             data.forEach(menu => {
-                const imageUrl = `/static/img/${menu.menuName}.jpg`;
                 html += `
-                    <div class="menuItem">
-                        <img src="${imageUrl}" alt="${menu.menuName}" class="menuImage" onerror="this.src='/static/img/default.jpg'">
+                    <div class="menuItem" onclick="loadRecipeList('${menu.mcode}')">
+                        <img src="${menu.imgurl || 'path/to/default-image.jpg'}" alt="${menu.menuName}" class="menuImage">
                         <div class="menuName">${menu.menuName}</div>
-                        <button class="recipeButton" onclick="loadRecipeList('${menu.mcode}')">레시피 보기 &gt;</button>
                     </div>`;
             });
             document.getElementById('menuList').innerHTML = html;
