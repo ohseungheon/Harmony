@@ -76,6 +76,9 @@ public class Mypage1Controller {
 		int mno = member.getMno();
 		model.addAttribute("mno", mno);
 		
+		//마이프로필
+		model.addAttribute("member", member);
+		
 		//냉동
 		List<FridgeIngredientDto> ice = myDao.getIceList(mno);
 		System.out.println("냉동===="+ice);
