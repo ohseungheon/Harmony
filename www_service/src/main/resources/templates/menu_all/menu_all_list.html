@@ -4,11 +4,56 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
-        .menuName{
+        
+        #menuList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+        .menuItem {
+            width: 200px;
+            background-color: #E0E0E0;
+            color: black;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
             cursor: pointer;
         }
-        #filterDiv{
+        .menuItem:hover {
+            transform: translateY(-5px);
+        }
+        .menuImage {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .menuName {
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        #filterDiv {
             display: none;
+        }
+        button{
+            border: 0px;
+            background-color: white;
+            color: black;
+        }
+        button:hover {
+            background-color: #e0e0e0;
+        }
+        .menuButton{
+            border: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 100%;
+            padding: 10px 0;
         }
     </style>
 </head>
@@ -17,7 +62,7 @@
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
 <section>
-    <div>
+    <div class="menuButton">
         <button onclick="loadMenu('한식')" class="active">한식</button>
         <button onclick="loadMenu('중식')">중식</button>
         <button onclick="loadMenu('일식')">일식</button>
@@ -82,7 +127,7 @@
     }
 
     function loadMenu(category) {
-        fetch(`/api/menu/menu_all_list?category=${encodeURIComponent(category)}`, {  // encodeURIComponent:한글이나 특수 문자 등이 포함된 문자열을 URL의 파라미터로 전달할 수 있게 해주는 함수
+        fetch(`/api/menu/menu_all_list?category=${encodeURIComponent(category)}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -90,11 +135,16 @@
         })
         .then(response => response.json())
         .then(data => {
-            let html = '<div>';
+            let html = '';
             data.forEach(menu => {
-                html += `<div class="menuName" onclick="loadRecipeList('${menu.mcode}')">${menu.menuName}</div>`;
+                const imageUrl = `/static/img/${menu.menuName}.jpg`;
+                html += `
+                    <div class="menuItem">
+                        <img src="${imageUrl}" alt="${menu.menuName}" class="menuImage" onerror="this.src='/static/img/default.jpg'">
+                        <div class="menuName">${menu.menuName}</div>
+                        <button class="recipeButton" onclick="loadRecipeList('${menu.mcode}')">레시피 보기 &gt;</button>
+                    </div>`;
             });
-            html += '</div>';
             document.getElementById('menuList').innerHTML = html;
         })
         .catch(error => console.error('Error:', error));
