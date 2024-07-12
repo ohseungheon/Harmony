@@ -12,11 +12,11 @@
   	</insert>
   	
   	<select id="findByCategory" resultType="com.harmony.www_service.dto.IngredientDto">
-  		SELECT name, type, tip, imgurl, category FROM ingredient WHERE category = #{category}
+  		SELECT icode, name, type, tip, imgurl, category FROM ingredient WHERE category = #{category}
   	</select>
   
   	<select id="getDetail" resultType="com.harmony.www_service.dto.IngredientDto">
-  		SELECT name, type, tip, imgurl, category FROM ingredient WHERE icode = #{icode}
+  		SELECT icode, name, type, tip, imgurl, category FROM ingredient WHERE icode = #{icode}
   	</select>
   	
 	<update id="updateIngredient">

@@ -1,9 +1,10 @@
 package com.harmony.www_service.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,22 +46,25 @@ public class ManagerController {
 
 	// 재료 디테일 페이지
 	@RequestMapping("/ingredient_detail")
-	public String goDetail() {
+	public String goDetail(@RequestParam("icode") int icode, Model model) {
+		System.out.println("디테일 페이지 넘어옴"+icode);
+		
+		IngredientDto result = iService.showDetail(icode);
+		
+		System.out.println("컨트롤러에서 디테일 결과 확인 : " + result);
+		model.addAttribute("detail", result);
+		
 		return "manager/ingredient_detail";
 	}
 	
-	// 재료 디테일 기능 구현
-	@RequestMapping("/do_ingredient_detail")
-	public String showDetail(@RequestParam("icode") int icode, Model model) {
-		IngredientDto result = iService.showDetail(icode);
-		model.addAttribute("detail", result);
-		
-		return "redirect:/ingredient_detail";
-	} 
 	
 	// 재료 수정 페이지
 	@RequestMapping("/ingredient_update")
-	public String updatePage() {
+	public String updatePage(@RequestParam("icode") int icode, Model model) {
+		System.out.println("------ 재료 수정을 위한 디테일 전송 ------");
+		IngredientDto result = iService.showDetail(icode);
+		model.addAttribute("detail", result);
+		
 		return "manager/ingredeints_update";
 	}
 	

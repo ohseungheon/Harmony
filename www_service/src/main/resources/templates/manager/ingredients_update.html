@@ -332,49 +332,22 @@
       </div>
       <div class="dally_ingredient_info"> </div>
       <div class="dally_ingredient_form">
-        <form
-          id="dally_formData"
-          action="/do_ingredients_regist"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          <div class="dally_form_img">
-            <label for="imgurl">재료 이미지</label>
-            <input
-              type="file"
-              name="file"
-              placeholder="이미지 주소를 등록하세요."
-              width="150"
-              height="200"
-            />
-          </div>
-          카테고리
-          <input
-            type="text"
-            name="category"
-            id="dally_category"
-            placeholder="ex) 소고기, 어패류, 잎채소"
-          /><br />
-          재료 이름
-          <input
-            type="text"
-            name="name"
-            placeholder="재료 이름을 입력하세요."
-          /><br />
-          <label for="type">단위</label>
-          <select name="type" id="dally_ingredient_type">
+
+      <!-- 재료 수정을 위한 디테일 출력 -->
+      <div class="dally_ingredient_detail">
+        <form id="dally_formData" action="/new-ingredient" method="PUT" enctype="multipart/form-data">
+            재료 이미지<input type="file" name="file" placeholder="이미지 주소를 등록하세요." width="150" height="200">
+            재료 이름<input type="text" name="name" th:value="${detail.name}"><br>
+            카테고리<input type="text" name="category" th:value="${detail.category}"><br>
+            단위
+            <select name="type" id="dally_ingredient_type" th:value="${detail.type}">
             <option value="수량">수량</option>
             <option value="중량">중량</option></select
-          ><br />
-          tip
-          <input
-            type="text"
-            name="tip"
-            placeholder="유통기한 등의 tip!"
-          /><br />
-          <input type="submit" value="재료 등록" />
+            ><br />
+            tip<input type="text" th:value="${detail.tip}" width="150px"><br>
+            <input type="submit" value="수정 완료">
         </form>
-      </div>
+    </div>
     </section>
 
     <script>
@@ -396,6 +369,7 @@
             dally_tab_contents.forEach((content) =>
               content.classList.remove("active")
             );
+
             // 클릭한 탭의 컨텐츠 보여주기
             document.getElementById(dally_tab).classList.add("active");
           });

@@ -314,10 +314,9 @@
           .then((data) => {
             var ingreInfoDiv = document.querySelector(".dally_ingredient_info");
             ingreInfoDiv.innerHTML = "";
-			console.log(data)
+			      console.log(data)
 
            for (var i = 0; i < data.length; i++) {
-            console.log("icode 전달 유무 확인 " +data[i].icode);
               var ingre_info_content =
                 '<span class="dally_info_box">' +
                 '<a href="/ingredient_detail?icode=' + data[i].icode + '">' +
