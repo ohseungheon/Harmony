@@ -17,7 +17,8 @@
 	padding: 110px 0;
 }
 
-.loginForm input[type="text"] {
+.loginForm input[type="text"],
+.loginForm input[type="password"] {
 	width: 440px;
 	height: 50px;
 	font-family: "Pretendard Variable", Pretendard;
@@ -30,7 +31,8 @@
 	outline: none; /* 포커스 시 기본 테두리 제거 */
 }
 
-.loginForm input[type="text"]::placeholder {
+.loginForm input[type="text"]::placeholder,
+.loginForm input[type="password"]::placeholder {
 	color: #999;
 	font-size: 13px;
 }
@@ -82,7 +84,7 @@
 	<section class="loginForm">
 		<form action="/loginProc" method="post">
 			<input type="text" name="username" placeholder="아이디">
-			<input type="text" name="password" placeholder="비밀번호">
+			<input type="password" name="password" placeholder="비밀번호">
 			<div th:if="${err_msg != null}" class="err-box">
 				<p th:text="${err_msg}"></p>
 			</div>

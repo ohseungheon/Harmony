@@ -9,6 +9,8 @@
   		select * from menu
   	</select>
   	
-  	
+  	<select id="getImageUrlByMcode">
+  		select imgurl from menu where mcode = #{mcode}
+  	</select>
   
   </mapper>
