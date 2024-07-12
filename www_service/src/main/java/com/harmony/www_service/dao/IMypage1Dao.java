@@ -25,4 +25,7 @@ public interface IMypage1Dao {
 
 	// 싹 다~ 가져오기
 	public List<FridgeIngredientDto> getAllList(@Param("mno") int mno);
+	
+	//등록했던 재료 삭제 
+	public void deleteMaterial(@Param("fcode") int fcode);
 }

@@ -59,4 +59,8 @@
 		ORDER BY f.deadline ASC
 	</select>
 
+	<!-- 재료삭제 -->
+	<delete id="deleteMaterial">
+		DELETE FROM fridge WHERE fcode= #{fcode}
+	</delete>
 </mapper>

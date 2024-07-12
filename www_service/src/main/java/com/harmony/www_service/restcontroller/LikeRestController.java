@@ -10,7 +10,7 @@ import com.harmony.www_service.dao.ILikeDao;
 
 @RestController
 @RequestMapping("/api")
-public class LikeController {
+public class LikeRestController {
 	@Autowired
 	ILikeDao likeDao;
 	
