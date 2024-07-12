@@ -27,7 +27,9 @@ tr:last-child td {
 	border-bottom: none;
 }
 
-
+tbody tr:hover td {
+	background-color: #f1f1f1;
+}
 
 td img {
 	max-width: 100px;
@@ -50,11 +52,6 @@ button#xBtn:hover {
 	transform: scale(1.1);
 	color: white;
 }
-
-  .highlight {
-            background-color: yellow; /* 강조할 색상 */
-        }
-
 </style>
 </head>
 <body>
@@ -84,8 +81,8 @@ button#xBtn:hover {
     					<td><img th:src="@{'/img/material/'+ ${dto.imgurl}}"></td>
 						<td>[[${dto.name}]]</td>
 
-                        <td><button id="xBtn" type="button" th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\'); deleteIngredient(event, \'' + ${dto.icode} + '\')'">x</button></td>
-                    </tr>
+						<td><button id ="xBtn" type="button"
+								th:onclick="'deleteIngredient(event, \'' + ${dto.icode} + '\')'">x</button></td>
 						<!-- x를 누르면 가지고 있는 재료 삭제됨-->
 
 					</tr>
@@ -120,24 +117,7 @@ button#xBtn:hover {
 	</section>
 
 	<script>
-	function toggleHighlight(event,icode) {
-	    const button = event.currentTarget;
-	    const row = button.closest('tr');
-	    row.classList.toggle('highlight');
-	    
-	    // `highlight` 클래스가 현재 있는지 확인
-	    if (row.classList.contains('highlight')) {
-	        deleteIngredient(event, icode);
-	       // undoHavingIngredient(event,icode)
-	    } else {
-	        undoIngredient2(event,icode);
-	    
-	    }
 
-	    
-	}
-	
-    
 	  function goRecipeList(event,mcode) {
 		  console.log("================================mcode"+mcode)
 	      event.preventDefault();
@@ -157,7 +137,7 @@ button#xBtn:hover {
 	    })
 	    .then(response => response.json())
 	    .then(data => {
-	        <!--document.getElementById("haveIngredient").innerHTML = deleteIngredientTable(data); --> // 해당재료가 빠진 가진재료 리스트를 가진재료 영역에 나타냄
+	        document.getElementById("haveIngredient").innerHTML = deleteIngredientTable(data); // 해당재료가 빠진 가진재료 리스트를 가진재료 영역에 나타냄
 	        deleteCanMakeMenu(event,icode)             // icode에 해당하는 재료를 빼고 만들수 있는 메뉴를 보여주는 함수
 			NoUseIngredient(event) // 사용할 목록에서 뺀 재료 리스트를 나타내주는 함수
 	    })
@@ -237,32 +217,11 @@ button#xBtn:hover {
 			.then(response => response.json())
 			.then(data => {
 				document.getElementById("NoUseIngredientList").innerHTML =CreateNoUseIngredientTable(data);
-				undoHavingIngredient(event,icode);      // 가진재료가 추가됨
+				undoHavingIngredient(event,icode);     // 가진재료가 추가됨
 				deleteCanMakeMenu(event,icode);				   // 복원을 누르면 만들 수 있는 메뉴 바뀌는 함수
 			})
 			.catch(error => {
 				document.getElementById("NoUseIngredientList").innerHTML = error;
-			});
-	}
-	
-	
-	function undoIngredient2(event,icode) {                        //복원을 눌렀을 때 실행되는 함수
-	    event.preventDefault();
-		console.log("=============undoIngredient =================: "+icode);
-		fetch("/menu1/undoIngredient2?icode="+icode, { 
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json", 
-			},
-		})
-			.then(response => response.json())
-			.then(data => {
-				document.getElementById("canMakeMenuDiv").innerHTML =deleteCanMakeMenuTable(data);
-				//undoHavingIngredient(event,icode);      // 가진재료가 추가됨
-				//deleteCanMakeMenu(event,icode);				   // 복원을 누르면 만들 수 있는 메뉴 바뀌는 함수
-			})
-			.catch(error => {
-				document.getElementById("canMakeMenuDiv").innerHTML = error;
 			});
 	}
 	

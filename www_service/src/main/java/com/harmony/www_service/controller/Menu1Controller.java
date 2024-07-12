@@ -98,7 +98,7 @@ public class Menu1Controller {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		int mno = menu1dao.getMno(username);
 		
-		//
+		// 냉장고에 없는 재료만 제외하고 사용자 냉장고에서 재료 출력해주는 dao 실행
 		List<IngredientDto> selectExcludeIngredientList = menuService.selectExcludeIngredient(NoInFridgeIngredientList,mno);  
 
 		System.out.println("=================NoInFridgeIngredientList==================: " + NoInFridgeIngredientList);
@@ -108,41 +108,44 @@ public class Menu1Controller {
 	}
 
 	@ResponseBody
-	@GetMapping("deleteCanMakeMenu")
+	@GetMapping("deleteCanMakeMenu")  //삭제
 	public List<MenuDto> deleteCanMakeMenu(@RequestParam("icode") int icode, HttpSession session) {
 		//System.out.println("===========================deleteCanMakeMenu=========================");
+		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		//
 		int mno = menu1dao.getMno(username);
 		List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session
 				.getAttribute("NoInFridgeIngredientList");
+		
 		if (NoInFridgeIngredientList == null) {
 			NoInFridgeIngredientList = new ArrayList<>();
 		}
 		
 		List<IngredientDto> InFridgeIngredientList = (List<IngredientDto>) session.getAttribute("InFridgeIngredientList");
 
-		// 리스트가 null일 경우 새로운 리스트를 생성합니다.
+	
 		if (InFridgeIngredientList == null) {
 			InFridgeIngredientList = new ArrayList<>();
 		}
+		
 		IngredientDto getOneIngredient = menuService.getOneIngredient(icode);
-
-		
-	
 		
 		
+		// 사용하지 않을 재료를 사용할수 있는재료 리스트에서 제거
 		for (IngredientDto NoInFridgeIngredient : NoInFridgeIngredientList) {
 
 			InFridgeIngredientList.remove(NoInFridgeIngredient);
 		}
-
+		
+		// 사용할수 있는 재료로 만들 수 있는 메뉴 보여주는 dao함수 실행
 		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
-
-		//System.out.println("=================showCanMakeMenuList==================: " + showCanMakeMenuList);
 
 		return showCanMakeMenuList;
 	}
 
+	
+	// 사용하지 않는 재료 리스트 반환 함수
 	@ResponseBody
 	@GetMapping("NoUseIngredient")
 	public List<IngredientDto> NoUseIngredient(HttpSession session) {
@@ -157,38 +160,61 @@ public class Menu1Controller {
 		return NoInFridgeIngredientList;
 	}
 
-	@ResponseBody
+	@ResponseBody // 재료 복원시 사용되는 함수
 	@GetMapping("undoIngredient")
 	public List<IngredientDto> undoIngredient(@RequestParam("icode") int icode, HttpSession session) {
-		List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session
-				.getAttribute("NoInFridgeIngredientList");
+		List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session.getAttribute("NoInFridgeIngredientList");
 		if (NoInFridgeIngredientList == null) {
 			NoInFridgeIngredientList = new ArrayList<>();
 		}
-		//System.out.println(
-		//		"===============================NoUseIngredient NoInFridgeIngredientList: " + NoInFridgeIngredientList);
+		
+		//icode로 재료 뽑음
 		IngredientDto getOneIngredient = menuService.getOneIngredient(icode);
+		
+		//사용하지 않는 재료 리스트에서 제거
 		NoInFridgeIngredientList.remove(getOneIngredient);
+		
 		List<IngredientDto> InFridgeIngredientList = (List<IngredientDto>) session.getAttribute("InFridgeIngredientList");
-
-		// 리스트가 null일 경우 새로운 리스트를 생성합니다.
 		if (InFridgeIngredientList == null) {
 			InFridgeIngredientList = new ArrayList<>();
 		}
 		
-		//System.out.println("===============================After Undo NoUseIngredient NoInFridgeIngredientList: "
-		//		+ NoInFridgeIngredientList);
-		
-		
+		//사용할수 있는 재료 리스트에 추가
 		InFridgeIngredientList.add(getOneIngredient);
 		return NoInFridgeIngredientList;
 	}
 
+	@ResponseBody // 재료 복원시 사용되는 함수
+	@GetMapping("undoIngredient2")
+	public List<MenuDto> undoIngredient2(@RequestParam("icode") int icode, HttpSession session) {
+		List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session.getAttribute("NoInFridgeIngredientList");
+		if (NoInFridgeIngredientList == null) {
+			NoInFridgeIngredientList = new ArrayList<>();
+		}
+		
+		//icode로 재료 뽑음
+		IngredientDto getOneIngredient = menuService.getOneIngredient(icode);
+		
+		//사용하지 않는 재료 리스트에서 제거
+		NoInFridgeIngredientList.remove(getOneIngredient);
+		
+		List<IngredientDto> InFridgeIngredientList = (List<IngredientDto>) session.getAttribute("InFridgeIngredientList");
+		if (InFridgeIngredientList == null) {
+			InFridgeIngredientList = new ArrayList<>();
+		}
+		//사용할수 있는 재료 리스트에 추가
+		InFridgeIngredientList.add(getOneIngredient);
+		List<MenuDto> undoCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
+		System.out.println("================================undoCanMakeMenuList===================== "+ undoCanMakeMenuList);
+		return undoCanMakeMenuList;
+	}
+	
+	
 	@ResponseBody
 	@GetMapping("undoHavingIngredient")
 	public List<IngredientDto> undoHavingIngredient(@RequestParam("icode") int icode, HttpSession session) {
-		List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session
-				.getAttribute("NoInFridgeIngredientList");
+		List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session.getAttribute("NoInFridgeIngredientList");
+
 		if (NoInFridgeIngredientList == null) {
 			NoInFridgeIngredientList = new ArrayList<>();
 		}
@@ -202,11 +228,13 @@ public class Menu1Controller {
 			InFridgeIngredientList = new ArrayList<>();
 		}
 		
+		// 뽑아낸 재료를 사용할 재료 리스트에 추가
 		InFridgeIngredientList.add(getOneIngredient);
+
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		int mno = menu1dao.getMno(username);
 		List<IngredientDto> selectExcludeIngredientList = menuService.selectExcludeIngredient(NoInFridgeIngredientList,mno);
-		//List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(selectExcludeIngredientList);
+		
 		return selectExcludeIngredientList;
 	}
 	
