@@ -9,12 +9,12 @@
   		select * from user where username = #{username}
   	</select>
   
-  	<!-- username이랑 password로 user데이터 확인 -->
-  	<select id="loginCheck" resultType="com.harmony.www_service.dto.UserDto">
-  		select * from user where username = #{username} and password = #{password}
+  	<!-- username으로 mno 가져오기 -->
+  	<select id="getMnoByUsername" resultType="com.harmony.www_service.dto.MemberDto">
+  		select mno from member where username = #{username}
   	</select>
   	
-  	<!-- username으로 member테이블에서 nickname가져오 -->
+  	<!-- username으로 member테이블에서 nickname가져오기 -->
   	<select id="getNickname">
   		select nickName from member where username = #{username}
   	</select>

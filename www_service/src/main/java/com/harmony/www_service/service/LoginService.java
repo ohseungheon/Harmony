@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.harmony.www_service.dao.LoginDao;
-import com.harmony.www_service.dto.UserDto;
+import com.harmony.www_service.dto.MemberDto;
 import com.harmony.www_service.dto.UserMemberDto;
 
 @Service
@@ -17,13 +17,6 @@ public class LoginService {
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;
 	
-	
-	// 로그인 체크
-	public UserDto loginCheckService(UserDto userDto) {
-		
-		return loginDao.loginCheck(userDto);
-		
-	}
 	
 	// 회원가입 user
 	public int registUserService(UserMemberDto userMemberDto) {
@@ -41,6 +34,15 @@ public class LoginService {
 		int resultMember = loginDao.registMember(userMemberDto);
 		
 		return resultMember;
+		
+	}
+	
+	//username으로 mno 가져오기
+	public MemberDto getMnoByUsernameService(String username) {
+		
+		MemberDto result = loginDao.getMnoByUsername(username);
+		
+		return result;
 		
 	}
 

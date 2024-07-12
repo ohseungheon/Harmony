@@ -27,29 +27,6 @@ public class ApiLoginController {
 	@Autowired
 	private LoginService loginService;
 
-	// 로그인
-//	@PostMapping("/doLogin")
-//	public ResponseEntity<Map<String, Object>>login(@RequestBody UserDto userDto) {
-//		
-//		UserDto user = loginService.loginCheckService(userDto);
-//		System.out.println(user);
-//		
-//		if(user != null) {
-//			Map<String, Object> responseData = new HashMap<>();
-//			responseData.put("username", user.getUsername());
-//			responseData.put("role", user.getRole());
-//			
-//			System.out.println(responseData);
-//			
-//			return ResponseEntity.ok(responseData);
-//		}else {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//		}
-//		
-//	}
-
-
-	
 
 	// 회원가입
 	@PostMapping("/doRegist")
@@ -79,13 +56,6 @@ public class ApiLoginController {
 		return nickname;
 	}
 	
-//	@GetMapping("/clearErrorMessage")
-//	public ResponseEntity<Void> clearErrorMessage(HttpSession session) {
-//		
-//		session.invalidate();
-//		
-//		return ResponseEntity.ok().build();
-//	}
 	
 	
 	
