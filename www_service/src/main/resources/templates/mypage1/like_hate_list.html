@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <style>
     #by-section {
         width: 1000px;
@@ -49,7 +50,7 @@
     	margin-left: 50px;
     	font-size: 20px;
     }
-    #by-delete-btn {
+    .by-delete-btn {
     	margin-right: 50px;
     	width: 80px;
     	height: 40px;
@@ -59,7 +60,7 @@
         color: white;
         cursor: pointer;
     }
-    #by-delete-btn:hover {
+    .by-delete-btn:hover {
     	background-color: #e5946e; /* 마우스 오버 시 색상 변경 */ 
     }
     #by-favorite_menu{
@@ -92,12 +93,16 @@
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
 <section id="by-section">
-    <span class="by-list-span">💛레시피 추천 리스트</span>
+    <span class="by-list-span">💛레시피 좋아요 리스트</span>
     <div class="by-list" id="by-list-1">
     	<!-- 레시피 추천한 리스트 출력(반복문 사용해야함) -->
     	<div th:each="recipeLike : ${recipeLike}" id="by-recipe_recom">
-			<span id="by-span-name" th:text="${recipeLike.recipeName}">[[${recipeLike.recipeName}]]</span>
-			<button id="by-delete-btn">삭제</button>
+    		<a th:href="@{/menu_all/recipe_detail(rcode=${recipeLike.rcode})}">
+			<span id="by-span-name" th:text="${recipeLike.recipeName} +' 👍'">[[${recipeLike.recipeName}]]</span>
+    		</a>
+			<input type="hidden" class="mno" th:value="${recipeLike.mno}">
+			<input type="hidden" class="rrcode" th:value="${recipeLike.rrcode}">
+			<button class="by-delete-btn"> 싫어요 👎</button>
 		</div>
     </div>
     
@@ -115,6 +120,24 @@
 
 <script>
 
+$(document).on("click", ".by-delete-btn", function(e) {
+	e.preventDefault(); // 기본 버튼 동작 방지
+    const rrcode = $(this).siblings(".rrcode").val();
+    console.log(rrcode);
+    
+	$.ajax({
+		url: '/api/recipe-reco/'+rrcode,
+		type: "DELETE",
+		success: function(response){
+			alert(response);
+			console.log("삭제성공");
+			location.reload(); // 페이지 새로고침
+		},
+		error: function(xhr, textStatus, errorThrown){
+			console.log("삭제실패", textStatus, errorThrown);
+		}
+	});
+});
 </script>
 </body>
 </html>

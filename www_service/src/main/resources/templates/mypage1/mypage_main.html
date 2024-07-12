@@ -200,7 +200,7 @@
 	<div id="by-ice-out">
 		<div id="by-ice-in">
 			<div th:each="ice : ${ice}" id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${ice.imgUrl} +'.png'}">
+    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${ice.imgUrl}}">
     			<span id="by-menu">[[${ice.deadline}]]</span>
     		</div>
 		</div>
@@ -209,7 +209,7 @@
 	<div id="by-cool-out">
 		<div id="by-cool-in">
 			<div th:each="cool : ${cool}" id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${cool.imgUrl} +'.png'}">
+    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${cool.imgUrl}}">
     			<span id="by-menu">[[${cool.deadline}]]</span>
     		</div>
 		</div>
@@ -221,7 +221,7 @@
 <div id="by-food">
 	<div id="by-buk"> 
 		<div th:each="food : ${food}" id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${food.imgUrl} +'.png'}">
+    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${food.imgUrl}}">
     			<span id="by-menu">[[${food.deadline}]]</span>
     	</div>
 	</div>

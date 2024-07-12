@@ -13,4 +13,6 @@ public interface ILikeDao {
 	public List<Recipe_recommendDto_by> getRecipeLike(@Param("mno") int mno);
 
 	public List<Menu_favoriteDto_by> getMenuLike(@Param("mno") int mno);
+
+	public void deleteRecipeReco(@Param("rrcode")int rrcode);
 }

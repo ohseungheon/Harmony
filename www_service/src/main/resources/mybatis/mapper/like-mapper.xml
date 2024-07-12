@@ -19,4 +19,8 @@
   		ON fm.mcode = m.mcode 
   		WHERE fm.mno = #{mno}
   	</select>
+  	
+  	<delete id="deleteRecipeReco">
+  		DELETE FROM recipe_recommend WHERE rrcode= #{rrcode}
+  	</delete>
   </mapper>
