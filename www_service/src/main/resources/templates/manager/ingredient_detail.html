@@ -73,6 +73,96 @@
       .dally_text {
         margin-top: 10px;
       }
+
+      .dally_ingredient_form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-family: Arial, sans-serif;
+        padding: 20px 25px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        width: 500px;
+		height: 500px;
+        margin: 30px auto;
+        background-color: #e2f2f8;
+		position: relative;
+      }
+
+      .dally_form_img {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 20px;
+		width: 100%;
+      }
+
+      .dally_form_img label {
+        font-size: 14px;
+        margin-bottom: 10px;
+		display: inline-block;
+      }
+
+      .dally_form_img input[type="file"] {
+        margin-bottom: 10px;
+		width: 100%;
+      }
+
+      .dally_ingredient_form input[type="text"],
+      .dally_ingredient_form select {
+        width: 90%;
+        padding: 8px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+		box-sizing: border-box;
+      }
+
+      .dally_ingredient_form input[type="submit"] {
+        background-color: #BEE3F1;
+        color: black;
+        padding: 10px 20px;
+		align-items: flex-end;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        position: absolute;
+		bottom: 15px;
+		right: 20px;
+		margin: 0 10px;
+      }
+
+      .dally_ingredient_form input[type="submit"]:hover {
+        background-color: #bae641;
+      }
+
+      .dally_ingredient_form form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 90%;
+      }
+
+      .dally_ingredient_form form label {
+        margin-top: 10px;
+      }
+
+      .dally_ingredient_form .buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .dally_ingredient_form .buttons button {
+        width: 48%;
+        padding: 10px 0;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        color: white;
+      }
+
     </style>
   </head>
   <body>
@@ -80,58 +170,58 @@
       <th:block th:insert="~{/sub/header.html}"></th:block>
     </header>
     <section>
-      <h2 class="dally_h2">재료 리스트</h2>
+      <h2 class="dally_h2">재료 등록</h2>
       <div class="dally_tab_container">
         <ul class="dally_tab_btns">
-          <li class="dally_tab_btn active" id="meat" data-tab="dally_img_meat">육류</li>
-          <li class="dally_tab_btn" id="seafood" data-tab="dally_img_seafood">해산물</li>
-          <li class="dally_tab_btn" id="vegi_fruit" data-tab="dally_img_vegi_fruit">
+          <li class="dally_tab_btn active" data-tab="dally_img_meat">육류</li>
+          <li class="dally_tab_btn" data-tab="dally_img_seafood">해산물</li>
+          <li class="dally_tab_btn" data-tab="dally_img_vegi_fruit">
             채소 / 과일
           </li>
-          <li class="dally_tab_btn" id="dairy_products" data-tab="dally_img_dairy_poducts">
+          <li class="dally_tab_btn" data-tab="dally_img_dairy_poducts">
             유제품
           </li>
-          <li class="dally_tab_btn" id="etc" data-tab="dally_img_etc">기타</li>
+          <li class="dally_tab_btn" data-tab="dally_img_etc">기타</li>
         </ul>
       </div>
       <div class="dally_tab_content active" id="dally_img_meat">
         <div class="dally_category_meat">
-          <div class="dally_li" id="dally_beef" data-tab="dally_beef_info">
+          <div class="dally_li" id="beef" data-tab="dally_beef_info">
             <img
               class="dally_img"
-              id="dally_meat_img"
+              id="dally_meat"
               th:src="@{/img/ingredient/meat/cow.png}"
             />
             <p class="dally_text">소고기</p>
           </div>
-          <div class="dally_li" id="dally_pork" data-tab="dally_pork_info">
+          <div class="dally_li" id="pork" data-tab="dally_pork_info">
             <img
               class="dally_img"
-              id="dally_pork_img"
+              id="dally_pork"
               th:src="@{/img/ingredient/meat/pig.png}"
             />
             <p class="dally_text">돼지고기</p>
           </div>
-          <div class="dally_li" id="dally_chicken" data-tab="dally_chicken_info">
+          <div class="dally_li" id="chicken" data-tab="dally_chicken_info">
             <img
               class="dally_img"
-              id="dally_chicken_img"
+              id="dally_chicken"
               th:src="@{/img/ingredient/meat/chicken.png}"
             />
             <p class="dally_text">닭고기</p>
           </div>
-          <div class="dally_li" id="dally_duck" data-tab="dally_duck_info">
+          <div class="dally_li" id="duck" data-tab="dally_duck_info">
             <img
               class="dally_img"
-              id="dally_duck_img"
+              id="dally_duck"
               th:src="@{/img/ingredient/meat/duck.png}"
             />
             <p class="dally_text">오리고기</p>
           </div>
-          <div class="dally_li" id="dally_sheep" data-tab="dally_sheep_info">
+          <div class="dally_li" id="sheep" data-tab="dally_sheep_info">
             <img
               class="dally_img"
-              id="dally_sheep_img"
+              id="dally_sheep"
               th:src="@{/img/ingredient/meat/sheep.png}"
             />
             <p class="dally_text">양고기</p>
@@ -240,10 +330,51 @@
           </div>
         </div>
       </div>
-      <!------------------ 재료 리스트 출력-------------------->
-      <a th:href="@{/ingredient_detail}">
-        <div class="dally_ingredient_info"></div> 
-      </a>
+      <div class="dally_ingredient_info"> </div>
+      <div class="dally_ingredient_form">
+        <form
+          id="dally_formData"
+          action="/do_ingredients_regist"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="dally_form_img">
+            <label for="imgurl">재료 이미지</label>
+            <input
+              type="file"
+              name="file"
+              placeholder="이미지 주소를 등록하세요."
+              width="150"
+              height="200"
+            />
+          </div>
+          카테고리
+          <input
+            type="text"
+            name="category"
+            id="dally_category"
+            placeholder="ex) 소고기, 어패류, 잎채소"
+          /><br />
+          재료 이름
+          <input
+            type="text"
+            name="name"
+            placeholder="재료 이름을 입력하세요."
+          /><br />
+          <label for="type">단위</label>
+          <select name="type" id="dally_ingredient_type">
+            <option value="수량">수량</option>
+            <option value="중량">중량</option></select
+          ><br />
+          tip
+          <input
+            type="text"
+            name="tip"
+            placeholder="유통기한 등의 tip!"
+          /><br />
+          <input type="submit" value="재료 등록" />
+        </form>
+      </div>
     </section>
 
     <script>
@@ -253,87 +384,32 @@
         const dally_tab_contents =
           document.querySelectorAll(".dally_tab_content");
 
-        dally_tab_btns.forEach((element) => {
-          element.addEventListener("click", () => {
-            const dally_tab = element.getAttribute("data-tab");
+        dally_tab_btns.forEach((button) => {
+          button.addEventListener("click", () => {
+            const dally_tab = button.getAttribute("data-tab");
 
             // 모든 탭 버튼의 활성화 상태 제거
             dally_tab_btns.forEach((btn) => btn.classList.remove("active"));
             // 클릭한 탭 활성화
-            element.classList.add("active");
+            button.classList.add("active");
             // 모든 탭의 컨텐츠 숨기기
             dally_tab_contents.forEach((content) =>
               content.classList.remove("active")
             );
             // 클릭한 탭의 컨텐츠 보여주기
             document.getElementById(dally_tab).classList.add("active");
-
-			var category = element.id; // 클릭된 요소의 id값 가져오기
-
-        if (
-          category === "meat" 
-        ) {
-          category = "육류";
-        } else if (
-          category === "seafood"
-        ) {
-          category = "해산물";
-        } else if (
-          category === "vegi_fruit"
-        ) {
-          category = "채소 / 과일";
-        } else if (category === "dairy_products") {
-          category = "유제품";
-        } else if (category === "etc") {
-          category = "기타";
-        }
-
-        findListByCategory(category);
-
           });
         });
 
-        
         // 그 밑의 탭(dally_img)를 눌렀을 때 탭기능 구현
         const dally_lists = document.querySelectorAll(".dally_li");
-
-        dally_lists.forEach(function (element) {
-          element.addEventListener("click", function () {});
+        
+        dally_lists.forEach((button) => {
+          button.addEventListener("click", () => {});
         });
+        
       });
 
-      // 재료 리스트 ajax 요청 보내기
-      function findListByCategory(category) {
-        fetch("/manager/list?category=" + encodeURIComponent(category))
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(
-                "Network response was not ok" + response.statusText
-              );
-            }
-            return response.json();
-          })
-          .then((data) => {
-            var meatInfoDiv = document.querySelector(".dally_ingredient_info");
-            meatInfoDiv.innerHTML = "";
-			console.log(data)
-
-           for (var i = 0; i < data.length; i++) {
-              var meat_info_content =
-                '<span class="dally_info_box">' +
-                '<img src="/img/ingredient/' +
-                data[i].imgurl +
-                '"> ' + 
-              	data[i].name +
-				data[i].category +
-                data[i].type +
-                data[i].tip +
-                "</span>";
-              meatInfoDiv.innerHTML += meat_info_content;
-            }
-          })
-          .catch((error) => console.error("Error:" + error));
-      }
     </script>
   </body>
 </html>

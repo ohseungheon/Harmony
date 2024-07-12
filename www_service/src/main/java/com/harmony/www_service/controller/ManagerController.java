@@ -34,18 +34,43 @@ public class ManagerController {
 		return "redirect:/ingredients_list";
 	}
 	
-//	@RequestMapping("ingredient_update")
-//	public void updateIngredient(@RequestParam IngredientDto iDto, Model model) {
-//		System.out.println("--------update--------");
-//		
-//	}
-	
 	// 재료 리스트 페이지
 	@RequestMapping("/ingredients_list")
 	public String goList() {
 		return "manager/ingredients_list";
 	}
 
+
+	// 재료 디테일 페이지
+	@RequestMapping("/ingredient_detail")
+	public String goDetail() {
+		return "manager/ingredients_detail";
+	}
+	
+	// 재료 디테일 기능 구현
+	@RequestMapping("/do_ingredient_detail")
+	public IngredientDto showDetail(@RequestParam("icode") int icode) {
+		IngredientDto result = iService.showDetail(icode);
+		return result;
+	} 
+	
+	
+//	// 재료 수정 기능 구현
+//	@RequestMapping("/do_ingredient_update")
+//	public IngredientDto update(IngredientDtoWithFile iDtoFile, Model model){
+//		System.out.println("--------update--------");
+//		return  ;
+//	}
+//	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
