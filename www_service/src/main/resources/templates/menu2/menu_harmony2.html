@@ -32,8 +32,8 @@
         }
 
         .deactivation {
-            background-color: #000;
-            color: rgb(255, 255, 255);
+            background-color:black;
+            filter: brightness(0.35);
         }
 
         /* Webkit 브라우저 (Chrome, Safari) */
@@ -61,24 +61,16 @@
     </header>
     <section>
         <div class="king-ingredients-grid" id="king-ingredient-row-list"> <!-- 재료 리스트 조회 --> 재료 불러오는 중......</div>
-
         <!-- 
             <div class="king-ingredients-grid">
-            <div class="king-ingredient-card"><img src="/img/material/cow.png"></div>
-            <div class="king-ingredient-card"><img src="/img/material/garlic.png"></div>
-            <div class="king-ingredient-card"><img src="/img/material/onion.png"></div>
-            <div class="king-ingredient-card"><img src="/img/material/pork.png"></div>
-            <div class="king-ingredient-card"><img src="/img/material/chicken.png"></div>
-            <div class="king-ingredient-card"><img src="/img/material/duck.png"></div>
-            <div class="king-ingredient-card"><img src="/img/material/lamb.png"></div>
-            <div class="king-ingredient-card"><img src="/img/material/tomato.png"></div>
-            <div class="king-ingredient-card"><img src="/img/material/napa_cabbage.png"></div>
-            <div class="king-ingredient-card"><img src="/img/material/mushroom.png"></div>
-            <div class="king-ingredient-card"><img src="/img/material/turkey.png"></div>
-            <div class="king-ingredient-card"><img src="/img/material/chives.png"></div>
+                <div class="king-ingredient-card"><img src="/img/material/cow.png"></div>
+                <div class="king-ingredient-card"><img src="/img/material/garlic.png"></div>
+            </div>
         -->
         </div>
+        <div class="">
 
+        </div>
 
     </section>
     <script>
@@ -91,6 +83,9 @@
         });
 
         function refreshMenuList(){
+            if(selections.length <= 0 ){
+                return ;
+            }
             // menu-selections
             fetch('/menu2-api/menu-selections',{
                 method: 'POST',
@@ -164,7 +159,7 @@
             document.getElementById('king-ingredient-row-list').innerHTML
                 += '<div class="king-ingredient-card" id="' + icode
                 + '"">'
-                + '<img src="/img/material/' + imgurl
+                + '<img src="/img/ingredient/' + imgurl
                 // + '" id="' + icode
                 + '"> </div>'
                 ;
