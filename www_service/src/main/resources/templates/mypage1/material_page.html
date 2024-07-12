@@ -173,7 +173,7 @@
 	        <div class="tab-content active" id="cool">
 	            <div th:each="cool : ${cool}" class="by-list">
 	            	<div class="by-mImg">
-	            		<img th:src="@{'/img/material/'+ ${cool.imgUrl} +'.png'}">
+	            		<img th:src="@{'/img/material/'+ ${cool.imgUrl}}">
 	            	</div>
 	            	<div class="by-mInfo">
 	            		<div id="by-mName">
@@ -201,7 +201,7 @@
 	        <div class="tab-content" id="ice">
 	            <div th:each="ice : ${ice}" class="by-list">
                     <div class="by-mImg">
-                        <img th:src="@{'/img/material/'+ ${ice.imgUrl} +'.png'}">
+                        <img th:src="@{'/img/material/'+ ${ice.imgUrl}}">
                     </div>
                     <div class="by-mInfo">
                         <div id="by-mName">
@@ -229,7 +229,7 @@
 	        <div class="tab-content" id="food">
 	            <div th:each="food : ${food}" class="by-list">
                     <div class="by-mImg">
-                        <img th:src="@{'/img/material/'+ ${food.imgUrl} +'.png'}">
+                        <img th:src="@{'/img/material/'+ ${food.imgUrl}}">
                     </div>
                     <div class="by-mInfo">
                         <div id="by-mName">
