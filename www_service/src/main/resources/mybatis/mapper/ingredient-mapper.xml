@@ -24,7 +24,7 @@
 		SET
 			name = #{iDto.name},
 			type = #{iDto.type},
-			tip = #{iDto.tip}
+			tip = #{iDto.tip},
 			imgurl = #{iDto.imgurl},
 			category = #{iDto.category}
 		WHERE icode = #{iDto.icode}

@@ -32,16 +32,5 @@ public class ManagerRestController {
 		return result;
 	}
 	
-	// 재료 수정 기능
-	@PutMapping("/new-ingredient")
-	public IngredientDto update(IngredientDtoWithFile iDtoFile){
-		System.out.println("--------update--------");
-		IngredientDto update_result = iService.updateIngredient(iDtoFile);
-		
-		System.out.println("****************iDtoFile : " + iDtoFile);
-		
-		return update_result;
-	}
-
 
 }
