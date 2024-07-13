@@ -7,6 +7,6 @@ public class RecipeTagDto {
 	
 	private int tagcode;
 	private int rcode;
-	private String conetent;
+	private String tagContent;
 
 }

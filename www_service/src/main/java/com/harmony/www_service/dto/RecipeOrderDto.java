@@ -6,7 +6,7 @@ import lombok.Data;
 public class RecipeOrderDto {
     private int rocode;
     private int rcode;
-    private String content;
+    private String orderContent;
     private int orderNum;
-    private String cookingimg;
+    private String cookingImg;
 }

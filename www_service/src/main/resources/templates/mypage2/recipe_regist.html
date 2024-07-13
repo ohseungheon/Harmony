@@ -316,7 +316,7 @@
     				<select name="category">
     					<option value="none">종류별</option>
     					<option value="밑반찬">밑반찬</option>
-    					<option value="메인반">메인반찬</option>
+    					<option value="메인반찬">메인반찬</option>
     					<option value="국/탕">국/탕</option>
     					<option value="찌개">찌개</option>
     					<option value="디저트">디저트</option>
@@ -354,7 +354,7 @@
     		<tr>
     			<th>재료 정보</th>
     			<td>
-    				<select name="icode" id="ingredient-select">
+    				<select name="icode" id="ingredient-select-0">
     					<option value="0">재료 이름</option>
     					<option value="1">레몬</option>
     					<option value="2">칠면조고기</option>
@@ -436,7 +436,7 @@
     				<input type="hidden" name="orderNum" value="1">
     			</th>
     			<td>
-    				<textarea name="content" placeholder="예) 소고기를 숭덩숭덩 썰어주세요"></textarea>
+    				<textarea name="orderContent" placeholder="예) 소고기를 숭덩숭덩 썰어주세요"></textarea>
     			</td>
     			<td class="order-img">
     				<input type="file" name="cookingImg" accept="image/*" style="display:none;">
@@ -457,7 +457,7 @@
     		<tr>
     			<th>태그</th>
     			<td>
-    				<input type="text" name="content" placeholder="예) 한식, 닭볶음탕">
+    				<input type="text" name="tagContent" placeholder="예) 한식, 닭볶음탕">
     			</td>
     		</tr>
     	</table>
@@ -472,30 +472,11 @@
 
 <script>
 
+let selectIdCounter = 1;
+
 document.addEventListener("DOMContentLoaded", () => {
 	
-	// 요리재료 선택하면 type 자동 기입
-	document.getElementById("ingredient-select").addEventListener("change", (event) => {
-		
-		const selectedIcode = event.target.value;
-		
-		fetch(`/getTypeByIcode?icode=${selectedIcode}`)
-		.then(response => {
-			if(!response.ok){
-				throw new Error(response.status);
-			}
-			return response.json();
-		})
-		.then(data => {
-			// 단위 데이터를 type 필드에 설정
-			document.querySelector("input[name='type']").value = data.type;
-		})
-		.catch(error => {
-			console.error(error);
-		});
-		
-	});
-	
+	addChangeListener(document.getElementById('ingredient-select-0'));
 	
 	
 	let selectedMenuItem = null;
@@ -530,8 +511,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			})
 			.then(data => {
 				const imageUrl = data.imgurl;
-				console.log(data.imgurl);
-				console.log(imageUrl);
+				console.log("data.imgurl : " + data.imgurl);
+				console.log("imageUrl : " + imageUrl);
 				// 이미지 URL을 이미지 요소에 설정
 				document.getElementById("menu-image").setAttribute("src", "/img/menu/" + imageUrl + ".jpg");
 				document.getElementById("menu-image").setAttribute("onerror", "this.onerror=null; this.src='/img/imgNone.png';");
@@ -545,6 +526,36 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 });
 
+//요리재료 선택하면 type 자동 기입
+function addChangeListener(selectElement){
+	selectElement.addEventListener("change", (event) => {
+		
+		if(event.target.matches("select[name='icode']")){
+		const selectedIcode = event.target.value;
+		const row = event.target.closest('tr');
+		const typeInput = row.querySelector("input[name='type']");
+		
+		fetch(`/getTypeByIcode?icode=${selectedIcode}`)
+		.then(response => {
+			if(!response.ok){
+				throw new Error(response.status);
+			}
+			return response.json();
+		})
+		.then(data => {
+			// 단위 데이터를 type 필드에 설정
+			typeInput.value = data.type;
+		})
+		.catch(error => {
+			console.error(error);
+		});
+		
+		}
+		
+	});
+}
+
+
 
 // 재료정보 추가 삭제 버튼 스크립트
 	function addDeleteEvent(deleteBtn){
@@ -554,6 +565,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 }
 
+	// 재료정보 추가 버튼 클릭 이벤트
 document.getElementById('recipe-ingredient-add').addEventListener('click', () => {
 	const table = document.getElementById('ingredient-table');
 	const newRow = document.createElement('tr');
@@ -565,6 +577,8 @@ document.getElementById('recipe-ingredient-add').addEventListener('click', () =>
 	const newSelectCell = document.createElement('td');
 	const newSelect = document.createElement('select');
 	newSelect.name = 'icode';
+	newSelect.id = `ingredient-select-${selectIdCounter++}`;
+	
 	newSelect.innerHTML = `
 		<option value="0">재료 이름</option>
 		<option value="1">레몬</option>
@@ -651,6 +665,7 @@ document.getElementById('recipe-ingredient-add').addEventListener('click', () =>
     table.appendChild(newRow);
     
     addDeleteEvent(newDeleteBtn);
+    addChangeListener(newSelect);
 });
 
 	document.querySelectorAll('.ingredient-delete-btn').forEach(function(btn){
@@ -713,7 +728,7 @@ document.getElementById('recipe-ingredient-add').addEventListener('click', () =>
 		
 		const newTextareaCell = document.createElement('td');
 		const newTextarea = document.createElement('textarea');
-		newTextarea.name = "content";
+		newTextarea.name = "orderContent";
 		newTextareaCell.appendChild(newTextarea);
 		newRow.appendChild(newTextareaCell);
 		

@@ -66,9 +66,9 @@ public class Mypage2Controller {
 			@RequestParam("amount") int amount,
 			@RequestParam("type") String type,
 			@RequestParam("orderNum") int orderNum,
-			@RequestParam("content") String orderContent,
+			@RequestParam("orderContent") String orderContent,
 			@RequestPart("cookingImg") MultipartFile cookingImg,
-			@RequestParam("content") String tagContent)
+			@RequestParam("tagContent") String tagContent)
 			{
 		
 		String cookingImgName = "";
@@ -85,7 +85,7 @@ public class Mypage2Controller {
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		MemberDto mno = loginService.getMnoByUsernameService(username);
-		System.out.println(mno.getMno());
+		System.out.println("mno = " + mno.getMno());
 		
 		// recipe 테이블 등록
 		RecipeDto recipeDto = new RecipeDto();
@@ -98,29 +98,32 @@ public class Mypage2Controller {
 		recipeDto.setPortions(portions);
 		service.registMyRecipeService(recipeDto);
 		
-		int rcode = recipeDto.getRcode();
+		//int rcode = recipeDto.getRcode();
+		//System.out.println("rcode = " + rcode);
 		
-		// recipe_ingredient 테이블 등록
+		// 레시피 재료 등록
 		RecipeIngredientDto recipeIngredientDto = new RecipeIngredientDto();
-		recipeIngredientDto.setRcode(rcode);
+		recipeIngredientDto.setRcode(recipeDto.getRcode());
 		recipeIngredientDto.setIcode(icode);
 		recipeIngredientDto.setAmount(amount);
 		service.registMyRecipeIngredientService(recipeIngredientDto);
 		
+		// 요리순서 등록
 		RecipeOrderDto recipeOrderDto = new RecipeOrderDto();
-		recipeOrderDto.setRcode(rcode);
-		recipeOrderDto.setContent(orderContent);
+		recipeOrderDto.setRcode(recipeDto.getRcode());
+		recipeOrderDto.setOrderContent(orderContent);
 		recipeOrderDto.setOrderNum(orderNum);
-		recipeOrderDto.setCookingimg(cookingImgName);
+		recipeOrderDto.setCookingImg(cookingImgName);
 		service.registMyRecipeOrderService(recipeOrderDto);
 		
+		// 태그 등록
 		RecipeTagDto recipeTagDto = new RecipeTagDto();
-		recipeTagDto.setRcode(rcode);
-		recipeTagDto.setConetent(tagContent);
+		recipeTagDto.setRcode(recipeDto.getRcode());
+		recipeTagDto.setTagContent(tagContent);
 		service.registMyRecipeTagService(recipeTagDto);
 		
 		
-		return "redirect:mypage2/my_recipe_list";
+		return "redirect:list?mno=" + mno.getMno();
 	}
 	
 	
