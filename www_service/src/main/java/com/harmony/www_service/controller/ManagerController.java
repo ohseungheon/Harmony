@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -64,10 +65,21 @@ public class ManagerController {
 		System.out.println("------ 재료 수정을 위한 디테일 전송 ------");
 		IngredientDto result = iService.showDetail(icode);
 		model.addAttribute("detail", result);
-		
-		return "manager/ingredeints_update";
+
+		return "manager/ingredients_update";
 	}
 	
+	// 재료 수정 기능
+	@RequestMapping("/do_ingredient_update")
+	public String update(IngredientDtoWithFile iDtoFile){
+		System.out.println("--------update--------");
+		iService.updateIngredients(iDtoFile);
+		int icode= iDtoFile.getIcode();
+		System.out.println("****************iDtoFile : " + iDtoFile);
+		
+		return "redirect:/ingredient_detail?icode="+icode;
+	}
+
 	
 	// 재료 삭제 기능 구현
 	@RequestMapping("/do_ingredient_delete")
@@ -76,15 +88,6 @@ public class ManagerController {
 		
 		return "redirect:/ingredients_list";
 	}
-	
-	
-
-	
-	
-	
-	
-	
-	
 	
 	
 	

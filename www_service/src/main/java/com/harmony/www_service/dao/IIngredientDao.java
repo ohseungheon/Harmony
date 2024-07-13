@@ -14,7 +14,7 @@ public interface IIngredientDao {
 	// 재료 등록
 	public void registIngredient(@Param("iDto") IngredientDto iDto);
 	// 재료 수정
-	public IngredientDto updateIngredient(@Param("iDto") IngredientDto iDto);
+	public int updateIngredient(@Param("iDto") IngredientDto iDto);
 	// 재료 삭제
 	public void deleteIgredient(@Param("icode") int icode);
 	// 재료 전체 조회
