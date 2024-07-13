@@ -9,30 +9,36 @@
   		select * from recipe where mno = #{mno}
   	</select>
   	
+  	<!-- 내가 등록한 레시피 삭제 -->
   	<delete id="deleteMyRecipe">
   		delete from recipe where rcode = #{rcode}
   	</delete>
   
-  	<insert id="registMyRecipe">
+  	<!-- 레시피 등록 -->
+  	<insert id="registMyRecipe" useGeneratedKeys="true" keyProperty="rcode">
   		insert into recipe (mcode, mno, recipeName, introduce, url, category, portions, view)
-  		values(#{mcode}, #{mno}, #{recipeName}, #{introduce}, #{url}, #{category}, #{portions}, #{view})
+  		values(#{mcode}, #{mno}, #{recipeName}, #{introduce}, #{url}, #{category}, #{portions}, 0)
   	</insert>
   	
+  	<!-- 레시피 재료 등록 -->
   	<insert id="registMyRecipeIngredient">
   		insert into recipe_ingredient (rcode, icode, amount)
   		values(#{rcode}, #{icode}, #{amount})
   	</insert>
   	
+  	<!-- 레시피 요리순서 등록 -->
   	<insert id="registMyRecipeOrder">
-  		insert into recipe_order (rcode, content, orderNum, cookingImg)
-  		values (#{rcode}, #{content}, #{orderNum}, #{cookingImg})
+  		insert into recipe_order (rcode, orderContent, orderNum, cookingImg)
+  		values (#{rcode}, #{orderContent}, #{orderNum}, #{cookingImg})
   	</insert>
   	
+  	<!-- 레시피 태그 등록 -->
   	<insert id="registMyRecipeTag">
-  		insert into recipe_tag (rcode, content)
-  		values (#{rcode}, #{content})
+  		insert into recipe_tag (rcode, tagContent)
+  		values (#{rcode}, #{tagContent})
   	</insert>
   	
+  	<!-- 요리재료 icode로 type불러오기 -->
   	<select id="getTypeByIcode">
   		select type from ingredient where icode = #{icode}
   	</select>

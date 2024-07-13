@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadUtil {
 	
-	private static final String UPLOAD_DIR = "/Users/kimtaejoon/Desktop/dev/www/www_service/src/main/resources/static/img/imgsrc";
+	private static final String UPLOAD_DIR = "/www_service/src/main/resources/static/img/imgsrc";
 
 	public static String saveFile(String fileName, MultipartFile multipartFile) throws IOException {
 		Path uploadPath = Paths.get(UPLOAD_DIR);
