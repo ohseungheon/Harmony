@@ -294,7 +294,7 @@
     </div>
     
    	<!-- 레시피 등록 폼 -->
-    <form action="/my/recipe/regist" method="post">
+    <form action="/my/recipe/regist" method="post" enctype="multipart/form-data">
     <input type="hidden" name="mcode" id="mcode">
     <div class="recipe-regist-box1">
     	<table>
@@ -474,6 +474,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 	
+	// 요리재료 선택하면 type 자동 기입
 	document.getElementById("ingredient-select").addEventListener("change", (event) => {
 		
 		const selectedIcode = event.target.value;
