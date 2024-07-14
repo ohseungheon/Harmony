@@ -113,7 +113,7 @@ function recipeList() {
         	output += `<img src="https://img.youtube.com/vi/${url}/mqdefault.jpg">`;
         	output += `</div>`;
         	output += '<div class="recipe-list-content">';
-        	output += `<a href="#">`;
+        	output += `<a href="/menu_all/recipe_detail?rcode=${recipe.rcode}">`;
         	output += `<h3>${recipe.recipeName}</h3>`;
         	output += `<p>${recipe.introduce}</p>`;
         	output += '</a>';
