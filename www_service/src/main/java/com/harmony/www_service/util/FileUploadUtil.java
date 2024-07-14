@@ -12,20 +12,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadUtil {
 	
-	private static final String UPLOAD_DIR = "/www_service/src/main/resources/static/img/imgsrc";
+	private static final String UPLOAD_DIR = "../uploads/";
 
 	public static String saveFile(String fileName, MultipartFile multipartFile) throws IOException {
-		Path uploadPath = Paths.get(UPLOAD_DIR);
+		Path uploadPath = Paths.get(UPLOAD_DIR).toAbsolutePath().normalize();
 
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
 
-        String originalFileName = ((MultipartFile) multipartFile).getOriginalFilename();
+        String originalFileName = multipartFile.getOriginalFilename();
         Path filePath = uploadPath.resolve(originalFileName);
+        
+        System.out.println("file : " + filePath.toString());
+        
 
-        try (InputStream inputStream = ((MultipartFile) multipartFile).getInputStream()) {
+        try (InputStream inputStream = multipartFile.getInputStream()) {
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("originalName : " + originalFileName);
             return originalFileName; // 파일 이름만 반환
         } catch (IOException ioe) {
             throw new IOException("Could not save file: " + originalFileName, ioe);
