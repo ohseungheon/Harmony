@@ -43,5 +43,17 @@
   		select type from ingredient where icode = #{icode}
   	</select>
   	
+  	<!-- 레시피 수정 -->
+  	<update id="updateMyRecipe">
+  		update recipe set 
+  		mcode = #{mcode},
+  		recipeName = #{recipeName},
+  		introduce = #{introduce},
+  		url = #[url}, 
+  		category = #{category},
+  		portions = #{portions}
+  		where mno = #{mno}
+  	</update>
+  	
   
   </mapper>
