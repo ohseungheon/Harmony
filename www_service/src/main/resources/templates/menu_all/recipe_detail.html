@@ -28,9 +28,9 @@
     
     <h2>Order</h2>
     <div th:each="order : ${recipeOrderList}">
-        <p>Content: <span th:text="${order?.content}"></span></p>
-        <p>Order Number: <span th:text="${order?.orderNum}"></span></p>
-        <img th:src="@{${order?.cookingimg}}" alt="Cooking Image"/>
+        <p>Content: <span th:text="${order.orderContent}"></span></p>
+        <p>Order Number: <span th:text="${order.orderNum}"></span></p>
+        <img th:src="@{${order?.cookingImg}}" alt="Cooking Image"/>
     </div>
 </section>
 

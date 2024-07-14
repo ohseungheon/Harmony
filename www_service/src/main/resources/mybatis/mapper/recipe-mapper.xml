@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="getRecipeOrdersByRcode" parameterType="int" resultType="com.harmony.www_service.dto.RecipeOrderDto">
-        SELECT rocode, rcode, content, orderNum, cookingImg FROM recipe_order WHERE rcode = #{rcode} ORDER BY orderNum
+        SELECT rocode, rcode, orderContent, orderNum, cookingImg FROM recipe_order WHERE rcode = #{rcode} ORDER BY orderNum
     </select>
 
 </mapper>
