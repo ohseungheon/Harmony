@@ -62,26 +62,13 @@ public class Mypage2Controller {
 			@RequestParam("url") String url,
 			@RequestParam("category") String category,
 			@RequestParam("portions") int portions,
-			@RequestParam("icode") int icode,
-			@RequestParam("amount") int amount,
-			@RequestParam("type") String type,
-			@RequestParam("orderNum") int orderNum,
-			@RequestParam("orderContent") String orderContent,
-			@RequestPart("cookingImg") MultipartFile cookingImg,
+			@RequestParam("icode") List<Integer> icode,
+			@RequestParam("amount") List<Integer> amount,
+			@RequestParam("orderNum") List<Integer> orderNum,
+			@RequestParam("orderContent") List<String> orderContent,
+			@RequestPart("cookingImg") List<MultipartFile> cookingImg,
 			@RequestParam("tagContent") String tagContent)
 			{
-		
-		String cookingImgName = "";
-		
-
-		try {
-			if (cookingImg != null && !cookingImg.isEmpty()) {
-				cookingImgName = FileUploadUtil.saveFile(cookingImg.getOriginalFilename(), cookingImg);
-	        }
-
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		MemberDto mno = loginService.getMnoByUsernameService(username);
@@ -101,20 +88,37 @@ public class Mypage2Controller {
 		//int rcode = recipeDto.getRcode();
 		//System.out.println("rcode = " + rcode);
 		
-		// 레시피 재료 등록
-		RecipeIngredientDto recipeIngredientDto = new RecipeIngredientDto();
-		recipeIngredientDto.setRcode(recipeDto.getRcode());
-		recipeIngredientDto.setIcode(icode);
-		recipeIngredientDto.setAmount(amount);
-		service.registMyRecipeIngredientService(recipeIngredientDto);
+		// 레시피 재료 등록 재료가 두개이상이면 List로 등록
+		for(int i = 0; i < icode.size(); i ++) {
+			
+			RecipeIngredientDto recipeIngredientDto = new RecipeIngredientDto();
+			recipeIngredientDto.setRcode(recipeDto.getRcode());
+			recipeIngredientDto.setIcode(icode.get(i));
+			recipeIngredientDto.setAmount(amount.get(i));
+			service.registMyRecipeIngredientService(recipeIngredientDto);
+			
+		}
 		
-		// 요리순서 등록
-		RecipeOrderDto recipeOrderDto = new RecipeOrderDto();
-		recipeOrderDto.setRcode(recipeDto.getRcode());
-		recipeOrderDto.setOrderContent(orderContent);
-		recipeOrderDto.setOrderNum(orderNum);
-		recipeOrderDto.setCookingImg(cookingImgName);
-		service.registMyRecipeOrderService(recipeOrderDto);
+		// 요리순서 등록 순서가 두개 이상이면 List로 등록
+		for(int i = 0; i < orderNum.size(); i++) {
+			
+			RecipeOrderDto recipeOrderDto = new RecipeOrderDto();
+			recipeOrderDto.setRcode(recipeDto.getRcode());
+			recipeOrderDto.setOrderContent(orderContent.get(i));
+			recipeOrderDto.setOrderNum(orderNum.get(i));
+			
+			if(!cookingImg.get(i).isEmpty()) {
+				try {
+					String cookimgImgName = FileUploadUtil.saveFile(cookingImg.get(i).getOriginalFilename(), cookingImg.get(i));
+					recipeOrderDto.setCookingImg(cookimgImgName);
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			service.registMyRecipeOrderService(recipeOrderDto);
+			
+		}
 		
 		// 태그 등록
 		RecipeTagDto recipeTagDto = new RecipeTagDto();

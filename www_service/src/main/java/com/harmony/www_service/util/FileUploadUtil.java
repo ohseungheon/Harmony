@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,10 +21,10 @@ public class FileUploadUtil {
             Files.createDirectories(uploadPath);
         }
 
-        String originalFileName = multipartFile.getOriginalFilename();
+        String originalFileName = ((MultipartFile) multipartFile).getOriginalFilename();
         Path filePath = uploadPath.resolve(originalFileName);
 
-        try (InputStream inputStream = multipartFile.getInputStream()) {
+        try (InputStream inputStream = ((MultipartFile) multipartFile).getInputStream()) {
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
             return originalFileName; // 파일 이름만 반환
         } catch (IOException ioe) {
