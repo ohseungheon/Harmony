@@ -85,9 +85,7 @@
         border-radius: 5px;
         
         display: flex; /* Flexbox 사용 */
-        flex-direction: row;
         flex-wrap: wrap; /* 줄 바꿈 허용 */
-        justify-content: space-around; /* 공간을 균등하게 배분 */
         align-items: center;
     }
     #by-refrigerator {
@@ -154,19 +152,28 @@
    	}
    	#by-buk {
    		position:absolute;
-   		bottom:65px;
-   		right:10px;
-    	width: 300px;
-    	height:0px;
-    	border-style:solid;
-    	border-width:20px 40px 200px 40px;
-    	border-color:#F9E77F transparent #F9E77F transparent;
+   		bottom:47px;
+   		right:50px;
+    	width: 320px;
+    	height:330px;
+        background:#F9E77F;
+        padding:20px;
+        padding-top:0;
+        display:flex;
+        justify-content:center;
+        border-radius:0 0 5px 5px;
+   	}
+   	#by-buk .by-buk-in{
+   		width:300px;
+   		height:300px;
     	display: flex; /* Flexbox 사용 */
-        flex-direction: row;
         flex-wrap: wrap; /* 줄 바꿈 허용 */
-        justify-content: center; /* 공간을 균등하게 배분 */
-        align-items: center;
-        margin-right: 30px;
+        justify-content:center;
+        align-items:center;
+   		background:#fff;
+   	}
+   	
+   	.by-buk-in .buk-menu{
    	}
    	
    	.recipe-info{
@@ -230,9 +237,11 @@
 <!-- 상온 -->
 <div id="by-food">
 	<div id="by-buk"> 
-		<div th:each="food : ${food}" id="by-favo-menu">
+	<div class="by-buk-in">
+		<div th:each="food : ${food}" id="by-favo-menu" class="buk-menu">
     			<img id="by-menu-img" th:src="@{'/img/material/'+ ${food.imgUrl}}">
     			<span id="by-menu">[[${food.deadline}]]</span>
+    	</div>
     	</div>
 	</div>
 </div>
