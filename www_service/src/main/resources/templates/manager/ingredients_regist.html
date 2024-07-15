@@ -344,13 +344,15 @@
               name="file"
             />
           </div>
-          카테고리
-          <input
-            type="text"
-            name="category"
-            id="dally_category"
-            placeholder="ex) 소고기, 어패류, 잎채소"
-          /><br />
+          <label for="category">카테고리</label>
+          <select name="type" id="dally_ingredient_category">
+            <option value="meat">육류</option>
+            <option value="seafood">해산물</option>
+            <option value="vegi_fruit">채소 / 과일</option>
+            <option value="dairy_poducts">유제품</option>
+            <option value="etc">기타</option>
+            </select
+          ><br />
           재료 이름
           <input
             type="text"
