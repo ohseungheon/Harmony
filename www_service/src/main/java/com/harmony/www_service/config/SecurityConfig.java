@@ -20,12 +20,6 @@ public class SecurityConfig {
 
 		return new BCryptPasswordEncoder();
 	}
-	
-//	@Bean
-//	public UserDetailsService userDetailsService() {
-//		
-//		return new CustomUserDetailsService();
-//	}
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -44,6 +38,7 @@ public class SecurityConfig {
 				.formLogin((auth) -> auth
 				.loginPage("/login_page")
 				.loginProcessingUrl("/loginProc")
+				.defaultSuccessUrl("/", true)
 				.failureHandler(customAuthenticationFailureHandler)
 				.permitAll()
 				);
