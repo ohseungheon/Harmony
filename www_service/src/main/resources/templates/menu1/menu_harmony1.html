@@ -79,6 +79,68 @@ input[type="submit"]:hover {
    overflow:hidden;
 }
 
+#haveIngredient {
+   max-height: 600px; /* Set a fixed height for scrolling */
+   overflow-y: auto; /* Enable vertical scrolling */
+   overflow-x: hidden; /* Hide horizontal scrolling if not needed */
+   border: 1px solid #ddd; /* Optional: Add a border around the scrollable area */
+}
+#haveIngredient::-webkit-scrollbar {
+   width: 12px; /* 스크롤바의 너비 */
+   height: 12px; /* 수평 스크롤바의 높이 (optional) */
+}
+
+/* 스크롤바 트랙 (스크롤바 배경) */
+#haveIngredient::-webkit-scrollbar-track {
+   background: #f1f1f1;
+    /* 트랙 배경 색상 */
+   border-radius: 10px; /* 트랙의 모서리 둥글게 */
+}
+
+/* 스크롤바 핸들 (스크롤바 손잡이) */
+#haveIngredient::-webkit-scrollbar-thumb {
+   background:  #00acc1;/* 핸들 색상 */
+  
+   border-radius: 10px; /* 핸들의 모서리 둥글게 */
+   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* 핸들에 그림자 추가 */
+}
+
+/* 스크롤바 핸들에 마우스를 올렸을 때 */
+#haveIngredient::-webkit-scrollbar-thumb:hover {
+   background: #00acc1; /* 핸들 색상 변경 */
+}
+
+#canMakeMenuDiv {
+   max-height: 600px; /* Set a fixed height for scrolling */
+   overflow-y: auto; /* Enable vertical scrolling */
+   overflow-x: hidden; /* Hide horizontal scrolling if not needed */
+   border: 1px solid #ddd; /* Optional: Add a border around the scrollable area */
+}
+#canMakeMenuDiv::-webkit-scrollbar {
+   width: 12px; /* 스크롤바의 너비 */
+   height: 12px; /* 수평 스크롤바의 높이 (optional) */
+}
+
+/* 스크롤바 트랙 (스크롤바 배경) */
+#canMakeMenuDiv::-webkit-scrollbar-track {
+   background: #f1f1f1;
+    /* 트랙 배경 색상 */
+   border-radius: 10px; /* 트랙의 모서리 둥글게 */
+}
+
+/* 스크롤바 핸들 (스크롤바 손잡이) */
+#canMakeMenuDiv::-webkit-scrollbar-thumb {
+   background:  #00acc1;/* 핸들 색상 */
+  
+   border-radius: 10px; /* 핸들의 모서리 둥글게 */
+   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* 핸들에 그림자 추가 */
+}
+
+/* 스크롤바 핸들에 마우스를 올렸을 때 */
+#canMakeMenuDiv::-webkit-scrollbar-thumb:hover {
+   background: #00acc1; /* 핸들 색상 변경 */
+}
+
 .remove_highlight::after {
    content: '재료가 부족합니다';
    position: absolute;
