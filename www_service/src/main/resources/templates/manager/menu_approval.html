@@ -11,11 +11,47 @@
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
 <section>
-    
+    <h2>요청 메뉴 리스트</h2>
+    <div class="dally_container"></div>
 </section>
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        findList();
+    });
 
+    // 요청 메뉴 리스트 ajax 요청 보내기
+    function findList(mrcode) {
+      fetch("/manager/menuReqlist?mrcode=" + encodeURIComponent(mrcode))
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not ok" + response.statusText
+            );
+          }
+          return response.json();menu_approvalmenu_approvalmenu_approval
+        })
+        .then((data) => {
+          var data_container = document.querySelector(".dally_container");
+          data_container.innerHTML = "";
+          console.log(data)
+
+          for (var i = 0; i < data.length; i++) {
+            var menuReq_info_content =
+              '<div id="dally_menu_img">' +
+              '<img src="/img/uploads/' +
+              data[i].imgUrl + '"> ' + '</div>' +
+              + data[i].menuName + '</div>' + 
+              '<div id="dally_menu_category">' +data[i].category +'</div>' +
+              '<div id="dally_menu_username">'+ data[i].username +'</div>' +
+              '<button id="dally_accept>'+'승인' + '</button>' + 
+              '<button id="dally_return>'+'반려' + '</button>';
+              data_container.innerHTML += menuReq_info_content;
+          }
+
+        })
+        .catch((error) => console.error("Error:" + error));
+    }
 </script>
 </body>
 </html>
