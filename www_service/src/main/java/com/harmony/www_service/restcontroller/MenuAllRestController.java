@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.service.MenuListService;
+import com.harmony.www_service.service.MenuService;
+
 import java.util.List;
 
 @RestController
@@ -16,13 +18,22 @@ public class MenuAllRestController {
     @Autowired
     private MenuListService menuListService;
 
+    @Autowired
+    private MenuService menuService;
+
     @GetMapping("/menu_all_list")
     public List<MenuDto> getMenuListByCategory(@RequestParam("category") String category){
 
         return menuListService.getMenuListByCategory(category);
     }
 
-    
+    @GetMapping("/filtered_menu_list")
+    public List<MenuDto> getFilteredMenuList(
+        @RequestParam(value = "categories", required = false) String categories,
+        @RequestParam(value = "ingredients", required = false) String ingredients) {
+        
+        return menuService.getFilteredMenuList(categories, ingredients);
+    }
 
 
 

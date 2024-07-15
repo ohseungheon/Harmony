@@ -13,4 +13,5 @@ public class RecipeDto {
     private String category;
     private int portions;
     private int view;
+    private String menuName;
 }

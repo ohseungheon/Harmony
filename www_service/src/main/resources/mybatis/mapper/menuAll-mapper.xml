@@ -7,5 +7,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * FROM menu WHERE category = #{category}
     </select>
 
-
+    <select id="getFilteredMenuList" parameterType="string" resultType="com.harmony.www_service.dto.MenuDto">
+        SELECT DISTINCT m.*
+        FROM menu m
+        LEFT JOIN recipe r ON m.mcode = r.mcode
+        LEFT JOIN recipe_ingredient ri ON r.rcode = ri.rcode
+        WHERE 1=1
+        <if test="categories != null and categories != ''">
+            AND m.category IN (${categories})
+        </if>
+        <if test="ingredients != null and ingredients != ''">
+            AND ri.icode IN (${ingredients})
+        </if>
+    </select>
 </mapper>

@@ -41,6 +41,7 @@ public class MenuAllController {
         List<RecipeIngredientDto> recipeIngredientList = recipeService.getRecipeIngredientsByRcode(rcode);
 
         model.addAttribute("rcode", rcode);
+        model.addAttribute("menuName",recipeDto.getMenuName());
         model.addAttribute("recipeName", recipeDto.getRecipeName());
         model.addAttribute("introduce", recipeDto.getIntroduce());
         model.addAttribute("url", recipeDto.getUrl());
