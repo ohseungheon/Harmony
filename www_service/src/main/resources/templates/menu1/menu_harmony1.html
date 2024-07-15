@@ -27,8 +27,6 @@ tr:last-child td {
    border-bottom: none;
 }
 
-
-
 td img {
    max-width: 100px;
    height: auto;
@@ -51,26 +49,34 @@ button#xBtn:hover {
    color: white;
 }
 
+input[type="submit"] {
+   font-size: 16px;
+   padding: 8px 12px;
+   background-color: #00acc1; /* 헤더 색상과 동일 */
+   color: white;
+   border: 2px solid #0097a7; /* 헤더 색상보다 조금 어두운 색상 */
+   border-radius: 12px;
+   cursor: pointer;
+   transition: background-color 0.3s, transform 0.3s;
+}
+
+input[type="submit"]:hover {
+   background-color: #0097a7; /* 헤더 색상보다 조금 어두운 색상 */
+   transform: scale(1.05);
+}
 .highlight {
-            background-color: rgba(0, 0, 0, 0.1); /* Light overlay on the background */
-        }
-        
+    position: relative; /* Pseudo-elements positioning */
+   background-color: rgba(0, 0, 0, 0.1); /* Light overlay on the background */
+   filter: brightness(60%); /* Darken the background */
+   transition: filter 0.3s ease; /* Smooth transition for darkening */
+}
+
 .remove_highlight {
    position: relative; /* Pseudo-elements positioning */
    background-color: rgba(0, 0, 0, 0.1); /* Light overlay on the background */
    filter: brightness(60%); /* Darken the background */
    transition: filter 0.3s ease; /* Smooth transition for darkening */
 }
-
-
-
-
-
-
-
-
-
-
 
 .remove_highlight::after {
    content: '';
@@ -83,6 +89,7 @@ button#xBtn:hover {
    transform-origin: left;
    z-index: 1; /* Ensure the line appears above other content */
 }
+
 /* Define the keyframes for the animation */
 @keyframes drawLine {
    to {
@@ -91,6 +98,7 @@ button#xBtn:hover {
 }
 
 </style>
+
 </head>
 <body>
    <header>
@@ -116,7 +124,9 @@ button#xBtn:hover {
                <tr th:each="dto : ${FridgeIngredientList}">
                   <!-- <input type = "hidden" th:value = "${dto.icode}" id="icode">-->
                   <input type="hidden" th:value="${dto.icode}" th:id="'icode' + ${dto.icode}">
-                   <td><img th:src="@{'/img/material/'+ ${dto.imgurl}}"></td>
+                  
+                   <td><img th:src="@{'/img/ingredient/'+ ${dto.imgurl}}"></td>
+                  
                   <td>[[${dto.name}]]</td>
 
                         <td><button id="xBtn" type="button" th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">x</button></td>
@@ -140,8 +150,8 @@ button#xBtn:hover {
             <tbody>
                <tr th:each="dto : ${showCanMakeMenuList}" th:id="'canMakeMenuMcode' + ${dto.mcode}">
                
-                   <input type="hidden"  value="${dto.mcode}">
-                   <td><img th:src="@{'/img/menu/'+ ${dto.imgurl}}"></td>
+                  <input type="hidden"  value="${dto.mcode}">
+                  <td><img th:src="@{'/uploads/'+ ${dto.imgurl}}"></td>
                   <td>[[${dto.menuName}]]</td>
                   <td><button id="xBtn" type="button"
                         th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
