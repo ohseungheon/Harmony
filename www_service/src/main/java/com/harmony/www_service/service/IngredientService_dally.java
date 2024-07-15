@@ -121,10 +121,11 @@ public class IngredientService_dally {
 	}
 	
 	// 재료 수정 기능
-	public IngredientDto updateIngredients(IngredientDtoWithFile iDtoFile) {
+	public int updateIngredients(IngredientDtoWithFile iDtoFile) {
 
 		// 실제 DB에 저장하기 위한 IngredientDto 생성
 		IngredientDto iDto = new IngredientDto();
+		iDto.setIcode(iDtoFile.getIcode());
 		iDto.setName(iDtoFile.getName());
 		iDto.setCategory(iDtoFile.getCategory());
 		iDto.setTip(iDtoFile.getTip());
@@ -154,7 +155,7 @@ public class IngredientService_dally {
 		// 파일 이름 재구성 (고유한 이름으로 대체)
 		String newName = UUID.randomUUID().toString() + extension;
 		iDto.setImgurl(newName);
-		int updateCount = iDao.updateIngredient(iDto);
+		
 		
 		System.out.println("................여기까지 동작.............");
 		// 업데이트 성공 시 업데이트 된 데이터 반환
@@ -184,14 +185,17 @@ public class IngredientService_dally {
 					"파일 시스템에 접근하는 동안 발생한 다른 입출력 오류.");
 			e.printStackTrace();
 		}
+		System.out.println("????????? iDto =" + iDto);
+		int updateCount = iDao.updateIngredient(iDto);
+		System.out.println("!!!!!!!!!!!!! iDto =" + iDto);
 		
-		IngredientDto update_data = null;
-		if(updateCount > 0) {
+		//if(updateCount >= 0) {
+			
 			//update_data = iDao.getDetail(iDto.getIcode());
-			return iDao.getDetail(iDto.getIcode());
-		}
-		System.out.println("iService-----update" + update_data);
-		return null;
+			//return iDao.getDetail(iDto.getIcode());
+		//}
+		System.out.println("iService-----update" + updateCount);
+		return updateCount;
 	}
 	
 	// 재료 삭제 기능
