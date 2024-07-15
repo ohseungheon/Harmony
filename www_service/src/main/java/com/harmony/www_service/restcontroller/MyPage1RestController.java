@@ -2,6 +2,7 @@ package com.harmony.www_service.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.harmony.www_service.dao.IMypage1Dao;
+import com.harmony.www_service.dto.FridgeIngredientDto;
 import com.harmony.www_service.dto.MemberDto_by;
 import com.harmony.www_service.service.MemberService;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/mypage1")
 public class MyPage1RestController {
@@ -35,6 +38,12 @@ public class MyPage1RestController {
 		myDao.deleteMaterial(fcode);
 		
 		return "해당 재료가 삭제되었습니다🍳";
+	}
+	
+	@PostMapping("/material_update")
+	public ResponseEntity<String> materialUpdate(@RequestBody FridgeIngredientDto material) {
+		myDao.updateMaterial(material);
+	    return ResponseEntity.ok("재료정보가 성공적으로 수정되었습니다🍉");
 	}
 	
 }

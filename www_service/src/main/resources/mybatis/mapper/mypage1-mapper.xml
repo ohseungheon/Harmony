@@ -71,4 +71,18 @@
 		ON f.icode = i.icode 
 		WHERE f.fcode = #{fcode} 
 	</select>
+	
+	<!-- 재료수정 -->
+	<update id="updateMaterial">
+		UPDATE fridge 
+		SET 
+			deadline = #{material.deadline},
+			amount = #{material.amount},
+			keeptype = #{material.keeptype},
+			memo = #{material.memo}
+		WHERE 
+			fcode = #{material.fcode}
+		AND 
+			mno = #{material.mno}
+	</update>
 </mapper>

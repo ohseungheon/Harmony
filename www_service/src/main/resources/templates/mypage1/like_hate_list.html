@@ -111,7 +111,7 @@
     	<div id="by-favorite_menu">
     	<!-- 메뉴 좋아요한 리스트 출력 -->
     		<div th:each="menuLike : ${menuLike}" id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{'/img/menu/' + ${menuLike.imgUrl} + '.jpg'}">
+    			<img id="by-menu-img" th:src="@{'/uploads/' + ${menuLike.imgUrl}}">
     			<span id="by-menu" th:text="${menuLike.menuName}">[[${menuLike.menuName}]]</span>
     		</div>
     	</div>	

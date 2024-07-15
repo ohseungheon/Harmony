@@ -1,5 +1,6 @@
 package com.harmony.www_service.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,6 +128,9 @@ public class Mypage1Controller {
 		FridgeIngredientDto fi = myDao.getMaterialList(fcode);
 		System.out.println("수정할재료정보리스트"+fi);
 		model.addAttribute("material", fi);
+		
+		List<String> keeptypes = Arrays.asList("냉장", "냉동", "상온"); //옵션데이터
+		model.addAttribute("keeptypes", keeptypes);
 		return "mypage1/material_update";
 	}
 	
