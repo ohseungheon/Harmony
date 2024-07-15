@@ -53,8 +53,6 @@
             box-shadow: inset 0 0 5px grey;
         }
 
-
-
         .king-menu-grid {
             display: flex;
             flex-direction: column;
@@ -71,16 +69,27 @@
             justify-content: space-between;
             padding: 2px 52px;
             height: 150px;
+            cursor: pointer;
         }
 
-        .king-menu-name{
+        /* .king-menu-list:hover{
+            filter:brightness(0.35);
+            background-color: rgb(255, 255, 255);
+        } */
+
+        .king-menu-list.dimmed {
+            filter: brightness(0.55);
+            background-color: rgb(255, 255, 255);
+        }
+
+        .king-menu-name {
             font-size: 36px;
             font-weight: bold;
         }
 
         .king-menu-list>img {
-            width: 120px;
-            height: 110px;
+            width: 160px;
+            height: 150px;
         }
     </style>
 </head>
@@ -134,9 +143,16 @@
                         display_menu_card(menu.mcode, menu.menuName, menu.imgurl);
                     })
                 })
+                .then(() => {
+                    menuListAddClickHandler();
+                })
+                .then(() => {
+                    addHoverEventHandler()
+                })
                 .catch(error => {
                     console.error('Error:', error);
                 });
+
         }
 
         /**
@@ -164,6 +180,15 @@
                     console.log("제외된 항목들 : ", unselections);
                 });
             });
+        }
+
+        function menuListAddClickHandler() {
+            document.querySelectorAll('.king-menu-list').forEach(menu => {
+                menu.addEventListener('click', () => {
+                    const mcode = parseInt(menu.getAttribute('id'));
+                    window.location.href = '/menu_all/recipe_list?mcode=' + mcode;
+                });
+            })
         }
 
         /**
@@ -208,7 +233,7 @@
                 += '<div class="king-menu-list" id="' + mcode
                 + '">'
                 + '<img src="/uploads/' + imgurl
-                + '">' 
+                + '">'
                 + '<span class="king-menu-name"> ' + menuName + '</span>'
                 + '</div>'
                 ;
@@ -217,6 +242,24 @@
         document.addEventListener("DOMContentLoaded", () => {
             getIngredients(); // 재료 리스트 불러오기
         })
+
+        function addHoverEventHandler() {
+            document.querySelectorAll('.king-menu-list').forEach(menu => {
+                menu.addEventListener('mouseenter', () => {
+                    document.querySelectorAll('.king-menu-list').forEach(otherMenu => {
+                        if (otherMenu !== menu) {
+                            otherMenu.classList.add('dimmed');
+                        }
+                    });
+                });
+
+                menu.addEventListener('mouseleave', () => {
+                    document.querySelectorAll('.king-menu-list').forEach(otherMenu => {
+                        otherMenu.classList.remove('dimmed');
+                    });
+                });
+            });
+        }
 
     </script>
 </body>
