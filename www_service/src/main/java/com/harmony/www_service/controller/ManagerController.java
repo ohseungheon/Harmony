@@ -11,8 +11,6 @@ import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.IngredientDtoWithFile;
 import com.harmony.www_service.service.IngredientService_dally;
 
-
-
 @Controller
 public class ManagerController {
     
@@ -87,7 +85,11 @@ public class ManagerController {
 		return "redirect:/ingredients_list";
 	}
 	
-	
+	// 요청받은 메뉴 전체 조회
+	@RequestMapping("/request_menu_list")
+	public String getList() {
+		return "/manager/menu_approval";
+	}
 	
 	
 }

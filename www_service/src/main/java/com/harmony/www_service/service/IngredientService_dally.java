@@ -34,35 +34,10 @@ public class IngredientService_dally {
 		IngredientDto iDto = new IngredientDto();
 		iDto.setIcode(iDto.getIcode());
 		iDto.setName(iDtoFile.getName());
-		
-		// 카테고리 정리
-		String category = iDtoFile.getCategory();
-//        if (
-//                category.equals("meat")
-//              ) {
-//                category = "육류";
-//              } else if (
-//            	category.equals("seafood")
-//              ) {
-//                category = "해산물";
-//              } else if (
-//            	category.equals("vegi_fruit")
-//              ) {
-//                category = "채소 / 과일";
-//              } else if (
-//            	category.equals("dairy_products")) {
-//                category = "유제품";
-//              } else if (
-//            	category.equals("etc")) {
-//                category = "기타";
-//              }
-        
-		System.out.println("================" + category +"============");
-		iDto.setCategory(category);
+		iDto.setCategory(iDtoFile.getCategory());
 		iDto.setTip(iDtoFile.getTip());
 		iDto.setType(iDtoFile.getType());
 		iDto.setImgurl(iDtoFile.getFileName());
-		
 		
 		MultipartFile file = iDtoFile.getFile();
 		String originName = "";

@@ -22,10 +22,9 @@ public class ManagerRestController {
 	// 재료 리스트 기능
 	@GetMapping("/list")
 	public List<IngredientDto> list(@RequestParam("category") String category){
-		System.out.println("...........재료 리스트 컨트롤러 진입............");
-		
+		//System.out.println("...........재료 리스트 컨트롤러 진입............");
 		List<IngredientDto> result = iService.showListByCategory(category);
-		System.out.println("result="+ result);
+		//System.out.println("result="+ result);
 		return result;
 	}
 	
