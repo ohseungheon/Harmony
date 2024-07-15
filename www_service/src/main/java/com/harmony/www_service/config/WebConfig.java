@@ -16,11 +16,12 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/uploads/**")
+        registry.addResourceHandler("/uploads/**") // 메뉴 주소
                 .addResourceLocations("file:" + uploadDir + "/");
 
         registry.addResourceHandler("/img/ingredient/**") // 코드상에서 이미지파일을 불러오는 가상공간
                 .addResourceLocations("file:" + ingredientsDir + "/"); // 실제로 파일이 저장되는 공간
+
     }
 
 }
