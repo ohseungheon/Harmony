@@ -27,46 +27,68 @@ public class MenuService {
     
     
     public IngredientDto getOneIngredient(int icode) {
-    	System.out.println("=============================getOneIngredient======================= :"+menu1dao.showOneIngredient(icode));
-    	return menu1dao.showOneIngredient(icode);
-    	
+       //System.out.println("=============================getOneIngredient======================= :"+menu1dao.showOneIngredient(icode));
+       return menu1dao.showOneIngredient(icode);
+       
     }
 
     public List<MenuDto> getCanMakeMenu(List<IngredientDto> iList) {
-    	List<Integer> icodeList = makeIcodeList(iList);
-    	System.out.println("=============================getCanMakeMenu=======================");
-    	System.out.println("=============================getCanMakeMenu icodeList======================= :"+icodeList);
-    	int size = icodeList.size();
+       List<Integer> icodeList = makeIcodeList(iList);
+       //System.out.println("=============================getCanMakeMenu=======================");
+       //System.out.println("=============================getCanMakeMenu icodeList======================= :"+icodeList);
+       int size = icodeList.size();
         return menu1dao.showCanMakeMenu(icodeList,size);
     }
     
     public List<Integer> makeIcodeList(List<IngredientDto> iList) {
-    	
-    	List<Integer> icodeList = new ArrayList<>();
-    	for ( IngredientDto iListElement:iList) {
-    		
-    		int icode = iListElement.getIcode();
-    		icodeList.add(icode);
-    		
-    		
-    	}
-    	
+       
+       List<Integer> icodeList = new ArrayList<>();
+       for ( IngredientDto iListElement:iList) {
+          
+          int icode = iListElement.getIcode();
+          icodeList.add(icode);
+          
+          
+       }
+       
         return icodeList;
     }
     
+    public List<Integer> makeMcodeList(List<MenuDto> menuDtoList){
+       List<Integer> mcodeList =  new ArrayList<>();
+       
+       for ( MenuDto menuListElement:menuDtoList) {
+          
+         int mcode = menuListElement.getMcode();
+         mcodeList.add(mcode);
+      
+      
+      }
+       return mcodeList; 
+    }
+    
     public List<IngredientDto> selectExcludeIngredient(List<IngredientDto> iList,int mno){
-    	List<Integer> icodeList = makeIcodeList(iList);
-    	return menu1dao.selectExcludeIngredient(icodeList,mno);
+       List<Integer> icodeList = makeIcodeList(iList);
+       return menu1dao.selectExcludeIngredient(icodeList,mno);
     }
     public int getMno(String username) {
-    	return  menu1dao.getMno(username);
+       return  menu1dao.getMno(username);
     }
+   
+//    public List<Integer> mcodeListFromIcodeList(List<IngredientDto> iList) {
+//       List<MenuDto> menuDtoList = getCanMakeMenu(iList);
+//       List<Integer> mcodeList
+//       for ()
+//       
+//       
+//       return  ;
+//    }
     
     
     @ResponseBody
     public List<Integer> getRcodeForMcode(int mcode){
-    	List<Integer> rcodeList= menu1dao.getRcodeForMcode(mcode);
-    	return rcodeList;
+       List<Integer> rcodeList= menu1dao.getRcodeForMcode(mcode);
+       return rcodeList;
     }
     
 }
