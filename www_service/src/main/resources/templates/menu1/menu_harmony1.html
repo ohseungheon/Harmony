@@ -16,6 +16,7 @@ th, td {
    text-align: center;
    border: 1px solid #ddd; /* 셀 테두리 색상 연하게 */
    border-color: rgba(0, 0, 0, 0.1); /* 연한 테두리 색상 */
+   box-sizing:border-box;
 }
 
 th {
@@ -65,7 +66,6 @@ input[type="submit"]:hover {
    transform: scale(1.05);
 }
 .highlight {
-    position: relative; /* Pseudo-elements positioning */
    background-color: rgba(0, 0, 0, 0.1); /* Light overlay on the background */
    filter: brightness(60%); /* Darken the background */
    transition: filter 0.3s ease; /* Smooth transition for darkening */
@@ -74,20 +74,23 @@ input[type="submit"]:hover {
 .remove_highlight {
    position: relative; /* Pseudo-elements positioning */
    background-color: rgba(0, 0, 0, 0.1); /* Light overlay on the background */
-   filter: brightness(60%); /* Darken the background */
+   filter: brightness(100%); /* Darken the background */
    transition: filter 0.3s ease; /* Smooth transition for darkening */
+   overflow:hidden;
 }
 
 .remove_highlight::after {
-   content: '';
+   content: '재료가 부족합니다';
    position: absolute;
-   top: 50%; /* Center the line vertically */
-   left: 0;
-   width: 100%;
-   border-bottom: 2px solid red; /* Line color and thickness */
-   transform: scaleX(1); /* Full width without animation */
-   transform-origin: left;
-   z-index: 1; /* Ensure the line appears above other content */
+   top: 50%; /* Center the text vertically */
+   left: 50%; /* Center the text horizontally */
+   transform: translate(-50%, -50%); /* Adjust the position to truly center the text */
+   background-color: rgba(255, 0, 0, 0.7); /* Semi-transparent red background */
+   color: white;
+   padding: 4px 8px;
+   border-radius: 4px;
+   font-size: 18px;
+   z-index: 1; /* Ensure the text appears above other content */
 }
 
 /* Define the keyframes for the animation */
@@ -114,7 +117,7 @@ input[type="submit"]:hover {
       <br>
       <div id="haveIngredient">
          <!-- 가지고 있는 재료 테이블 생성 -->
-         <table border="1" style="margin: 0 auto; text-align: center;">
+         <table>
             <thead>
                <th>재료이미지</th>
                <th>재료이름</th>
@@ -140,9 +143,8 @@ input[type="submit"]:hover {
       <br>
       <div id="canMakeMenuDiv">
          <!-- 만들 수 있는 메뉴 테이블 생성-->
-         <table border="1" style="margin: 0 auto; text-align: center;">
+         <table>
             <thead>
-
                <th>메뉴사진</th>
                <th>회원님의 재료로 만들수 있는 메뉴</th>
                <th>레시피</th>
