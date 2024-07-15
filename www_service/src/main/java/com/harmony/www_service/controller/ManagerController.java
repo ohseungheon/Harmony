@@ -1,12 +1,9 @@
 package com.harmony.www_service.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -84,6 +81,7 @@ public class ManagerController {
 	// 재료 삭제 기능 구현
 	@RequestMapping("/do_ingredient_delete")
 	public String delete(@RequestParam("icode") int icode) {
+		System.out.println("------------삭제할 icode="+icode+"--------------");
 		iService.IgredientIsGone(icode);
 		
 		return "redirect:/ingredients_list";
