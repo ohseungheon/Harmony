@@ -6,7 +6,7 @@
   
   	<insert id="registIngredient">
   		INSERT INTO ingredient 
-  		(name, type, tip, imgurl, category ) 
+  		(name, type, tip, imgurl, category) 
   		values
   		(#{iDto.name}, #{iDto.type}, #{iDto.tip}, #{iDto.imgurl}, #{iDto.category})
   	</insert>

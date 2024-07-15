@@ -6,17 +6,13 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
         }
     
         section {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border: 1px solid #bee3f1;  
         }
     
         h1 {
@@ -36,7 +32,7 @@
         }
     
         .recipe-info {
-            background-color: #f9f9f9;
+            background: rgba(107, 213, 252, 0.1);
             padding: 15px;
             border-radius: 5px;
         }
@@ -55,7 +51,7 @@
         }
     
         .ingredient-item, .order-item {
-            background-color: #f9f9f9;
+            background: rgba(107, 213, 252, 0.1);
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 5px;
@@ -95,7 +91,9 @@
     <div class="order">
         <div th:each="order : ${recipeOrderList}" class="order-item">
             <p>순서 <span th:text="${order.orderNum}"></span>: <span th:text="${order.orderContent}"></span></p>
-            <img th:src="@{${order?.cookingImg}}" alt="조리 이미지"/>
+            <th:block th:if = "${order.cookingImg != null && order.cookingImg != ''}">
+                <img th:src="${order.cookingImg}" alt="조리 이미지"/>
+            </th:block>
         </div>
     </div>
 </section>

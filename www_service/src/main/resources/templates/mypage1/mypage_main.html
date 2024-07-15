@@ -42,7 +42,7 @@
 	}
     #by-ice-out {
     	background-color: #A7BCF2;
-    	border: 1px solid #eee;
+    	border: 1px solid #ccc;
     	width: 500px;
         height: 300px;
         margin-bottom: 10px;
@@ -54,11 +54,11 @@
     }
     #by-ice-in {
     	background-color: #fff;
-    	border: 1px solid #777777;
+    	border: 1px solid #bbb;
     	width: 400px;
         height: 220px;
         margin: 20px;
-        border-radius: 5px;
+        border-radius: 15px;
         
         display: flex; /* Flexbox 사용 */
         flex-direction: row;
@@ -68,7 +68,7 @@
     }
     #by-cool-out {
     	background-color: #A7BCF2;
-    	border: 1px solid #eee;
+    	border: 1px solid #ccc;
     	width: 500px;
         height: 500px;
         border-radius: 5px;
@@ -78,11 +78,11 @@
     }
     #by-cool-in {
     	background-color: #fff;
-    	border: 1px solid #777777;
+    	border: 1px solid #bbb;
     	width: 400px;
         height: 420px;
         margin: 5px;
-        border-radius: 5px;
+        border-radius: 15px;
         
         display: flex; /* Flexbox 사용 */
         flex-wrap: wrap; /* 줄 바꿈 허용 */
@@ -217,7 +217,7 @@
 	<div id="by-ice-out">
 		<div id="by-ice-in">
 			<div th:each="ice : ${ice}" id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${ice.imgUrl}}">
+    			<img id="by-menu-img" th:src="@{'/img/ingredient/'+ ${ice.imgUrl}}">
     			<span id="by-menu">[[${ice.deadline}]]</span>
     		</div>
 		</div>
@@ -226,7 +226,7 @@
 	<div id="by-cool-out">
 		<div id="by-cool-in">
 			<div th:each="cool : ${cool}" id="by-favo-menu">
-    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${cool.imgUrl}}">
+    			<img id="by-menu-img" th:src="@{'/img/ingredient/'+ ${cool.imgUrl}}">
     			<span id="by-menu">[[${cool.deadline}]]</span>
     		</div>
 		</div>
@@ -237,9 +237,8 @@
 <!-- 상온 -->
 <div id="by-food">
 	<div id="by-buk"> 
-	<div class="by-buk-in">
-		<div th:each="food : ${food}" id="by-favo-menu" class="buk-menu">
-    			<img id="by-menu-img" th:src="@{'/img/material/'+ ${food.imgUrl}}">
+		<div th:each="food : ${food}" id="by-favo-menu" class="buk-menu>
+    			<img id="by-menu-img" th:src="@{'/img/ingredient/'+ ${food.imgUrl}}">
     			<span id="by-menu">[[${food.deadline}]]</span>
     	</div>
     	</div>
