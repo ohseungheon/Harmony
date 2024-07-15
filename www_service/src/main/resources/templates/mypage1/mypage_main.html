@@ -174,6 +174,10 @@
    	}
    	
    	.by-buk-in .buk-menu{
+   		background:#fff;
+   		display:flex;
+   		flex-wrap:wrap;
+   		align-items:center;
    	}
    	
    	.recipe-info{
@@ -237,13 +241,14 @@
 <!-- 상온 -->
 <div id="by-food">
 	<div id="by-buk"> 
-		<div th:each="food : ${food}" id="by-favo-menu" class="buk-menu>
+<div class="by-buk-in">
+		<div th:each="food : ${food}" id="by-favo-menu" class="buk-menu">
     			<img id="by-menu-img" th:src="@{'/img/ingredient/'+ ${food.imgUrl}}">
     			<span id="by-menu">[[${food.deadline}]]</span>
     	</div>
     	</div>
+    	</div>
 	</div>
-</div>
 </section>
 <!-- 내정보 -->
 	<div id="by-myInfo"> 
@@ -257,7 +262,6 @@
 			<p><a th:href="@{/my/recipe/list(mno=${mno})}">🍳 나의 레시피 관리</a></p>
 			<p><a th:href="@{/like_hate_list}">💘 나의 좋아요 관리</a></p>
 		</div>
-	</div>
 	</div>
 <script>
 
