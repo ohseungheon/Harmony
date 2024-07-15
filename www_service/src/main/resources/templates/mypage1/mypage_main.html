@@ -70,11 +70,24 @@
     	background-color: #A7BCF2;
     	border: 1px solid #ccc;
     	width: 500px;
-        height: 500px;
+        height: 430px;
         border-radius: 5px;
         display: flex; /* Flexbox 사용 */
+        flex-direction:column;
         justify-content: center; /* 수평 가운데 정렬 */
         align-items: center; /* 수직 가운데 정렬 */	
+        position:relative;
+        padding:50px 0 40px;
+    }
+    #by-cool-out .by-handle{
+    	position:absolute;
+    	left:20px;
+    	top:15px;
+    	width:50px;
+    	height:15px;
+    	background:#fff;
+    	border:1px solid #899ED5;
+    	border-radius:5px;
     }
     #by-cool-in {
     	background-color: #fff;
@@ -152,7 +165,7 @@
    	}
    	#by-buk {
    		position:absolute;
-   		bottom:47px;
+   		bottom:27px;
    		right:50px;
     	width: 320px;
     	height:330px;
@@ -228,6 +241,8 @@
 	</div>
 	<!-- 냉장 -->
 	<div id="by-cool-out">
+		<div class="by-handle">
+		</div>
 		<div id="by-cool-in">
 			<div th:each="cool : ${cool}" id="by-favo-menu">
     			<img id="by-menu-img" th:src="@{'/img/ingredient/'+ ${cool.imgUrl}}">
