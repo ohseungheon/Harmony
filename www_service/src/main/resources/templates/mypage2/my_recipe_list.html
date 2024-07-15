@@ -10,6 +10,18 @@
 		font-weight:500;
 	}
 	
+	.recipe-registForm{
+		text-align:right;
+		margin-bottom:20px;
+	}
+	.recipe-registForm a{
+		display:inline-block;
+		padding:10px 20px;
+		border:1px solid #bee3f1;
+		background:#bee3f1;
+		border-radius:5px;
+	}
+	
 	#recipe-list-area{
 		width:100%;
 		margin:0 auto;
@@ -50,12 +62,17 @@
 		font-size:14px;
 	}
 	
-	.recipe-list-del{
+	.recipe-list-updel div:first-child{
 		position:absolute;
 		right:50px;
-		top:80px;
+		top:90px;
 	}
-	.recipe-list-del a{
+	.recipe-list-updel div:last-child{
+		position:absolute;
+		right:50px;
+		top:40px;
+	}
+	.recipe-list-updel a{
 		padding:10px 20px;
 		border:1px solid #eee;
 		border-radius:5px;
@@ -64,7 +81,7 @@
 		font-size:13px;
 		color:#999;
 	}
-	.recipe-list-del a:hover{
+	.recipe-list-updel a:hover{
 		background:#bee3f1;
 		color:#333;
 		border:1px solid #bee3f1;
@@ -78,6 +95,7 @@
 	<section>
 
 		<h1 class="queen-page-title">나의 레시피</h1>
+		<div class="recipe-registForm"><a href="/my/recipe/registForm">레시피 등록</a></div>
 		<div id="recipe-list-area"></div>
 
 	</section>
@@ -106,11 +124,11 @@ function recipeList() {
     	
         data.forEach(recipe => {
         	// redipe.url이 null이 아니면 slice, null이면 'default' 사용
-    	let url = recipe.url ? recipe.url.slice(-11) : 'default';
+    	//let url = recipe.url ? recipe.url.slice(-11) : 'default';
     	
         	output += '<div class="recipe-list-box">';
         	output += `<div class="recipe-urlimg">`;
-        	output += `<img src="https://img.youtube.com/vi/${url}/mqdefault.jpg">`;
+        	output += `<img src="https://img.youtube.com/vi/${recipe.url}/mqdefault.jpg">`;
         	output += `</div>`;
         	output += '<div class="recipe-list-content">';
         	output += `<a href="/menu_all/recipe_detail?rcode=${recipe.rcode}">`;
@@ -118,8 +136,9 @@ function recipeList() {
         	output += `<p>${recipe.introduce}</p>`;
         	output += '</a>';
         	output += '</div>'; //recipe-list-content
-        	output += '<div class="recipe-list-del">';
-        	output += `<a href="#" class="delete-recipe" data-rcode="${recipe.rcode}">삭제</a>`;
+        	output += '<div class="recipe-list-updel">';
+        	output += `<div><a href="/my/recipe/updateForm?rcode=${recipe.rcode}" class="update-recipe">수정</a></div>`; 
+        	output += `<div><a href="#" class="delete-recipe" data-rcode="${recipe.rcode}">삭제</a></div>`;
         	output += '</div>';
         	output += '</div>'; //recipe-list-box
         });

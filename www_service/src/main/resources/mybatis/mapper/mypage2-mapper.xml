@@ -52,8 +52,56 @@
   		url = #[url}, 
   		category = #{category},
   		portions = #{portions}
-  		where mno = #{mno}
+  		where rcode = #{rcode}
   	</update>
+  	
+  	<!-- 레시피 재료 수정 -->
+  	<update id="updateMyRecipeIngredient">
+  		update recipe_ingredient set
+  		icode = #{icode},
+  		amount = #{amount}
+  		where rcode = #{rcode}
+  	</update>
+  	
+  	<!-- 레시피 요리순서 수정 -->
+  	<update id="updateMyRecipeOrder">
+  		update recipe_order set
+  		orderContent = #{orderContent},
+  		orderNum = #{orderNum},
+  		cookingImg = #{cookingImg}
+  		where rcode = #{rcode}
+  	</update>
+  	
+  	<!-- 레시피 태그 수정 -->
+  	<update id="updateMyRecipeTag">
+  		update recipe_tag set
+  		tagContent = #{tagContent}
+  		where rcode = #{rcode}
+  	</update>
+  	
+  	<!-- 레시피 수정을 위한 레시피 정보 -->
+  	<select id="getRecipeFindByRcode">
+  		select * from recipe where rcode = #{rcode}
+  	</select>
+  	
+  	<!-- 레시피 수정을 위한 레시피 재료정보 -->
+  	<select id="getRecipeIngredientFindByRcode">
+  		select * from recipe_ingredient where rcode = #{rcode}
+  	</select>
+  	
+  	<!-- 레시피 수정을 위한 레시피 요리순서 정보 -->
+  	<select id="getRecipeOrderFindByRcode">
+  		select * from recipe_order where rcode = #{rcode}
+  	</select>
+  	
+  	<!-- 레시피 수정을 위한 레시피 태그 정보 -->
+  	<select id="getRecipeTagFindByRcode">
+  		select * from recipe_tag where rcode = #{rcode}
+  	</select>
+  	
+  	
+  	
+  	
   	
   
   </mapper>

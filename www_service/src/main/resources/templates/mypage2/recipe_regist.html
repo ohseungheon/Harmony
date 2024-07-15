@@ -521,7 +521,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				console.log("data.imgurl : " + data.imgurl);
 				console.log("imageUrl : " + imageUrl);
 				// 이미지 URL을 이미지 요소에 설정
-				document.getElementById("menu-image").setAttribute("src", "/img/menu/" + imageUrl + ".jpg");
+				document.getElementById("menu-image").setAttribute("src", "/img/menu/" + imageUrl);
 				document.getElementById("menu-image").setAttribute("onerror", "this.onerror=null; this.src='/img/imgNone.png';");
 			})
 			.catch(error => {
@@ -556,9 +556,7 @@ function addChangeListener(selectElement){
 		.catch(error => {
 			console.error(error);
 		});
-		
 		}
-		
 	});
 }
 
