@@ -28,9 +28,10 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/", "/login_page", "/regist_page", "/doLogin", "/doRegist", "/loginProc").permitAll()
 						.requestMatchers("/src/**", "/main/**","/resources/**", "/static/**", "/img/**", "/json/**").permitAll()
+						.requestMatchers("/uploads/**").permitAll()
 						.requestMatchers("/api/**").permitAll()
 						.requestMatchers("/menu_all/**").permitAll()
-						.requestMatchers("/admin").hasRole("ADMIN")
+						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
 						.anyRequest().authenticated()
 						);

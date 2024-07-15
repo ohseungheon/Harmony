@@ -37,8 +37,8 @@
         }
 
         .deactivation {
-            background-color: black;
-            filter: brightness(0.35);
+            background-color: rgba(0, 0, 0, 0.5);
+            filter: brightness(0.50);
         }
 
         /* Webkit 브라우저 (Chrome, Safari) */
@@ -78,13 +78,18 @@
         } */
 
         .king-menu-list.dimmed {
-            filter: brightness(0.55);
+            filter: brightness(0.75);
             background-color: rgb(255, 255, 255);
         }
 
         .king-menu-name {
             font-size: 36px;
             font-weight: bold;
+        }
+
+        .king-menu-categor{
+            font-size: 24px;
+            color:#333;
         }
 
         .king-menu-list>img {
@@ -140,7 +145,7 @@
                     document.querySelector('.king-menu-grid').innerHTML = "";
 
                     menuList.forEach(menu => {
-                        display_menu_card(menu.mcode, menu.menuName, menu.imgurl);
+                        display_menu_card(menu.mcode, menu.menuName, menu.imgurl, menu.category);
                     })
                 })
                 .then(() => {
@@ -228,13 +233,14 @@
                 ;
         }
 
-        function display_menu_card(mcode, menuName, imgurl) {
+        function display_menu_card(mcode, menuName, imgurl, category) {
             document.querySelector('.king-menu-grid').innerHTML
                 += '<div class="king-menu-list" id="' + mcode
                 + '">'
                 + '<img src="/uploads/' + imgurl
                 + '">'
                 + '<span class="king-menu-name"> ' + menuName + '</span>'
+                + '<span class="king-menu-category"> ' + category + '</span>'
                 + '</div>'
                 ;
         }
