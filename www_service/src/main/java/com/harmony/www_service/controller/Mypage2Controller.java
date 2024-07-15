@@ -80,7 +80,7 @@ public class Mypage2Controller {
 		recipeDto.setMno(mno.getMno());
 		recipeDto.setRecipeName(recipeName);
 		recipeDto.setIntroduce(introduce);
-		recipeDto.setUrl(url);
+		recipeDto.setUrl(url.substring(url.length() - 11));
 		recipeDto.setCategory(category);
 		recipeDto.setPortions(portions);
 		service.registMyRecipeService(recipeDto);
@@ -128,6 +128,23 @@ public class Mypage2Controller {
 		
 		
 		return "redirect:list?mno=" + mno.getMno();
+	}
+	
+	@RequestMapping("/updateForm")
+	public String updateForm(Model model,
+			@RequestParam("rcode") int rcode) {
+		
+		RecipeDto recipeDto = service.getRecipeService(rcode);
+		List<RecipeIngredientDto> recipeIngredientDto = service.getRecipeIngredientService(rcode);
+		List<RecipeOrderDto> recipeOrderDto = service.getRecipeOrderService(rcode);
+		RecipeTagDto recipeTagDto = service.getRecipeTagService(rcode);
+		
+		model.addAttribute("recipe", recipeDto);
+		model.addAttribute("recipeIngredient", recipeIngredientDto);
+		model.addAttribute("recipeOrder", recipeOrderDto);
+		model.addAttribute("recipeTag", recipeTagDto);
+		
+		return "mypage2/recipe_update";
 	}
 	
 	
