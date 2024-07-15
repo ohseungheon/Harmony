@@ -37,7 +37,7 @@
 	background-color: #ddd;
 }
 /* 냉동/냉장 섹션 외부 스타일 */
-#by-ice-out, #by-cool-out {
+#by-cool-out {
 	display: flex; /* Flexbox 사용 */
 	flex-direction: row; /* 가로 배치 */
 	justify-content: center; /* 수평 가운데 정렬 */
@@ -48,27 +48,22 @@
 	background-color: #A7BCF2;
 	border: 1px solid #ccc;
 	width: 500px;
-	height: 300px;
 	margin-bottom: 10px;
 	border-radius: 5px;
-	display: flex; /* Flexbox 사용 */
-	flex-direction: row;
-	justify-content: center; /* 수평 가운데 정렬 */
-	align-items: center; /* 수직 가운데 정렬 */
+	padding:20px 0;
 }
 
 #by-ice-in {
-	background-color: #fff;
-	border: 1px solid #bbb;
-	width: 400px;
-	height: 220px;
-	margin: 20px;
-	border-radius: 15px;
-	display: flex; /* Flexbox 사용 */
-	flex-direction: row;
-	flex-wrap: wrap; /* 줄 바꿈 허용 */
-	justify-content: space-around; /* 공간을 균등하게 배분 */
-	align-items: center;
+	width:450px;
+	margin:0 auto;
+	height:250px;
+	background:#fff;
+	border-radius:10px;
+	display:flex;
+	justify-content:center;
+	flex-wrap:wrap;
+	align-items:center;
+	gap:30px;
 }
 
 #by-cool-out {
@@ -99,13 +94,15 @@
 #by-cool-in {
 	background-color: #fff;
 	border: 1px solid #bbb;
-	width: 400px;
-	height: 420px;
+	width: 450px;
 	margin: 5px;
 	border-radius: 15px;
 	display: flex; /* Flexbox 사용 */
 	flex-wrap: wrap; /* 줄 바꿈 허용 */
 	align-items: center;
+	justify-content:center;
+	gap:30px;
+	padding:70px 0;
 }
 
 #by-refrigerator {
@@ -114,16 +111,20 @@
 }
 
 #by-favo-menu {
-	border: 1px solid #ccc;
-	width: 110px;
-	margin: 10px;
-	box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+	border:1px solid #eee;
+	border-radius:5px;
+	box-shadow:0px 1px 10px #ccc;
+	padding:5px;
+	display:flex;
+	flex-direction:column;
+	gap:10px;
 }
 
 #by-menu-img {
 	width: 100px;
 	height: 70px;
 	margin: 5px;
+	padding-bottom:5px;
 }
 
 #by-menu {
@@ -169,13 +170,13 @@
 
 #by-buk {
 	position: absolute;
-	bottom: 27px;
+	bottom: 37px;
 	right: 50px;
 	width: 320px;
-	height: 330px;
 	background: #F9E77F;
 	padding: 20px;
 	padding-top: 0;
+	padding-bottom:30px;
 	display: flex;
 	justify-content: center;
 	border-radius: 0 0 5px 5px;
@@ -183,12 +184,13 @@
 
 #by-buk .by-buk-in {
 	width: 300px;
-	height: 300px;
 	display: flex; /* Flexbox 사용 */
 	flex-wrap: wrap; /* 줄 바꿈 허용 */
 	justify-content: center;
 	align-items: center;
 	background: #fff;
+	gap:20px;
+	padding:20px 0;
 }
 
 .by-buk-in .buk-menu {
@@ -252,30 +254,32 @@
 					<!-- 냉동 -->
 					<div id="by-ice-out">
 						<div id="by-ice-in">
-							<div th:each="ice : ${ice}" id="by-favo-menu">
+							<div th:each="ice, i : ${ice}" id="by-favo-menu">
+							<div class="ice-ingredient">
 								<img id="by-menu-img"
 									th:src="@{'/img/ingredient/'+ ${ice.imgUrl}}">
+								<div th:with="day = ${dayIce[i.index]}">
+							<div class="d-day-info">
+								<p id="by-menu-plus" th:if="${day > 0}" th:text="'D+' + ${day}">D0</p>
+								<p id="by-menu-minus" th:unless="${day > 0}" th:text="'D' + ${day}">D0</p>
 							</div>
-							<div th:block th:each="day : ${dayIce}" class="d-day-info">
-								<span id="by-menu-plus" th:if="${day > 0}"
-									th:text="'D+' + ${day}">D0</span>
-								<span id="by-menu-minus" th:unless="${day > 0}"
-									th:text="'D' + ${day}">D0</span>
+							</div>
+							</div>
 							</div>
 						</div>
 					</div> <!-- 냉장 -->
 					<div id="by-cool-out">
 						<div class="by-handle"></div>
 						<div id="by-cool-in">
-							<div th:each="cool : ${cool}" id="by-favo-menu">
+							<div th:each="cool, i: ${cool}" id="by-favo-menu">
 								<img id="by-menu-img"
 									th:src="@{'/img/ingredient/'+ ${cool.imgUrl}}">
+									<div th:with="day = ${dayCool[i.index]}">
+							<div class="d-day-info">
+								<p id="by-menu-plus" th:if="${day > 0}" th:text="'D+' + ${day}">D0</p>
+								<p id="by-menu-minus" th:unless="${day > 0}" th:text="'D' + ${day}">D0</p>
 							</div>
-							<div th:block th:each="day : ${dayCool}" class="d-day-info">
-								<span id="by-menu-plus" th:if="${day > 0}"
-									th:text="'D+' + ${day}">D0</span>
-								<span id="by-menu-minus" th:unless="${day > 0}"
-									th:text="'D' + ${day}">D0</span>
+							</div>
 							</div>
 						</div>
 					</div>
@@ -286,15 +290,15 @@
 			<div id="by-food">
 				<div id="by-buk">
 					<div class="by-buk-in">
-						<div th:each="food : ${food}" id="by-favo-menu" class="buk-menu">
+						<div th:each="food, i: ${food}" id="by-favo-menu" class="buk-menu">
 							<img id="by-menu-img"
 								th:src="@{'/img/ingredient/'+ ${food.imgUrl}}">
+								<div th:with="day = ${dayFood[i.index]}">
+						<div class="d-day-info">
+							<p id="by-menu-plus" th:if="${day > 0}" th:text="'D+' + ${day}">D0</p>
+							<p id="by-menu-minus" th:unless="${day > 0}" th:text="'D' + ${day}">D0</p>
 						</div>
-						<div th:block th:each="day : ${dayFood}" class="d-day-info">
-							<span id="by-menu-plus" th:if="${day > 0}"
-								th:text="'D+' + ${day}">D0</span>
-							<span id="by-menu-minus" th:unless="${day > 0}"
-								th:text="'D' + ${day}">D0</span>
+						</div>
 						</div>
 					</div>
 				</div>
