@@ -2,28 +2,80 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>날씨 기반 메뉴 추천</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .weather-container {
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .weather-item {
+            font-size: 16px;  
+        }
+        .weather-icon {
+            font-size: 20px;
+            margin: 0 5px; 
+            vertical-align: middle; 
+        }
+        .menu-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .menu-item {
+            width: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .menu-item:nth-child(1) { background-color: #ffb3ba; }
+        .menu-item:nth-child(2) { background-color: #baffc9; }
+        .menu-item:nth-child(3) { background-color: #bae1ff; }
+        .menu-item:nth-child(4) { background-color: #ffffba; }
+        .menu-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .menu-info {
+            padding: 15px;
+            text-align: center;
+        }
+        .menu-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .menu-button {
+            background-color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-<header>
-    <th:block th:insert="~{/sub/header.html}"></th:block>
-</header>
+
 <section>
-    <h1 style="text-align: center;">현재 날씨</h1>
-    <table id="weather-table">
-        <thead>
-            <tr>
-                <th>날짜</th>
-                <th>현재 온도(°C)</th>
-                <th>날씨</th>
-                <th>추천 메뉴</th>
-            </tr>
-        </thead>
-        <tbody id="weather-body">
-        </tbody>
-    </table>
+    <div id="weather-container" class="weather-container">
+    </div>
+    <h1>호린날씨 이런 메뉴 어때요?</h1>
+    <div id="menu-list" class="menu-list">
+    </div>
 </section>
 
 <script>
@@ -64,35 +116,47 @@
             '안개': '🌫️'
         };
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const weatherBody = document.getElementById('weather-body');
-            const date = new Date(data.dt * 1000);
-            const formattedDate = date.toISOString().split('T')[0];
-            const formattedTime = date.toTimeString().split(' ')[0];
-            const temp = (data.main.temp - 273.15).toFixed(2);
-            const description = data.weather[0].description;
-            const simplifiedDescription = weatherMapping[description] || '맑음';
-            const icon = weatherIcons[simplifiedDescription] || '☀️';
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const weatherContainer = document.getElementById('weather-container');
+                const date = new Date(data.dt * 1000);
+                const formattedDate = date.toISOString().split('T')[0];
+                const temp = (data.main.temp - 273.15).toFixed(2);
+                const description = data.weather[0].description;
+                const simplifiedDescription = weatherMapping[description] || '맑음';
+                const icon = weatherIcons[simplifiedDescription] || '☀️';
 
-            const recommendedMenu = temp >= 20 ? '불고기, 삼겹살' : '';
-            // loadRecomendMenu();
-            const tableContent = `
-                <tr>
-                    <td>${formattedDate}</td>
-                    <td>${temp}</td>
-                    <td>${icon} ${simplifiedDescription}</td>
-                    <td>${recommendedMenu}</td>
-                </tr>
-            `;
+                const content = `
+                    <div class="weather-item">
+                        ${temp}°C <span class="weather-icon">${icon}</span> ${simplifiedDescription}
+                    </div>
+                `;
 
-            weatherBody.innerHTML = tableContent;
-        })
-        .catch(error => console.error('Error fetching weather data:', error));
+                weatherContainer.innerHTML = content;
+
+                // 온도에 따른 메뉴 추천
+                let recommendedMenus;
+                if (temp < 20) {
+                    recommendedMenus = ['라멘', '오뎅', '짬뽕', '딤섬'];
+                } else if (temp >= 20 && temp < 30) {
+                    recommendedMenus = ['삼겹살', '불고기', '스테이크', '햄버거'];
+                } else {
+                    recommendedMenus = ['하이라이스', '와플', '동태찌개', '호박죽'];
+                }
+
+                const menuList = document.getElementById('menu-list');
+                menuList.innerHTML = recommendedMenus.map(menu => `
+                    <div class="menu-item">
+                        <img src="/images/${menu}.jpg" alt="${menu}">
+                        <div class="menu-info">
+                            <div class="menu-name">${menu}</div>
+                        </div>
+                    </div>
+                `).join('');
+            })
+            .catch(error => console.error('Error fetching weather data:', error));
     });
-
-    
 
     
 </script>

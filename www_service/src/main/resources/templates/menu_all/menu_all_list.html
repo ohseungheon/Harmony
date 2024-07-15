@@ -9,9 +9,11 @@
             flex-wrap: wrap;
             gap: 20px;
             padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         .menuItem {
-            width: 200px;
+            width: 225px;
             background-color: #E0E0E0;
             color: black;
             border-radius: 5px;
@@ -44,31 +46,62 @@
         button:hover {
             background-color: #e0e0e0;
         }
-        .menuButton{
-            border: none;
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            display: block;
-            width: 100%;
-            padding: 10px 0;
+        .menuButton {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
         }
+
+        .menuButton button {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 10px 15px;
+        }
+
+        .menuButton button:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .filterButtons {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .filterButtons button {
+            margin-right: 10px;
+        }
+
+        
     </style>
 </head>
 <body>
-<header>
-<th:block th:insert="~{/sub/header.html}"></th:block>
-</header>
 <section>
     <div class="menuButton">
-        <button onclick="loadMenu('한식')" class="active">한식</button>
-        <button onclick="loadMenu('중식')">중식</button>
+        <button onclick="loadMenu('한식')">한식</button>
+        <span class="divider">|</span>
         <button onclick="loadMenu('일식')">일식</button>
+        <span class="divider">|</span>
+        <button onclick="loadMenu('중식')">중식</button>
+        <span class="divider">|</span>
         <button onclick="loadMenu('양식')">양식</button>
+        <span class="divider">|</span>
         <button onclick="loadMenu('기타')">기타</button>
     </div>
-    <button onclick="toggleFilter()">필터</button>
-    <button onclick="loadRecomendMenu()">날씨별 추천</button>
+    <div class="container">
+        <div class="filterButtons">
+            <button onclick="toggleFilter()">필터</button>
+            <button onclick="loadRecomendMenu()">날씨별 추천</button>
+        </div>
+    </div>  
     <div id="filterDiv">
         <div>
             <input type="checkbox" name="ingredient" value="1" id="ing1" onchange="applyFilter()"> <label for="ing1">레몬</label>
@@ -152,7 +185,7 @@
         data.forEach(menu => {
             html += `
                 <div class="menuItem" onclick="loadRecipeList('${menu.mcode}')">
-                    <img src="${menu.imgurl || 'path/to/default-image.jpg'}" alt="${menu.menuName}" class="menuImage">
+                    <img src="/uploads/`+menu.imgurl+`" alt="${menu.menuName}" class="menuImage">
                     <div class="menuName">${menu.menuName}</div>
                 </div>`;
         });

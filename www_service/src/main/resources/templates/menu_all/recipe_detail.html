@@ -4,6 +4,68 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+    
+        section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+    
+        h2 {
+            color: #666;
+            margin-top: 30px;
+        }
+    
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+    
+        .recipe-info {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    
+        .recipe-info p {
+            margin: 5px 0;
+        }
+    
+        iframe {
+            display: block;
+            margin: 20px auto;
+        }
+    
+        .ingredients, .order {
+            margin-top: 30px;
+        }
+    
+        .ingredient-item, .order-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    
+        .order-item img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -11,27 +73,30 @@
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
 <section>
-    <h1>recipe_detail</h1>
+    <h1>레시피 상세</h1>
     <hr>
-    <h2></h2>
-    <div>
-        <p>menuName  : <span th:text="${menuName }"></span></p>
-        <p>rcode : <span th:text="${rcode}"></span></p>
-        <p>recipeName : <span th:text="${recipeName}"></span></p>
-        <p>introduce : <span th:text="${introduce}"></span></p>
-        <iframe th:src="'https://www.youtube.com/embed/' + ${url}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+    <div class="recipe-info">
+        <p>메뉴명: <span th:text="${menuName}"></span></p>
+        <p>레시피 코드: <span th:text="${rcode}"></span></p>
+        <p>레시피명: <span th:text="${recipeName}"></span></p>
+        <p>소개: <span th:text="${introduce}"></span></p>
     </div>
-    <h2>Ingredients</h2>
-    <div th:each="ingredient : ${recipeIngredientList}">
-        <p>Name: <span th:text="${ingredient?.name}"></span></p>
-        <p>Amount: <span th:text="${ingredient?.amount}"></span></p>
+    <iframe th:src="'https://www.youtube.com/embed/' + ${url}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+    
+    <h2>재료</h2>
+    <div class="ingredients">
+        <div th:each="ingredient : ${recipeIngredientList}" class="ingredient-item">
+            <p>재료명: <span th:text="${ingredient?.name}"></span></p>
+            <p>양: <span th:text="${ingredient?.amount}"></span></p>
+        </div>
     </div>
     
-    <h2>Order</h2>
-    <div th:each="order : ${recipeOrderList}">
-        <p>Content: <span th:text="${order.orderContent}"></span></p>
-        <p>Order Number: <span th:text="${order.orderNum}"></span></p>
-        <img th:src="@{${order?.cookingImg}}" alt="Cooking Image"/>
+    <h2>조리 순서</h2>
+    <div class="order">
+        <div th:each="order : ${recipeOrderList}" class="order-item">
+            <p>순서 <span th:text="${order.orderNum}"></span>: <span th:text="${order.orderContent}"></span></p>
+            <img th:src="@{${order?.cookingImg}}" alt="조리 이미지"/>
+        </div>
     </div>
 </section>
 
