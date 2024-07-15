@@ -1,7 +1,12 @@
 package com.harmony.www_service.controller;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -93,6 +98,25 @@ public class Mypage1Controller {
 		List<FridgeIngredientDto> food = myDao.getFoodList(mno);
 		System.out.println("상온>>>>"+food);
 		model.addAttribute("food", food);
+		
+		//디데이
+		LocalDate now = LocalDate.now();
+		List<Long> daysBetween_ice = new ArrayList<>();
+		List<Long> daysBetween_cool = new ArrayList<>();
+		List<Long> daysBetween_food = new ArrayList<>();
+		for(int i = 0; i < ice.size() ; i ++ ) {
+			 daysBetween_ice.add( ChronoUnit.DAYS.between(ice.get(i).getDeadline(),now));
+		}
+		for(int i = 0; i < cool.size() ; i ++ ) {
+			 daysBetween_cool.add( ChronoUnit.DAYS.between(cool.get(i).getDeadline(),now));
+		}
+		for(int i = 0; i < food.size() ; i ++ ) {
+			 daysBetween_food.add( ChronoUnit.DAYS.between(food.get(i).getDeadline(),now));
+		}
+		
+		model.addAttribute("dayIce",daysBetween_ice);
+		model.addAttribute("dayCool",daysBetween_cool);
+		model.addAttribute("dayFood",daysBetween_food);
 		
 		return "mypage1/mypage_main";
 	}
