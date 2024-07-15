@@ -33,7 +33,6 @@ section{
 
 header {
 	width: 100%;
-	height: 100px;
 	margin: 0 auto;
 	border-bottom: 1px solid #eee;
 }
@@ -70,6 +69,14 @@ header {
 .head .login-area span a:hover {
 	color: #333;
 }
+.head-nav{
+	padding:20px 0 10px;
+}
+.head-nav ul{
+	display:flex;
+	justify-content:center;
+	gap:30px;
+}
 </style>
 </head>
 <body>
@@ -90,6 +97,14 @@ header {
 					th:href="@{/logout}" id="logout">로그아웃</a>
 				</span>
 			</div>
+		</div>
+		<div class="head-nav">
+			<ul>
+				<li><a href="">aa</a></li>
+				<li><a href="">aa</a></li>
+				<li><a href="">aa</a></li>
+				<li><a href="">aa</a></li>
+			</ul>
 		</div>
 	</header>
 
