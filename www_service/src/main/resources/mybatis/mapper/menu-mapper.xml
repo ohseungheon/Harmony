@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmony.www_service.dao.MenuDao">
+    <select id="getFilteredMenuList" resultType="com.harmony.www_service.dto.MenuDto">
+        SELECT DISTINCT m.*
+        FROM menu m
+        LEFT JOIN recipe r ON m.mcode = r.mcode
+        LEFT JOIN recipe_ingredient ri ON r.rcode = ri.rcode
+        WHERE 1=1
+        <if test="categories != null and categories != ''">
+            AND m.category IN 
+            <foreach item="item" index="index" collection="categories.split(',')" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="ingredients != null and ingredients != ''">
+            AND ri.icode IN 
+            <foreach item="item" index="index" collection="ingredients.split(',')" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+</mapper>

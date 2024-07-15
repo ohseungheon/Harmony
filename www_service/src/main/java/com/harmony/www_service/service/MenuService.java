@@ -3,11 +3,12 @@ package com.harmony.www_service.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.harmony.www_service.dao.Menu1Dao;
+import com.harmony.www_service.dao.MenuDao;
 import com.harmony.www_service.dao.MenuListDao;
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.MenuDto;
@@ -19,6 +20,8 @@ public class MenuService {
     private Menu1Dao menu1dao;
     @Autowired
     private MenuListDao menuListDao;
+    @Autowired
+    private MenuDao menuDao;
     
 //    public List<MenuDto> getMenuList(String category){
 //        
@@ -69,4 +72,9 @@ public class MenuService {
     	return rcodeList;
     }
     
+    public List<MenuDto> getFilteredMenuList(String categories, String ingredients) {
+        if (categories == null) categories = "";
+        if (ingredients == null) ingredients = "";
+        return menuDao.getFilteredMenuList(categories, ingredients);
+    }
 }

@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="getRecipeByRcode" parameterType="int" resultType="com.harmony.www_service.dto.RecipeDto">
-        SELECT * FROM recipe WHERE rcode = #{rcode}
+        SELECT r.*, m.menuName FROM recipe r JOIN menu m ON r.mcode = m.mcode WHERE r.rcode = #{rcode}
     </select>
 
     <select id="getRecipeIngredientsByRcode" parameterType="int" resultType="com.harmony.www_service.dto.RecipeIngredientDto">

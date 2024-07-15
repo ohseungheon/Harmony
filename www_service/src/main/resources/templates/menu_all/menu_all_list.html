@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
-        
         #menuList {
             display: flex;
             flex-wrap: wrap;
@@ -72,8 +71,12 @@
     <button onclick="loadRecomendMenu()">날씨별 추천</button>
     <div id="filterDiv">
         <div>
-            <input type="checkbox" name="type" value="main" id="typeMain" onchange="applyFilter()"> <label for="typeMain">Main</label>
-            <input type="checkbox" name="type" value="other" id="typeOther" onchange="applyFilter()"> <label for="typeOther">Other</label>
+            <input type="checkbox" name="ingredient" value="1" id="ing1" onchange="applyFilter()"> <label for="ing1">레몬</label>
+            <input type="checkbox" name="ingredient" value="3" id="ing3" onchange="applyFilter()"> <label for="ing3">대파</label>
+            <input type="checkbox" name="ingredient" value="6" id="ing6" onchange="applyFilter()"> <label for="ing6">마늘</label>
+            <input type="checkbox" name="ingredient" value="7" id="ing7" onchange="applyFilter()"> <label for="ing7">감자</label>
+            <input type="checkbox" name="ingredient" value="22" id="ing22" onchange="applyFilter()"> <label for="ing22">소고기</label>
+            <input type="checkbox" name="ingredient" value="23" id="ing23" onchange="applyFilter()"> <label for="ing23">돼지고기</label>
         </div>
         <div>
             <input type="checkbox" name="category" value="한식" id="catKorean" onchange="applyFilter()"> <label for="catKorean">한식</label>
@@ -82,7 +85,6 @@
             <input type="checkbox" name="category" value="양식" id="catWestern" onchange="applyFilter()"> <label for="catWestern">양식</label>
             <input type="checkbox" name="category" value="기타" id="catOther" onchange="applyFilter()"> <label for="catOther">기타</label>
         </div>
-        <!-- 적용 버튼 제거 -->
     </div>
 
     <div id="menuList"></div>
@@ -104,19 +106,25 @@
     }
 
     function applyFilter() {
-        const type = document.querySelector('input[name="type"]:checked')?.value;
+        const type = document.querySelector('input[name="type"]:checked')?.value || '';
         const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(input => input.value);
+        const ingredients = Array.from(document.querySelectorAll('input[name="ingredient"]:checked')).map(input => input.value);
         
         if (categories.length === 0) {
             categories.push('한식', '중식', '일식', '양식', '기타');
         }
 
-        fetch('/api/menu/filtered_menu_list', {
-            method: 'POST',
+        const params = new URLSearchParams({
+            type: type,
+            categories: categories.join(','),
+            ingredients: ingredients.join(',')
+        });
+
+        fetch(`/api/menu/filtered_menu_list?${params.toString()}`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ type, categories })
         })
         .then(response => response.json())
         .then(data => {
@@ -134,22 +142,24 @@
         })
         .then(response => response.json())
         .then(data => {
-            let html = '';
-            data.forEach(menu => {
-                html += `
-                    <div class="menuItem" onclick="loadRecipeList('${menu.mcode}')">
-                        <img src="${menu.imgurl || 'path/to/default-image.jpg'}" alt="${menu.menuName}" class="menuImage">
-                        <div class="menuName">${menu.menuName}</div>
-                    </div>`;
-            });
-            document.getElementById('menuList').innerHTML = html;
+            updateMenuList(data);
         })
         .catch(error => console.error('Error:', error));
     }
 
+    function updateMenuList(data) {
+        let html = '';
+        data.forEach(menu => {
+            html += `
+                <div class="menuItem" onclick="loadRecipeList('${menu.mcode}')">
+                    <img src="${menu.imgurl || 'path/to/default-image.jpg'}" alt="${menu.menuName}" class="menuImage">
+                    <div class="menuName">${menu.menuName}</div>
+                </div>`;
+        });
+        document.getElementById('menuList').innerHTML = html;
+    }
     
     function loadRecipeList(mcode) {
-
         window.location.href = `/menu_all/recipe_list?mcode=${mcode}`;
     }
     
