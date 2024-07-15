@@ -346,11 +346,11 @@
           </div>
           <label for="category">카테고리</label>
           <select name="category" id="dally_ingredient_category">
-            <option value="meat">육류</option>
-            <option value="seafood">해산물</option>
-            <option value="vegi_fruit">채소 / 과일</option>
-            <option value="dairy_poducts">유제품</option>
-            <option value="etc">기타</option>
+            <option value="육류">육류</option>
+            <option value="해산물">해산물</option>
+            <option value="채소 / 과일">채소 / 과일</option>
+            <option value="유제품">유제품</option>
+            <option value="기타">기타</option>
             </select
           ><br />
           재료 이름
@@ -364,12 +364,7 @@
             <option value="수량">수량</option>
             <option value="중량">중량</option></select
           ><br />
-          tip
-          <input
-            type="text"
-            name="tip"
-            placeholder="유통기한 등의 tip!"
-          /><br />
+          tip<textarea name="tip" rows="5" cols="70">[[${detail.tip}]]</textarea><br>
           <input type="submit" value="재료 등록" />
         </form>
       </div>

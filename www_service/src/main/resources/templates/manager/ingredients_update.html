@@ -116,7 +116,7 @@
               <option value="수량">수량</option>
               <option value="중량">중량</option>
             </select><br />
-            tip<input type="text" name="tip" th:value="${detail.tip}" width="700px"><br>
+            tip<textarea name="tip" rows="5" cols="70">[[${detail.tip}]]</textarea><br>
             <input type="submit" value="수정 완료">
         </form>
     </div>
