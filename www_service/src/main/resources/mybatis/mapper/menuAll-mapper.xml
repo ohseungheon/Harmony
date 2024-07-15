@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * FROM menu WHERE category = #{category}
     </select>
 
-    <select id="getFilteredMenuList" parameterType="string" resultType="com.harmony.www_service.dto.MenuDto">
+    <select id="getFilteredMenuList" resultType="com.harmony.www_service.dto.MenuDto">
         SELECT DISTINCT m.*
         FROM menu m
         LEFT JOIN recipe r ON m.mcode = r.mcode

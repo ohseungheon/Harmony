@@ -12,6 +12,7 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+
         .menuItem {
             width: 225px;
             background-color: #E0E0E0;
@@ -21,31 +22,32 @@
             transition: transform 0.3s ease;
             cursor: pointer;
         }
+
         .menuItem:hover {
             transform: translateY(-5px);
         }
+
         .menuImage {
             width: 100%;
             height: 150px;
             object-fit: cover;
         }
+
         .menuName {
             padding: 10px;
             text-align: center;
             font-weight: bold;
         }
-        
-        #filterDiv {
+
+        .filter-container {
             display: none;
+            background: rgba(107, 213, 252, 0.1);
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
-        button{
-            border: 0px;
-            background-color: white;
-            color: black;
-        }
-        button:hover {
-            background-color: #e0e0e0;
-        }
+
         .menuButton {
             display: flex;
             justify-content: center;
@@ -53,17 +55,23 @@
             margin-bottom: 20px;
         }
 
-        .menuButton button {
+        .menuButton button,
+        .custom-button {
             background: none;
             border: none;
             font-size: 16px;
             cursor: pointer;
             padding: 10px 15px;
+            color: black;
+            transition: background-color 0.3s, text-decoration 0.3s;
         }
 
-        .menuButton button:hover {
+        .menuButton button:hover,
+        .custom-button:hover {
+            background-color: #e0e0e0;
             text-decoration: underline;
         }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -80,7 +88,34 @@
             margin-right: 10px;
         }
 
-        
+        .filter-description {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .filter-section {
+            margin-bottom: 15px;
+        }
+
+        .filter-section h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .checkbox-group label {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -98,25 +133,36 @@
     </div>
     <div class="container">
         <div class="filterButtons">
-            <button onclick="toggleFilter()">필터</button>
-            <button onclick="loadRecomendMenu()">날씨별 추천</button>
+            <button onclick="toggleFilter('filterDiv')" class="custom-button">상세 검색</button>
+            <button onclick="toggleFilter('ingredientDiv')" class="custom-button">재료별 검색</button>
         </div>
     </div>  
-    <div id="filterDiv">
-        <div>
-            <input type="checkbox" name="ingredient" value="1" id="ing1" onchange="applyFilter()"> <label for="ing1">레몬</label>
-            <input type="checkbox" name="ingredient" value="3" id="ing3" onchange="applyFilter()"> <label for="ing3">대파</label>
-            <input type="checkbox" name="ingredient" value="6" id="ing6" onchange="applyFilter()"> <label for="ing6">마늘</label>
-            <input type="checkbox" name="ingredient" value="7" id="ing7" onchange="applyFilter()"> <label for="ing7">감자</label>
-            <input type="checkbox" name="ingredient" value="22" id="ing22" onchange="applyFilter()"> <label for="ing22">소고기</label>
-            <input type="checkbox" name="ingredient" value="23" id="ing23" onchange="applyFilter()"> <label for="ing23">돼지고기</label>
+    <div id="filterDiv" class="filter-container">
+        <p class="filter-description"><i>*선택한 항목이 포함된 모든 메뉴가 표시됩니다.*</i></p>
+        <div id="ingredientCategories" class="filter-section">
+            <h4>재료 카테고리</h4>
+            <div class="checkbox-group">
+                <!-- 여기에 동적으로 재료 카테고리 체크박스가 추가됩니다 -->
+            </div>
         </div>
-        <div>
-            <input type="checkbox" name="category" value="한식" id="catKorean" onchange="applyFilter()"> <label for="catKorean">한식</label>
-            <input type="checkbox" name="category" value="중식" id="catChinese" onchange="applyFilter()"> <label for="catChinese">중식</label>
-            <input type="checkbox" name="category" value="일식" id="catJapanese" onchange="applyFilter()"> <label for="catJapanese">일식</label>
-            <input type="checkbox" name="category" value="양식" id="catWestern" onchange="applyFilter()"> <label for="catWestern">양식</label>
-            <input type="checkbox" name="category" value="기타" id="catOther" onchange="applyFilter()"> <label for="catOther">기타</label>
+        <div class="filter-section">
+            <h4>메뉴 카테고리</h4>
+            <div class="checkbox-group">
+                <input type="checkbox" name="category" value="한식" id="catKorean" onchange="applyFilter()"> <label for="catKorean">한식</label>
+                <input type="checkbox" name="category" value="중식" id="catChinese" onchange="applyFilter()"> <label for="catChinese">중식</label>
+                <input type="checkbox" name="category" value="일식" id="catJapanese" onchange="applyFilter()"> <label for="catJapanese">일식</label>
+                <input type="checkbox" name="category" value="양식" id="catWestern" onchange="applyFilter()"> <label for="catWestern">양식</label>
+                <input type="checkbox" name="category" value="기타" id="catOther" onchange="applyFilter()"> <label for="catOther">기타</label>
+            </div>
+        </div>
+    </div>
+    <div id="ingredientDiv" class="filter-container">
+        <p class="filter-description"><i>*선택한 재료가 모두 포함된 메뉴가 표시됩니다.*</i></p>
+        <div class="filter-section">
+            <h4>재료</h4>
+            <div id="ingredientCheckboxes" class="checkbox-group">
+                <!-- 여기에 동적으로 체크박스가 추가됩니다 -->
+            </div>
         </div>
     </div>
 
@@ -127,43 +173,104 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         loadMenu('한식');
+        loadIngredientCategories();
+        loadIngredients();
     });
 
-    function toggleFilter() {
-        const filterDiv = document.getElementById('filterDiv');
+    function toggleFilter(divId) {
+        const filterDiv = document.getElementById(divId);
+        const otherDivId = divId === 'filterDiv' ? 'ingredientDiv' : 'filterDiv';
+        const otherDiv = document.getElementById(otherDivId);
+        
         if (filterDiv.style.display === 'none' || filterDiv.style.display === '') {
             filterDiv.style.display = 'block';
+            otherDiv.style.display = 'none';
         } else {
             filterDiv.style.display = 'none';
         }
     }
 
+    function loadIngredientCategories() {
+        fetch('/api/menu/ingredient-categories')
+            .then(response => response.json())
+            .then(categories => {
+                const categoryGroup = document.querySelector('#ingredientCategories .checkbox-group');
+                categories.forEach(category => {
+                    const checkbox = document.createElement('div');
+                    checkbox.innerHTML = `
+                        <input type="checkbox" name="ingredientCategory" value="${category}" id="cat${category.replace(/\s+/g, '')}" onchange="applyFilter()">
+                        <label for="cat${category.replace(/\s+/g, '')}">${category}</label>
+                    `;
+                    categoryGroup.appendChild(checkbox);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function loadIngredients() {
+        fetch('/api/menu/ingredients')
+            .then(response => response.json())
+            .then(ingredients => {
+                const checkboxesContainer = document.getElementById('ingredientCheckboxes');
+                ingredients.forEach(ingredient => {
+                    const checkbox = document.createElement('div');
+                    checkbox.innerHTML = `
+                        <input type="checkbox" name="ingredient" value="${ingredient.icode}" id="ing${ingredient.icode}" onchange="applyIngredientFilter()">
+                        <label for="ing${ingredient.icode}">${ingredient.name}</label>
+                    `;
+                    checkboxesContainer.appendChild(checkbox);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
     function applyFilter() {
-        const type = document.querySelector('input[name="type"]:checked')?.value || '';
         const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(input => input.value);
-        const ingredients = Array.from(document.querySelectorAll('input[name="ingredient"]:checked')).map(input => input.value);
+        const ingredientCategories = Array.from(document.querySelectorAll('input[name="ingredientCategory"]:checked')).map(input => input.value);
         
-        if (categories.length === 0) {
-            categories.push('한식', '중식', '일식', '양식', '기타');
+        const params = new URLSearchParams();
+        
+        if (categories.length > 0) {
+            params.append('categories', categories.join(','));
+        }
+        
+        if (ingredientCategories.length > 0) {
+            params.append('ingredientCategories', ingredientCategories.join(','));
         }
 
-        const params = new URLSearchParams({
-            type: type,
-            categories: categories.join(','),
-            ingredients: ingredients.join(',')
-        });
-
-        fetch(`/api/menu/filtered_menu_list?${params.toString()}`, {
+        fetch(`/api/menu/filtered_menu_list?${params.toString()}`,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
         })
-        .then(response => response.json())
-        .then(data => {
-            updateMenuList(data);
+            .then(response => response.json())
+            .then(data => {
+                updateMenuList(data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function applyIngredientFilter() {
+        const selectedIngredients = Array.from(document.querySelectorAll('#ingredientCheckboxes input[name="ingredient"]:checked')).map(input => input.value);
+        
+        const params = new URLSearchParams();
+        
+        if (selectedIngredients.length > 0) {
+            params.append('ingredients', selectedIngredients.join(','));
+        }
+
+        fetch(`/api/menu/filtered_menu_list?${params.toString()}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
-        .catch(error => console.error('Error:', error));
+            .then(response => response.json())
+            .then(data => {
+                updateMenuList(data);
+            })
+            .catch(error => console.error('Error:', error));
     }
 
     function loadMenu(category) {
@@ -185,7 +292,7 @@
         data.forEach(menu => {
             html += `
                 <div class="menuItem" onclick="loadRecipeList('${menu.mcode}')">
-                    <img src="/uploads/`+menu.imgurl+`" alt="${menu.menuName}" class="menuImage">
+                    <img src="/uploads/${menu.imgurl}" alt="${menu.menuName}" class="menuImage">
                     <div class="menuName">${menu.menuName}</div>
                 </div>`;
         });
@@ -194,10 +301,6 @@
     
     function loadRecipeList(mcode) {
         window.location.href = `/menu_all/recipe_list?mcode=${mcode}`;
-    }
-    
-    function loadRecomendMenu(){
-        window.location.href = 'recomend_menu';
     }
 </script>
 </body>
