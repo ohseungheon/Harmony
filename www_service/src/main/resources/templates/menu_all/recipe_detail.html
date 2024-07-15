@@ -6,9 +6,6 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
         }
     
         section {
@@ -95,7 +92,9 @@
     <div class="order">
         <div th:each="order : ${recipeOrderList}" class="order-item">
             <p>순서 <span th:text="${order.orderNum}"></span>: <span th:text="${order.orderContent}"></span></p>
-            <img th:src="@{${order?.cookingImg}}" alt="조리 이미지"/>
+            <th:block th:if = "${order.cookingImg != null && order.cookingImg != ''}">
+                <img th:src="${order.cookingImg}" alt="조리 이미지"/>
+            </th:block>
         </div>
     </div>
 </section>
