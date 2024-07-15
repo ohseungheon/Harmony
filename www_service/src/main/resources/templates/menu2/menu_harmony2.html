@@ -7,6 +7,7 @@
     <style>
         .king-ingredients-grid {
             display: flex;
+            background-color: #f1f1f1;
             flex-direction: row;
             overflow: auto;
             margin: 36px auto;
@@ -54,9 +55,11 @@
         }
 
         .king-menu-grid {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개의 열 */
+            gap: 8px 24px; /* 항목 사이의 간격 */
             flex-direction: column;
-            min-height: 800px;
+            min-height: 350px;
             margin: 36px auto;
             padding: 12px;
             box-shadow: rgba(0, 0, 0, 0.66) 0px 0px 0px 1px;
@@ -67,7 +70,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 2px 52px;
+            padding: 10px 20px;
             height: 150px;
             cursor: pointer;
         }
@@ -83,7 +86,7 @@
         }
 
         .king-menu-name {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: bold;
         }
 

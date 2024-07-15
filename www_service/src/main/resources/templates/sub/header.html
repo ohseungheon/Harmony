@@ -17,6 +17,17 @@ body {
 	font-size: 16px;
 }
 
+body {
+	background-image: url('/img/background.png'); /* 배경 이미지 경로 */
+	background-size: cover; /* 이미지가 전체 화면을 덮도록 설정 */
+	background-position: center; /* 이미지가 중앙에 위치하도록 설정 */
+	/* background-repeat: no-repeat; /* 이미지 반복을 하지 않도록 설정 */
+	background-repeat: repeat-y; /* 이미지 반복을 하지 않도록 설정 */
+	/* background-attachment: fixed; /* 배경 이미지가 스크롤과 함께 움직이지 않도록 설정 */
+	margin: 0; /* 기본 margin 제거 */
+	padding: 0; /* 기본 padding 제거 */
+}
+
 a {
 	text-decoration: none;
 	color: #333;
@@ -29,12 +40,15 @@ ul {
 section{
 	width:1000px;
 	margin:50px auto;
+	background-color: rgba(255, 255, 255, 0.99);
+	padding: 0 36px;
 }
 
 header {
 	width: 100%;
 	margin: 0 auto;
 	border-bottom: 1px solid #eee;
+	background-color: rgba(255, 255, 255, 0.90);
 }
 
 .head {
