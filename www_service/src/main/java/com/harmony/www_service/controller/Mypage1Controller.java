@@ -157,7 +157,11 @@ public class Mypage1Controller {
 		model.addAttribute("keeptypes", keeptypes);
 		return "mypage1/material_update";
 	}
-	
+	//재료등록페이지
+	@RequestMapping("/material_insert")
+	public String goMaterialInsert() {
+		return "mypage1/material_insert";
+	}
 	
 }
 
