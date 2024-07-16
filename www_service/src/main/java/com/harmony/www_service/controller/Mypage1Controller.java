@@ -5,8 +5,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -100,6 +98,8 @@ public class Mypage1Controller {
 		model.addAttribute("food", food);
 		
 		//디데이
+		
+		
 		LocalDate now = LocalDate.now();
 		List<Long> daysBetween_ice = new ArrayList<>();
 		List<Long> daysBetween_cool = new ArrayList<>();
@@ -159,7 +159,9 @@ public class Mypage1Controller {
 	}
 	//재료등록페이지
 	@RequestMapping("/material_insert")
-	public String goMaterialInsert() {
+	public String goMaterialInsert(Model model) {
+		List<String> keeptypes = Arrays.asList("냉장", "냉동", "상온"); //옵션데이터
+		model.addAttribute("keeptypes", keeptypes);
 		return "mypage1/material_insert";
 	}
 	
