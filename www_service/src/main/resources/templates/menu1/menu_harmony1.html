@@ -88,7 +88,7 @@ input[type="submit"]:hover {
 .remove_highlight {
    background-color: rgba(0, 0, 0, 0.1); /* Light overlay on the background */
    filter: brightness(60%); /* Darken the background */
-   transition: filter 0.3s ease; /* Smooth transition for darkening */
+   transition: all 0.3s ease; /* Smooth transition for darkening */
 }
 .remove_highlight::after {
    content: '재료가 부족합니다';
@@ -177,13 +177,6 @@ input[type="submit"]:hover {
 }
 
 
-
-/* Define the keyframes for the animation */
-@keyframes drawLine {
-   to {
-      transform: scaleX(1); /* Expand the line to full width */
-   }
-}
 
 </style>
 
