@@ -318,7 +318,7 @@
     		</tr>
     		<tr>
     			<th>동영상 주소</th>
-    			<td><input type="text" name="url" th:value="${recipe.url}"></td>
+    			<td><input type="text" name="url" th:value="'https://www.youtube.com/watch?v=' + ${recipe.url}"></td>
     		</tr>
     		<tr>
     			<th>카테고리</th>
@@ -448,7 +448,7 @@
     				<input type="hidden" name="orderNum" value="1">
     			</th>
     			<td>
-    				<textarea name="orderContent" placeholder="예) 소고기를 숭덩숭덩 썰어주세요"></textarea>
+    				<textarea name="orderContent" placeholder="예) 소고기를 숭덩숭덩 썰어주세요" th:text="${recipeOrder.orderContent}"></textarea>
     			</td>
     			<td class="order-img">
     				<p class="order-img-text">➕</p>
