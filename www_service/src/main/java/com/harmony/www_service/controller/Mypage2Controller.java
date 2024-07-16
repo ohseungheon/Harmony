@@ -80,7 +80,11 @@ public class Mypage2Controller {
 		recipeDto.setMno(mno.getMno());
 		recipeDto.setRecipeName(recipeName);
 		recipeDto.setIntroduce(introduce);
-		recipeDto.setUrl(url.substring(url.length() - 11));
+		if(url.length() > 12) {
+			recipeDto.setUrl(url.substring(url.length() - 11));
+		}else {
+			recipeDto.setUrl(url);
+		}
 		recipeDto.setCategory(category);
 		recipeDto.setPortions(portions);
 		service.registMyRecipeService(recipeDto);
@@ -138,7 +142,9 @@ public class Mypage2Controller {
 		List<RecipeIngredientDto> recipeIngredientDto = service.getRecipeIngredientService(rcode);
 		List<RecipeOrderDto> recipeOrderDto = service.getRecipeOrderService(rcode);
 		RecipeTagDto recipeTagDto = service.getRecipeTagService(rcode);
+		List<MenuDto> menuList = menuDao.getMenu();
 		
+		model.addAttribute("list", menuList);
 		model.addAttribute("recipe", recipeDto);
 		model.addAttribute("recipeIngredient", recipeIngredientDto);
 		model.addAttribute("recipeOrder", recipeOrderDto);

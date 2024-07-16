@@ -2,8 +2,282 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>레시피 수정 폼</title>
+    <title>레시피 수정</title>
+    <link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
     <style>
+    section{
+    	padding-top:30px !important;
+		padding-bottom:100px !important;
+    }
+    
+    .queen-page-title{
+    	margin:50px 0;
+    	text-align:center;
+    	font-weight:500;
+    }
+    
+    .choice-menu-img{
+    	width:300px;
+    	margin:0 auto;
+    	height:300px;
+    	border:1px solid #eee;
+    	border-radius:50%;
+    	background:#fff;
+    	overflow:hidden;
+    }
+    .choice-menu-img img{
+    	width:100%;
+    	height:100%;
+    	object-fit:cover;
+    }
+    
+    .choice-menu-name{
+    	text-align:center;
+    	margin:40px 0;
+    }
+    
+    .recipe-regist-box1{
+    	width:100%;
+    	margin:30px auto;
+    	background:rgb(190, 227, 241, 0.1);
+		border:1px solid #bee3f1;
+		border-radius:5px;
+		padding:30px 0;
+    }
+    .recipe-regist-box1 table{
+    	margin:0 auto;
+    	border-spacing:30px 30px;
+    }
+    .recipe-regist-box1 table th{
+    	text-align:left;
+    	font-weight:500;
+    	font-size:16px;
+    }
+    
+    .recipe-regist-box1 input[type="text"]{
+    	font-family: "Pretendard Variable", Pretendard;
+    	width:600px;
+    	height:50px;
+    	border:1px solid #ececec;
+    	background:#fff;
+    	box-sizing:border-box;
+    	border-radius:5px;
+    	padding-left:10px;
+    	color:#666;
+    }
+    .recipe-regist-box1 select{
+    	font-family: "Pretendard Variable", Pretendard;
+    	width:120px;
+    	height:50px;
+    	border:1px solid #ececec;
+    	border-radius:5px;
+    	padding:0 10px;
+    }
+    
+    .recipe-regist-box2{
+    	width:100%;
+    	margin:30px auto;
+    	background:rgb(190, 227, 241, 0.1);
+		border:1px solid #bee3f1;
+		padding:30px 0;
+		border-radius:5px;
+    }
+    .recipe-regist-box2 table{
+    	margin:0 auto;
+    	border-spacing:20px 30px;
+    }
+    .recipe-regist-box2 table th{
+    	text-align:left;
+    	font-weight:500;
+    	font-size:16px;
+    }
+    
+    .recipe-regist-box2 select{
+    	font-family: "Pretendard Variable", Pretendard;
+    	width:250px;
+    	height:50px;
+    	border:1px solid #ececec;
+    	border-radius:5px;
+    	padding:0 10px;
+    }
+    .recipe-regist-box2 input[type="text"]{
+    	font-family: "Pretendard Variable", Pretendard;
+    	width:120px;
+    	height:50px;
+    	border:1px solid #ececec;
+    	border-radius:5px;
+    	box-sizing:border-box;
+    	padding-left:10px;
+    }
+    .recipe-regist-box2 .addBtn{
+    	text-align:center;
+    }
+    .recipe-regist-box2 .addBtn img{
+    	display:inline-block;
+    	cursor:pointer;
+    }
+    .recipe-regist-box2 .ingredient-delete-btn{
+    	font-size:16px;
+    	font-weight:500;
+    	cursor:pointer;
+    	padding:2px 7px;
+    	border:2px solid #F5A47D;
+    	color:#F5A47D;
+    	border-radius:50%;
+    }
+    
+    
+    .recipe-regist-box3{
+    	width:100%;
+    	margin:30px auto;
+    	background:rgb(190, 227, 241, 0.1);
+		border:1px solid #bee3f1;
+		padding:30px 0;
+		border-radius:5px;
+    }
+    .recipe-regist-box3 h4{
+    	padding-left:155px;
+    	font-weight:500;
+    }
+    
+    .recipe-regist-box3 table{
+    	margin:0 auto;
+    	border-spacing:20px 30px;
+    }
+    .recipe-regist-box3 table th{
+    	font-size:20px;
+    	font-weight:400;
+    	text-align:left;
+    }
+    
+    .recipe-regist-box3 textarea{
+    	font-family: "Pretendard Variable", Pretendard;
+    	width:410px;
+    	height:100px;
+    	resize:none;
+    	border:1px solid #ececec;
+    	border-radius:5px;
+    	padding:10px;
+    	box-sizing:border-box;
+    }
+    
+    .recipe-regist-box3 .order-img-text{
+    	font-size:20px;
+    	text-align:center;
+    }
+    .recipe-regist-box3 .order-img{
+    	width:160px;
+    	height:100px;
+    	border:1px solid #eee;
+    	border-radius:5px;
+    	overflow:hidden;
+    	cursor:pointer;
+    	background:#fff;
+    }
+    .recipe-regist-box3 .order-img img{
+    	width:100%;
+    	height:100%;
+    	object-fit:cover;
+    	
+    }
+    
+    .recipe-regist-box3 .addBtn{
+    	text-align:center;
+    }
+    .recipe-regist-box3 .addBtn img{
+    	display:inline-block;
+    	cursor:pointer;
+    }
+    .recipe-regist-box3 .delete-btn{
+    	font-size:16px;
+    	font-weight:500;
+    	cursor:pointer;
+    	padding:2px 7px;
+    	border:2px solid #F5A47D;
+    	color:#F5A47D;
+    	border-radius:50%;
+    }
+    
+    .recipe-regist-box4{
+    	width:100%;
+    	margin:30px auto;
+    	background:rgb(190, 227, 241, 0.1);
+		border:1px solid #bee3f1;
+		padding:30px 0;
+		border-radius:5px;
+    }
+    .recipe-regist-box4 table{
+    	margin:0 auto;
+    	border-spacing:20px 30px;
+    }
+    .recipe-regist-box4 table th{
+    	text-align:left;
+    	font-weight:500;
+    	font-size:16px;
+    	text-align:left;
+    }
+    .recipe-regist-box4 input[type="text"]{
+    	font-family: "Pretendard Variable", Pretendard;
+    	width:600px;
+    	height:50px;
+    	border:1px solid #ececec;
+    	border-radius:5px;
+    	box-sizing:border-box;
+    	padding-left:10px;
+    }
+    
+    .recipe-regist-btns{
+    	text-align:center;
+    }
+    .recipe-regist-btns input[type="submit"]{
+    	font-family: "Pretendard Variable", Pretendard;
+    	width:133px;
+    	height:44px;
+    	background:#F5A47D;
+    	border:1px solid #F5A47D;
+    	border-radius:5px;
+    	color:#fff;
+    	cursor:pointer;
+    }
+    .recipe-regist-btns input[type="button"]{
+    	font-family: "Pretendard Variable", Pretendard;
+    	width:133px;
+    	height:44px;
+    	background:#fff;
+    	border:1px solid #F5A47D;
+    	border-radius:5px;
+    	color:#F5A47D;
+    	cursor:pointer;
+    }
+    
+    .recipe-menu-list{
+    	margin:20px 0;
+    }
+    .recipe-menu-list ul{
+    	width:100%;
+    	display:flex;
+    	flex-wrap:wrap;
+    	gap:10px;
+    	border:1px solid #DAC0DE;
+    	padding:40px;
+    	box-sizing:border-box;
+    	border-radius:5px;
+    }
+    .recipe-menu-list ul li{
+    	text-align:center;
+    	padding:10px;
+    	cursor:pointer;
+    }
+    .recipe-menu-list ul li:hover{
+    	background:#DAC0DE;
+    	border-radius:5px;
+    }
+    
+    .selected{
+    	background:#DAC0DE;
+    	border-radius:5px;
+    }
     </style>
 </head>
 <body>
@@ -12,10 +286,516 @@
 </header>
 <section>
     
+    <h1 class="queen-page-title">레시피 등록</h1>
+    <div class="choice-menu-img">
+    	<img id="menu-image" src="" onerror="this.onerror=null; this.src='/img/imgNone.png';">
+    </div>
+    
+     <!-- 레시피를 등록할 메뉴 전체 리스트 -->
+    <div class="choice-menu-name">
+    	<h4>메뉴 선택</h4>
+    	<div class="recipe-menu-list">
+    		<ul>
+    			<th:block th:each="menu : ${list}">
+    				<li id="recipe-menu-name" th:text="${menu.menuName}" th:attr="mcode=${menu.mcode}"></li>
+    			</th:block>
+    		</ul>
+    	</div>
+    </div>
+    
+   	<!-- 레시피 등록 폼 -->
+    <form action="/my/recipe/regist" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="mcode" id="mcode">
+    <div class="recipe-regist-box1">
+    	<table>
+    		<tr>
+    			<th>레시피 제목</th>
+    			<td><input type="text" name="recipeName" th:value="${recipe.recipeName}"></td>
+    		</tr>
+    		<tr>
+    			<th>요리 소개</th>
+    			<td><input type="text" name="introduce" th:value="${recipe.introduce}"></td>
+    		</tr>
+    		<tr>
+    			<th>동영상 주소</th>
+    			<td><input type="text" name="url" th:value="${recipe.url}"></td>
+    		</tr>
+    		<tr>
+    			<th>카테고리</th>
+    			<td>
+    				<select name="category" id="category-sel">
+    					<option value="none">종류별</option>
+    					<option value="밑반찬">밑반찬</option>
+    					<option value="메인반찬">메인반찬</option>
+    					<option value="국/탕">국/탕</option>
+    					<option value="찌개">찌개</option>
+    					<option value="디저트">디저트</option>
+    					<option value="면/만두">면/만두</option>
+    					<option value="밥/죽/떡">밥/죽/떡</option>
+    					<option value="퓨전">퓨전</option>
+    					<option value="김치/젓갈/장류">김치/젓갈/장류</option>
+    					<option value="양념/소스/잼">양념/소스/잼</option>
+    					<option value="양식">양식</option>
+    					<option value="샐러드">샐러드</option>
+    					<option value="스프">스프</option>
+    					<option value="빵">빵</option>
+    					<option value="과자">과자</option>
+    					<option value="차/음료/술">차/음료/술</option>
+    					<option value="기타">기타</option>
+    				</select>
+    			</td>
+    		</tr>
+    		<tr>
+    			<th>인원</th>
+    			<td>
+    				<select name="portions" id="portions-sel">
+    					<option value="0">인원 선택</option>
+    					<option value="1">1인</option>
+    					<option value="2">2인</option>
+    					<option value="3">3인 이상</option>
+    				</select>
+    			</td>
+    		</tr>
+    	</table>
+    </div>
+    
+    <div class="recipe-regist-box2">
+    	<table id="ingredient-table">
+    <th:block th:each="ingre, i : ${recipeIngredient}">
+    		<tr>
+    			<th>재료 정보</th>
+    			<td>
+    				<select name="icode" th:id="'ingredient-select-' + ${i.index}" th:value="${ingre.icode}">
+    					<option value="0">재료 이름</option>
+    					<option value="1" th:selected="${ingre.icode == 1}">레몬</option>
+    					<option value="2" th:selected="${ingre.icode == 2}">칠면조고기</option>
+    					<option value="3" th:selected="${ingre.icode == 3}">대파</option>
+    					<option value="4" th:selected="${ingre.icode == 4}">쪽파</option>
+    					<option value="5" th:selected="${ingre.icode == 5}">생강</option>
+    					<option value="6" th:selected="${ingre.icode == 6}">마늘</option>
+    					<option value="7" th:selected="${ingre.icode == 7}">감자</option>
+    					<option value="8" th:selected="${ingre.icode == 8}">당근</option>
+    					<option value="9" th:selected="${ingre.icode == 9}">브로콜리</option>
+    					<option value="10" th:selected="${ingre.icode == 10}">배추</option>
+    					<option value="11" th:selected="${ingre.icode == 11}">시금치</option>
+    					<option value="12" th:selected="${ingre.icode == 12}">애호박</option>
+    					<option value="13" th:selected="${ingre.icode == 13}">오이</option>
+    					<option value="14" th:selected="${ingre.icode == 14}">토마토</option>
+    					<option value="15" th:selected="${ingre.icode == 15}">피망</option>
+    					<option value="16" th:selected="${ingre.icode == 16}">상추</option>
+    					<option value="17" th:selected="${ingre.icode == 17}">양배추</option>
+    					<option value="18" th:selected="${ingre.icode == 18}">호박</option>
+    					<option value="19" th:selected="${ingre.icode == 19}">콜리플라워</option>
+    					<option value="20" th:selected="${ingre.icode == 20}">무</option>
+    					<option value="21" th:selected="${ingre.icode == 21}">파프리카</option>
+    					<option value="22" th:selected="${ingre.icode == 22}">소고기</option>
+    					<option value="23" th:selected="${ingre.icode == 23}">돼지고기</option>
+    					<option value="24" th:selected="${ingre.icode == 24}">닭고기</option>
+    					<option value="25" th:selected="${ingre.icode == 25}">오리고기</option>
+    					<option value="26" th:selected="${ingre.icode == 26}">양고기</option>
+    					<option value="27" th:selected="${ingre.icode == 27}">명태</option>
+    					<option value="28" th:selected="${ingre.icode == 28}">고등어</option>
+    					<option value="29" th:selected="${ingre.icode == 29}">연어</option>
+    					<option value="30" th:selected="${ingre.icode == 30}">새우</option>
+    					<option value="31" th:selected="${ingre.icode == 31}">굴</option>
+    					<option value="32" th:selected="${ingre.icode == 32}">양송이 버섯</option>
+    					<option value="33" th:selected="${ingre.icode == 33}">호두</option>
+    					<option value="34" th:selected="${ingre.icode == 34}">아몬드</option>
+    					<option value="35" th:selected="${ingre.icode == 35}">땅콩</option>
+    					<option value="36" th:selected="${ingre.icode == 36}">파인애플</option>
+    					<option value="37" th:selected="${ingre.icode == 37}">바나나</option>
+    					<option value="38" th:selected="${ingre.icode == 38}">사과</option>
+    					<option value="39" th:selected="${ingre.icode == 39}">딸기</option>
+    					<option value="40" th:selected="${ingre.icode == 40}">포도</option>
+    					<option value="41" th:selected="${ingre.icode == 41}">수박</option>
+    					<option value="42" th:selected="${ingre.icode == 42}">옥수수</option>
+    					<option value="43" th:selected="${ingre.icode == 43}">검은콩</option>
+    					<option value="44" th:selected="${ingre.icode == 44}">완두콩</option>
+    					<option value="45" th:selected="${ingre.icode == 45}">고구마</option>
+    					<option value="46" th:selected="${ingre.icode == 46}">청경채</option>
+    					<option value="47" th:selected="${ingre.icode == 47}">무화과</option>
+    					<option value="48" th:selected="${ingre.icode == 48}">블루베리</option>
+    					<option value="49" th:selected="${ingre.icode == 49}">참외</option>
+    					<option value="50" th:selected="${ingre.icode == 50}">키위</option>
+    					<option value="51" th:selected="${ingre.icode == 51}">깻잎</option>
+    					<option value="52" th:selected="${ingre.icode == 52}">고추</option>
+    					<option value="53" th:selected="${ingre.icode == 53}">가지</option>
+    					<option value="54" th:selected="${ingre.icode == 54}">양파</option>
+    				</select>
+    			</td>
+    			<td>
+    				<input type="text" name="amount" placeholder="수량" th:value="${ingre.amount}">
+    			</td>
+    			<td>
+    				<input type="text" name="type" placeholder="단위(개/g)">
+    			</td>
+    			<td>
+    				<span class="ingredient-delete-btn">X</span>
+    			</td>
+    		</tr>
+    	</table>
+    	</th:block>
+    	<div class="addBtn">
+    			<img src="/img/addBtn.png" id="recipe-ingredient-add">
+    	</div>
+    </div>
+    
+    <div class="recipe-regist-box3">
+    	<h4>요리 순서</h4>
+    	<table id="recipe-steps">
+    		<tr>
+    			<th>Step 1
+    				<input type="hidden" name="orderNum" value="1">
+    			</th>
+    			<td>
+    				<textarea name="orderContent" placeholder="예) 소고기를 숭덩숭덩 썰어주세요"></textarea>
+    			</td>
+    			<td class="order-img">
+    				<p class="order-img-text">➕</p>
+    				<input type="file" name="cookingImg" accept="image/*" style="display:none;">
+    				<img src="" style="display:none;">
+    			</td>
+    			<td>
+    				<span class="delete-btn">X</span>
+    			</td>
+    		</tr>
+    	</table>
+    	<div class="addBtn">
+    			<img src="/img/addBtn.png" id="recipe-order-add">
+    	</div>
+    </div>
+    
+    <div class="recipe-regist-box4">
+    	<table>
+    		<tr>
+    			<th>태그</th>
+    			<td>
+    				<input type="text" name="tagContent" placeholder="예) 한식, 닭볶음탕">
+    			</td>
+    		</tr>
+    	</table>
+    </div>
+    
+    <div class="recipe-regist-btns">
+    	<input type="submit" value="등록">
+    	<input type="button" value="취소">
+    </div>
+    </form>
 </section>
 
-<script>
+<script th:inline="javascript">
+
+let selectIdCounter = 1;
+
+document.addEventListener("DOMContentLoaded", () => {
+	
+	// 카테고리 데이터 불러오기
+	document.getElementById("category-sel").value = [[${recipe.category}]];
+	// 인원 데이터 불러오기
+	document.getElementById("portions-sel").value = [[${recipe.portions}]];
+	
+	addChangeListener(document.getElementById('ingredient-select-0'));
+	
+	
+	let selectedMenuItem = null;
+	
+	// 메뉴 이름 클릭 이벤트 처리
+	document.querySelectorAll("#recipe-menu-name").forEach(menuItem => {
+		menuItem.addEventListener("click", () => {
+			
+			if(selectedMenuItem){
+				selectedMenuItem.classList.remove("selected");
+			}
+			
+			//선택된 메뉴 스타일 적용
+			menuItem.classList.add("selected");
+			
+			//현재 선택된 메뉴 항목을 업데이트
+			selectedMenuItem = menuItem;
+			
+			
+			// 클릭한 메뉴 아이템의 mcode 가져오기
+			var mcode = menuItem.getAttribute("mcode");
+			
+			// mcode 값을 hidden input에 설정
+			document.getElementById("mcode").value = mcode;
+			
+			fetch(`/getMenuImage?mcode=${mcode}`)
+			.then(response => {
+				if(!response.ok){
+					throw new Error(response.status);
+				}
+				return response.json(); //JSON 형태로 응답을 파싱하여 반환
+			})
+			.then(data => {
+				const imageUrl = data.imgurl;
+				console.log("data.imgurl : " + data.imgurl);
+				console.log("imageUrl : " + imageUrl);
+				// 이미지 URL을 이미지 요소에 설정
+				document.getElementById("menu-image").setAttribute("src", "/img/menu/" + imageUrl);
+				document.getElementById("menu-image").setAttribute("onerror", "this.onerror=null; this.src='/img/imgNone.png';");
+			})
+			.catch(error => {
+				console.error(error);
+			});
+			
+		});
+	});
+	
+});
+
+//요리재료 선택하면 type 자동 기입
+function addChangeListener(selectElement){
+	selectElement.addEventListener("change", (event) => {
+		
+		if(event.target.matches("select[name='icode']")){
+		const selectedIcode = event.target.value;
+		const row = event.target.closest('tr');
+		const typeInput = row.querySelector("input[name='type']");
+		
+		fetch(`/getTypeByIcode?icode=${selectedIcode}`)
+		.then(response => {
+			if(!response.ok){
+				throw new Error(response.status);
+			}
+			return response.json();
+		})
+		.then(data => {
+			// 단위 데이터를 type 필드에 설정
+			typeInput.value = data.type;
+		})
+		.catch(error => {
+			console.error(error);
+		});
+		}
+	});
+}
+
+
+
+// 재료정보 추가 삭제 버튼 스크립트
+	function addDeleteEvent(deleteBtn){
+	deleteBtn.addEventListener('click', () => {
+		const row = deleteBtn.colsest('tr');
+		row.remove();
+	});
+}
+
+	// 재료정보 추가 버튼 클릭 이벤트
+document.getElementById('recipe-ingredient-add').addEventListener('click', () => {
+	const table = document.getElementById('ingredient-table');
+	const newRow = document.createElement('tr');
+	
+	const newStepCell = document.createElement('th');
+	newStepCell.textContent = '재료 정보';
+	newRow.appendChild(newStepCell);
+	
+	const newSelectCell = document.createElement('td');
+	const newSelect = document.createElement('select');
+	newSelect.name = 'icode';
+	newSelect.id = `ingredient-select-${selectIdCounter++}`;
+	
+	newSelect.innerHTML = `
+		<option value="0">재료 이름</option>
+		<option value="1">레몬</option>
+        <option value="2">칠면조고기</option>
+        <option value="3">대파</option>
+        <option value="4">쪽파</option>
+        <option value="5">생강</option>
+        <option value="6">마늘</option>
+        <option value="7">감자</option>
+        <option value="8">당근</option>
+        <option value="9">브로콜리</option>
+        <option value="10">배추</option>
+        <option value="11">시금치</option>
+        <option value="12">애호박</option>
+        <option value="13">오이</option>
+        <option value="14">토마토</option>
+        <option value="15">피망</option>
+        <option value="16">상추</option>
+        <option value="17">양배추</option>
+        <option value="18">호박</option>
+        <option value="19">콜리플라워</option>
+        <option value="20">무</option>
+        <option value="21">파프리카</option>
+        <option value="22">소고기</option>
+        <option value="23">돼지고기</option>
+        <option value="24">닭고기</option>
+        <option value="25">오리고기</option>
+        <option value="26">양고기</option>
+        <option value="27">명태</option>
+        <option value="28">고등어</option>
+        <option value="29">연어</option>
+        <option value="30">새우</option>
+        <option value="31">굴</option>
+        <option value="32">양송이 버섯</option>
+        <option value="33">호두</option>
+        <option value="34">아몬드</option>
+        <option value="35">땅콩</option>
+        <option value="36">파인애플</option>
+        <option value="37">바나나</option>
+        <option value="38">사과</option>
+        <option value="39">딸기</option>
+        <option value="40">포도</option>
+        <option value="41">수박</option>
+        <option value="42">옥수수</option>
+        <option value="43">검은콩</option>
+        <option value="44">완두콩</option>
+        <option value="45">고구마</option>
+        <option value="46">청경채</option>
+        <option value="47">무화과</option>
+        <option value="48">블루베리</option>
+        <option value="49">참외</option>
+        <option value="50">키위</option>
+        <option value="51">깻잎</option>
+        <option value="52">고추</option>
+        <option value="53">가지</option>
+        <option value="54">양파</option>
+    `;
+    newSelectCell.appendChild(newSelect);
+    newRow.appendChild(newSelectCell);
+    
+    const newAmountCell = document.createElement('td');
+    const newAmountInput = document.createElement('input');
+    newAmountInput.type = 'text';
+    newAmountInput.name = 'amount';
+    newAmountInput.placeholder = '수량';
+    newAmountCell.appendChild(newAmountInput);
+    newRow.appendChild(newAmountCell);
+    
+    const newTypeCell = document.createElement('td');
+    const newTypeInput = document.createElement('input');
+    newTypeInput.type = 'text';
+    newTypeInput.name = 'type';
+    newTypeInput.placeholder = '단위(개/g)';
+    newTypeCell.appendChild(newTypeInput);
+    newRow.appendChild(newTypeCell);
+    
+    const newDeleteCell = document.createElement('td');
+    const newDeleteBtn = document.createElement('span');
+    newDeleteBtn.className = 'ingredient-delete-btn';
+    newDeleteBtn.textContent = 'X';
+    newDeleteCell.appendChild(newDeleteBtn);
+    newRow.appendChild(newDeleteCell);
+    
+    table.appendChild(newRow);
+    
+    addDeleteEvent(newDeleteBtn);
+    addChangeListener(newSelect);
+});
+
+	document.querySelectorAll('.ingredient-delete-btn').forEach(function(btn){
+		addDeleteEvent(btn);
+	});
+
+
+
+
+// 요리순서 추가 삭제 버튼 스크립트
+	function addImageUploadEvent(orderImgCell){
+		const imageInput = orderImgCell.querySelector('input[type="file"]');
+		const imageDisplay = orderImgCell.querySelector('img');
+		const imageInText = orderImgCell.querySelector(".order-img-text");
+		
+		orderImgCell.addEventListener('click', () => {
+			imageInput.click();
+		});
+		
+		imageInput.addEventListener('change', () => {
+			if(imageInput.files && imageInput.files[0]){
+				const reader = new FileReader();
+				reader.onload = function(e) {
+					imageDisplay.src = e.target.result;
+					imageDisplay.style.display = 'block';
+					imageInText.style.display = 'none';
+				}
+				reader.readAsDataURL(imageInput.files[0]);
+			}
+		});
+	}
+	
+	function addDeleteEvent(deleteBtn){
+		deleteBtn.addEventListener('click', () => {
+			const row = deleteBtn.closest('tr');
+			row.remove();
+			updateStepNumbers();
+		});
+	}
+	
+	function updateStepNumbers(){
+		const rows = document.querySelectorAll('#recipe-steps tr');
+		rows.forEach((row, index) => {
+			const stepCell = row.querySelector('th');
+			const orderNumInputl = stepCell.querySelector('input[name="orderNum"]');
+			stepCell.childNodes[0].textContent = `Step ${index + 1}`;
+			orderNumInput.value = index + 1;
+		});
+	}
+
+// 요리 순서에서 추가 버튼 클릭하면 요소 추가
+	document.getElementById("recipe-order-add").addEventListener('click', () => {
+		
+		const table = document.getElementById("recipe-steps");
+		const currentStepCount = table.getElementsByTagName('tr').length;
+		
+		const newRow = document.createElement('tr');
+		
+		const newStepCell = document.createElement('th');
+		newStepCell.innerHTML = `Step ${currentStepCount + 1}<input type="hidden" name="orderNum" value="${currentStepCount + 1}">`;
+		newRow.appendChild(newStepCell);
+		
+		const newTextareaCell = document.createElement('td');
+		const newTextarea = document.createElement('textarea');
+		newTextarea.name = "orderContent";
+		newTextareaCell.appendChild(newTextarea);
+		newRow.appendChild(newTextareaCell);
+		
+		const newImageCell = document.createElement('td');
+		newImageCell.className = 'order-img';
+		const newImageText = document.createElement('p');
+		newImageText.className = 'order-img-text';
+		newImageText.innerHTML = '➕';
+		const newImageInput = document.createElement('input');
+		newImageInput.type = 'file';
+		newImageInput.name = 'cookingImg';
+		newImageInput.accept = 'image/*';
+		newImageInput.style.display = 'none';
+		const newImage = document.createElement('img');
+		newImage.style.display = 'none';
+		newImageCell.appendChild(newImageText);
+		newImageCell.appendChild(newImageInput);
+		newImageCell.appendChild(newImage);
+		
+		
+		newRow.appendChild(newImageCell);
+		
+		const newDeleteCell = document.createElement('td');
+		const newDeleteBtn = document.createElement('span');
+		newDeleteBtn.className = 'delete-btn';
+		newDeleteBtn.textContent = 'X';
+		newDeleteCell.appendChild(newDeleteBtn);
+		newRow.appendChild(newDeleteCell);
+		
+		table.appendChild(newRow);
+		
+		addImageUploadEvent(newImageCell);
+		addDeleteEvent(newDeleteBtn);
+	});
+	
+	document.querySelectorAll('.order-img').forEach(function(cell){
+		addImageUploadEvent(cell);
+	});
+	
+	document.querySelectorAll('.delete-btn').forEach(function(btn){
+		addDeleteEvent(btn);
+	});
 
 </script>
+
+
+
+
+
+
 </body>
 </html>
