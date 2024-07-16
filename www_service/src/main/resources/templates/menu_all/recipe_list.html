@@ -63,7 +63,7 @@
     <div id="recipeList">
         <div th:each="recipe : ${recipeList}" class="recipeList" th:onclick="'loadRecipeDetail(\'' + ${recipe.rcode} + '\')'">
             <div class="recipe-urlimg">
-                <img src="https://img.youtube.com/vi/${url}/mqdefault.jpg">
+                <img th:src="'https://img.youtube.com/vi/'+${recipe.url}+'/0.jpg'">
             </div>
             <div class="recipeList-content">
                 <a href="#">
