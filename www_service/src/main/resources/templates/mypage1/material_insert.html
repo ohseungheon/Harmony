@@ -1,223 +1,264 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <style>
-    	#by-section{
-	    	width: 1000px;
-	        height: 1000px;
-	        margin: 80px auto;
-	        
-	        display: flex; /* Flexbox 사용 */
-	        flex-direction: column; /* 세로 배치 */
-	        justify-content: center; /* 수평 가운데 정렬 */
-	        align-items: center; /* 수직 가운데 정렬 */
-    	}
-    	#by-box{
-	    	background-color: #A7BCF2;
-	    	border: 1px solid #ddd;
-	    	width: 800px;
-	    	height: 610px;
-	    	border-radius: 10px; 
-	        margin: 10px;
-	        padding: 5px;
-	        display: flex;
-	        flex-direction: column;
-	        align-items: center;
-		    justify-content: center;	
-    	}
-    	#by-mImg-materials-wrapper {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-        }
-        #by-mImg-materials-wrapper img {
-        	width: 200px;
-    		height: 200px;
-        }
-    	#by-mImg{
-    		margin: 10px;
-    		width: 200px;
-    		height: 200px;
-    		background-color: white;	
-    		padding: 10px;
-    	}
-    	#by-materials {
-            display: flex; /* Flexbox 사용 */
-            flex-direction: column; 
-            align-items: center; /* 세로 가운데 정렬 */
-            justify-content: center; /* 수평 가운데 정렬 */
-            gap: 15px; /* 요소 간 간격 추가 */
-            margin-top: 8px;
-        }
-    	.by-deadline-box {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .by-deadline-box label {
-            font-size: 20px;
-            margin-right: 10px; /* 레이블과 입력 필드 간의 간격 */
-            min-width: 120px; /* 레이블의 최소 너비 */
-        }
+<meta charset="UTF-8">
+<title>Document</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+<style>
+#by-section {
+	width: 1000px;
+	height: 1000px;
+	margin: 80px auto;
+	display: flex; /* Flexbox 사용 */
+	flex-direction: column; /* 세로 배치 */
+	justify-content: center; /* 수평 가운데 정렬 */
+	align-items: center; /* 수직 가운데 정렬 */
+}
 
-        #by-memo {
-            margin: 20px; 
-        }
+#by-box {
+	background-color: #A7BCF2;
+	border: 1px solid #ddd;
+	width: 800px;
+	height: 610px;
+	border-radius: 10px;
+	margin: 10px;
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
 
-        #by-memo input {
-            width: 550px;
-            height: 150px;
-            border-radius: 10px; 
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px; /* 요소 간 간격 추가 */
-        }
-        #by-materials label {
-        	font-size: 20px;
-        	text-align: right;
-        	margin-right: 7px;
-        }
-        input[type="text"]{
-        	align-self: center; /* 가운데 정렬 */
-            width:150px;
-            height:20px;
-            padding:10px;
-            margin-left:10px;
-            border-radius: 10px; 
-            border: 2px solid #ccc;
-            text-align: center;
-            font-size: 18px;
-        }
-        select {
-		    align-self: center; /* 가운데 정렬 */
-		    width: 170px;
-		    height: 40px; /* 높이를 조금 늘려서 선택 영역을 더 쉽게 클릭할 수 있도록 */
-		    padding: 5px;
-		    margin-left: 10px;
-		    border-radius: 10px;
-		    border: 2px solid #ccc;
-		    font-size: 18px;
-		    text-align: center;
-		}
-        input[type="submit"], input[type="button"] {
-            align-self: center; /* 가운데 정렬 */
-            width:100px;
-            height:50px;
-            background-color: #FF9A8B;
-        	border: none; /* 테두리 없애기 */
-        	border-radius: 5px;
-        	color: white;
-        	cursor: pointer;
-        	border: 2px solid #ccc;
-        	font-size: 18px;
-        	text-align: center;
-        	margin: 20px;
-        }
-        input[type="submit"]:hover, input[type="button"]:hover {
-        	background-color: #FF6F61;
-        }
-        #by-button-group {
-		    display: flex; /* Flexbox 사용 */
-		}
-    </style>
+#by-mImg-materials-wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+#by-mImg-materials-wrapper img {
+	width: 200px;
+	height: 200px;
+}
+
+#by-mImg {
+	margin: 10px;
+	width: 200px;
+	height: 200px;
+	background-color: white;
+	padding: 10px;
+}
+
+#by-materials {
+	display: flex; /* Flexbox 사용 */
+	flex-direction: column;
+	align-items: center; /* 세로 가운데 정렬 */
+	justify-content: center; /* 수평 가운데 정렬 */
+	gap: 15px; /* 요소 간 간격 추가 */
+	margin-top: 8px;
+	margin-left: 20px;
+}
+
+.by-deadline-box {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 15px;
+	margin-left: 20px;
+}
+
+.by-deadline-box label {
+	font-size: 20px;
+	margin-right: 10px; /* 레이블과 입력 필드 간의 간격 */
+	min-width: 60px; /* 레이블의 최소 너비 */
+}
+
+#by-memo {
+	margin: 20px;
+}
+
+#by-memo input {
+	width: 550px;
+	height: 150px;
+	border-radius: 10px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px; /* 요소 간 간격 추가 */
+}
+
+#by-materials label {
+	font-size: 20px;
+	text-align: right;
+	margin-right: 7px;
+}
+
+input[type="text"] {
+	align-self: center; /* 가운데 정렬 */
+	width: 160px;
+	height: 20px;
+	padding: 10px;
+	margin-left: 10px;
+	border-radius: 10px;
+	border: 2px solid #ccc;
+	text-align: center;
+	font-size: 18px;
+}
+
+select {
+	align-self: center; /* 가운데 정렬 */
+	width: 180px;
+	height: 45px; /* 높이를 조금 늘려서 선택 영역을 더 쉽게 클릭할 수 있도록 */
+	padding: 5px;
+	margin-left: 10px;
+	border-radius: 10px;
+	border: 2px solid #ccc;
+	font-size: 18px;
+	text-align: center;
+}
+
+input[type="submit"], input[type="button"] {
+	align-self: center; /* 가운데 정렬 */
+	width: 100px;
+	height: 50px;
+	background-color: #FF9A8B;
+	border: none; /* 테두리 없애기 */
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+	border: 2px solid #ccc;
+	font-size: 18px;
+	text-align: center;
+	margin: 20px;
+}
+
+input[type="submit"]:hover, input[type="button"]:hover {
+	background-color: #FF6F61;
+}
+
+#by-button-group {
+	display: flex; /* Flexbox 사용 */
+}
+/* 라디오 버튼 스타일링 */
+input.by-radio {
+    appearance: none; /* 기본 라디오 버튼 스타일 제거 */
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ccc;
+    background-color: white;
+    border-radius: 5px; /* 둥근 사각형 */
+    outline: none;
+    cursor: pointer;
+    position: relative;
+}
+input.by-radio:checked::before {
+    content: '';
+    width: 15px;
+    height: 15px;
+    background-color: #ddd;
+    border-radius: 4px; /* 둥근 사각형 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>
 </head>
 <body>
-<header>
-<th:block th:insert="~{/sub/header.html}"></th:block>
-</header>
-<section id="by-section">
-    <div id="by-box">
-    	<form id="insertForm" th:action="@{/mypage1/material_insert}" method="POST">
-    		<div id="by-mImg-materials-wrapper">
-    			<div id="by-mImg">
-    				<img src="" >
-    			</div>
-    	
-    			<div id="by-materials">
-	    			<div class="by-deadline-box">
-		    			<label for="deadline">유통기한</label>
-		    			<input type="text" id="deadline" name="deadline">
-	    			</div>
-	    			<div class="by-deadline-box">
-		    			<label for="type">수량</label>
-		    			<input type="text" id="amount" name="amount">
-	    			</div>
-	    			<div class="by-deadline-box">
-		    			<label for="keeptype">보관상태</label>
-		    			<select id="keeptype" name="keeptype">
-		    				<option th:each="keeptype : ${keeptypes}"
-						        th:value="${keeptype}"
-						        th:text="${keeptype}"
-						        th:selected="${keeptype}">
-							</option>
-		    			</select>
-	    			</div>
-	    		</div>
-	    	</div>
-	    	
-	    	<div id="by-memo">
-	    		<input type="text" id="memo" name="memo" value="비고란">
-	    	</div>
-	    	<input type="hidden" id="fcode" name="fcode">
-	    	<input type="hidden" id="mno" name="mno">
-	    	
-	    	<div id="by-btn-group">
-		    	<input type="submit" value="등록">
-		    	<input type="button" value="목록" onclick="window.location.href='/material_page'">
-	    	</div>
-    	</form>
-    </div>
-</section>
+	<header>
+		<th:block th:insert="~{/sub/header.html}"></th:block>
+	</header>
+	<section id="by-section">
+		<div id="by-box">
+			<form id="insertForm" th:action="@{/mypage1/material_insert}"
+				method="POST">
+				<div id="by-mImg-materials-wrapper">
+					<div id="by-mImg">
+						<img src="">
+					</div>
 
-<script>
-$(document).ready(function() {
-	
-	$("#updateForm").on("submit", function(event){
-		event.preventDefault();
-		
-		const fcode = $("#fcode").val();
-		const mno = $("#mno").val();
-        const deadline = $("#deadline").val();
-        const amount = $("#amount").val();
-        const keeptype = $("#keeptype").val();
-        const memo = $("#memo").val();
+					<div id="by-materials">
+						<div class="by-deadline-box">
+							<label for="deadline">유통기한</label> <input type="text"
+								id="deadline" name="deadline">
+						</div>
+						<div class="by-deadline-box">
+							<label for="amount">수량/중량</label>
+							<label for="quantity">수량</label> 
+								<input class="by-radio" type="radio" id="quantity" name="type" value="quantity"> 
+							<label for="weight">중량</label> 
+								<input class="by-radio" type="radio" id="weight" name="type" value="weight">
+						</div>
+						<div class="by-deadline-box">
+							<label for="keeptype">보관상태</label> <select id="keeptype"
+								name="keeptype">
+								<option th:each="keeptype : ${keeptypes}" th:value="${keeptype}"
+									th:text="${keeptype}" th:selected="${keeptype}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
 
-        var jsonData = JSON.stringify({
-        	fcode: fcode,
-        	mno: mno,
-        	deadline: deadline,
-        	amount: amount,
-        	keeptype: keeptype,
-        	memo: memo
-        });
-        console.log(jsonData);
-		
-		$.ajax({
-			url: $(this).attr('action'),
-            type: 'POST',
-            contentType: 'application/json', // JSON 형식으로 데이터 전송
-            data: jsonData,
-            dataType: 'text',
-            success: function(response) {
-                alert("재료정보가 성공적으로 수정되었습니다🍉");
-                window.location.href = "/material_page";
-            },
-            error: function(xhr, status, error) {
-                console.log('Status: ' + status);
-                console.log('Error: ' + error);
-                alert("재료수정 실패😫");
-            }
-        });
-	});
-});
-</script>
+				<div id="by-memo">
+					<input type="text" id="memo" name="memo" value="비고란">
+				</div>
+				<input type="hidden" id="fcode" name="fcode"> <input
+					type="hidden" id="mno" name="mno">
+
+				<div id="by-btn-group">
+					<input type="submit" value="등록"> <input type="button"
+						value="목록" onclick="window.location.href='/material_page'">
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<script>
+		$(document).ready(function() {
+
+			$("#updateForm").on("submit", function(event) {
+				event.preventDefault();
+
+				const fcode = $("#fcode").val();
+				const mno = $("#mno").val();
+				const deadline = $("#deadline").val();
+				const amount = $("#amount").val();
+				const keeptype = $("#keeptype").val();
+				const memo = $("#memo").val();
+
+				var jsonData = JSON.stringify({
+					fcode : fcode,
+					mno : mno,
+					deadline : deadline,
+					amount : amount,
+					keeptype : keeptype,
+					memo : memo
+				});
+				console.log(jsonData);
+
+				$.ajax({
+					url : $(this).attr('action'),
+					type : 'POST',
+					contentType : 'application/json', // JSON 형식으로 데이터 전송
+					data : jsonData,
+					dataType : 'text',
+					success : function(response) {
+						alert("재료정보가 성공적으로 등록되었습니다🍖");
+						window.location.href = "/material_page";
+					},
+					error : function(xhr, status, error) {
+						console.log('Status: ' + status);
+						console.log('Error: ' + error);
+						alert("재료등록 실패😫");
+					}
+				});
+			});
+		});
+	</script>
 </body>
 </html>
