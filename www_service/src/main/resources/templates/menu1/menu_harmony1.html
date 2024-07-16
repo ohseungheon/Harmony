@@ -70,14 +70,49 @@ input[type="submit"]:hover {
    filter: brightness(60%); /* Darken the background */
    transition: filter 0.3s ease; /* Smooth transition for darkening */
 }
+.highlight::after {
+   content: '제외한 재료입니다';
+   position: absolute;
+   top: 50%; /* Center the text vertically */
+   left: 50%; /* Center the text horizontally */
+   transform: translate(-50%, -50%); /* Adjust the position to truly center the text */
+   background-color: rgba(255, 0, 0, 0.7); /* Semi-transparent red background */
+   color: white;
+   padding: 4px 8px;
+   border-radius: 4px;
+   font-size: 18px;
+   z-index: 1; /* Ensure the text appears above other content */
+}
+
 
 .remove_highlight {
-   position: relative; /* Pseudo-elements positioning */
    background-color: rgba(0, 0, 0, 0.1); /* Light overlay on the background */
-   filter: brightness(100%); /* Darken the background */
+   filter: brightness(60%); /* Darken the background */
    transition: filter 0.3s ease; /* Smooth transition for darkening */
-   overflow:hidden;
 }
+.remove_highlight::after {
+   content: '재료가 부족합니다';
+   position: absolute;
+   top: 50%; /* Center the text vertically */
+   left: 50%; /* Center the text horizontally */
+   transform: translate(-50%, -50%); /* Adjust the position to truly center the text */
+   background-color: rgba(255, 0, 0, 0.7); /* Semi-transparent red background */
+   color: white;
+   padding: 4px 8px;
+   border-radius: 4px;
+   font-size: 18px;
+   z-index: 1; /* Ensure the text appears above other content */
+}
+
+
+
+
+
+
+
+
+
+
 
 #haveIngredient {
    max-height: 600px; /* Set a fixed height for scrolling */
@@ -141,19 +176,7 @@ input[type="submit"]:hover {
    background: #00acc1; /* 핸들 색상 변경 */
 }
 
-.remove_highlight::after {
-   content: '재료가 부족합니다';
-   position: absolute;
-   top: 50%; /* Center the text vertically */
-   left: 50%; /* Center the text horizontally */
-   transform: translate(-50%, -50%); /* Adjust the position to truly center the text */
-   background-color: rgba(255, 0, 0, 0.7); /* Semi-transparent red background */
-   color: white;
-   padding: 4px 8px;
-   border-radius: 4px;
-   font-size: 18px;
-   z-index: 1; /* Ensure the text appears above other content */
-}
+
 
 /* Define the keyframes for the animation */
 @keyframes drawLine {
