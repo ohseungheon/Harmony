@@ -65,6 +65,32 @@ public class MyRecipeService {
 		return resultRecipeTag;
 	}
 	
+	// 레시피 수정 Service
+	// 레시피 수정
+	public int updateMyRecipeService(int rcode) {
+		
+		return dao.updateMyRecipe(rcode);
+	}
+	
+	// 레시피 재료 수정
+	public int updateMyRecipeIngredientService(int rcode) {
+		
+		return dao.updateMyRecipeIngredient(rcode);
+	}
+	
+	// 레시지 요리순서 수정
+	public int updateMyRecipeOrder(int rcode) {
+		
+		return dao.updateMyRecipeOrder(rcode);
+	}
+	
+	// 레시피 태그 수정
+	public int updateMyRecipeTag(int rcode) {
+		
+		return dao.updateMyRecipeTag(rcode);
+	}
+	
+	
 	// 레시피 수정을 위한 데이터 보내기
 	// 레시피 수정을 위한 레시피 정보
 	public RecipeDto getRecipeService(int rcode) {

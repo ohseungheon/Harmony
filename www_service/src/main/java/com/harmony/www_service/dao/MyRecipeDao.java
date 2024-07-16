@@ -35,6 +35,19 @@ public interface MyRecipeDao {
 	// 재료선택하면 재료의 type 불러오기
 	public IngredientDto getTypeByIcode(@Param("icode") int icode);
 	
+	// 레시피 수정 Dao
+	// 레시피 수정
+	public int updateMyRecipe(@Param("rcode") int rcode);
+	
+	// 레시피 재료 수정
+	public int updateMyRecipeIngredient(@Param("rcode") int rcode);
+	
+	// 레시피 요리순서 수정
+	public int updateMyRecipeOrder(@Param("rcode")int rcode);
+	
+	// 레시피 태그 수정
+	public int updateMyRecipeTag(@Param("rcode") int rcode);
+	
 	// 레시피 수정을 위한 정보들
 	// 레시피 수정을 위한 레시피 정보
 	public RecipeDto getRecipeFindByRcode(@Param("rcode") int rcode);
