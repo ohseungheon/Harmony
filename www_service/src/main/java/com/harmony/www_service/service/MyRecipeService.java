@@ -67,27 +67,27 @@ public class MyRecipeService {
 	
 	// 레시피 수정 Service
 	// 레시피 수정
-	public int updateMyRecipeService(int rcode) {
+	public int updateMyRecipeService(RecipeDto recipeDto) {
 		
-		return dao.updateMyRecipe(rcode);
+		return dao.updateMyRecipe(recipeDto);
 	}
 	
 	// 레시피 재료 수정
-	public int updateMyRecipeIngredientService(int rcode) {
+	public int updateMyRecipeIngredientService(RecipeIngredientDto recipeIngredientDto) {
 		
-		return dao.updateMyRecipeIngredient(rcode);
+		return dao.updateMyRecipeIngredient(recipeIngredientDto);
 	}
 	
 	// 레시지 요리순서 수정
-	public int updateMyRecipeOrder(int rcode) {
+	public int updateMyRecipeOrderService(RecipeOrderDto recipeOrderDto) {
 		
-		return dao.updateMyRecipeOrder(rcode);
+		return dao.updateMyRecipeOrder(recipeOrderDto);
 	}
 	
 	// 레시피 태그 수정
-	public int updateMyRecipeTag(int rcode) {
+	public int updateMyRecipeTagService(RecipeTagDto recipeTagDto) {
 		
-		return dao.updateMyRecipeTag(rcode);
+		return dao.updateMyRecipeTag(recipeTagDto);
 	}
 	
 	

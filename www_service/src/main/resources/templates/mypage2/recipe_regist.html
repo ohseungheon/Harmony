@@ -509,6 +509,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			
 			// 클릭한 메뉴 아이템의 mcode 가져오기
 			var mcode = menuItem.getAttribute("mcode");
+			console.log(mcode);
 			
 			// mcode 값을 hidden input에 설정
 			document.getElementById("mcode").value = mcode;
@@ -525,7 +526,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				console.log("data.imgurl : " + data.imgurl);
 				console.log("imageUrl : " + imageUrl);
 				// 이미지 URL을 이미지 요소에 설정
-				document.getElementById("menu-image").setAttribute("src", "/img/menu/" + imageUrl);
+				document.getElementById("menu-image").setAttribute("src", "/uploads/" + imageUrl);
 				document.getElementById("menu-image").setAttribute("onerror", "this.onerror=null; this.src='/img/imgNone.png';");
 			})
 			.catch(error => {

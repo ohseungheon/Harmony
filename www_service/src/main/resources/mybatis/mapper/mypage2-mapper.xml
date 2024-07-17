@@ -44,7 +44,7 @@
   	</select>
   	
   	<!-- 레시피 수정 -->
-  	<update id="updateMyRecipe">
+  	<update id="updateMyRecipe" parameterType="com.harmony.www_service.dto.RecipeDto">
   		update recipe set 
   		mcode = #{mcode},
   		recipeName = #{recipeName},
@@ -56,7 +56,7 @@
   	</update>
   	
   	<!-- 레시피 재료 수정 -->
-  	<update id="updateMyRecipeIngredient">
+  	<update id="updateMyRecipeIngredient" parameterType="com.harmony.www_service.dto.RecipeIngredientDto">
   		update recipe_ingredient set
   		icode = #{icode},
   		amount = #{amount}
@@ -64,7 +64,7 @@
   	</update>
   	
   	<!-- 레시피 요리순서 수정 -->
-  	<update id="updateMyRecipeOrder">
+  	<update id="updateMyRecipeOrder" parameterType="com.harmony.www_service.dto.RecipeOrderDto">
   		update recipe_order set
   		orderContent = #{orderContent},
   		orderNum = #{orderNum},
@@ -73,7 +73,7 @@
   	</update>
   	
   	<!-- 레시피 태그 수정 -->
-  	<update id="updateMyRecipeTag">
+  	<update id="updateMyRecipeTag" parameterType="com.harmony.www_service.dto.RecipeOrderDto">
   		update recipe_tag set
   		tagContent = #{tagContent}
   		where rcode = #{rcode}
