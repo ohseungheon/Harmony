@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.harmony.www_service.dto.MenuDto;
+import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.service.IngredientService;
 import com.harmony.www_service.service.MenuListService;
 import com.harmony.www_service.service.MenuService;
+import com.harmony.www_service.service.RecipeService;
 
 import java.util.List;
 
@@ -26,6 +28,9 @@ public class MenuAllRestController {
 
     @Autowired
     private IngredientService ingredientService;
+
+    @Autowired
+    private RecipeService recipeService;
 
     @GetMapping("/menu_all_list")
     public List<MenuDto> getMenuListByCategory(@RequestParam("category") String category){
@@ -53,5 +58,9 @@ public class MenuAllRestController {
         return ingredientService.gettAllIngredientCategories();
     }
 
-
+    @GetMapping("/recipeAllList")
+	public List<RecipeDto> getAllRecipes(){
+        System.out.println("getAllRecipes 메서드가 호출되었습니다.");
+		return recipeService.getAllRecipes();
+	}
 }

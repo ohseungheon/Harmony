@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getAllRecipes" resultType="com.harmony.www_service.dto.RecipeDto">
         SELECT r.*, m.menuName
-        FROM recipes r
+        FROM recipe r
         JOIN menu m ON r.mcode = m.mcode
         ORDER BY r.rcode
     </select>
