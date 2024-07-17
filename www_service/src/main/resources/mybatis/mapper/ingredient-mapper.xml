@@ -35,20 +35,7 @@
 		WHERE icode = #{icode}
 	</delete>
   
-  <select id="findMenuRequest" resultType="com.harmony.www_service.dto.MenuReqDto">
-	 SELECT mr.mrcode, m.username, menuName, category, imgUrl 
-		FROM menu_request mr
-		LEFT JOIN member m
-		ON mr.mno = m.mno
-	WHERE mrcode = #{mrcode}
-  </select>
-  
-  <insert id="registRequestMenu">
-  	INSERT INTO menu
-  	(menuName, category, imgUrl, VIEW, type)
-  	values
-  	(#{mDto.menuName}, #{mDto.category}, #{mDto.imgUrl}, #{mDto.VIEW}, #{mDto.type})
-  </insert>
+
   
   </mapper>
  	

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmony.www_service.dao.IRequestMenuDao">
+
+	<select id="findMenuRequest"
+		resultType="com.harmony.www_service.dto.MenuReqDto">
+		SELECT mr.mrcode, mr.mno, m.username, mr.menuName, mr.category, mr.imgUrl
+		FROM menu_request mr
+		LEFT JOIN member m
+		ON mr.mno = m.mno
+	</select>
+
+	<insert id="registRequestMenu">
+		INSERT INTO menu
+		(menuName, category, imgUrl, VIEW, type)
+		values
+		(#{mDto.menuName}, #{mDto.category}, #{mDto.imgUrl}, #{mDto.VIEW}, #{mDto.type})
+	</insert>
+
+</mapper>

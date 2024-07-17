@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.harmony.www_service.dto.IngredientDto;
-import com.harmony.www_service.dto.IngredientDtoWithFile;
 
 @Mapper
 public interface IIngredientDao {

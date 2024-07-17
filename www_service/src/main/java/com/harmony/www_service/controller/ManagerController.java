@@ -27,7 +27,6 @@ public class ManagerController {
 	// 재료 등록 기능
 	@PostMapping("/do_ingredients_regist")
 	public String ingredientRegist(IngredientDtoWithFile iDtoFile) {
-		System.out.println("--------post--------");
 		
 		iService.addIngredients(iDtoFile);
 		return "redirect:/ingredients_list";
@@ -36,6 +35,7 @@ public class ManagerController {
 	// 재료 리스트 페이지
 	@RequestMapping("/ingredients_list")
 	public String goList() {
+		
 		return "manager/ingredients_list";
 	}
 
@@ -43,11 +43,7 @@ public class ManagerController {
 	// 재료 디테일 페이지
 	@RequestMapping("/ingredient_detail")
 	public String goDetail(@RequestParam("icode") int icode, Model model) {
-		System.out.println("디테일 페이지 넘어옴"+icode);
-		
 		IngredientDto result = iService.showDetail(icode);
-		
-		System.out.println("컨트롤러에서 디테일 결과 확인 : " + result);
 		model.addAttribute("detail", result);
 		
 		return "manager/ingredient_detail";
@@ -57,7 +53,6 @@ public class ManagerController {
 	// 재료 수정 페이지
 	@RequestMapping("/ingredient_update")
 	public String updatePage(@RequestParam("icode") int icode, Model model) {
-		System.out.println("------ 재료 수정을 위한 디테일 전송 ------");
 		IngredientDto result = iService.showDetail(icode);
 		model.addAttribute("detail", result);
 
@@ -67,10 +62,8 @@ public class ManagerController {
 	// 재료 수정 기능
 	@RequestMapping("/do_ingredient_update")
 	public String update(IngredientDtoWithFile iDtoFile){
-		System.out.println("--------update--------");
 		iService.updateIngredients(iDtoFile);
 		int icode= iDtoFile.getIcode();
-		System.out.println("****************iDtoFile : " + iDtoFile);
 		
 		return "redirect:/ingredient_detail?icode="+icode;
 	}
@@ -79,17 +72,17 @@ public class ManagerController {
 	// 재료 삭제 기능 구현
 	@RequestMapping("/do_ingredient_delete")
 	public String delete(@RequestParam("icode") int icode) {
-		System.out.println("------------삭제할 icode="+icode+"--------------");
 		iService.IgredientIsGone(icode);
 		
 		return "redirect:/ingredients_list";
 	}
 	
 	// 요청받은 메뉴 전체 조회
-	@RequestMapping("/request_menu_list")
+	@RequestMapping("/menu_req_list")
 	public String getList() {
 		return "/manager/menu_approval";
 	}
 	
+
 	
 }

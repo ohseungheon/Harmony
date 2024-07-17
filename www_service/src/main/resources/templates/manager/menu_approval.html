@@ -21,37 +21,48 @@
     });
 
     // 요청 메뉴 리스트 ajax 요청 보내기
-    function findList(mrcode) {
-      fetch("/manager/menuReqlist?mrcode=" + encodeURIComponent(mrcode))
+    function findList() {
+      fetch("/manager/menuReqlist")
         .then((response) => {
           if (!response.ok) {
             throw new Error(
               "Network response was not ok" + response.statusText
             );
           }
-          return response.json();menu_approvalmenu_approvalmenu_approval
+          return response.json();
         })
         .then((data) => {
-          var data_container = document.querySelector(".dally_container");
-          data_container.innerHTML = "";
+          var menuReq_container = document.querySelector(".dally_container");
+          menuReq_container.innerHTML = "";
           console.log(data)
 
           for (var i = 0; i < data.length; i++) {
-            var menuReq_info_content =
-              '<div id="dally_menu_img">' +
-              '<img src="/img/uploads/' +
-              data[i].imgUrl + '"> ' + '</div>' +
-              + data[i].menuName + '</div>' + 
-              '<div id="dally_menu_category">' +data[i].category +'</div>' +
-              '<div id="dally_menu_username">'+ data[i].username +'</div>' +
-              '<button id="dally_accept>'+'승인' + '</button>' + 
-              '<button id="dally_return>'+'반려' + '</button>';
-              data_container.innerHTML += menuReq_info_content;
+            var menuReq_content =
+              '<div class="add_menu_form"><form th:action="@{}" method="post">' + 
+              '<div id="dally_menu_img"><input type="hidden" name="imgUrl" th:value=""><img src="/uploads/' +
+              data[i].imgUrl + '"> ' + '</div><div id="dally_menu_menuName">'
+              + data[i].menuName + '</div><div id="dally_menu_category">' + data[i].category +
+              '<div id="dally_menu_mno"><input type="hidden" >' + 
+              '</div><div id="dally_menu_username">' + data[i].username +'</div><button id="dally_accept">승인</button>' + 
+              '<button id="dally_return">반려</button>';
+              menuReq_container.innerHTML += menuReq_content;
           }
 
         })
         .catch((error) => console.error("Error:" + error));
     }
+
+
+    // 추가 메뉴 승인 => 메뉴로 추가
+    function addMenu(){
+      const accept_btn = document.getElementById('dally_accept');
+      const return_btn = document.getElementById('dally_return');
+
+      accept_btn.addEventListener("click", () => {
+        const 
+
+      });
+    }    
 </script>
 </body>
 </html>
