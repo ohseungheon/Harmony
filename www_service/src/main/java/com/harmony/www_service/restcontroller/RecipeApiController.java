@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.service.MemberService;
 import com.harmony.www_service.service.MyRecipeService;
+import com.harmony.www_service.service.RecipeService;
 
 @RestController
 @RequestMapping("/api/recipe")
@@ -21,6 +22,9 @@ public class RecipeApiController {
 	
 	@Autowired
 	private MemberService memberService;
+
+	@Autowired
+	private RecipeService recipeService;
 	
 	@Autowired
 	private MyRecipeService myRecipeService;
@@ -47,6 +51,11 @@ public class RecipeApiController {
 		return myRecipeService.deleteMyRecipe(rcode);
 	}
 	
+	@GetMapping("/recipeAllList")
+	public List<RecipeDto> getAllRecipes(){
+
+		return recipeService.getAllRecipes();
+	}
 
 	
 

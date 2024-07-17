@@ -25,4 +25,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN menu m ON r.mcode = m.mcode
         WHERE m.menuName = #{menuName}
     </select>
+
+    <select id="getAllRecipes" resultType="com.harmony.www_service.dto.RecipeDto">
+        SELECT r.*, m.menuName
+        FROM recipes r
+        JOIN menu m ON r.mcode = m.mcode
+        ORDER BY r.rcode
+    </select>
 </mapper>

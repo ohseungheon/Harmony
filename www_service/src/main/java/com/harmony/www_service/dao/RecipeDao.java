@@ -19,4 +19,6 @@ public interface RecipeDao {
     List<RecipeOrderDto> getRecipeOrdersByRcode(int rcode);
     
     List<RecipeDto> getRecipeListByMenuName(String menuName);
+
+    List<RecipeDto> getAllRecipes();
 }
