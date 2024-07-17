@@ -30,7 +30,7 @@ public class SecurityConfig {
 						.requestMatchers("/src/**", "/main/**","/resources/**", "/static/**", "/img/**", "/json/**").permitAll()
 						.requestMatchers("/uploads/**").permitAll()
 						.requestMatchers("/api/**").permitAll()
-						.requestMatchers("/menu_all/**").permitAll()
+						//.requestMatchers("/menu_all/**").permitAll()
 						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
 						.anyRequest().authenticated()
