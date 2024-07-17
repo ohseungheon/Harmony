@@ -4,273 +4,192 @@
 <meta charset="UTF-8">
 <title>Document</title>
 <style>
-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin: 20px 0;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Add your existing styles here */
+.container {
+   display: flex;
+   flex-direction: row;
+   margin: 20px 0;
 }
 
-th, td {
-	padding: 12px;
-	text-align: center;
-	border: 1px solid #ddd; /* 셀 테두리 색상 연하게 */
-	border-color: rgba(0, 0, 0, 0.1); /* 연한 테두리 색상 */
-	box-sizing: border-box;
+.row {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   border: 1px solid #ddd;
+   margin: 5px 0;
+   padding: 12px;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-th {
-	background-color: #00acc1;
-	color: white;
-}
-
-tr:last-child td {
-	border-bottom: none;
-}
-
-td img {
-	max-width: 100px;
-	height: auto;
-	border-radius: 5px;
-}
-
-button#xBtn {
-	font-size: 16px;
-	padding: 8px 12px;
-	background-color: #ffcccb;
-	border: 2px solid #ff7777;
-	border-radius: 12px;
-	cursor: pointer;
-	transition: background-color 0.3s, transform 0.3s;
-}
-
-button#xBtn:hover {
-	background-color: #ff4444;
-	transform: scale(1.1);
-	color: white;
-}
-
-input[type="submit"] {
-	font-size: 16px;
-	padding: 8px 12px;
-	background-color: #00acc1; /* 헤더 색상과 동일 */
-	color: white;
-	border: 2px solid #0097a7; /* 헤더 색상보다 조금 어두운 색상 */
-	border-radius: 12px;
-	cursor: pointer;
-	transition: background-color 0.3s, transform 0.3s;
-}
-
-input[type="submit"]:hover {
-	background-color: #0097a7; /* 헤더 색상보다 조금 어두운 색상 */
-	transform: scale(1.05);
+.row img {
+   max-width: 100px;
+   height: auto;
+   border-radius: 5px;
 }
 
 .highlight {
-	background-color: rgba(0, 0, 0, 0.1);
-	/* Light overlay on the background */
-	filter: brightness(60%); /* Darken the background */
-	transition: filter 0.3s ease; /* Smooth transition for darkening */
+   background-color: rgba(0, 0, 0, 0.1);
+   filter: brightness(60%);
+   transition: filter 0.3s ease;
+   position: relative;
 }
 
 .highlight::after {
-	content: '제외한 재료입니다';
-	position: absolute;
-	top: 50%; /* Center the text vertically */
-	left: 50%; /* Center the text horizontally */
-	transform: translate(-50%, -50%);
-	/* Adjust the position to truly center the text */
-	background-color: rgba(255, 0, 0, 0.7);
-	/* Semi-transparent red background */
-	color: white;
-	padding: 4px 8px;
-	border-radius: 4px;
-	font-size: 18px;
-	z-index: 1; /* Ensure the text appears above other content */
+   content: '제외한 재료입니다';
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   background-color: rgba(255, 0, 0, 0.7);
+   color: white;
+   padding: 4px 8px;
+   border-radius: 4px;
+   font-size: 18px;
+   z-index: 1;
 }
 
 .remove_highlight {
-	background-color: rgba(0, 0, 0, 0.1);
-	/* Light overlay on the background */
-	filter: brightness(60%); /* Darken the background */
-	transition: all 0.3s ease; /* Smooth transition for darkening */
+   background-color: rgba(0, 0, 0, 0.1);
+   filter: brightness(60%);
+   transition: all 0.3s ease;
+   position: relative;
 }
 
 .remove_highlight::after {
-	content: '재료가 부족합니다';
-	position: absolute;
-	top: 50%; /* Center the text vertically */
-	left: 50%; /* Center the text horizontally */
-	transform: translate(-50%, -50%);
-	/* Adjust the position to truly center the text */
-	background-color: rgba(255, 0, 0, 0.7);
-	/* Semi-transparent red background */
-	color: white;
-	padding: 4px 8px;
-	border-radius: 4px;
-	font-size: 18px;
-	z-index: 1; /* Ensure the text appears above other content */
+   content: '재료가 부족합니다';
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   background-color: rgba(255, 0, 0, 0.7);
+   color: white;
+   padding: 4px 8px;
+   border-radius: 4px;
+   font-size: 18px;
+   z-index: 1;
 }
 
-#haveIngredient {
-	max-height: 600px; /* Set a fixed height for scrolling */
-	overflow-y: auto; /* Enable vertical scrolling */
-	overflow-x: hidden; /* Hide horizontal scrolling if not needed */
-	border: 1px solid #ddd;
-	/* Optional: Add a border around the scrollable area */
+button#xBtn {
+   font-size: 16px;
+   padding: 8px 12px;
+   background-color: #ffcccb;
+   border: 2px solid #ff7777;
+   border-radius: 12px;
+   cursor: pointer;
+   transition: background-color 0.3s, transform 0.3s;
 }
 
-#haveIngredient::-webkit-scrollbar {
-	width: 12px; /* 스크롤바의 너비 */
-	height: 12px; /* 수평 스크롤바의 높이 (optional) */
+button#xBtn:hover {
+   background-color: #ff4444;
+   transform: scale(1.1);
+   color: white;
 }
 
-/* 스크롤바 트랙 (스크롤바 배경) */
-#haveIngredient::-webkit-scrollbar-track {
-	background: #f1f1f1;
-	/* 트랙 배경 색상 */
-	border-radius: 10px; /* 트랙의 모서리 둥글게 */
+input[type="submit"] {
+   font-size: 16px;
+   padding: 8px 12px;
+   background-color: #00acc1;
+   color: white;
+   border: 2px solid #0097a7;
+   border-radius: 12px;
+   cursor: pointer;
+   transition: background-color 0.3s, transform 0.3s;
 }
 
-/* 스크롤바 핸들 (스크롤바 손잡이) */
-#haveIngredient::-webkit-scrollbar-thumb {
-	background: #00acc1; /* 핸들 색상 */
-	border-radius: 10px; /* 핸들의 모서리 둥글게 */
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* 핸들에 그림자 추가 */
+input[type="submit"]:hover {
+   background-color: #0097a7;
+   transform: scale(1.05);
 }
 
-/* 스크롤바 핸들에 마우스를 올렸을 때 */
-#haveIngredient::-webkit-scrollbar-thumb:hover {
-	background: #00acc1; /* 핸들 색상 변경 */
+#haveIngredient, #canMakeMenuDiv {
+   max-height: 600px;
+   overflow-y: auto;
+   border: 1px solid #ddd;
+   margin-bottom: 20px;
 }
 
-#canMakeMenuDiv {
-	max-height: 600px; /* Set a fixed height for scrolling */
-	overflow-y: auto; /* Enable vertical scrolling */
-	overflow-x: hidden; /* Hide horizontal scrolling if not needed */
-	border: 1px solid #ddd;
-	/* Optional: Add a border around the scrollable area */
+#haveIngredient .row,
+#canMakeMenuDiv .row {
+   flex-direction: row;
 }
 
-#canMakeMenuDiv::-webkit-scrollbar {
-	width: 12px; /* 스크롤바의 너비 */
-	height: 12px; /* 수평 스크롤바의 높이 (optional) */
+#haveIngredient .row > div,
+#canMakeMenuDiv .row > div {
+   flex: 1;
+   text-align: center;
+   margin: 0 10px;
 }
 
-/* 스크롤바 트랙 (스크롤바 배경) */
-#canMakeMenuDiv::-webkit-scrollbar-track {
-	background: #f1f1f1;
-	/* 트랙 배경 색상 */
-	border-radius: 10px; /* 트랙의 모서리 둥글게 */
-}
-
-/* 스크롤바 핸들 (스크롤바 손잡이) */
-#canMakeMenuDiv::-webkit-scrollbar-thumb {
-	background: #00acc1; /* 핸들 색상 */
-	border-radius: 10px; /* 핸들의 모서리 둥글게 */
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* 핸들에 그림자 추가 */
-}
-
-/* 스크롤바 핸들에 마우스를 올렸을 때 */
-#canMakeMenuDiv::-webkit-scrollbar-thumb:hover {
-	background: #00acc1; /* 핸들 색상 변경 */
-}
 </style>
-
 </head>
 <body>
-	<header>
-		<th:block th:insert="~{/sub/header.html}"></th:block>
-	</header>
-	<section>
-
-		<form id="mainForm" action="/menu1/main" method="get">
-
-			<input type="submit" value="초기화">
-		</form>
-
-		<br>
-		<div id="haveIngredient">
-			<!-- 가지고 있는 재료 테이블 생성 -->
-
-
-
-			<div th:each="dto : ${FridgeIngredientList}">
-				<!-- <input type = "hidden" th:value = "${dto.icode}" id="icode">-->
-				<input type="hidden" th:value="${dto.icode}"
-					th:id="'icode' + ${dto.icode}">
-
-				<div><img th:src="@{'/img/ingredient/'+ ${dto.imgurl}}"></div>
-
-				<div>[[${dto.name}]]</div>
-
-				<div><button id="xBtn" type="button"
-						th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">x</button></td>
-				</div>
-				<!-- x를 누르면 가지고 있는 재료 삭제됨-->
-
-			</div>
-
-		</div>
-		<br>
-		<div id="canMakeMenuDiv">
-			<!-- 만들 수 있는 메뉴 테이블 생성-->
-			<table>
-				<thead>
-					<th>메뉴사진</th>
-					<th>회원님의 재료로 만들수 있는 메뉴</th>
-					<th>레시피</th>
-				</thead>
-				<tbody>
-					<tr th:each="dto : ${showCanMakeMenuList}"
-						th:id="'canMakeMenuMcode' + ${dto.mcode}">
-
-						<input type="hidden" value="${dto.mcode}">
-						<td><img th:src="@{'/uploads/'+ ${dto.imgurl}}"></td>
-						<td>[[${dto.menuName}]]</td>
-						<td><button id="xBtn" type="button"
-								th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
-								보러가기</button></td>
-						<!-- 누르면 레시피 리스트 화면으로 이동-->
-					</tr>
-				</tbody>
-		</div>
-		<br>
-		<div id=NoUseIngredientList></div>
-
-	</section>
-
-	<script>
-	function toggleHighlight(event, icode) {
-	    const button = event.currentTarget;
-	    const parentDiv = button.closest('div'); // 'div' 요소로 수정
-	    parentDiv.classList.toggle('highlight');
-	    
-	    if (parentDiv.classList.contains('highlight')) {
-	           deleteIngredient(event, icode);
-	           mcodeListForIcodeList(event,icode);
-	           //returnMcode(icode)
-	          // undoHavingIngredient(event,icode)
-	          
-	       } else {
-	          
-	           mcodeListForIcodeList(event,icode);
-	       }
-	}
+<header>
+   <th:block th:insert="~{/sub/header.html}"></th:block>
+</header>
+<section>
+   <form id="mainForm" action="/menu1/main" method="get">
+      <input type="submit" value="초기화">
+   </form>
+   <br>
+   <div id="haveIngredient" class="container">
+      <div class="row">
+         <div>재료이미지</div>
+         <div>재료이름</div>
+         <div>재료삭제</div>
+      </div>
+      <div th:each="dto : ${FridgeIngredientList}" class="row">
+         <input type="hidden" th:value="${dto.icode}" th:id="'icode' + ${dto.icode}">
+         <div><img th:src="@{'/img/ingredient/'+ ${dto.imgurl}}"></div>
+         <div>[[${dto.name}]]</div>
+         <div>
+            <button id="xBtn" type="button" th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">x</button>
+         </div>
+      </div>
+   </div>
+   <br>
    
-    
-     function goRecipeList(event,mcode) {
-        console.log("================================mcode"+mcode)
-         event.preventDefault();
-        window.location.href = '/menu_all/recipe_list?mcode=' + mcode;
+   <div id="canMakeMenuDiv" class="container">
+      <div class="row">
+         <div>메뉴사진</div>
+         <div>회원님의 재료로 만들 수 있는 메뉴</div>
+         <div>레시피</div>
+      </div>
+      <div th:each="dto : ${showCanMakeMenuList}" class="row" th:id="'canMakeMenuMcode' + ${dto.mcode}">
+         <input type="hidden" value="${dto.mcode}">
+         <div><img th:src="@{'/uploads/'+ ${dto.imgurl}}"></div>
+         <div>[[${dto.menuName}]]</div>
+         <div>
+            <button id="xBtn" type="button" th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피 보러가기</button>
+         </div>
+      </div>
+   </div>
+   <br>
+   <div id="NoUseIngredientList"></div>
+</section>
+
+<script>
+   function toggleHighlight(event, icode) {
+       const button = event.currentTarget;
+       const row = button.closest('.row');
+       row.classList.toggle('highlight');
+
+       if (row.classList.contains('highlight')) {
+           deleteIngredient(event, icode);
+           mcodeListForIcodeList(event, icode);
+       } else {
+           undoIngredient2(event, icode);
+           mcodeListForIcodeList(event, icode);
        }
+   }
 
-
-   function deleteIngredient(event, icode) {                  // 재료를 지우면
+   function goRecipeList(event, mcode) {
        event.preventDefault();
-       console.log("============================icode : " + icode);
-       
-       fetch("/menu1/deleteFridgeIngredientList?icode=" + icode, { // 가진 재료에서 icode에 해당하는 재료 삭제
+       window.location.href = '/menu_all/recipe_list?mcode=' + mcode;
+   }
+
+   function deleteIngredient(event, icode) {
+       event.preventDefault();
+       fetch("/menu1/deleteFridgeIngredientList?icode=" + icode, {
            method: "GET",
            headers: {
                "Content-Type": "application/json",
@@ -278,319 +197,78 @@ input[type="submit"]:hover {
        })
        .then(response => response.json())
        .then(data => {
-           <!--document.getElementById("haveIngredient").innerHTML = deleteIngredientTable(data); --> // 해당재료가 빠진 가진재료 리스트를 가진재료 영역에 나타냄
-           deleteCanMakeMenu(event,icode)             // icode에 해당하는 재료를 빼고 만들수 있는 메뉴를 보여주는 함수
-         NoUseIngredient(event) // 사용할 목록에서 뺀 재료 리스트를 나타내주는 함수
+           // Handle ingredient deletion
+           deleteCanMakeMenu(event, icode);
+           NoUseIngredient(event);
        })
        .catch(error => {
            console.error('Error:', error);
-           document.getElementById("haveIngredient").innerHTML = error;
        });
    }
-   
-   function mcodeListForIcodeList(event,icode) {                  // icode에 해당하는 재료를 빼고 만들수 있는 메뉴를 보여주는 함수
+
+   function mcodeListForIcodeList(event, icode) {
        event.preventDefault();
-      console.log("=============");
-      console.log("=============================icode : "+icode);
-      fetch("/menu1/mcodeListForIcodeList?icode="+icode, { // 서버에 요청을 보냅니다.
-         method: "GET",
-         headers: {
-            "Content-Type": "application/json", // 요청의 헤더 설정
-         },
-      })
-         .then(response => response.json())
-         .then(data => {
-        	 const mcodeList = data;
-        	 toggle2(mcodeList);
-        	 console.log("======================================mcodeList : ",mcodeList)
-        	 
-            //document.getElementById("canMakeMenuDiv").innerHTML =deleteCanMakeMenuTable(data);
-            
-         })
-         .catch(error => {
-           //document.getElementById("canMakeMenuDiv").innerHTML = error;
-         });
+       fetch("/menu1/mcodeListForIcodeList?icode=" + icode, {
+           method: "GET",
+           headers: {
+               "Content-Type": "application/json",
+           },
+       })
+       .then(response => response.json())
+       .then(data => {
+           toggle2(data);
+       })
+       .catch(error => {
+           console.error('Error:', error);
+       });
    }
-   function deleteCanMakeMenu(event,icode) {                  // icode에 해당하는 재료를 빼고 만들수 있는 메뉴를 보여주는 함수
-       event.preventDefault();
-      console.log("=============");
-      console.log("=============================icode : "+icode);
-      fetch("/menu1/deleteCanMakeMenu?icode="+icode, { // 서버에 요청을 보냅니다.
-         method: "GET",
-         headers: {
-            "Content-Type": "application/json", // 요청의 헤더 설정
-         },
-      })
-         .then(response => response.json())
-         .then(data => {
-            //document.getElementById("canMakeMenuDiv").innerHTML =deleteCanMakeMenuTable(data);
-            
-         })
-         .catch(error => {
-            document.getElementById("canMakeMenuDiv").innerHTML = error;
-         });
-   }
+
    function toggle2(mcodes) {
-	    // 모든 mcode를 다룰 경우 각 mcode에 해당하는 행 수집
-	    let selectedRows = mcodes.map(mcode => {
-	        let row = document.getElementById("canMakeMenuMcode" + mcode);
-	        if (row) {
-	            console.log("Row found for mcode:", mcode, row);
-	        } else {
-	            console.warn("No row found for mcode:", mcode);
-	        }
-	        return row;
-	    }).filter(row => row !== null); // null인 경우를 필터링하여 제외
+       let selectedRows = mcodes.map(mcode => document.getElementById("canMakeMenuMcode" + mcode));
+       let rows = document.querySelectorAll('#canMakeMenuDiv .row:not(:first-child)'); // Exclude header row
 
-	    console.log("Selected Rows:", selectedRows);
-
-	    // 모든 행을 선택
-	    let rows = document.querySelectorAll('tr[id^="canMakeMenuMcode"]');
-	    rows.forEach(row => {
-	        // 선택된 행 배열에 현재 행이 포함되지 않은 경우 배경색을 빨갛게
-	        if (!selectedRows.includes(row)) {
-	            row.classList.add('remove_highlight');
-	            // 'remove_highlight' 클래스를 추가
-	            console.log("Adding 'remove_highlight' to:", row.id);
-	            console.log("Adding 'remove_highlight' to:", row.id);
-	        } else {
-	            // 선택된 행의 배경색을 원래대로 되돌림
-	            row.classList.remove('remove_highlight');  // 'remove_highlight' 클래스를 제거
-	            console.log("Removing 'remove_highlight' from:", row.id);
-	        }
-	    });
-	}
-   
-   
-   
-   
-   
-   
-   function NoUseIngredient(event) { //사용하지 않을 재료 리스트 생성함수
-       event.preventDefault();
-      console.log("=============");
-      fetch("/menu1/NoUseIngredient", { 
-         method: "GET",
-         headers: {
-            "Content-Type": "application/json", 
-         },
-      })
-         .then(response => response.json())
-         .then(data => {
-            // document.getElementById("NoUseIngredientList").innerHTML =CreateNoUseIngredientTable(data);
-         })
-         .catch(error => {
-            document.getElementById("NoUseIngredientList").innerHTML = error;
-         });
-   }
-   
-   
-   function reset(event) {                                 //사용할 수 있는 재료 리스트 초기화 함수
-       event.preventDefault();
-      console.log("=============");
-      fetch("/menu1/reset", { 
-         method: "GET",
-         headers: {
-            "Content-Type": "application/json",
-         },
-      })
-         .then(response => response.json())
-         .then(data => {
-            document.getElementById("canMakeMenuDiv").innerHTML =deleteCanMakeMenuTable(data);
-         })
-         .catch(error => {
-            document.getElementById("canMakeMenuDiv").innerHTML = error;
-         });
-   }
-   // 취소한 재료 복원
-   // 취소한 재료 복원을 누르면 사용하지 않을 재료 리스트에서 사라짐
-   // 사라지면서 사용할수 있는 재료 리스트에 다시 추가가 되어야 함
-   function undoIngredient(event,icode) {                        //복원을 눌렀을 때 실행되는 함수
-       event.preventDefault();
-      console.log("=============undoIngredient =================: "+icode);
-      fetch("/menu1/undoIngredient?icode="+icode, { 
-         method: "GET",
-         headers: {
-            "Content-Type": "application/json", 
-         },
-      })
-         .then(response => response.json())
-         .then(data => {
-            document.getElementById("NoUseIngredientList").innerHTML =CreateNoUseIngredientTable(data);
-            undoHavingIngredient(event,icode);      // 가진재료가 추가됨
-            deleteCanMakeMenu(event,icode);               // 복원을 누르면 만들 수 있는 메뉴 바뀌는 함수
-         })
-         .catch(error => {
-            document.getElementById("NoUseIngredientList").innerHTML = error;
-         });
-   }
-   
-   
-   function undoIngredient2(event,icode) {                        //복원을 눌렀을 때 실행되는 함수
-       event.preventDefault();
-      console.log("=============undoIngredient =================: "+icode);
-      fetch("/menu1/undoIngredient2?icode="+icode, { 
-         method: "GET",
-         headers: {
-            "Content-Type": "application/json", 
-         },
-      })
-         .then(response => response.json())
-         .then(data => {
-            //document.getElementById("canMakeMenuDiv").innerHTML =deleteCanMakeMenuTable(data);
-            //undoHavingIngredient(event,icode);      // 가진재료가 추가됨
-            //deleteCanMakeMenu(event,icode);               // 복원을 누르면 만들 수 있는 메뉴 바뀌는 함수
-         })
-         .catch(error => {
-            document.getElementById("canMakeMenuDiv").innerHTML = error;
-         });
-   }
-   
-   function undoHavingIngredient(event,icode) {
-       event.preventDefault();
-      console.log("=============undoIngredient =================: "+icode);
-      fetch("/menu1/undoHavingIngredient?icode="+icode, { 
-         method: "GET",
-         headers: {
-            "Content-Type": "application/json", 
-         },
-      })
-         .then(response => response.json())
-         .then(data => {
-            document.getElementById("haveIngredient").innerHTML =CreateHavingIngredientTable(data);
-         })
-         .catch(error => {
-            document.getElementById("haveIngredient").innerHTML = error;
-         });
-   }
-   
-   // 테이블 생성 함수 부분   
-   function deleteIngredientTable(jsonData) {
-      var html = '<table  border="1"  style="margin: 0 auto;text-align: center;">';
-      
-      html += '<thead>';
-      html += '<th>재료이미지</th>';
-      html += '<th>재료이름</th>';
-      html += '<th>재료삭제</th>';
-      html += '</thead>';
-      
-
-       // 배열인지 확인
-       if (Array.isArray(jsonData)) {
-           // 배열이지만 비어있는 경우
-           if (jsonData.length === 0) {
-               html += '<tr><td colspan="3">사용할 수 있는 재료가 없습니다.</td></tr>';
+       rows.forEach(row => {
+           if (!selectedRows.includes(row)) {
+               row.classList.add('remove_highlight');
            } else {
-               // 배열이 있고 데이터가 있는 경우
-               jsonData.forEach(item => {
-                  html += '<tr>';
-                  html += '<td><img id="by-menu-img" src="/img/material/' + item.imgurl + '"></td>';
-                  html += '<td>' + item.name + '</td>';
-                   html += '<td><button id="xBtn" type="button" onclick="deleteIngredient(event, \'' + item.icode + '\')">x</button></td>'; // JSON 데이터에서 icode를 사용합니다.
-                html += '</tr>';
-               });
+               row.classList.remove('remove_highlight');
            }
-           
-       } else {
-           // 배열이 아닌 경우
-           html += '<tr><td colspan="1">사용할 수 있는 재료가 없습니다.</td></tr>';
-       }
-      html += '</table>';
-      
-      return html;
-   }
-   
-   
-      
-
-   function deleteCanMakeMenuTable(jsonData) {
-       var html = '<table border="1" style="margin: 0 auto; text-align: center;">';
-       
-       html += '<tr>';
-       html += '<th>메뉴사진</th>';
-       html += '<th>회원님의 재료로 만들 수 있는 메뉴</th>';
-       html += '<th>레시피</th>';
-       html += '</tr>';
-
-       
-           if (jsonData.length === 0) {     // 데이터가 길이가 0(빈 배열인지 확인)
-               html += '<tr><td colspan="3">만들 수 있는 메뉴가 없습니다.</td></tr>';
-           } else {
-               // 데이터가 있는 경우
-               jsonData.forEach(item => {
-                   html += '<tr>';
-                  html += '<td><img id="by-menu-img" src="/img/menu/' + item.imgurl + '"></td>';
-                   html += '<td>' + item.menuName + '</td>';
-                   html += '<td><button type="button" id="xBtn" onclick="goRecipeList(event, \'' + item.mcode + '\')">레시피 보러가기</button></td>'; // JSON 데이터에서 icode를 사용합니다.
-                  
-                   html += '</tr>';
-               });
-           }
-           
-       
-
-       html += '</table>';
-       
-       return html;
-   }
-
-   
-   
-   function CreateNoUseIngredientTable(jsonData) {
-       var html = '';
-
-   
-           if (jsonData.length === 0) {
-               html += '';
-           } else {
-               // 배열이 있고 데이터가 있는 경우
-               html += '<table border="1" style="margin: 0 auto; text-align: center;">';
-               html += '<tr>';
-               html += '<th>재료 이미지</th>';
-               html += '<th>메뉴추천에서 제외한 메뉴</th>';
-               html += '<th>복원</th>';
-               html += '</tr>';
-
-               jsonData.forEach(item => {
-                   html += '<tr>';
-                  html += '<td><img id="by-menu-img" src="/img/material/' + item.imgurl + '"></td>';
-                   html += '<td>' + item.name + '</td>';
-                   html += '<td><button type="button" onclick="undoIngredient(event, \'' + item.icode + '\')">복원</button></td>';
-                   html += '</tr>';
-               });
-
-               html += '</table>';
-           }
-        
-
-       return html;
-   }
-
-   
-   function CreateHavingIngredientTable(jsonData) {
-       var html = '<table border="1" style="margin: 0 auto; text-align: center;">';
-       
-       html += '<thead>';
-       html += '<tr><th>재료이미지</th><th>재료이름</th><th>재료삭제</th></tr>';
-       html += '</thead>';
-       
-       html += '<tbody>'; // <tbody> 태그 추가
-
-       jsonData.forEach(item => {
-           html += '<tr>';
-           html += '<td><img id="by-menu-img" src="/img/material/' + item.imgurl + '"></td>';
-           html += '<td>' + item.name + '</td>';
-           html += '<td><button id = "xBtn" type="button" onclick="deleteIngredient(event, \'' + item.icode + '\')">x</button></td>';
-           html += '</tr>';
        });
-
-       html += '</tbody>'; // <tbody> 태그 닫기
-       html += '</table>';
-       
-       return html;
    }
 
-   
-   </script>
+   function NoUseIngredient(event) {
+       event.preventDefault();
+       fetch("/menu1/NoUseIngredient", {
+           method: "GET",
+           headers: {
+               "Content-Type": "application/json",
+           },
+       })
+       .then(response => response.json())
+       .then(data => {
+           // Update No Use Ingredients
+       })
+       .catch(error => {
+           console.error('Error:', error);
+       });
+   }
+
+   function undoIngredient2(event, icode) {
+       event.preventDefault();
+       fetch("/menu1/undoIngredient2?icode=" + icode, {
+           method: "GET",
+           headers: {
+               "Content-Type": "application/json",
+           },
+       })
+       .then(response => response.json())
+       .then(data => {
+           // Handle undoing the ingredient
+       })
+       .catch(error => {
+           console.error('Error:', error);
+       });
+   }
+</script>
 </body>
 </html>
