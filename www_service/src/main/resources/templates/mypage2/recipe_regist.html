@@ -720,7 +720,7 @@ document.getElementById('recipe-ingredient-add').addEventListener('click', () =>
 		const rows = document.querySelectorAll('#recipe-steps tr');
 		rows.forEach((row, index) => {
 			const stepCell = row.querySelector('th');
-			const orderNumInputl = stepCell.querySelector('input[name="orderNum"]');
+			const orderNumInput = stepCell.querySelector('input[name="orderNum"]');
 			stepCell.childNodes[0].textContent = `Step ${index + 1}`;
 			orderNumInput.value = index + 1;
 		});
