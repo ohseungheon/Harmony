@@ -18,8 +18,5 @@ public class IngredientService {
         return ingredientDao.getAllIngredients();
     }
 
-    public List<String> gettAllIngredientCategories(){
-        
-        return ingredientDao.getAllIngredientCategories();
-    }
+    
 }

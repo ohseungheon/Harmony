@@ -10,5 +10,4 @@ import java.util.List;
 public interface  IngredientDao {
     List<IngredientDto> getAllIngredients();
 
-    List<String> getAllIngredientCategories();
 }

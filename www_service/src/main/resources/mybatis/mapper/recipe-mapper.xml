@@ -32,4 +32,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN menu m ON r.mcode = m.mcode
         ORDER BY r.rcode
     </select>
+
+    <select id="getRecipeCategories" resultType="String">
+        SELECT DISTINCT category 
+        FROM recipe 
+        WHERE category IS NOT NULL AND category != ''
+        ORDER BY category
+    </select>
+
+    <select id="getFilteredRecipes" resultType="com.harmony.www_service.dto.RecipeDto">
+        SELECT DISTINCT r.*, m.menuName 
+        FROM recipe r
+        JOIN menu m ON r.mcode = m.mcode
+        WHERE 1=1
+        <if test="categories != null and categories.size() > 0">
+            AND r.category IN
+            <foreach item="category" collection="categories" open="(" separator="," close=")">
+                #{category}
+            </foreach>
+        </if>
+        <if test="ingredients != null and ingredients.size() > 0">
+            AND r.rcode NOT IN (
+                SELECT DISTINCT ri.rcode
+                FROM recipe_ingredient ri
+                WHERE ri.icode IN
+                <foreach item="ingredient" collection="ingredients" open="(" separator="," close=")">
+                    #{ingredient}
+                </foreach>
+            )
+        </if>
+    </select>
 </mapper>
