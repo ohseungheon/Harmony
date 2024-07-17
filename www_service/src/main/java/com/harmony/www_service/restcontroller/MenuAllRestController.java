@@ -58,9 +58,5 @@ public class MenuAllRestController {
         return ingredientService.gettAllIngredientCategories();
     }
 
-    @GetMapping("/recipeAllList")
-	public List<RecipeDto> getAllRecipes(){
-        System.out.println("getAllRecipes 메서드가 호출되었습니다.");
-		return recipeService.getAllRecipes();
-	}
+    
 }
