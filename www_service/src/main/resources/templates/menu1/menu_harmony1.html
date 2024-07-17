@@ -131,11 +131,11 @@ input[type="submit"]:hover {
       <input type="submit" value="초기화">
    </form>
    <br>
+   
    <div id="haveIngredient" class="container">
-      <div class="row">
-         <div>재료이미지</div>
-         <div>재료이름</div>
-         <div>재료삭제</div>
+      
+   <div class="row" style="display: none;">
+      냉장고 재료
       </div>
       <div th:each="dto : ${FridgeIngredientList}" class="row">
          <input type="hidden" th:value="${dto.icode}" th:id="'icode' + ${dto.icode}">
@@ -147,12 +147,10 @@ input[type="submit"]:hover {
       </div>
    </div>
    <br>
-   
    <div id="canMakeMenuDiv" class="container">
-      <div class="row">
-         <div>메뉴사진</div>
-         <div>회원님의 재료로 만들 수 있는 메뉴</div>
-         <div>레시피</div>
+      
+   <div class="row" style="display: none;">
+      만들 수 있는 메뉴
       </div>
       <div th:each="dto : ${showCanMakeMenuList}" class="row" th:id="'canMakeMenuMcode' + ${dto.mcode}">
          <input type="hidden" value="${dto.mcode}">
