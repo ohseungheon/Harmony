@@ -45,4 +45,17 @@ public class RecipeService {
 
         return recipeDao.getAllRecipes();
     }
+
+    public List<String> getRecipeCategories(){
+
+        return recipeDao.getRecipeCategories();
+    }
+
+    public List<RecipeDto> getFilteredRecipeList(List<String> categories, List<Integer> excludedIngredients) {
+        if ((categories == null || categories.isEmpty()) && (excludedIngredients == null || excludedIngredients.isEmpty())) {
+            return recipeDao.getAllRecipes();
+        }
+        return recipeDao.getFilteredRecipes(categories, excludedIngredients);
+    }
+
 }

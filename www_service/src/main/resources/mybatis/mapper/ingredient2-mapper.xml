@@ -7,7 +7,4 @@
         ORDER BY category, name
     </select>
 
-    <select id="getAllIngredientCategories" resultType="String">
-        SELECT DISTINCT category FROM ingredient ORDER BY category
-    </select>
 </mapper>

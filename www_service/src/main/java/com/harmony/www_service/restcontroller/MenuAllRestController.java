@@ -52,11 +52,17 @@ public class MenuAllRestController {
         return ingredientService.gettAllIngredients();
     }
 
-    @GetMapping("/ingredient-categories")
-    public List<String> getIngredientCategories(){
 
-        return ingredientService.gettAllIngredientCategories();
+    @GetMapping("/recipe-categories")
+    public List<String> getRecipeCategories(){
+
+        return recipeService.getRecipeCategories();
     }
-
     
+    @GetMapping("/filtered_recipe_list")
+    public List<RecipeDto> getFilteredRecipeList(
+            @RequestParam(required = false) List<String> categories,
+            @RequestParam(required = false) List<Integer> ingredients) {
+        return recipeService.getFilteredRecipeList(categories, ingredients);
+    }
 }
