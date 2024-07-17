@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class IngredientDto {
 	
-
 	private int icode;
 	private String name;
 	private String type;
@@ -17,5 +16,4 @@ public class IngredientDto {
 	private String imgurl;
 	private String category;
 	
-
 }

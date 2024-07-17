@@ -9,6 +9,8 @@ import com.harmony.www_service.dto.MenuReqDto;
 
 @Mapper
 public interface IRequestMenuDao {
-	public List<MenuReqDto> findMenuRequest(@Param("mrcode") int mrcode);
-	public void registRequestMenu(@Param("mrDto") MenuReqDto mrDto);
+	public List<MenuReqDto> findMenuRequest();
+	public boolean registRequestMenu(@Param("mrDto") MenuReqDto mrDto);
+	public boolean deleteRequestMenu(@Param("mrcode") int mrcode);
+	public boolean addRequestMenuForAlarm(@Param("mrDto")MenuReqDto mrDto);
 }

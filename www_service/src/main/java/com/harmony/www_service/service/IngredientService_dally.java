@@ -28,8 +28,6 @@ public class IngredientService_dally {
 	
 	// 재료 등록
 	public void addIngredients(IngredientDtoWithFile iDtoFile) {
-		System.out.println("------service 진입-------");
-		
 		// 실제 DB에 저장하기 위한 IngredientDto 생성
 		IngredientDto iDto = new IngredientDto();
 		iDto.setIcode(iDto.getIcode());
@@ -47,7 +45,6 @@ public class IngredientService_dally {
 			extension = "";
 		}
 		
-		System.out.println("----------------file : " + file );
 		
 		// 파일 확장자 추출
 		int dotIndex = originName.lastIndexOf('.');
@@ -62,9 +59,6 @@ public class IngredientService_dally {
 		String newName = UUID.randomUUID().toString() + extension;
 		iDto.setImgurl(newName);
 		iDao.registIngredient(iDto);
-		
-		System.out.println("................여기까지 동작.............");
-		
 		
 		// 프로젝트 루트 경로를 기준으로 파일 저장 경로 설정
 		try {
@@ -93,17 +87,8 @@ public class IngredientService_dally {
 		
 	}
 	
-	// 전체 재료 리스트 출력
-	public List<IngredientDto> showAllList(){
-		List<IngredientDto> allList = iDao.findAll();
-		
-		return allList;
-	}
-	
-	
 	// 카테고리에 따른 재료 리스트 출력
 	public List<IngredientDto> showListByCategory(String category){
-		System.out.println("++++++++++++++++ 재료 리스트 출력 +++++++++++++++");
 		List<IngredientDto> iList = iDao.findByCategory(category);
 		
 		return iList;
@@ -111,17 +96,13 @@ public class IngredientService_dally {
 	
 	// 재료 디테일 출력
 	public IngredientDto showDetail(int icode){
-		System.out.println("++++++++++++++++ 재료 디테일 출력 +++++++++++++++");
 		IngredientDto ingred_info = iDao.getDetail(icode);
-	
-		System.out.println("재료 디테일 정보 확인 : "  + ingred_info);
 		
 		return ingred_info;
 	}
 	
 	// 재료 수정 기능
 	public int updateIngredients(IngredientDtoWithFile iDtoFile) {
-
 		// 실제 DB에 저장하기 위한 IngredientDto 생성
 		IngredientDto iDto = new IngredientDto();
 		iDto.setIcode(iDtoFile.getIcode());
@@ -139,8 +120,6 @@ public class IngredientService_dally {
 			originName = iDtoFile.getFileName();
 			extension = "";
 		}
-		
-		System.out.println("----------------file : " + file );
 		
 		// 파일 확장자 추출
 		int dotIndex = originName.lastIndexOf('.');
@@ -184,16 +163,9 @@ public class IngredientService_dally {
 					"파일 시스템에 접근하는 동안 발생한 다른 입출력 오류.");
 			e.printStackTrace();
 		}
-		System.out.println("????????? iDto =" + iDto);
-		int updateCount = iDao.updateIngredient(iDto);
-		System.out.println("!!!!!!!!!!!!! iDto =" + iDto);
 		
-		//if(updateCount >= 0) {
-			
-			//update_data = iDao.getDetail(iDto.getIcode());
-			//return iDao.getDetail(iDto.getIcode());
-		//}
-		System.out.println("iService-----update" + updateCount);
+		int updateCount = iDao.updateIngredient(iDto);
+		
 		return updateCount;
 	}
 	
