@@ -18,23 +18,21 @@
 }
 
 #by-tab {
-	width: 800px;
-	height: 800px;
+	width: 900px;
+	height: 900px;
 	border-radius: 20px;
 }
 
 #by-tab2 {
-	background-color: #A7BCF2;
-	width: 800px;
-	height: 800px;
-	border-bottom-left-radius: 20px; /* 왼쪽 아래 반경 */
-	border-bottom-right-radius: 20px; /* 오른쪽 아래 반경 */
+	background-color: #e0ebf7;
+	width: 900px;
+	height: 900px;
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
 	overflow: auto;
-	scrollbar-width: thin;
-	scrollbar-color: #ffffff #A7BCF2;
+	scrollbar-width: auto;
+	scrollbar-color: #ffffff #e0ebf7;
 }
 
 .tabs {
@@ -51,8 +49,6 @@
 	outline: none;
 	transition: background-color 0.3s ease;
 	font-size: 19px;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
 }
 
 .tabs button:hover {
@@ -61,8 +57,7 @@
 /* 활성화된 탭 버튼 스타일 */
 .tabs button.active {
 	background-color: white;
-	border: 5px solid #A7BCF2;
-	border-radius: 5px;
+	border: 5px solid #e0ebf7;
 }
 /* 탭 콘텐츠 기본 스타일 - 숨김 */
 .tab-content {
@@ -78,10 +73,10 @@
 	border: 1px solid #ddd;
 	background-color: #fff;
 	box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15); /* 우하단에 그림자 추가 */
-	width: 720px;
-	height: 160px;
+	width: 740px;
+	height: 150px;
 	padding: 10px;
-	margin: 20px;
+	margin: 30px;
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
@@ -172,8 +167,8 @@
 
 #by-btn-insert {
 	position: absolute; /* 절대 위치 설정 */
-	width: 80px; /* 버튼 너비 */
-	height: 80px; /* 버튼 높이 */
+	width: 60px; /* 버튼 너비 */
+	height: 60px; /* 버튼 높이 */
 	background-color: #FF9A8B; /* 버튼 배경색 */
 	border-radius: 50%; /* 버튼을 원형으로 */
 	cursor: pointer; /* 커서 포인터로 변경 */
@@ -181,8 +176,8 @@
 	align-items: center;
 	justify-content: center; /* 버튼 내용 중앙 정렬 */
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* 그림자 추가 */
-	margin-top: -560px;
-	margin-left: 700px;
+	margin-top: -620px;
+	margin-left: 800px;
 	z-index: 10;
 	pointer-events: auto;
 }
@@ -195,13 +190,13 @@
 }
 
 #by-btn-insert::before {
-	width: 50px; /* 수평 선 너비 */
-	height: 10px; /* 수평 선 높이 */
+	width: 35px; /* 수평 선 너비 */
+	height: 8px; /* 수평 선 높이 */
 }
 
 #by-btn-insert::after {
-	width: 10px; /* 수직 선 너비 */
-	height: 50px; /* 수직 선 높이 */
+	width: 8px; /* 수직 선 너비 */
+	height: 35px; /* 수직 선 높이 */
 }
 
 #by-btn-insert::before {
@@ -232,28 +227,35 @@
 
 #by-dday-list {
 	border: 1px solid #eee;
-	background-color: #A7BCF2;
-	width: 800px;
-	height: 140px;
+	background-color: #e0ebf7;
+	width: 900px;
+	height: 160px;
 	margin: 50px;
 	margin-bottom: 180px;
 	padding: 20px;
 	
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
+	flex-direction: row;
+	
+	overflow-x: auto;
+	overflow-y: hidden;
+	scrollbar-width: auto;
+	scrollbar-color: #ffffff #e0ebf7;
 }
 
 .by-dday {
 	border: 1px solid #ccc;
 	background-color: white;
-	width: 150px;
-	height: 150px;
+	width: 140px;
+	height: 140px;
 	margin: 20px;
 	
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
+	flex-shrink: 0;
 }
 </style>
 </head>
@@ -265,6 +267,8 @@
 	<section id="by-section">
 	
 		<div id="by-dday-list">
+			<div class="by-dday"></div>
+			<div class="by-dday"></div>
 			<div class="by-dday"></div>
 			<div class="by-dday"></div>
 			<div class="by-dday"></div>
