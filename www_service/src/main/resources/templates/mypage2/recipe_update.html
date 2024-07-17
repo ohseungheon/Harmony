@@ -286,7 +286,7 @@
 </header>
 <section>
     
-    <h1 class="queen-page-title">레시피 등록</h1>
+    <h1 class="queen-page-title">레시피 수정</h1>
     <div class="choice-menu-img">
     	<img id="menu-image" src="" onerror="this.onerror=null; this.src='/img/imgNone.png';">
     </div>
@@ -303,9 +303,10 @@
     	</div>
     </div>
     
-   	<!-- 레시피 등록 폼 -->
-    <form action="/my/recipe/regist" method="post" enctype="multipart/form-data">
+   	<!-- 레시피 수정 폼 -->
+    <form action="/my/recipe/update" method="post" enctype="multipart/form-data">
     <input type="hidden" name="mcode" id="mcode">
+    <input type="hidden" name="rcode" th:value="${recipe.rcode}">
     <div class="recipe-regist-box1">
     	<table>
     		<tr>
@@ -443,12 +444,13 @@
     <div class="recipe-regist-box3">
     	<h4>요리 순서</h4>
     	<table id="recipe-steps">
+    	<th:block th:each="order : ${recipeOrder}">
     		<tr>
     			<th>Step 1
     				<input type="hidden" name="orderNum" value="1">
     			</th>
     			<td>
-    				<textarea name="orderContent" placeholder="예) 소고기를 숭덩숭덩 썰어주세요" th:text="${recipeOrder.orderContent}"></textarea>
+    				<textarea name="orderContent" placeholder="예) 소고기를 숭덩숭덩 썰어주세요">[[${order.orderContent}]]</textarea>
     			</td>
     			<td class="order-img">
     				<p class="order-img-text">➕</p>
@@ -459,6 +461,7 @@
     				<span class="delete-btn">X</span>
     			</td>
     		</tr>
+    		</th:block>
     	</table>
     	<div class="addBtn">
     			<img src="/img/addBtn.png" id="recipe-order-add">
@@ -470,7 +473,7 @@
     		<tr>
     			<th>태그</th>
     			<td>
-    				<input type="text" name="tagContent" placeholder="예) 한식, 닭볶음탕">
+    				<input type="text" name="tagContent" placeholder="예) 한식, 닭볶음탕" th:value="${recipeTag.tagContent}">
     			</td>
     		</tr>
     	</table>
@@ -513,9 +516,9 @@ document.addEventListener("DOMContentLoaded", () => {
 			//현재 선택된 메뉴 항목을 업데이트
 			selectedMenuItem = menuItem;
 			
-			
 			// 클릭한 메뉴 아이템의 mcode 가져오기
 			var mcode = menuItem.getAttribute("mcode");
+			console.log(mcode);
 			
 			// mcode 값을 hidden input에 설정
 			document.getElementById("mcode").value = mcode;
@@ -532,7 +535,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				console.log("data.imgurl : " + data.imgurl);
 				console.log("imageUrl : " + imageUrl);
 				// 이미지 URL을 이미지 요소에 설정
-				document.getElementById("menu-image").setAttribute("src", "/img/menu/" + imageUrl);
+				document.getElementById("menu-image").setAttribute("src", "/uploads/" + imageUrl);
 				document.getElementById("menu-image").setAttribute("onerror", "this.onerror=null; this.src='/img/imgNone.png';");
 			})
 			.catch(error => {
