@@ -6,166 +6,206 @@
 <style>
 /* Add your existing styles here */
 .container {
-   display: flex;
-   flex-direction: row;
-   margin: 20px 0;
+	display: flex;
+	flex-direction: row;
+	margin: 20px 0;
 }
 
+.container2 {
+	display: flex;
+	flex-direction: column;
+	margin: 20px 0;
+}
+
+
 .row {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   border: 1px solid #ddd;
-   margin: 5px 0;
-   padding: 12px;
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border: 1px solid #ddd;
+	margin: 5px 0;
+	padding: 12px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .row img {
-   max-width: 100px;
-   height: auto;
-   border-radius: 5px;
+	max-width: 100px;
+	height: auto;
+	border-radius: 5px;
 }
 
 .highlight {
-   background-color: rgba(0, 0, 0, 0.1);
-   filter: brightness(60%);
-   transition: filter 0.3s ease;
-   position: relative;
+	background-color: rgba(0, 0, 0, 0.1);
+	filter: brightness(60%);
+	transition: filter 0.3s ease;
+	position: relative;
 }
 
 .highlight::after {
-   content: '제외한 재료입니다';
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -50%);
-   background-color: rgba(255, 0, 0, 0.7);
-   color: white;
-   padding: 4px 8px;
-   border-radius: 4px;
-   font-size: 18px;
-   z-index: 1;
+	content: '제외한 재료입니다';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: rgba(255, 0, 0, 0.7);
+	color: white;
+	padding: 4px 8px;
+	border-radius: 4px;
+	font-size: 18px;
+	z-index: 1;
 }
 
 .remove_highlight {
-   background-color: rgba(0, 0, 0, 0.1);
-   filter: brightness(60%);
-   transition: all 0.3s ease;
-   position: relative;
+	background-color: rgba(0, 0, 0, 0.1);
+	filter: brightness(60%);
+	transition: all 0.3s ease;
+	position: relative;
 }
 
 .remove_highlight::after {
-   content: '재료가 부족합니다';
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -50%);
-   background-color: rgba(255, 0, 0, 0.7);
-   color: white;
-   padding: 4px 8px;
-   border-radius: 4px;
-   font-size: 18px;
-   z-index: 1;
+	content: '재료가 부족합니다';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: rgba(255, 0, 0, 0.7);
+	color: white;
+	padding: 4px 8px;
+	border-radius: 4px;
+	font-size: 18px;
+	z-index: 1;
 }
 
 button#xBtn {
-   font-size: 16px;
-   padding: 8px 12px;
-   background-color: #ffcccb;
-   border: 2px solid #ff7777;
-   border-radius: 12px;
-   cursor: pointer;
-   transition: background-color 0.3s, transform 0.3s;
+	font-size: 16px;
+	padding: 8px 12px;
+	background-color: #ffcccb;
+	border: 2px solid #ff7777;
+	border-radius: 12px;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.3s;
 }
 
 button#xBtn:hover {
-   background-color: #ff4444;
-   transform: scale(1.1);
-   color: white;
+	background-color: #ff4444;
+	transform: scale(1.1);
+	color: white;
 }
 
 input[type="submit"] {
-   font-size: 16px;
-   padding: 8px 12px;
-   background-color: #00acc1;
-   color: white;
-   border: 2px solid #0097a7;
-   border-radius: 12px;
-   cursor: pointer;
-   transition: background-color 0.3s, transform 0.3s;
+	font-size: 16px;
+	padding: 8px 12px;
+	background-color: #00acc1;
+	color: white;
+	border: 2px solid #0097a7;
+	border-radius: 12px;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.3s;
 }
 
 input[type="submit"]:hover {
-   background-color: #0097a7;
-   transform: scale(1.05);
+	background-color: #0097a7;
+	transform: scale(1.05);
 }
 
 #haveIngredient, #canMakeMenuDiv {
-   max-height: 600px;
-   overflow-y: auto;
-   border: 1px solid #ddd;
-   margin-bottom: 20px;
+	max-height: 600px;
+	overflow-y: auto;
+	border: 1px solid #ddd;
+	margin-bottom: 20px;
 }
 
-#haveIngredient .row,
-#canMakeMenuDiv .row {
-   flex-direction: row;
+#haveIngredient .row, #canMakeMenuDiv .row {
+	flex-direction: row;
 }
 
-#haveIngredient .row > div,
-#canMakeMenuDiv .row > div {
-   flex: 1;
-   text-align: center;
-   margin: 0 10px;
+#haveIngredient .row>div, #canMakeMenuDiv .row>div {
+	flex: 1;
+	text-align: center;
+	margin: 0 10px;
 }
 
+.row img {
+	width: 150px; /* 원하는 너비로 조절 */
+	height: 120px; /* 원하는 높이로 조절 */
+}
 </style>
 </head>
 <body>
-<header>
-   <th:block th:insert="~{/sub/header.html}"></th:block>
-</header>
-<section>
-   <form id="mainForm" action="/menu1/main" method="get">
-      <input type="submit" value="초기화">
-   </form>
-   <br>
-   
-   <div id="haveIngredient" class="container">
-      
-   <div class="row" style="display: none;">
-      냉장고 재료
-      </div>
-      <div th:each="dto : ${FridgeIngredientList}" class="row">
-         <input type="hidden" th:value="${dto.icode}" th:id="'icode' + ${dto.icode}">
-         <div><img th:src="@{'/img/ingredient/'+ ${dto.imgurl}}"></div>
-         <div>[[${dto.name}]]</div>
-         <div>
-            <button id="xBtn" type="button" th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">x</button>
-         </div>
-      </div>
-   </div>
-   <br>
-   <div id="canMakeMenuDiv" class="container">
-      
-   <div class="row" style="display: none;">
-      만들 수 있는 메뉴
-      </div>
-      <div th:each="dto : ${showCanMakeMenuList}" class="row" th:id="'canMakeMenuMcode' + ${dto.mcode}">
-         <input type="hidden" value="${dto.mcode}">
-         <div><img th:src="@{'/uploads/'+ ${dto.imgurl}}"></div>
-         <div>[[${dto.menuName}]]</div>
-         <div>
-            <button id="xBtn" type="button" th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피 보러가기</button>
-         </div>
-      </div>
-   </div>
-   <br>
-   <div id="NoUseIngredientList"></div>
-</section>
+	<header>
+		<th:block th:insert="~{/sub/header.html}"></th:block>
+	</header>
+	<section>
+		<form id="mainForm" action="/menu1/main" method="get">
+			<input type="submit" value="초기화">
+		</form>
+		<br>
 
-<script>
+		<div id="haveIngredient" class="container">
+
+			<div class="row" style="display: none;">냉장고 재료</div>
+			<div th:each="dto : ${FridgeIngredientList}" class="row">
+				<input type="hidden" th:value="${dto.icode}"
+					th:id="'icode' + ${dto.icode}">
+				<div class="container2">
+					<div>
+						<img th:src="@{'/img/ingredient/'+ ${dto.imgurl}}">
+					</div>
+					<div>[[${dto.name}]]</div>
+					<div>
+						<button id="xBtn" type="button"
+							th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">재료빼기</button>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+		<br>
+		<div id="canMakeMenuDiv" class="container">
+
+			<div class="row" style="display: none;">만들 수 있는 메뉴</div>
+			<div th:each="dto : ${showCanMakeMenuList}" class="row"
+				th:id="'canMakeMenuMcode' + ${dto.mcode}">
+				<input type="hidden" value="${dto.mcode}">
+				<div class="container2" th:if="${dto.mcode==3}">
+					<div>
+						<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
+					</div>
+					<div>[[${dto.menuName}]]</div>
+					<div>
+						<button id="xBtn" type="button"
+							th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
+							보러가기</button>
+					</div>
+					
+				</div>
+				
+				<div class="container2" th:if="${dto.mcode!=3}">
+					<div>
+						<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
+					</div>
+					<div>[[${dto.menuName}]]</div>
+					<div>
+						<button id="xBtn" type="button"
+							th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
+							보러가기</button>
+					</div>
+
+					<div>모자란 재료</div>
+					<div id="aa">
+						   <img th:src="@{'/img/ingredient/pork.png'}">
+					
+					</div>
+				
+				</div>
+
+			</div>
+			<br>
+			<div id="NoUseIngredientList"></div>
+	</section>
+
+	<script>
    function toggleHighlight(event, icode) {
        const button = event.currentTarget;
        const row = button.closest('.row');
