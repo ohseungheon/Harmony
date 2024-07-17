@@ -57,5 +57,14 @@ public class MenuAllController {
         return "menu_all/recomend_menu";
     }
 
+    @GetMapping("/menu_all/recipe_list_name")
+    public String recipeListByName(@RequestParam("menuName") String menuName, Model model){
+        List<RecipeDto> recipeList = recipeService.getRecipeListByMenuName(menuName);
+
+        model.addAttribute("menuName", menuName);
+        model.addAttribute("recipeList", recipeList);
+
+        return "menu_all/recipe_list";
+    }
 
 }

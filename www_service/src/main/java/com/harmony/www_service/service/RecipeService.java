@@ -36,4 +36,8 @@ public class RecipeService {
         return recipeDao.getRecipeIngredientsByRcode(rcode);
     }
 
+    public List<RecipeDto> getRecipeListByMenuName(String menuName){
+        
+        return recipeDao.getRecipeListByMenuName(menuName);
+    }
 }
