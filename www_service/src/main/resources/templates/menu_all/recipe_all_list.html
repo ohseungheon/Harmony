@@ -4,20 +4,266 @@
     <meta charset="UTF-8">
     <title>Recipe List</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        #recipeList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .recipe {
+            width: 225px;
+            background-color: #E0E0E0;
+            color: black;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .recipe:hover {
+            transform: translateY(-5px);
+        }
+        .recipe h3 {
+            padding: 10px;
+            margin: 0;
+            background-color: #D0D0D0;
+            font-size: 16px;
+        }
+        .recipe p {
+            padding: 5px 10px;
+            margin: 0;
+            font-size: 14px;
+        }
+        .recipe .menuName {
+            font-weight: bold;
+        }
+        .recipe .introduce {
+            height: 60px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        .filter-container {
+            display: none;
+            background: rgba(107, 213, 252, 0.1);
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .filterButtons {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+        .filterButtons button {
+            margin-right: 10px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 10px 15px;
+            color: black;
+            transition: background-color 0.3s, text-decoration 0.3s;
+        }
+        .filterButtons button:hover {
+            background-color: #e0e0e0;
+            text-decoration: underline;
+        }
+        .filter-description {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .filter-section {
+            margin-bottom: 15px;
+        }
+        .filter-section h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .checkbox-group label {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 <header>
     <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
+<div class="container">
+    <div class="filterButtons">
+        <button onclick="toggleFilter('filterDiv')">상세 검색</button>
+        <button onclick="toggleFilter('ingredientDiv')">재료별 검색</button>
+    </div>
+</div>  
+<div id="filterDiv" class="filter-container">
+    <p class="filter-description"><i>*선택한 항목이 포함된 모든 레시피가 표시됩니다.*</i></p>
+    <div id="ingredientCategories" class="filter-section">
+        <h4>재료 카테고리</h4>
+        <div class="checkbox-group">
+            <!-- 여기에 동적으로 재료 카테고리 체크박스가 추가됩니다 -->
+        </div>
+    </div>
+    <div class="filter-section">
+        <h4>메뉴 카테고리</h4>
+        <div class="checkbox-group">
+            <input type="checkbox" name="category" value="한식" id="catKorean" onchange="applyFilter()"> <label for="catKorean">한식</label>
+            <input type="checkbox" name="category" value="중식" id="catChinese" onchange="applyFilter()"> <label for="catChinese">중식</label>
+            <input type="checkbox" name="category" value="일식" id="catJapanese" onchange="applyFilter()"> <label for="catJapanese">일식</label>
+            <input type="checkbox" name="category" value="양식" id="catWestern" onchange="applyFilter()"> <label for="catWestern">양식</label>
+            <input type="checkbox" name="category" value="기타" id="catOther" onchange="applyFilter()"> <label for="catOther">기타</label>
+        </div>
+    </div>
+</div>
+<div id="ingredientDiv" class="filter-container">
+    <p class="filter-description"><i>*선택한 재료가 모두 포함된 레시피가 표시됩니다.*</i></p>
+    <div class="filter-section">
+        <h4>재료</h4>
+        <div id="ingredientCheckboxes" class="checkbox-group">
+            <!-- 여기에 동적으로 체크박스가 추가됩니다 -->
+        </div>
+    </div>
+</div>
+
 <section>
     <div id="recipeList">
-        <div th:each="recipe : ${recipes}">
+        <div class="recipe" th:each="recipe : ${recipes}" th:onclick="'loadRecipeDetail(\'' + ${recipe.rcode} + '\')'">
             <h3 th:text="${recipe.recipeName}">Recipe Name</h3>
-            <p>메뉴: <span th:text="${recipe.menuName}">Menu Name</span></p>
-            <p th:text="${recipe.introduce}">Introduce</p>
+            <p class="menuName">메뉴: <span th:text="${recipe.menuName}">Menu Name</span></p>
+            <p class="introduce" th:text="${recipe.introduce}">Introduce</p>
         </div>
     </div>
 </section>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadIngredientCategories();
+    loadIngredients();
+});
+
+function toggleFilter(divId) {
+        const filterDiv = document.getElementById(divId);
+        const otherDivId = divId === 'filterDiv' ? 'ingredientDiv' : 'filterDiv';
+        const otherDiv = document.getElementById(otherDivId);
+        
+        if (filterDiv.style.display === 'none' || filterDiv.style.display === '') {
+            filterDiv.style.display = 'block';
+            otherDiv.style.display = 'none';
+        } else {
+            filterDiv.style.display = 'none';
+        }
+    }
+
+function loadIngredientCategories() {
+        fetch('/api/menu/ingredient-categories')
+            .then(response => response.json())
+            .then(categories => {
+                const categoryGroup = document.querySelector('#ingredientCategories .checkbox-group');
+                categories.forEach(category => {
+                    const checkbox = document.createElement('div');
+                    checkbox.innerHTML = `
+                        <input type="checkbox" name="ingredientCategory" value="${category}" id="cat${category.replace(/\s+/g, '')}" onchange="applyFilter()">
+                        <label for="cat${category.replace(/\s+/g, '')}">${category}</label>
+                    `;
+                    categoryGroup.appendChild(checkbox);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function loadIngredients() {
+        fetch('/api/menu/ingredients')
+            .then(response => response.json())
+            .then(ingredients => {
+                const checkboxesContainer = document.getElementById('ingredientCheckboxes');
+                ingredients.forEach(ingredient => {
+                    const checkbox = document.createElement('div');
+                    checkbox.innerHTML = `
+                        <input type="checkbox" name="ingredient" value="${ingredient.icode}" id="ing${ingredient.icode}" onchange="applyIngredientFilter()">
+                        <label for="ing${ingredient.icode}">${ingredient.name}</label>
+                    `;
+                    checkboxesContainer.appendChild(checkbox);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function applyFilter() {
+        const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(input => input.value);
+        const ingredientCategories = Array.from(document.querySelectorAll('input[name="ingredientCategory"]:checked')).map(input => input.value);
+        
+        const params = new URLSearchParams();
+        
+        if (categories.length > 0) {
+            params.append('categories', categories.join(','));
+        }
+        
+        if (ingredientCategories.length > 0) {
+            params.append('ingredientCategories', ingredientCategories.join(','));
+        }
+
+        fetch(`/api/menu/filtered_menu_list?${params.toString()}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                updateMenuList(data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function applyIngredientFilter() {
+        const selectedIngredients = Array.from(document.querySelectorAll('#ingredientCheckboxes input[name="ingredient"]:checked')).map(input => input.value);
+        
+        const params = new URLSearchParams();
+        
+        if (selectedIngredients.length > 0) {
+            params.append('ingredients', selectedIngredients.join(','));
+        }
+
+        fetch(`/api/menu/filtered_menu_list?${params.toString()}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                updateMenuList(data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function loadRecipeDetail(rcode){
+        window.location.href = `/menu_all/recipe_detail?rcode=${rcode}`;
+    }
+</script>
 </body>
 </html>
