@@ -24,9 +24,6 @@ public class RecipeApiController {
 	private MemberService memberService;
 
 	@Autowired
-	private RecipeService recipeService;
-	
-	@Autowired
 	private MyRecipeService myRecipeService;
 	
 	// 나의 레시피 리스트
@@ -51,11 +48,6 @@ public class RecipeApiController {
 		return myRecipeService.deleteMyRecipe(rcode);
 	}
 	
-	@GetMapping("/recipeAllList")
-	public List<RecipeDto> getAllRecipes(){
-
-		return recipeService.getAllRecipes();
-	}
 
 	
 

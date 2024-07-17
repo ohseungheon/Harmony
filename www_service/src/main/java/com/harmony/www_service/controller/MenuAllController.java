@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.harmony.www_service.dao.RecipeDao;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.RecipeIngredientDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
@@ -19,6 +20,9 @@ public class MenuAllController {
     @Autowired
     private RecipeService recipeService;
 
+    @Autowired
+    private RecipeDao recipeDao;
+
     @GetMapping("/menu_all/menu_all_list")
     public String menu_all_list(){
 
@@ -26,7 +30,10 @@ public class MenuAllController {
     }
 
     @GetMapping("/menu_all/recipe_all_list")
-    public String recipe_all_list(){
+    public String recipe_all_list(Model model){
+
+        List<RecipeDto> recipes = recipeDao.getAllRecipes();
+        model.addAttribute("recipes", recipes);
 
         return "menu_all/recipe_all_list";
     }

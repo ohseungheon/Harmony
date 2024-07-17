@@ -2,33 +2,22 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Recipe List</title>
     <style>
-
     </style>
 </head>
 <body>
 <header>
-<th:block th:insert="~{/sub/header.html}"></th:block>
+    <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
 <section>
-    <div id="recipeList"></div>
+    <div id="recipeList">
+        <div th:each="recipe : ${recipes}">
+            <h3 th:text="${recipe.recipeName}">Recipe Name</h3>
+            <p>메뉴: <span th:text="${recipe.menuName}">Menu Name</span></p>
+            <p th:text="${recipe.introduce}">Introduce</p>
+        </div>
+    </div>
 </section>
-<script>
-    fetch('/api/recipe/recipeAllList')
-    .then(response => response.json())
-    .then(data => {
-        let html = '';
-        data.forEach(recipe => {
-            html += `<div>
-                        <h3>${recipe.recipeName}</h3>
-                        <p>메뉴: ${recipe.menuName}</p>
-                        <p>${recipe.introduce}</p>
-                    </div>`;
-        });
-        document.getElementById('recipeList').innerHTML = html;
-    })
-    .catch(error => console.error('Error:', error));
-</script>
 </body>
 </html>
