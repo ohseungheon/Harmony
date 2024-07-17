@@ -40,4 +40,9 @@ public class RecipeService {
         
         return recipeDao.getRecipeListByMenuName(menuName);
     }
+
+    public List<RecipeDto> getAllRecipes(){
+
+        return recipeDao.getAllRecipes();
+    }
 }

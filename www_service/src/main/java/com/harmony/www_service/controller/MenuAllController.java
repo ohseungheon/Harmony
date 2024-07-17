@@ -25,6 +25,12 @@ public class MenuAllController {
         return "menu_all/menu_all_list";
     }
 
+    @GetMapping("/menu_all/recipe_all_list")
+    public String recipe_all_list(){
+
+        return "menu_all/recipe_all_list";
+    }
+
     @GetMapping("/menu_all/recipe_list")
     public String recipe_list(@RequestParam("mcode") int mcode, Model model){
         List<RecipeDto> recipeList = recipeService.getRecipeListByMcode(mcode);
