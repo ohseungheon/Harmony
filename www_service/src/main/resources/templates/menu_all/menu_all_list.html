@@ -21,6 +21,7 @@
             overflow: hidden;
             transition: transform 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
 
         .menuItem:hover {
@@ -37,6 +38,7 @@
             padding: 10px;
             text-align: center;
             font-weight: bold;
+            position: relative; /* 추가: menuName 내부에 버튼 위치를 잡기 위해 */
         }
 
         .filter-container {
@@ -116,6 +118,26 @@
         .checkbox-group label {
             cursor: pointer;
         }
+
+        .like-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 50%; /* 추가: 메뉴 이름의 중간 높이에 맞춤 */
+            right: 10px; /* 추가: 오른쪽 끝에 맞춤 */
+            transform: translateY(-50%); /* 추가: 세로 가운데 정렬 */
+        }
+
+        .like-button i {
+            font-size: 24px;
+            color: #ccc;
+            transition: color 0.3s;
+        }
+
+        .like-button.liked i {
+            color: #e74c3c;
+        }
     </style>
 </head>
 <body>
@@ -166,7 +188,6 @@
     </div>
 
     <div id="menuList"></div>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -291,7 +312,12 @@
             html += `
                 <div class="menuItem" onclick="loadRecipeList('${menu.mcode}')">
                     <img src="/uploads/${menu.imgurl}" alt="${menu.menuName}" class="menuImage">
-                    <div class="menuName">${menu.menuName}</div>
+                    <div class="menuName">
+                        ${menu.menuName}
+                        <button class="like-button" onclick="toggleLike(event, this)">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
                 </div>`;
         });
         document.getElementById('menuList').innerHTML = html;
@@ -300,6 +326,12 @@
     function loadRecipeList(mcode) {
         window.location.href = `/menu_all/recipe_list?mcode=${mcode}`;
     }
+
+    function toggleLike(event, button) {
+        event.stopPropagation();
+        button.classList.toggle('liked');
+    }
 </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </body>
 </html>

@@ -19,4 +19,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT rocode, rcode, orderContent, orderNum, cookingImg FROM recipe_order WHERE rcode = #{rcode} ORDER BY orderNum
     </select>
 
+    <select id="getRecipeListByMenuName" parameterType="String" resultType="com.harmony.www_service.dto.RecipeDto">
+        SELECT r.* 
+        FROM recipe r
+        JOIN menu m ON r.mcode = m.mcode
+        WHERE m.menuName = #{menuName}
+    </select>
 </mapper>
