@@ -473,7 +473,7 @@
     		<tr>
     			<th>태그</th>
     			<td>
-    				<input type="text" name="tagContent" placeholder="예) 한식, 닭볶음탕" th:value="${recipeTag.tagContent}">
+    				<input type="text" name="tagContent" placeholder="예) 한식, 닭볶음탕" th:value="${recipeTag != null ? recipeTag.tagContent : ''}">
     			</td>
     		</tr>
     	</table>
@@ -486,9 +486,15 @@
     </form>
 </section>
 
+<script th:if="${notMcode}">
+var notMcode = "[[${notMcode}]]";
+alert(notMcode);
+console.log(notMcode);
+</script>
+
 <script th:inline="javascript">
 
-let selectIdCounter = 1;
+var selectIdCounter = 1;
 
 document.addEventListener("DOMContentLoaded", () => {
 	
@@ -544,7 +550,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			
 		});
 	});
-	
 });
 
 //요리재료 선택하면 type 자동 기입
@@ -729,7 +734,7 @@ document.getElementById('recipe-ingredient-add').addEventListener('click', () =>
 		const rows = document.querySelectorAll('#recipe-steps tr');
 		rows.forEach((row, index) => {
 			const stepCell = row.querySelector('th');
-			const orderNumInputl = stepCell.querySelector('input[name="orderNum"]');
+			const orderNumInput = stepCell.querySelector('input[name="orderNum"]');
 			stepCell.childNodes[0].textContent = `Step ${index + 1}`;
 			orderNumInput.value = index + 1;
 		});

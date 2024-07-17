@@ -8,10 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.harmony.www_service.dao.RecipeMenuDao;
@@ -139,7 +136,7 @@ public class Mypage2Controller {
 	}
 	
 //	레시피 수정 폼
-	@RequestMapping("/updateForm")
+	@GetMapping("/updateForm")
 	@Transactional
 	public String updateForm(Model model,
 			@RequestParam("rcode") int rcode) {
@@ -161,8 +158,8 @@ public class Mypage2Controller {
 	}
 	
 	// 레시피 수정
-	@RequestMapping("update")
-	public String recipeUpdate(@RequestParam("mcode") int mcode,
+	@PostMapping("/update")
+	public String recipeUpdate(@RequestParam(name = "mcode", required = false) Integer mcode,
 			@RequestParam("recipeName") String recipeName,
 			@RequestParam("introduce") String introduce,
 			@RequestParam("url") String url,
@@ -174,16 +171,23 @@ public class Mypage2Controller {
 			@RequestParam("orderContent") List<String> orderContent,
 			@RequestPart("cookingImg") List<MultipartFile> cookingImg,
 			@RequestParam("tagContent") String tagContent,
-			@RequestParam("rcode") int rcode) {
+			@RequestParam(name = "rcode", required = true) int rcode,
+			Model model) {
 		
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		MemberDto mno = loginService.getMnoByUsernameService(username);
 		System.out.println("mno = " + mno.getMno());
+		System.out.println("rcode = " + rcode);
 		
 		// recipe 테이블 수정
 		RecipeDto recipeDto = new RecipeDto();
-		recipeDto.setMcode(mcode);
+		if(mcode != null) {
+			recipeDto.setMcode(mcode);
+		}else {
+			model.addAttribute("notMcode", "메뉴를 선택해 주세요.");
+			return "redirect:/updateForm";
+		}
 		recipeDto.setRcode(rcode);
 		recipeDto.setMno(mno.getMno());
 		recipeDto.setRecipeName(recipeName);
@@ -226,6 +230,8 @@ public class Mypage2Controller {
 				}catch(IOException e) {
 					e.printStackTrace();
 				}
+			}else{
+				
 			}
 			
 			service.updateMyRecipeOrderService(recipeOrderDto);
