@@ -17,6 +17,7 @@
 	margin: 20px 0;
 }
 
+
 .row {
 	display: flex;
 	justify-content: space-between;
@@ -128,49 +129,7 @@ input[type="submit"]:hover {
 	width: 150px; /* 원하는 너비로 조절 */
 	height: 120px; /* 원하는 높이로 조절 */
 }
-
-.container {
-	width: 500px;
-	margin: 0 auto;
-}
-
-ul.tabs {
-	text-align:center;
-	margin-bottom:30px;
-}
-
-ul.tabs li {
-	background: none;
-	color: #222;
-	display: inline-block;
-	padding:0px 10px;
-	cursor: pointer;
-}
-.tabs .line{
-	color:#333;
-}
-
-ul{
-	list-style: none;
-}
-
-
-ul.tabs li.current {
-	color:black;
-	font-weight:bold;
-}
-
-.tab-content {
-	display: none;
-	padding: 15px;
-}
-
-.tab-content.current {
-	display: block;
-}
 </style>
-
-
 </head>
 <body>
 	<header>
@@ -182,83 +141,27 @@ ul.tabs li.current {
 		</form>
 		<br>
 
-		<div style="text-align: center">나의 냉장고 속 재료들</div>
-		<div class="tag_container">
-			<ul class="tabs">
-				<li class="tab-link current" data-tab="tab-1">냉장</li>
-				<li class="line">|</li>
-				<li class="tab-link" data-tab="tab-2">냉동</li>
-				<li class="line">|</li>
-				<li class="tab-link" data-tab="tab-3">상온</li>
-			</ul>
-			<div id="tab-1" class="tab-content current">
-
-				<div id="haveIngredient" class="container">
-
-					<div class="row" style="display: none;">냉장고 재료</div>
-					<div th:each="dto : ${FridgeIngredientList}" class="row">
-						<input type="hidden" th:value="${dto.icode}"
-							th:id="'icode' + ${dto.icode}">
-						<div class="container2">
-							<div>
-								<img th:src="@{'/img/ingredient/'+ ${dto.imgurl}}">
-							</div>
-							<div>[[${dto.name}]]</div>
-							<div>
-								<button id="xBtn" type="button"
-									th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">재료빼기</button>
-							</div>
-						</div>
+			<div style="text-align:center"> 나의 냉장고 속 재료들</div>
+		<div id="haveIngredient" class="container">
+			
+			<div class="row" style="display: none;">냉장고 재료</div>
+			<div th:each="dto : ${FridgeIngredientList}" class="row">
+				<input type="hidden" th:value="${dto.icode}"
+					th:id="'icode' + ${dto.icode}">
+				<div class="container2">
+					<div>
+						<img th:src="@{'/img/ingredient/'+ ${dto.imgurl}}">
+					</div>
+					<div>[[${dto.name}]]</div>
+					<div>
+						<button id="xBtn" type="button"
+							th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">재료빼기</button>
 					</div>
 				</div>
-
 			</div>
-			<div id="tab-2" class="tab-content">
-				test2
-				<div id="haveIngredient" class="container">
 
-					<div class="row" style="display: none;">냉장고 재료</div>
-					<div th:each="dto : ${FridgeIngredientList}" class="row">
-						<input type="hidden" th:value="${dto.icode}"
-							th:id="'icode' + ${dto.icode}">
-						<div class="container2">
-							<div>
-								<img th:src="@{'/img/ingredient/'+ ${dto.imgurl}}">
-							</div>
-							<div>[[${dto.name}]]</div>
-							<div>
-								<button id="xBtn" type="button"
-									th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">재료빼기</button>
-							</div>
-						</div>
-					</div>
-				</div>
 
-			</div>
-			<div id="tab-3" class="tab-content">
-				test3
-				<div id="haveIngredient" class="container">
-
-					<div class="row" style="display: none;">냉장고 재료</div>
-					<div th:each="dto : ${FridgeIngredientList}" class="row">
-						<input type="hidden" th:value="${dto.icode}"
-							th:id="'icode' + ${dto.icode}">
-						<div class="container2">
-							<div>
-								<img th:src="@{'/img/ingredient/'+ ${dto.imgurl}}">
-							</div>
-							<div>[[${dto.name}]]</div>
-							<div>
-								<button id="xBtn" type="button"
-									th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">재료빼기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
 		</div>
-
 		<br>
 		<div id="canMakeMenuDiv" class="container">
 
@@ -276,9 +179,9 @@ ul.tabs li.current {
 							th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
 							보러가기</button>
 					</div>
-
+					
 				</div>
-
+				
 				<div class="container2" th:if="${dto.mcode!=3}">
 					<div>
 						<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
@@ -292,10 +195,10 @@ ul.tabs li.current {
 
 					<div>모자란 재료</div>
 					<div id="aa">
-						<img th:src="@{'/img/ingredient/pork.png'}">
-
+						   <img th:src="@{'/img/ingredient/pork.png'}">
+					
 					</div>
-
+				
 				</div>
 
 			</div>
@@ -304,44 +207,6 @@ ul.tabs li.current {
 	</section>
 
 	<script>
-	
-	const btn1 = document.querySelector("[data-tab='tab-1']");
-	const btn2 = document.querySelector("[data-tab='tab-2']");
-	const btn3 = document.querySelector("[data-tab='tab-3']");
-	const tabContent1 = document.getElementById("tab-1");
-	const tabContent2 = document.getElementById("tab-2");
-	const tabContent3 = document.getElementById("tab-3");
-
-	btn1.addEventListener("click", function() {
-		btn1.classList.add("current");
-		btn2.classList.remove("current");
-		btn3.classList.remove("current");
-		tabContent1.classList.add("current");
-		tabContent2.classList.remove("current");
-		tabContent3.classList.remove("current");
-	});
-
-	btn2.addEventListener("click", function() {
-		btn2.classList.add("current");
-		btn1.classList.remove("current");
-		btn3.classList.remove("current");
-		tabContent2.classList.add("current");
-		tabContent1.classList.remove("current");
-		tabContent3.classList.remove("current");
-	});
-	
-
-	btn3.addEventListener("click", function() {
-		btn3.classList.add("current");
-		btn1.classList.remove("current");
-		btn2.classList.remove("current");
-		tabContent3.classList.add("current");
-		tabContent1.classList.remove("current");
-		tabContent2.classList.remove("current");
-	});
-	
-	
-	
    function toggleHighlight(event, icode) {
        const button = event.currentTarget;
        const row = button.closest('.row');

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.ui.Model;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +24,6 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/menu1")
-
 public class Menu1Controller {
    @Autowired
    Menu1Dao menu1dao;
@@ -31,8 +31,8 @@ public class Menu1Controller {
    MenuService menuService;
 
 
-   @RequestMapping("main")
-   public String main(org.springframework.ui.Model model, HttpSession session) {
+   @RequestMapping("/main")
+   public String main(Model model, HttpSession session) {
       System.out.println("==================================main===========================");
       
       // 사용하지 않을 재료 리스트
@@ -58,7 +58,7 @@ public class Menu1Controller {
 
 
    @ResponseBody
-   @RequestMapping("reset")
+   @RequestMapping("/reset")
    public String reset(org.springframework.ui.Model model, HttpSession session) {
       session.removeAttribute("NoInFridgeIngredientList");
 
@@ -66,7 +66,7 @@ public class Menu1Controller {
    }
 
    @ResponseBody
-   @GetMapping("deleteFridgeIngredientList")          // 재료삭제후 가진 재료 리스트
+   @GetMapping("/deleteFridgeIngredientList")          // 재료삭제후 가진 재료 리스트
    public List<IngredientDto> deleteFridgeIngredientList(@RequestParam("icode") int icode, HttpSession session) {
       System.out.println("===========================deleteFridgeIngredientList=========================");
 
@@ -109,7 +109,7 @@ public class Menu1Controller {
    }
 
    @ResponseBody
-   @GetMapping("deleteCanMakeMenu")  //삭제
+   @GetMapping("/deleteCanMakeMenu")  //삭제
    public List<MenuDto> deleteCanMakeMenu(@RequestParam("icode") int icode, HttpSession session) {
       //System.out.println("===========================deleteCanMakeMenu=========================");
       
@@ -147,7 +147,7 @@ public class Menu1Controller {
    
    
    @ResponseBody
-   @GetMapping("mcodeListForIcodeList") 
+   @GetMapping("/mcodeListForIcodeList") 
    public List<Integer> mcodeListForIcodeList(@RequestParam("icode") int icode, HttpSession session) {
 	      //System.out.println("===========================deleteCanMakeMenu=========================");
 	      
@@ -191,7 +191,7 @@ public class Menu1Controller {
    
    // 사용하지 않는 재료 리스트 반환 함수
    @ResponseBody
-   @GetMapping("NoUseIngredient")
+   @GetMapping("/NoUseIngredient")
    public List<IngredientDto> NoUseIngredient(HttpSession session) {
       List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session
             .getAttribute("NoInFridgeIngredientList");
@@ -205,7 +205,7 @@ public class Menu1Controller {
    }
 
    @ResponseBody // 재료 복원시 사용되는 함수
-   @GetMapping("undoIngredient")
+   @GetMapping("/undoIngredient")
    public List<IngredientDto> undoIngredient(@RequestParam("icode") int icode, HttpSession session) {
       List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session.getAttribute("NoInFridgeIngredientList");
       if (NoInFridgeIngredientList == null) {
@@ -229,7 +229,7 @@ public class Menu1Controller {
    }
 
    @ResponseBody // 재료 복원시 사용되는 함수
-   @GetMapping("undoIngredient2")
+   @GetMapping("/undoIngredient2")
    public List<MenuDto> undoIngredient2(@RequestParam("icode") int icode, HttpSession session) {
       List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session.getAttribute("NoInFridgeIngredientList");
       if (NoInFridgeIngredientList == null) {
@@ -255,7 +255,7 @@ public class Menu1Controller {
    
    
    @ResponseBody
-   @GetMapping("undoHavingIngredient")
+   @GetMapping("/undoHavingIngredient")
    public List<IngredientDto> undoHavingIngredient(@RequestParam("icode") int icode, HttpSession session) {
       List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session.getAttribute("NoInFridgeIngredientList");
 
@@ -283,7 +283,7 @@ public class Menu1Controller {
    }
    
    @ResponseBody
-   @GetMapping("undoCanMakeMenu")
+   @GetMapping("/undoCanMakeMenu")
    public List<MenuDto> undoCanMakeMenu(HttpSession session) {
       
       List<IngredientDto> InFridgeIngredientList = (List<IngredientDto>) session.getAttribute("InFridgeIngredientList");
