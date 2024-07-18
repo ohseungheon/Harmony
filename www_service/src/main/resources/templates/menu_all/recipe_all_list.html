@@ -109,6 +109,25 @@
         .checkbox-group label {
             cursor: pointer;
         }
+        .like-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+        }
+
+        .like-button i {
+            font-size: 24px;
+            color: #ccc;
+            transition: color 0.3s;
+        }
+
+        .like-button.liked i {
+            color: #e74c3c;
+        }
     </style>
 </head>
 <body>
@@ -261,7 +280,12 @@
                 html += `
                     <div class="recipe" onclick="loadRecipeDetail('${recipe.rcode}')">
                         <h3>${recipe.recipeName}</h3>
-                        <p class="menuName">메뉴: <span>${recipe.menuName}</span></p>
+                        <p class="menuName">
+                            메뉴: <span>${recipe.menuName}</span>
+                            <button class="like-button" onclick="toggleLike(event, this)">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </p>
                         <p class="introduce">${recipe.introduce}</p>
                     </div>`;
             });
@@ -270,10 +294,16 @@
         }
         document.getElementById('recipeList').innerHTML = html;
     }
+
+function toggleLike(event, button) {
+    event.stopPropagation();
+    button.classList.toggle('liked');
+}
     
     function loadRecipeDetail(rcode){
         window.location.href = `/menu_all/recipe_detail?rcode=${rcode}`;
     }
     </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </body>
 </html>
