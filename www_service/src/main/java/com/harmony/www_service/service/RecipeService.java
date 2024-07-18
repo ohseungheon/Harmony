@@ -1,5 +1,7 @@
 package com.harmony.www_service.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,8 +9,6 @@ import com.harmony.www_service.dao.RecipeDao;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.RecipeIngredientDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
-
-import java.util.List;
 
 
 @Service
@@ -51,11 +51,11 @@ public class RecipeService {
         return recipeDao.getRecipeCategories();
     }
 
-    public List<RecipeDto> getFilteredRecipeList(List<String> categories, List<Integer> excludedIngredients) {
-        if ((categories == null || categories.isEmpty()) && (excludedIngredients == null || excludedIngredients.isEmpty())) {
+    public List<RecipeDto> getFilteredRecipeList(List<String> category, List<Integer> ingredient) {
+        if ((category == null || category.isEmpty()) && (ingredient == null || ingredient.isEmpty())) {
             return recipeDao.getAllRecipes();
         }
-        return recipeDao.getFilteredRecipes(categories, excludedIngredients);
+        return recipeDao.getFilteredRecipes(category, ingredient);
     }
 
 }

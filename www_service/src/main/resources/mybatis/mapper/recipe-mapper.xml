@@ -45,19 +45,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM recipe r
         JOIN menu m ON r.mcode = m.mcode
         WHERE 1=1
-        <if test="categories != null and categories.size() > 0">
+        <if test="category != null and category.size() > 0">
             AND r.category IN
-            <foreach item="category" collection="categories" open="(" separator="," close=")">
-                #{category}
+            <foreach item="cat" collection="category" open="(" separator="," close=")">
+                #{cat}
             </foreach>
         </if>
-        <if test="ingredients != null and ingredients.size() > 0">
+        <if test="ingredient != null and ingredient.size() > 0">
             AND r.rcode NOT IN (
                 SELECT DISTINCT ri.rcode
                 FROM recipe_ingredient ri
                 WHERE ri.icode IN
-                <foreach item="ingredient" collection="ingredients" open="(" separator="," close=")">
-                    #{ingredient}
+                <foreach item="ing" collection="ingredient" open="(" separator="," close=")">
+                    #{ing}
                 </foreach>
             )
         </if>

@@ -150,118 +150,130 @@
     </div>
 </section>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    loadRecipeCategories();
-    loadIngredients();
-});
-
-function toggleFilter(divId) {
-    const filterDiv = document.getElementById(divId);
-    const otherDivId = divId === 'filterDiv' ? 'ingredientDiv' : 'filterDiv';
-    const otherDiv = document.getElementById(otherDivId);
+    let selectedCategories = [];
+    let excludedIngredients = [];
     
-    if (filterDiv.style.display === 'none' || filterDiv.style.display === '') {
-        filterDiv.style.display = 'block';
-        otherDiv.style.display = 'none';
-    } else {
-        filterDiv.style.display = 'none';
-    }
-}
-
-function loadRecipeCategories() {
-    fetch('/api/menu/recipe-categories')
-        .then(response => response.json())
-        .then(categories => {
-            const categoryGroup = document.querySelector('#recipeCategoriesCheckbox .checkbox-group');
-            categories.forEach(category => {
-                const checkbox = document.createElement('div');
-                checkbox.innerHTML = `
-                    <input type="checkbox" name="recipeCategory" value="${category}" id="cat${category.replace(/\s+/g, '')}" onchange="applyFilter()">
-                    <label for="cat${category.replace(/\s+/g, '')}">${category}</label>
-                `;
-                categoryGroup.appendChild(checkbox);
-            });
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-function loadIngredients() {
-    fetch('/api/menu/ingredients')
-        .then(response => response.json())
-        .then(ingredients => {
-            const checkboxesContainer = document.getElementById('ingredientCheckboxes');
-            ingredients.forEach(ingredient => {
-                const checkbox = document.createElement('div');
-                checkbox.innerHTML = `
-                    <input type="checkbox" name="ingredient" value="${ingredient.icode}" id="ing${ingredient.icode}" onchange="applyIngredientFilter()">
-                    <label for="ing${ingredient.icode}">${ingredient.name}</label>
-                `;
-                checkboxesContainer.appendChild(checkbox);
-            });
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-function applyFilter() {
-    const recipeCategories = Array.from(document.querySelectorAll('input[name="recipeCategory"]:checked')).map(input => input.value);
-    
-    const params = new URLSearchParams();
-    
-    if (recipeCategories.length > 0) {
-        params.append('categories', recipeCategories.join(','));
-    }
-
-    fetch(`/api/recipe/filtered_recipe_list?${params.toString()}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-        .then(response => response.json())
-        .then(data => {
-            updateRecipeList(data);
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-function applyIngredientFilter() {
-    const selectedIngredients = Array.from(document.querySelectorAll('#ingredientCheckboxes input[name="ingredient"]:checked')).map(input => input.value);
-    
-    const params = new URLSearchParams();
-    
-    if (selectedIngredients.length > 0) {
-        params.append('ingredients', selectedIngredients.join(','));
-    }
-
-    fetch(`/api/menu/filtered_recipe_list?${params.toString()}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-        .then(response => response.json())
-        .then(data => {
-            updateRecipeList(data);
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-function updateRecipeList(data) {
-    let html = '';
-    data.forEach(recipe => {
-        html += `
-            <div class="recipe" onclick="loadRecipeDetail('${recipe.rcode}')">
-                <h3>${recipe.recipeName}</h3>
-                <p class="menuName">메뉴: <span>${recipe.menuName}</span></p>
-                <p class="introduce">${recipe.introduce}</p>
-            </div>`;
+    document.addEventListener('DOMContentLoaded', function() {
+        loadRecipeCategories();
+        loadIngredients();
+        fetchFilteredRecipes(); // 초기 로딩 시 모든 레시피 표시
     });
-    document.getElementById('recipeList').innerHTML = html;
-}
-
-function loadRecipeDetail(rcode){
-    window.location.href = `/menu_all/recipe_detail?rcode=${rcode}`;
-}
-</script>
+    
+    function toggleFilter(divId) {
+        const filterDiv = document.getElementById(divId);
+        const otherDivId = divId === 'filterDiv' ? 'ingredientDiv' : 'filterDiv';
+        const otherDiv = document.getElementById(otherDivId);
+        
+        if (filterDiv.style.display === 'none' || filterDiv.style.display === '') {
+            filterDiv.style.display = 'block';
+            otherDiv.style.display = 'none';
+        } else {
+            filterDiv.style.display = 'none';
+        }
+    }
+    
+    function loadRecipeCategories() {
+        fetch('/api/menu/recipe-categories')
+            .then(response => response.json())
+            .then(categories => {
+                const categoryGroup = document.querySelector('#recipeCategoriesCheckbox .checkbox-group');
+                categories.forEach(category => {
+                    const checkbox = document.createElement('div');
+                    checkbox.innerHTML = `
+                        <input type="checkbox" name="recipeCategory" value="${category}" id="cat${category.replace(/\s+/g, '')}" onchange="applyFilter()">
+                        <label for="cat${category.replace(/\s+/g, '')}">${category}</label>
+                    `;
+                    categoryGroup.appendChild(checkbox);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    
+    function loadIngredients() {
+        fetch('/api/menu/ingredients')
+            .then(response => response.json())
+            .then(ingredients => {
+                const checkboxesContainer = document.getElementById('ingredientCheckboxes');
+                ingredients.forEach(ingredient => {
+                    const checkbox = document.createElement('div');
+                    checkbox.innerHTML = `
+                        <input type="checkbox" name="ingredient" value="${ingredient.icode}" id="ing${ingredient.icode}" onchange="applyIngredientFilter()">
+                        <label for="ing${ingredient.icode}">${ingredient.name}</label>
+                    `;
+                    checkboxesContainer.appendChild(checkbox);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    
+    function applyFilter() {
+        selectedCategories = Array.from(document.querySelectorAll('input[name="recipeCategory"]:checked')).map(input => input.value);
+        fetchFilteredRecipes();
+    }
+    
+    function applyIngredientFilter() {
+        excludedIngredients = Array.from(document.querySelectorAll('#ingredientCheckboxes input[name="ingredient"]:checked')).map(input => input.value);
+        fetchFilteredRecipes();
+    }
+    
+    function fetchFilteredRecipes() {
+        const params = new URLSearchParams();
+        
+        if (selectedCategories.length > 0) {
+            params.append('category', selectedCategories.join(','));
+        }
+        
+        if (excludedIngredients.length > 0) {
+            params.append('ingredient', excludedIngredients.join(','));
+        }
+    
+        fetch(`/api/menu/filtered_recipe_list?${params.toString()}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Received data:', data);
+            if (Array.isArray(data)) {
+                updateRecipeList(data);
+            } else {
+                console.error('Received data is not an array:', data);
+                updateRecipeList([]);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            updateRecipeList([]);
+        });
+    }
+    
+    function updateRecipeList(data) {
+        let html = '';
+        if (Array.isArray(data) && data.length > 0) {
+            data.forEach(recipe => {
+                html += `
+                    <div class="recipe" onclick="loadRecipeDetail('${recipe.rcode}')">
+                        <h3>${recipe.recipeName}</h3>
+                        <p class="menuName">메뉴: <span>${recipe.menuName}</span></p>
+                        <p class="introduce">${recipe.introduce}</p>
+                    </div>`;
+            });
+        } else { 
+            html = '<p>검색 결과가 없습니다.</p>';
+        }
+        document.getElementById('recipeList').innerHTML = html;
+    }
+    
+    function loadRecipeDetail(rcode){
+        window.location.href = `/menu_all/recipe_detail?rcode=${rcode}`;
+    }
+    </script>
 </body>
 </html>
