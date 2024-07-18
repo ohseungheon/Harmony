@@ -1,21 +1,20 @@
 package com.harmony.www_service.restcontroller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.service.IngredientService;
 import com.harmony.www_service.service.MenuListService;
 import com.harmony.www_service.service.MenuService;
 import com.harmony.www_service.service.RecipeService;
-
-import java.util.List;
-
-import com.harmony.www_service.dto.IngredientDto;
 
 @RestController
 @RequestMapping("/api/menu")
@@ -61,8 +60,8 @@ public class MenuAllRestController {
     
     @GetMapping("/filtered_recipe_list")
     public List<RecipeDto> getFilteredRecipeList(
-            @RequestParam(required = false) List<String> categories,
-            @RequestParam(required = false) List<Integer> ingredients) {
-        return recipeService.getFilteredRecipeList(categories, ingredients);
+        @RequestParam(value = "category", required = false) List<String> category,
+        @RequestParam(value = "ingredient", required = false) List<Integer> ingredient) {
+        return recipeService.getFilteredRecipeList(category, ingredient);
     }
 }

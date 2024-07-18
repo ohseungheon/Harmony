@@ -25,5 +25,5 @@ public interface RecipeDao {
 
     List<String> getRecipeCategories();
 
-    List<RecipeDto> getFilteredRecipes(@Param("categories") List<String> categories, @Param("ingredients") List<Integer> ingredients);
+    List<RecipeDto> getFilteredRecipes(@Param("category") List<String> category, @Param("ingredient") List<Integer> ingredient);
 }
