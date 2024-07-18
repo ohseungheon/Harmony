@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <title>Document</title>
 <style>
-main {
-	width: 1300px;
-	margin: 0 auto;
-	display: flex;
-	justify-content: space-between;
-	position: relative;
+section{
+	position:relative;
 }
-
+main{
+	position:absolute;
+	top:0;
+	left:-220px;
+}
 #by-section {
 	width: 1140px;
 	min-height: 1000px;
@@ -19,26 +19,15 @@ main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-}
-
-#by-sidebar {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-start;
-	gap: 30px;
-	margin-top: 70px;
-	margin-right: 30px;
+	box-sizing:border-box;
 }
 
 #by-myInfo {
 	width: 200px;
-	background-color: white;
-	border: 3px solid #A7BCF2;
-	border-radius: 10px;
+	background: white;
+	border: 1px solid #ccc;
 	padding: 25px 0;
-	top: 215px;
-	left: 160px;
+	margin-bottom:30px;
 }
 
 #by-myInfo .info-inbox {
@@ -55,13 +44,9 @@ main {
 
 #by-myInfo2 {
 	width: 200px;
-	height: 350px;
-	background-color: white;
-	border: 3px solid #A7BCF2;
-	border-radius: 10px;
+	border: 1px solid #ccc;
 	padding: 25px 0;
-	top: 210px;
-	left: 160px;
+	background:#fff;
 }
 
 #by-myInfo, #by-myInfo2 {
@@ -315,57 +300,54 @@ main {
 	<header>
 		<th:block th:insert="~{/sub/header.html}"></th:block>
 	</header>
-	<main>
-		<!-- 내정보 -->
-
-
-		<div id="by-sidebar">
-			<div id="by-myInfo">
-				<div class="info-inbox">
-					<span id="by-nickName"> [[${member.nickName}]] </span>
-				</div>
-				<div class="info-inbox2">
-					<p>
-						<a th:href="@{/info_update}">😀 회원 정보 관리</a>
-					</p>
-					<p>
-						<a th:href="@{/my/recipe/list(mno=${mno})}">🍳 나의 레시피 관리</a>
-					</p>
-					<p>
-						<a th:href="@{/like_hate_list}">💘 나의 좋아요 관리</a>
-					</p>
-				</div>
-			</div>
-
-			<div id="by-myInfo2">
-				<div class="info-inbox">
-					<span id="by-nickName2"> MY PAGE </span>
-				</div>
-				<div class="info-inbox2">
-					<p>
-						<a th:href="@{/material_insert}">재료 등록</a>
-					</p>
-					<p>
-						<a th:href="@{/my/recipe/registForm(mno=${mno})}">레시피 등록</a>
-					</p>
-					<p>
-						<a th:href="@{/my/recipe/list(mno=${mno})}">나의 레시피</a>
-					</p>
-					<p>
-						<a th:href="@{/like_hate_list}">좋아요 레시피</a>
-					</p>
-					<p>
-						<a th:href="@{/menu1/main(mno=${mno})}">메뉴 추천 받기</a>
-					</p>
-					<p>
-						<a th:href="@{/info_update}">회원 정보 관리</a>
-					</p>
-				</div>
-			</div>
-
-		</div>
 
 		<section>
+		<!-- 내정보 -->
+		<main>
+		
+			<div id="by-sidebar">
+				<div id="by-myInfo">
+					<div class="info-inbox">
+						<span id="by-nickName"> [[${member.nickName}]] </span>
+					</div>
+					<div class="info-inbox2">
+						<p>
+							<a th:href="@{/info_update}">😀 내 정보 수정</a>
+						</p>
+						<p>
+							<a th:href="@{/my/recipe/list(mno=${mno})}">🍳 나의 레시피 관리</a>
+						</p>
+						<p>
+							<a th:href="@{/like_hate_list}">💘 나의 좋아요 관리</a>
+						</p>
+					</div>
+				</div>
+	
+				<div id="by-myInfo2">
+					<div class="info-inbox">
+						<span id="by-nickName2"> MY PAGE </span>
+					</div>
+					<div class="info-inbox2">
+						<p>
+							<a th:href="@{/material_insert}">재료 등록</a>
+						</p>
+						<p>
+							<a th:href="@{/my/recipe/registForm(mno=${mno})}">레시피 등록</a>
+						</p>
+						<p>
+							<a th:href="@{/my/recipe/list(mno=${mno})}">나의 레시피</a>
+						</p>
+						<p>
+							<a th:href="@{/like_hate_list}">좋아요 레시피</a>
+						</p>
+						<p>
+							<a th:href="@{/menu1/main(mno=${mno})}">메뉴 추천 받기</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		
+		</main>
 			<div id="by-section">
 				<!-- 상단 : 리스트 -->
 				<div class="by-div">
@@ -488,7 +470,6 @@ main {
 			</div>
 		</section>
 
-	</main>
 	<script>
 		
 	</script>
