@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+.all-section {
+	width: 1300px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#by-section {
+	width: 1120px;
+	min-height: 1000px;
+	border: 1px solid #eee;
+	margin: 70px auto;
+	display: flex; /* Flexbox 사용 */
+	flex-direction: row; /* 세로 배치 */
+	justify-content: space-between; /* 수평 가운데 정렬 */
+	align-items: row; /* 수직 가운데 정렬 */
+	position: relative;
+}
+
+#goMenu-btn {
+	margin: 15px;
+}
+
+#goMenu-btn button {
+	width: 170px;
+	height: 45px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	font-size: 17px;
+}
+
+#goMenu-btn button:hover {
+	background-color: #ddd;
+}
+/* 냉동/냉장 섹션 외부 스타일 */
+#by-cool-out {
+	display: flex; /* Flexbox 사용 */
+	flex-direction: row; /* 가로 배치 */
+	justify-content: center; /* 수평 가운데 정렬 */
+	align-items: center; /* 수직 가운데 정렬 */
+}
+
+#by-ice-out {
+	background-color: #A7BCF2;
+	border: 1px solid #ccc;
+	width: 500px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	padding: 20px 0;
+}
+
+#by-ice-in {
+	width: 450px;
+	margin: 0 auto;
+	height: 250px;
+	background: #fff;
+	border-radius: 10px;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 30px;
+}
+
+#by-cool-out {
+	background-color: #A7BCF2;
+	border: 1px solid #ccc;
+	width: 500px;
+	height: 430px;
+	border-radius: 5px;
+	display: flex; /* Flexbox 사용 */
+	flex-direction: column;
+	justify-content: center; /* 수평 가운데 정렬 */
+	align-items: center; /* 수직 가운데 정렬 */
+	position: relative;
+	padding: 50px 0 40px;
+}
+
+#by-cool-out .by-handle {
+	position: absolute;
+	left: 20px;
+	top: 15px;
+	width: 50px;
+	height: 15px;
+	background: #fff;
+	border: 1px solid #899ED5;
+	border-radius: 5px;
+}
+
+#by-cool-in {
+	background-color: #fff;
+	border: 1px solid #bbb;
+	width: 450px;
+	height: 400px;
+	margin: 5px;
+	border-radius: 15px;
+	display: flex; /* Flexbox 사용 */
+	flex-wrap: wrap; /* 줄 바꿈 허용 */
+	align-items: center;
+	justify-content: center;
+	gap: 30px;
+}
+
+#by-refrigerator {
+	margin-top: 70px;
+	margin-left: 50px;
+}
+
+#by-favo-menu {
+	border: 1px solid #eee;
+	border-radius: 5px;
+	box-shadow: 0px 1px 10px #ccc;
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+#by-menu-img {
+	width: 100px;
+	height: 70px;
+	margin: 5px;
+	padding-bottom: 5px;
+}
+
+#by-menu {
+	font-size: 15px; /* 폰트 사이즈 조절 */
+	display: flex; /* Flexbox 사용 */
+	justify-content: center; /* 수평 가운데 정렬 */
+}
+
+#by-myInfo {
+	width: 200px;
+	background-color: white;
+	border: 3px solid #A7BCF2;
+	border-radius: 10px;
+	padding: 25px 0;
+	position: absolute;
+	top: 0;
+	left: -180px;
+}
+
+#by-myInfo .img {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background: #ccc;
+	margin-right: 20px;
+}
+
+#by-myInfo .info-inbox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 30px;
+}
+
+#by-myInfo .info-inbox2 p {
+	padding-left: 40px;
+	margin-bottom: 20px;
+}
+
+#by-food {
+	margin: 30px;
+}
+
+#by-buk {
+	position: absolute;
+	bottom: 37px;
+	right: 50px;
+	width: 320px;
+	background: #F9E77F;
+	padding: 20px;
+	padding-bottom: 30px;
+	display: flex;
+	justify-content: center;
+	border-radius: 0 0 5px 5px;
+}
+
+#by-buk .by-buk-in {
+	width: 300px;
+	display: flex; /* Flexbox 사용 */
+	flex-wrap: wrap; /* 줄 바꿈 허용 */
+	justify-content: center;
+	align-items: center;
+	background: #fff;
+	gap: 20px;
+	padding: 20px 0;
+}
+
+.by-buk-in .buk-menu {
+	background: #fff;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.recipe-info {
+	width: 200px;
+	position: absolute;
+	top: 300px;
+	right: -70px;
+	border: 3px solid #A7BCF2;
+	border-radius: 10px;
+	background: white;
+	padding: 30px 0;
+	box-sizing: border-box;
+	padding-left: 40px;
+}
+
+.recipe-info ul li {
+	margin-bottom: 15px;
+}
+
+.recipe-info ul li:last-child {
+	margin-bottom: 0;
+}
+
+#by-nickName {
+	font-size: 30px;
+}
+
+#by-menu-plus {
+	color: red;
+}
+
+#by-menu-plus, #by-menu-minus {
+	font-weight: bold;
+}
+
+.d-day-info {
+	text-align: center; /* 텍스트를 중앙 정렬 */
+}
+</style>
+</head>
+<body>
+	<header>
+		<th:block th:insert="~{/sub/header.html}"></th:block>
+	</header>
+	<div class="all-section">
+		<section id="by-section">
+			<div id="by-refrigerator">
+				<a th:href="@{/material_page}">
+					<div id="goMenu-btn">
+						<!-- 폼을 사용하여 버튼 클릭 시 요청을 보냅니다. -->
+						<form action="/menu1/main" method="get">
+							<button type="submit">재료로 메뉴추천 ⭐</button>
+						</form>
+					</div> <!-- 냉동 -->
+					<div id="by-ice-out">
+						<div id="by-ice-in">
+							<div th:each="ice, i : ${ice}" id="by-favo-menu">
+								<div class="ice-ingredient">
+									<img id="by-menu-img"
+										th:src="@{'/img/ingredient/'+ ${ice.imgUrl}}">
+									<div th:with="day = ${dayIce[i.index]}">
+										<div class="d-day-info">
+											<p id="by-menu-plus" th:if="${day > 0}"
+												th:text="'D+' + ${day}">D0</p>
+											<p id="by-menu-minus" th:unless="${day > 0}"
+												th:text="'D' + ${day}">D0</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> <!-- 냉장 -->
+					<div id="by-cool-out">
+						<div class="by-handle"></div>
+						<div id="by-cool-in">
+							<div th:each="cool, i: ${cool}" id="by-favo-menu">
+								<img id="by-menu-img"
+									th:src="@{'/img/ingredient/'+ ${cool.imgUrl}}">
+								<div th:with="day = ${dayCool[i.index]}">
+									<div class="d-day-info">
+										<p id="by-menu-plus" th:if="${day > 0}"
+											th:text="'D+' + ${day}">D0</p>
+										<p id="by-menu-minus" th:unless="${day > 0}"
+											th:text="'D' + ${day}">D0</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</a>
+			</div>
+			<!-- 냉장고 -->
+			<!-- 상온 -->
+			<div id="by-food">
+				<div id="by-buk">
+					<a th:href="@{/material_page}">
+						<div class="by-buk-in">
+							<div th:each="food, i: ${food}" id="by-favo-menu"
+								class="buk-menu">
+								<img id="by-menu-img"
+									th:src="@{'/img/ingredient/'+ ${food.imgUrl}}">
+								<div th:with="day = ${dayFood[i.index]}">
+									<div class="d-day-info">
+										<p id="by-menu-plus" th:if="${day > 0}"
+											th:text="'D+' + ${day}">D0</p>
+										<p id="by-menu-minus" th:unless="${day > 0}"
+											th:text="'D' + ${day}">D0</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</section>
+		<!-- 내정보 -->
+		<div id="by-myInfo">
+			<div class="info-inbox">
+				<span id="by-nickName"> [[${member.nickName}]] </span>
+			</div>
+			<div class="info-inbox2">
+				<p>
+					<a th:href="@{/info_update}">😀 회원 정보 관리</a>
+				</p>
+				<p>
+					<a th:href="@{/my/recipe/list(mno=${mno})}">🍳 나의 레시피 관리</a>
+				</p>
+				<p>
+					<a th:href="@{/like_hate_list}">💘 나의 좋아요 관리</a>
+				</p>
+			</div>
+		</div>
+		<script>
+			
+		</script>
+</body>
+</html>
