@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Document</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
 <style>
 section{
 	position:relative;
@@ -15,7 +18,7 @@ main{
 #by-section {
 	width: 1140px;
 	min-height: 1000px;
-	border: 1px solid #eee;
+	border: 1px solid #ddd;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -83,7 +86,7 @@ main{
 }
 
 .by-topdiv {
-	border: 3px solid #A7BCF2;
+	border: 1px solid #ddd;
 	width: 455px;
 	height: 180px;
 	margin: 50px 20px;
@@ -97,7 +100,7 @@ main{
 }
 
 .by-ingre-div {
-	border: 3px solid #A7BCF2;
+	border: 1px solid #ddd;
 	width: 915px;
 	height: 950px;
 	padding: 20px;
@@ -348,7 +351,7 @@ main{
 				<!-- 상단 : 리스트 -->
 				<div class="by-div">
 					<div class="by-topdiv">
-						<span>좋아요 LIST</span>
+						<span>찜 레시피 LIST</span>
 					</div>
 					<div class="by-topdiv">
 						<span>나의 레시피 LIST</span>
@@ -390,11 +393,11 @@ main{
 									<div class="by-form">
 										<div class="form-row">
 											<label for="by-count">[[${cool.type}]]</label> <input
-												type="text" id="by-count" th:value="${cool.amount}">
+												type="text" id="by-count" th:value="${cool.amount}" readonly>
 										</div>
 										<div class="form-row">
 											<label for="by-deadline">유통기한</label> <input type="text"
-												id="by-deadline" th:value="${cool.deadline}">
+												id="by-deadline" th:value="${cool.deadline}" readonly>
 										</div>
 									</div>
 									<div class="by-btn-div">
@@ -469,7 +472,47 @@ main{
 		</section>
 
 	<script>
-		
+	document.getElementById('by-btn-insert').addEventListener('click', function() {
+	    window.location.href = '/material_insert'; // 이동할 URL
+	});
+
+
+	//DOMContentLoaded : 문서의 모든 요소가 로드되고 파싱되었을 때 실행
+	document.addEventListener('DOMContentLoaded', function() {
+	    const tabButtons = document.querySelectorAll('.tab-button');
+	    const tabContents = document.querySelectorAll('.tab-content');
+	 	// 각 탭 버튼에 클릭 이벤트 리스너 추가
+	    tabButtons.forEach(button => {
+	        button.addEventListener('click', () => {
+	        	// 모든 버튼과 콘텐츠에서 'active' 클래스 제거
+	            tabButtons.forEach(btn => btn.classList.remove('active'));
+	            tabContents.forEach(content => content.classList.remove('active'));
+
+	         	// 클릭된 버튼과 연결된 콘텐츠에 'active' 클래스 추가
+	            button.classList.add('active');
+	            const selectedTab = button.getAttribute('data-tab');
+	            document.getElementById(selectedTab).classList.add('active');
+	        });
+	    });
+	});
+
+	$(document).on("click", ".by-mbtn", function(e) {
+	    const fcode = $(this).siblings(".fcode").val();
+	    console.log(fcode);
+	    
+		$.ajax({
+			url: '/mypage1/material/'+fcode,
+			type: "DELETE",
+			success: function(response){
+				alert(response);
+				console.log("삭제성공");
+				location.reload(); // 페이지 새로고침
+			},
+			error: function(xhr, textStatus, errorThrown){
+				console.log("삭제실패", textStatus, errorThrown);
+			}
+		});
+	});
 	</script>
 </body>
 </html>
