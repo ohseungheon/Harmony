@@ -206,7 +206,7 @@ main{
 	width: 385px;
 	height: 150px;
 	padding: 10px;
-	margin: 20px;
+	margin: 15px;
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
@@ -237,17 +237,12 @@ main{
 }
 
 #by-mName {
-	font-size: 25px;
+	font-size: 18px;
 	text-align: left;
 }
 
 .by-form {
-	font-size: 18px;
-	margin-right: 20px;
 	margin-left: 10px;
-	display: felx;
-	flex-direction: column;
-	width: 200px;
 }
 
 .by-form label, .by-form input {
@@ -268,31 +263,32 @@ main{
 }
 
 .by-form input[type="text"] {
-	width: 100%;
-	height: 40px;
+	width: 70%;
 	padding: 5px;
 	border: 2px solid #ccc;
 	box-sizing: border-box;
 	text-align: center;
 	margin-right: 10px;
 	border-radius: 5px;
-	font-size: 18px;
+	font-size: 15px;
 }
 
 .by-mbtn {
-	width: 80px;
-	padding: 10px 10px;
-	font-size: 16px;
+	padding: 5px 5px;
+	font-size: 10px;
 	background-color: #FF9A8B;
 	color: white;
 	border: none;
 	cursor: pointer;
-	margin-right: 20px; /* 추가: 버튼을 왼쪽으로 이동 */
+	margin-right: 10px; /* 추가: 버튼을 왼쪽으로 이동 */
 	border-radius: 5px;
 }
 
 .by-mbtn:hover {
 	background-color: #FF6F61;
+}
+.by-btn-div {
+	margin: 5px;
 }
 </style>
 </head>
@@ -401,12 +397,14 @@ main{
 												id="by-deadline" th:value="${cool.deadline}">
 										</div>
 									</div>
-									<!-- hidden input 추가 -->
-									<input type="hidden" class="fcode" th:value="${cool.fcode}">
-									<input type="hidden" name="icode" th:value="${cool.icode}">
-									<a th:href="@{/material_update(fcode=${cool.fcode})}"><button
-											class="by-mbtn">수정</button></a>
-									<button class="by-mbtn">삭제</button>
+									<div class="by-btn-div">
+										<!-- hidden input 추가 -->
+										<input type="hidden" class="fcode" th:value="${cool.fcode}">
+										<input type="hidden" name="icode" th:value="${cool.icode}">
+										<a th:href="@{/material_update(fcode=${cool.fcode})}"><button
+												class="by-mbtn">수정</button></a>
+										<button class="by-mbtn">삭제</button>
+									</div>
 								</div>
 							</div>
 							<!-- 냉동 -->
