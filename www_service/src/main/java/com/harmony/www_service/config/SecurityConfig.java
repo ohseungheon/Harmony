@@ -15,6 +15,9 @@ public class SecurityConfig {
 	@Autowired
 	private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
+	@Autowired
+	private CustomAuthenticationSuccessHandler successHandler;
+
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 
@@ -39,7 +42,8 @@ public class SecurityConfig {
 				.formLogin((auth) -> auth
 				.loginPage("/login_page")
 				.loginProcessingUrl("/loginProc")
-				.defaultSuccessUrl("/", true)
+				// .defaultSuccessUrl("/", true)
+				.successHandler(successHandler) // 커스텀 핸들러 설정
 				.failureHandler(customAuthenticationFailureHandler)
 				.permitAll()
 				);
