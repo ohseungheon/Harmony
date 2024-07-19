@@ -1,6 +1,7 @@
 package com.harmony.www_service.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.harmony.www_service.dao.RecipeMenuDao;
+import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.MemberDto;
 import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.RecipeDto;
@@ -21,6 +27,7 @@ import com.harmony.www_service.dto.RecipeTagDto;
 import com.harmony.www_service.service.LoginService;
 import com.harmony.www_service.service.MyRecipeService;
 import com.harmony.www_service.util.FileUploadUtil;
+import com.harmony.www_service.util.YoutubeUrlUtil;
 
 @Controller
 @RequestMapping("/my/recipe")
@@ -47,7 +54,9 @@ public class Mypage2Controller {
 	public String myRecipeRegist(Model model) {
 	
 		List<MenuDto> list = menuDao.getMenu();
-		
+		List<IngredientDto> ingredientList = service.getIngredientService();
+		System.out.println(ingredientList);
+		model.addAttribute("ingredientList", ingredientList);
 		model.addAttribute("list", list);
 		
 		return "mypage2/recipe_regist";
@@ -135,24 +144,33 @@ public class Mypage2Controller {
 		return "redirect:list?mno=" + mno.getMno();
 	}
 	
-//	레시피 수정 폼
+	// 레시피 수정 폼
 	@GetMapping("/updateForm")
 	@Transactional
 	public String updateForm(Model model,
 			@RequestParam("rcode") int rcode) {
 		
 		List<MenuDto> menuList = menuDao.getMenu();
+		model.addAttribute("list", menuList);
+		
 		RecipeDto recipeDto = service.getRecipeService(rcode);
 		System.out.println("rcode= " + recipeDto.getRcode());
-		List<RecipeIngredientDto> recipeIngredientDto = service.getRecipeIngredientService(rcode);
-		List<RecipeOrderDto> recipeOrderDto = service.getRecipeOrderService(rcode);
-		RecipeTagDto recipeTagDto = service.getRecipeTagService(rcode);
-		
-		model.addAttribute("list", menuList);
 		model.addAttribute("recipe", recipeDto);
+		
+		List<RecipeIngredientDto> recipeIngredientDto = service.getRecipeIngredientService(rcode);
 		model.addAttribute("recipeIngredient", recipeIngredientDto);
+		
+		List<RecipeOrderDto> recipeOrderDto = service.getRecipeOrderService(rcode);
 		model.addAttribute("recipeOrder", recipeOrderDto);
-		model.addAttribute("recipeTag", recipeTagDto);
+		
+		RecipeTagDto recipeTagDto = service.getRecipeTagService(rcode);
+		if(recipeTagDto != null) {
+			model.addAttribute("recipeTag", recipeTagDto);
+		}
+		
+		List<IngredientDto> ingredientList = service.getIngredientService();
+		model.addAttribute("ingredientList", ingredientList);
+		
 		
 		return "mypage2/recipe_update";
 	}
@@ -192,10 +210,13 @@ public class Mypage2Controller {
 		recipeDto.setMno(mno.getMno());
 		recipeDto.setRecipeName(recipeName);
 		recipeDto.setIntroduce(introduce);
-		if(url.length() > 12) {
-			recipeDto.setUrl(url.substring(url.length() - 11));
+		if(url.contains("youtube.com") || url.contains("youtu.be")) {
+			String videoId = YoutubeUrlUtil.extractVideoId(url);
+			recipeDto.setUrl("https://www.youtube.com/watch?v=" + url.substring(url.length() - 11));
+			System.out.println("url(-11) : " + recipeDto.getUrl());
 		}else {
 			recipeDto.setUrl(url);
+			System.out.println("url : " + recipeDto.getUrl());
 		}
 		recipeDto.setCategory(category);
 		recipeDto.setPortions(portions);
@@ -203,41 +224,73 @@ public class Mypage2Controller {
 		System.out.println(recipeDto);
 		
 		
-		// 레시피 재료 등록 재료가 두개이상이면 List로 등록
-		for(int i = 0; i < icode.size(); i ++) {
-			
-			RecipeIngredientDto recipeIngredientDto = new RecipeIngredientDto();
-			recipeIngredientDto.setRcode(rcode);
-			recipeIngredientDto.setIcode(icode.get(i));
-			recipeIngredientDto.setAmount(amount.get(i));
-			service.updateMyRecipeIngredientService(recipeIngredientDto);
-			
-			System.out.println(recipeIngredientDto);
+
+	    // 레시피 재료 수정
+		List<RecipeIngredientDto> existingIngredients = service.getRecipeIngredientService(rcode);
+		List<Integer> updatedIngredientIds = new ArrayList<>();
+
+		for (int i = 0; i < icode.size(); i++) {
+		    RecipeIngredientDto ingredientDto = new RecipeIngredientDto();
+		    ingredientDto.setRcode(rcode);
+		    ingredientDto.setIcode(icode.get(i));
+		    ingredientDto.setAmount(amount.get(i));
+
+		    if (i < existingIngredients.size()) {
+		        // 기존 재료 업데이트
+		        int ricode = existingIngredients.get(i).getRicode();
+		        ingredientDto.setRicode(ricode);
+		        service.updateMyRecipeIngredientService(ingredientDto);
+		        updatedIngredientIds.add(ricode);
+		    } else {
+		        // 새로운 재료 추가
+		        int newRicode = service.registMyRecipeIngredientService(ingredientDto);
+		        updatedIngredientIds.add(newRicode);
+		    }
 		}
+
+		// 삭제된 재료 처리
+		for (RecipeIngredientDto existingIngredient : existingIngredients) {
+		    if (!updatedIngredientIds.contains(existingIngredient.getRicode())) {
+		        service.deleteMyRecipeIngredientService(existingIngredient.getRicode());
+		    }
+		}
+
 		
-		// 요리순서 등록 순서가 두개 이상이면 List로 등록
-		for(int i = 0; i < orderNum.size(); i++) {
-			
-			RecipeOrderDto recipeOrderDto = new RecipeOrderDto();
-			recipeOrderDto.setRcode(rcode);
-			recipeOrderDto.setOrderContent(orderContent.get(i));
-			recipeOrderDto.setOrderNum(orderNum.get(i));
-			
-			if(!cookingImg.get(i).isEmpty()) {
-				try {
-					String cookimgImgName = FileUploadUtil.saveFile(cookingImg.get(i).getOriginalFilename(), cookingImg.get(i));
-					recipeOrderDto.setCookingImg(cookimgImgName);
-				}catch(IOException e) {
-					e.printStackTrace();
-				}
-			}else{
-				
-			}
-			
-			service.updateMyRecipeOrderService(recipeOrderDto);
-			System.out.println(recipeOrderDto);
-			
-		}
+	 // 요리순서 수정
+	    List<RecipeOrderDto> existingOrders = service.getRecipeOrderService(rcode);
+	    for (int i = 0; i < orderNum.size(); i++) {
+	        RecipeOrderDto orderDto = new RecipeOrderDto();
+	        orderDto.setRcode(rcode);
+	        orderDto.setOrderContent(orderContent.get(i));
+	        orderDto.setOrderNum(orderNum.get(i));
+
+	        if (!cookingImg.get(i).isEmpty()) {
+	            try {
+	                String cookingImgName = FileUploadUtil.saveFile(cookingImg.get(i).getOriginalFilename(), cookingImg.get(i));
+	                orderDto.setCookingImg(cookingImgName);
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        } else if (i < existingOrders.size()) {
+	            // 기존 이미지 유지
+	            orderDto.setCookingImg(existingOrders.get(i).getCookingImg());
+	        }
+
+	        if (i < existingOrders.size()) {
+	            // 기존 순서 업데이트
+	            orderDto.setRocode(existingOrders.get(i).getRocode());
+	            service.updateMyRecipeOrderService(orderDto);
+	        } else {
+	            // 새로운 순서 추가
+	            service.registMyRecipeOrderService(orderDto);
+	        }
+	    }
+	    // 삭제된 순서 처리
+	    if (orderNum.size() < existingOrders.size()) {
+	        for (int i = orderNum.size(); i < existingOrders.size(); i++) {
+	            service.deleteMyRecipeOrderService(existingOrders.get(i).getRocode());
+	        }
+	    }
 		
 		// 태그 등록
 		RecipeTagDto recipeTagDto = new RecipeTagDto();

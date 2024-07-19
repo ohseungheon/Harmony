@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.harmony.www_service.dao.MyRecipeDao;
+import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.RecipeIngredientDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
@@ -75,7 +76,12 @@ public class MyRecipeService {
 	// 레시피 재료 수정
 	public int updateMyRecipeIngredientService(RecipeIngredientDto recipeIngredientDto) {
 		
-		return dao.updateMyRecipeIngredient(recipeIngredientDto);
+		int result = dao.updateMyRecipeIngredient(recipeIngredientDto);
+		if(result > 0) {
+			return recipeIngredientDto.getRicode();
+		}else {
+			throw new RuntimeException("Failed to register new ingredient");
+		}
 	}
 	
 	// 레시지 요리순서 수정
@@ -116,9 +122,18 @@ public class MyRecipeService {
 		return dao.getRecipeTagFindByRcode(rcode);
 	}
 	
+	public int deleteMyRecipeIngredientService(int ricode) {
+	    return dao.deleteMyRecipeIngredient(ricode);
+	}
 	
+	public int deleteMyRecipeOrderService(int rocode) {
+	    return dao.deleteMyRecipeOrder(rocode);
+	}
 	
-	
+	public List<IngredientDto> getIngredientService(){
+		
+		return dao.getIngredient();
+	}
 	
 	
 	

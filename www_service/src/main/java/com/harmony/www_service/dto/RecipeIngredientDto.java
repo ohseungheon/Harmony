@@ -9,4 +9,5 @@ public class RecipeIngredientDto {
     private int icode;
     private int amount;
     private String name;
+    private String type;
 }
