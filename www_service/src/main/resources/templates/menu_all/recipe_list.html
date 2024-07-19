@@ -63,7 +63,8 @@
     <div id="recipeList">
         <div th:each="recipe : ${recipeList}" class="recipeList" th:onclick="'loadRecipeDetail(\'' + ${recipe.rcode} + '\')'">
             <div class="recipe-urlimg">
-                <img th:src="'https://img.youtube.com/vi/'+${recipe.url}+'/0.jpg'">
+            <!-- #strings.substring()과 #strings.length()는 Thymeleaf의 문자열 유틸리티 메서드로, JavaScript의 slice() 기능을 대체합니다. -->
+                <img th:src="'https://img.youtube.com/vi/' + ${recipe.url != null ? #strings.substring(recipe.url, #strings.length(recipe.url) - 11) : 'default'} + '/mqdefault.jpg'">
             </div>
             <div class="recipeList-content">
                 <a href="#">
