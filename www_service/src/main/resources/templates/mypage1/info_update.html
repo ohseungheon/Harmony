@@ -8,18 +8,21 @@
     #by-section {
         width: 1000px;
         height: 1000px;
-        margin: 80px auto;
+        margin: 50px auto;
         display: flex; /* Flexbox 사용 */
         justify-content: center; /* 수평 가운데 정렬 */
         align-items: center; /* 수직 가운데 정렬 */
+        background-color: transparent !important;
     }
     #by-div {
-        border: 1px solid #eee;
+        border: 1px solid #ddd;
+        background-color: white;
         width: 500px;
         height: 600px;
         display: flex;
         justify-content: center;
         align-items: center;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.05);
     }
     #by-form {
         width: 70%;
@@ -30,8 +33,11 @@
     }
     #by-form .form-group {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         margin-bottom: 20px;
+        justify-content: space-evenly;
+        align-items: center;
+        font-size: 13px;
     }
     #by-form label {
         margin-bottom: 5px;
@@ -68,22 +74,19 @@
     	<div id="by-form">
     		<form id="updateForm" th:action="@{/mypage1/info_update}" method="post">
                 <div class="form-group">
-                    <input type="text" name="username" id="username" placeholder="아이디" th:value="${username}">
+                    아이디<input type="text" name="username" id="username" placeholder="아이디" th:value="${username}">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="password" id="password" placeholder="비밀번호" th:value="${member.password}">
+                    닉네임<input type="text" name="nickName" id="nickName" placeholder="닉네임" th:value="${member.nickName}">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="nickName" id="nickName" placeholder="닉네임" th:value="${member.nickName}">
+                    주소<input type="text" name="addr" id="addr" placeholder="주소" th:value="${member.addr}">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="addr" id="addr" placeholder="주소" th:value="${member.addr}">
+                    생년월일<input type="text" name="birth" id="birth" placeholder="생년월일" th:value="${member.birth}">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="birth" id="birth" placeholder="생년월일" th:value="${member.birth}">
-                </div>
-                <div class="form-group">
-                    <input type="text" name="phone" id="phone" placeholder="휴대폰 번호" th:value="${member.phone}">
+                    번호<input type="text" name="phone" id="phone" placeholder="휴대폰 번호" th:value="${member.phone}">
                 </div>
                 <input type="submit" value="수정">
             </form>
