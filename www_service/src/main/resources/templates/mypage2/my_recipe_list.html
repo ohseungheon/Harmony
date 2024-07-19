@@ -129,11 +129,11 @@ function recipeList() {
     	
         data.forEach(recipe => {
         	// redipe.url이 null이 아니면 slice, null이면 'default' 사용
-    	//let url = recipe.url ? recipe.url.slice(-11) : 'default';
+    		let url = recipe.url ? recipe.url.slice(-11) : 'default';
     	
         	output += '<div class="recipe-list-box">';
         	output += `<div class="recipe-urlimg">`;
-        	output += `<img src="https://img.youtube.com/vi/${recipe.url}/mqdefault.jpg">`;
+        	output += "<img src='https://img.youtube.com/vi/" + url + "/mqdefault.jpg'>";
         	output += `</div>`;
         	output += '<div class="recipe-list-content">';
         	output += `<a href="/menu_all/recipe_detail?rcode=${recipe.rcode}">`;

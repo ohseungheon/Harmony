@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -95,7 +96,9 @@
         <p>레시피명: <span th:text="${recipeName}"></span></p>
         <p>소개: <span th:text="${introduce}"></span></p>
     </div>
-    <iframe th:src="'https://www.youtube.com/embed/' + ${url}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+    <!-- ${url.indexOf('v=') + 2}는 URL에서 'v=' 다음의 위치를 찾습니다. -->
+    <!-- url.substring(...)은 그 위치부터 끝까지의 문자열을 추출합니다, 즉 동영상 ID를 얻습니다. -->
+    <iframe th:src="'https://www.youtube.com/embed/' + ${url.substring(url.indexOf('v=') + 2)}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
     
     <h2>재료</h2>
     <div class="ingredients">
@@ -110,7 +113,7 @@
         <div th:each="order : ${recipeOrderList}" class="order-item">
             <p>순서 <span th:text="${order.orderNum}"></span>: <span th:text="${order.orderContent}"></span></p>
             <th:block th:if = "${order.cookingImg != null && order.cookingImg != ''}">
-                <img th:src="${order.cookingImg}" alt="조리 이미지"/>
+                <img th:src="@{/uploads/} + ${order.cookingImg}" alt="조리 이미지"/>
             </th:block>
         </div>
     </div>
@@ -125,6 +128,5 @@
         button.classList.toggle('liked');
     }
 </script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </body>
 </html>

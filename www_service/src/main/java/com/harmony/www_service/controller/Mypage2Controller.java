@@ -90,11 +90,7 @@ public class Mypage2Controller {
 		recipeDto.setMno(mno.getMno());
 		recipeDto.setRecipeName(recipeName);
 		recipeDto.setIntroduce(introduce);
-		if(url.length() > 12) {
-			recipeDto.setUrl(url.substring(url.length() - 11));
-		}else {
-			recipeDto.setUrl(url);
-		}
+		recipeDto.setUrl(url);
 		recipeDto.setCategory(category);
 		recipeDto.setPortions(portions);
 		service.registMyRecipeService(recipeDto);
@@ -210,14 +206,7 @@ public class Mypage2Controller {
 		recipeDto.setMno(mno.getMno());
 		recipeDto.setRecipeName(recipeName);
 		recipeDto.setIntroduce(introduce);
-		if(url.contains("youtube.com") || url.contains("youtu.be")) {
-			String videoId = YoutubeUrlUtil.extractVideoId(url);
-			recipeDto.setUrl("https://www.youtube.com/watch?v=" + url.substring(url.length() - 11));
-			System.out.println("url(-11) : " + recipeDto.getUrl());
-		}else {
-			recipeDto.setUrl(url);
-			System.out.println("url : " + recipeDto.getUrl());
-		}
+		recipeDto.setUrl(url);
 		recipeDto.setCategory(category);
 		recipeDto.setPortions(portions);
 		service.updateMyRecipeService(recipeDto);
