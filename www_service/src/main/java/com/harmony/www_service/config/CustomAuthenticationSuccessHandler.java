@@ -36,8 +36,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
                 String prevPage = (String) session.getAttribute("prevPage");
                 if (prevPage != null) {
                     session.removeAttribute("prevPage");
-                    System.out.println(prevPage);
-                    System.out.println(prevPage);
+                    // System.out.println(prevPage);
                     response.sendRedirect(prevPage);
                     return;
                 }
