@@ -42,7 +42,7 @@ public class SecurityConfig {
 				.formLogin((auth) -> auth
 				.loginPage("/login_page")
 				.loginProcessingUrl("/loginProc")
-				// .defaultSuccessUrl("/", true)
+				// .defaultSuccessUrl("/", true)	// 로그인 성공 시 무조건 메인으로 가는 코드
 				.successHandler(successHandler) // 커스텀 핸들러 설정
 				.failureHandler(customAuthenticationFailureHandler)
 				.permitAll()
