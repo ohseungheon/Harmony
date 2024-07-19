@@ -12,11 +12,15 @@
 		ON mr.mno = m.mno
 	</select>
 
-	<insert id="registRequestMenu">
+	<insert id="registRequestMenuToMenu">
 		INSERT INTO menu
 		(menuName, category, imgUrl, VIEW, type)
 		values
 		(#{mDto.menuName}, #{mDto.category}, #{mDto.imgUrl}, #{mDto.VIEW}, #{mDto.type})
 	</insert>
 
+	<delete id="deleteRequestMenu">
+		DELETE FROM menu_request
+		mrcode = #{mrcode}
+	</delete>
 </mapper>

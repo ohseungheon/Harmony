@@ -83,6 +83,22 @@ public class ManagerController {
 		return "/manager/menu_approval";
 	}
 	
-
+	// 요청메뉴를 요청메뉴테이블에서 삭제
+	
+	
+	// 요청메뉴를 정식메뉴로 등록
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
