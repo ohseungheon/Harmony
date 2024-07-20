@@ -75,13 +75,37 @@ public class MyRecipeService {
 	}
 	
 	@Transactional
-	public void updateEntireRecipe(RecipeDto recipeDto, List<RecipeIngredientDto> ingredients, 
-	                               List<RecipeOrderDto> orders, List<MultipartFile> cookingImgs, RecipeTagDto recipeTagDto) {
-	    updateMyRecipe(recipeDto);
-	    updateMyRecipeIngredients(ingredients, recipeDto.getRcode());
-	    updateMyRecipeOrders(orders, cookingImgs, recipeDto.getRcode());
-	    updateMyRecipeTag(recipeTagDto);
-	}
+    public void updateEntireRecipe(RecipeDto recipeDto, List<RecipeIngredientDto> ingredients, 
+            List<RecipeOrderDto> orders, List<MultipartFile> newImages, 
+            List<String> existingImages, RecipeTagDto recipeTagDto) {
+        
+        // 이미지 처리 로직
+        for (int i = 0; i < orders.size(); i++) {
+            RecipeOrderDto order = orders.get(i);
+            if (newImages != null && newImages.size() > i && !newImages.get(i).isEmpty()) {
+                // 새 이미지 처리
+                try {
+                    String fileName = FileUploadUtil.saveFile(newImages.get(i).getOriginalFilename(), newImages.get(i));
+                    order.setCookingImg(fileName);
+                } catch (IOException e) {
+                    logger.error("Failed to upload file: ", e);
+                    throw new RuntimeException("Failed to upload cooking image", e);
+                }
+            } else if (existingImages != null && existingImages.size() > i && !existingImages.get(i).isEmpty()) {
+                // 기존 이미지 유지
+                order.setCookingImg(existingImages.get(i));
+            } else {
+                // 이미지가 없는 경우
+                order.setCookingImg(null);
+            }
+        }
+
+        // 나머지 업데이트 수행
+        updateMyRecipe(recipeDto);
+        updateMyRecipeIngredients(ingredients, recipeDto.getRcode());
+        updateMyRecipeOrders(orders, recipeDto.getRcode());
+        updateMyRecipeTag(recipeTagDto);
+    }
 	
 	
 	// 레시피 수정 Service
@@ -116,27 +140,20 @@ public class MyRecipeService {
 	
 	// 레시지 요리순서 수정
 	@Transactional
-	public int updateMyRecipeOrders(List<RecipeOrderDto> orders, List<MultipartFile> cookingImgs, int rcode) {
-	    logger.info("Updating recipe orders for rcode: {}", rcode);
-	    dao.deleteAllRecipeOrders(rcode);
-	    for (int i = 0; i < orders.size(); i++) {
-	        RecipeOrderDto order = orders.get(i);
-	        if (cookingImgs != null && i < cookingImgs.size() && !cookingImgs.get(i).isEmpty()) {
-	            try {
-	                String fileName = FileUploadUtil.saveFile(cookingImgs.get(i).getOriginalFilename(), cookingImgs.get(i));
-	                order.setCookingImg(fileName);
-	            } catch (IOException e) {
-	                logger.error("Failed to upload file: ", e);
-	                throw new RuntimeException("Failed to upload cooking image", e);
-	            }
-	        }
-	        int result = dao.insertMyRecipeOrder(order);
-	        if (result <= 0) {
-	            throw new RuntimeException("Failed to insert new order");
-	        }
-	    }
-	    return orders.size();
-	}
+    public int updateMyRecipeOrders(List<RecipeOrderDto> orders, int rcode) {
+        logger.info("Updating recipe orders for rcode: {}", rcode);
+        dao.deleteAllRecipeOrders(rcode);
+        
+        for (RecipeOrderDto order : orders) {
+            order.setRcode(rcode);
+            int result = dao.insertMyRecipeOrder(order);
+            if (result <= 0) {
+                throw new RuntimeException("Failed to insert new order");
+            }
+        }
+        
+        return orders.size();
+    }
 	
 	// 레시피 태그 수정
 	@Transactional

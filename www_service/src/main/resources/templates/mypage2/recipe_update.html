@@ -256,24 +256,23 @@ section {
 	border-radius: 5px;
 	color: #fff;
 	cursor: pointer;
-	padding:12px 0;
-	font-size:14px;
-	box-sizing:border-box;
+	padding: 12px 0;
+	font-size: 14px;
+	box-sizing: border-box;
 }
 
 .recipe-regist-btns a {
-	display:inline-block;
+	display: inline-block;
 	width: 133px;
 	background: #fff;
 	border: 1px solid #F5A47D;
 	border-radius: 5px;
 	color: #F5A47D;
 	cursor: pointer;
-	padding:12px 0;
-	font-size:14px;
-	box-sizing:border-box;
+	padding: 12px 0;
+	font-size: 14px;
+	box-sizing: border-box;
 }
-
 
 .recipe-menu-list {
 	margin: 20px 0;
@@ -435,8 +434,10 @@ section {
 							<td class="order-img">
 								<p class="order-img-text"
 									th:style="${order.cookingImg != null && !order.cookingImg.isEmpty() ? 'display:none;' : ''}">➕</p>
-								<input type="file" name="cookingImg" accept="image/*"
-								style="display: none;"> <img
+								<input type="file" name="newCookingImg" accept="image/*"
+								style="display: none;"> <input type="hidden"
+								name="existingCookingImg" th:value="${order.cookingImg}">
+								<img
 								th:src="@{${order.cookingImg != null && !order.cookingImg.isEmpty() ? '/uploads/' + order.cookingImg : '/img/imgNone.png'}}"
 								th:style="${order.cookingImg != null && !order.cookingImg.isEmpty() ? '' : 'display:none;'}">
 							</td>
@@ -463,8 +464,8 @@ section {
 			</div>
 
 			<div class="recipe-regist-btns">
-				<input type="submit" value="수정">
-				<a th:href="@{/my/recipe/list(mno=${mno})}">취소</a>
+				<input type="submit" value="수정"> <a
+					th:href="@{/my/recipe/list(mno=${mno})}">취소</a>
 			</div>
 		</form>
 	</section>
@@ -627,11 +628,10 @@ function handleImageUpload(orderImgCell) {
     const imageInText = orderImgCell.querySelector(".order-img-text");
     
     // 이미지와 텍스트 모두에 클릭 이벤트 추가
-    imageDisplay.addEventListener('click', function() {
-        imageInput.click();
-    });
-    imageInText.addEventListener('click', function() {
-        imageInput.click();
+    orderImgCell.addEventListener('click', function(e) {
+        if (e.target === this || e.target === imageInText || e.target === imageDisplay) {
+            imageInput.click();
+        }
     });
     
     imageInput.addEventListener('change', function() {
@@ -656,45 +656,55 @@ function handleStepDelete(deleteBtn) {
 
 function addRecipeOrder() {
     const table = document.getElementById("recipe-steps");
-    const newRow = createRecipeOrderRow(table.rows.length + 1);
+    const stepNumber = table.rows.length + 1;
+    const newRow = createRecipeOrderRow(stepNumber);
     table.appendChild(newRow);
     handleImageUpload(newRow.querySelector('.order-img'));
+    updateStepNumbers();
 }
 
-function createRecipeOrderRow(stepNumber) {
+function createRecipeOrderRow(stepNumber, existingImageUrl = '') {
     const newRow = document.createElement('tr');
     newRow.innerHTML = `
         <th>Step ${stepNumber}
             <input type="hidden" name="orderNum" value="${stepNumber}">
         </th>
         <td>
-            <textarea name="orderContent" placeholder="예) 소고기를 숭덩숭덩 썰어주세요"></textarea>
+            <textarea name="orderContent[${stepNumber - 1}]" placeholder="예) 소고기를 숭덩숭덩 썰어주세요"></textarea>
         </td>
         <td class="order-img">
-            <p class="order-img-text">➕</p>
-            <input type="file" name="cookingImg" accept="image/*" style="display:none;">
-            <img src="/img/imgNone.png" style="display:none;">
+            <p class="order-img-text" ${existingImageUrl ? 'style="display:none;"' : ''}>➕</p>
+            <input type="file" name="newCookingImg[${stepNumber - 1}]" accept="image/*" style="display:none;">
+            <input type="hidden" name="existingCookingImg[${stepNumber - 1}]" value="${existingImageUrl}">
+            <img src="${existingImageUrl || '/img/imgNone.png'}" style="${existingImageUrl ? '' : 'display:none;'}">
         </td>
         <td>
             <span class="delete-btn">X</span>
         </td>
     `;
-    handleImageUpload(newRow.querySelector('.order-img'));
     return newRow;
 }
 
 function updateStepNumbers() {
     const rows = document.querySelectorAll('#recipe-steps tr');
     rows.forEach((row, index) => {
+        const stepNum = index + 1;
         const stepCell = row.querySelector('th');
         const orderNumInput = stepCell.querySelector('input[name="orderNum"]');
-        stepCell.firstChild.textContent = `Step ${index + 1}`;
-        orderNumInput.value = index + 1;
+        const textArea = row.querySelector('textarea');
+        const fileInput = row.querySelector('input[type="file"]');
+        
+        stepCell.firstChild.textContent = `Step ${stepNum}`;
+        orderNumInput.value = stepNum;
+        textArea.name = `orderContent[${index}]`;
+        if (fileInput) {
+            fileInput.name = `cookingImg[${index}]`;
+        }
     });
 }
 
 function setupOrderImages() {
-    document.querySelectorAll('.order-img').forEach(cell => {
+    document.querySelectorAll('.order-img').forEach((cell, index) => {
         const img = cell.querySelector('img');
         const textElem = cell.querySelector('.order-img-text');
         const fileInput = cell.querySelector('input[type="file"]');
@@ -707,6 +717,7 @@ function setupOrderImages() {
             img.style.display = 'none';
         }
 
+        fileInput.name = `cookingImg[${index}]`;
         handleImageUpload(cell);
     });
 }
@@ -790,19 +801,20 @@ function createIngredientRow() {
     return newRow;
 }
 
-function createRecipeOrderRow(stepNumber) {
+function createRecipeOrderRow(stepNumber, existingImageUrl = '') {
     const newRow = document.createElement('tr');
     newRow.innerHTML = `
         <th>Step ${stepNumber}
             <input type="hidden" name="orderNum" value="${stepNumber}">
         </th>
         <td>
-            <textarea name="orderContent" placeholder="예) 소고기를 숭덩숭덩 썰어주세요"></textarea>
+            <textarea name="orderContent[${stepNumber - 1}]" placeholder="예) 소고기를 숭덩숭덩 썰어주세요"></textarea>
         </td>
         <td class="order-img">
             <p class="order-img-text">➕</p>
-            <input type="file" name="cookingImg" accept="image/*" style="display:none;">
-            <img src="" style="display:none;">
+            <input type="file" name="newCookingImg[${stepNumber - 1}]" accept="image/*" style="display:none;">
+            <input type="hidden" name="existingCookingImg[${stepNumber - 1}]" value="${existingImageUrl}">
+            <img src="${existingImageUrl || '/img/imgNone.png'}" style="${existingImageUrl ? '' : 'display:none;'}">
         </td>
         <td>
             <span class="delete-btn">X</span>

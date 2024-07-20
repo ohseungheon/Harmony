@@ -21,6 +21,7 @@ public class RecipeUpdateForm {
     private List<Integer> orderNum;
     private List<String> orderContent;
     private List<MultipartFile> cookingImg;
+    private List<String> existingCookingImg;
     private String tagContent;
     private int rcode;
 
@@ -52,18 +53,22 @@ public class RecipeUpdateForm {
     }
 
     public List<RecipeOrderDto> toRecipeOrderDtoList() {
-        List<RecipeOrderDto> list = new ArrayList<>();
-        for (int i = 0; i < orderNum.size(); i++) {
-            RecipeOrderDto dto = new RecipeOrderDto();
-            dto.setRcode(this.rcode);
-            dto.setOrderNum(this.orderNum.get(i));
-            dto.setOrderContent(this.orderContent.get(i));
-            if (this.cookingImg != null && i < this.cookingImg.size()) {
-                dto.setCookingImg(this.cookingImg.get(i).getOriginalFilename());
+        List<RecipeOrderDto> orderDtos = new ArrayList<>();
+        for (int i = 0; i < orderContent.size(); i++) {
+            RecipeOrderDto orderDto = new RecipeOrderDto();
+            orderDto.setOrderNum(i + 1);
+            orderDto.setOrderContent(orderContent.get(i));
+            
+            // 새 이미지가 업로드되었다면 그것을 사용, 아니면 기존 이미지 유지
+            if (cookingImg != null && cookingImg.size() > i && !cookingImg.get(i).isEmpty()) {
+                orderDto.setCookingImg(cookingImg.get(i).getOriginalFilename());
+            } else if (existingCookingImg != null && existingCookingImg.size() > i) {
+                orderDto.setCookingImg(existingCookingImg.get(i));
             }
-            list.add(dto);
+            
+            orderDtos.add(orderDto);
         }
-        return list;
+        return orderDtos;
     }
 
     public RecipeTagDto toRecipeTagDto() {

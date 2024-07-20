@@ -434,265 +434,176 @@
 </section>
 
 <script th:inline="javascript">
-
+// 전역 변수 및 상수
+const ingredientsList = /*[[${ingredientList}]]*/ [];
 let selectIdCounter = 1;
 
-document.addEventListener("DOMContentLoaded", () => {
-	
-	addChangeListener(document.getElementById('ingredient-select-0'));
-	
-	
-	let selectedMenuItem = null;
-	
-	// 메뉴 이름 클릭 이벤트 처리
-	document.querySelectorAll("#recipe-menu-name").forEach(menuItem => {
-		menuItem.addEventListener("click", () => {
-			
-			if(selectedMenuItem){
-				selectedMenuItem.classList.remove("selected");
-			}
-			
-			//선택된 메뉴 스타일 적용
-			menuItem.classList.add("selected");
-			
-			//현재 선택된 메뉴 항목을 업데이트
-			selectedMenuItem = menuItem;
-			
-			
-			// 클릭한 메뉴 아이템의 mcode 가져오기
-			var mcode = menuItem.getAttribute("mcode");
-			console.log(mcode);
-			
-			// mcode 값을 hidden input에 설정
-			document.getElementById("mcode").value = mcode;
-			
-			fetch(`/getMenuImage?mcode=${mcode}`)
-			.then(response => {
-				if(!response.ok){
-					throw new Error(response.status);
-				}
-				return response.json(); //JSON 형태로 응답을 파싱하여 반환
-			})
-			.then(data => {
-				const imageUrl = data.imgurl;
-				console.log("data.imgurl : " + data.imgurl);
-				console.log("imageUrl : " + imageUrl);
-				// 이미지 URL을 이미지 요소에 설정
-				document.getElementById("menu-image").setAttribute("src", "/uploads/" + imageUrl);
-				document.getElementById("menu-image").setAttribute("onerror", "this.onerror=null; this.src='/img/imgNone.png';");
-			})
-			.catch(error => {
-				console.error(error);
-			});
-			
-		});
-	});
-	
-});
+// 문서 로드 완료 시 실행
+document.addEventListener("DOMContentLoaded", initializeApp);
 
-//요리재료 선택하면 type 자동 기입
-function addChangeListener(selectElement){
-	selectElement.addEventListener("change", (event) => {
-		
-		if(event.target.matches("select[name='icode']")){
-		const selectedIcode = event.target.value;
-		const row = event.target.closest('tr');
-		const typeInput = row.querySelector("input[name='type']");
-		
-		fetch(`/getTypeByIcode?icode=${selectedIcode}`)
-		.then(response => {
-			if(!response.ok){
-				throw new Error(response.status);
-			}
-			return response.json();
-		})
-		.then(data => {
-			// 단위 데이터를 type 필드에 설정
-			typeInput.value = data.type;
-		})
-		.catch(error => {
-			console.error(error);
-		});
-		}
-	});
+function initializeApp() {
+    setupInitialEventListeners();
+    setupMenuSelection();
 }
 
-
-
-// 재료정보 추가 삭제 버튼 스크립트
-	function addDeleteEvent(deleteBtn){
-	deleteBtn.addEventListener('click', () => {
-		const row = deleteBtn.colsest('tr');
-		row.remove();
-	});
+function setupInitialEventListeners() {
+    addChangeListener(document.getElementById('ingredient-select-0'));
+    document.getElementById('recipe-ingredient-add').addEventListener('click', addIngredientRow);
+    document.getElementById('recipe-order-add').addEventListener('click', addOrderStep);
+    setupExistingElements();
 }
 
-	var ingredientsList = /*[[${ingredientList}]]*/ [];
+function setupExistingElements() {
+    document.querySelectorAll('.ingredient-delete-btn').forEach(addDeleteEvent);
+    document.querySelectorAll('.order-img').forEach(addImageUploadEvent);
+    document.querySelectorAll('.delete-btn').forEach(addDeleteEvent);
+}
 
-	// 재료정보 추가 버튼 클릭 이벤트
-document.getElementById('recipe-ingredient-add').addEventListener('click', () => {
-	const table = document.getElementById('ingredient-table');
-	const newRow = document.createElement('tr');
-	
-	const newStepCell = document.createElement('th');
-	newStepCell.textContent = '재료 정보';
-	newRow.appendChild(newStepCell);
-	
-	const newSelectCell = document.createElement('td');
-	const newSelect = document.createElement('select');
-	newSelect.name = 'icode';
-	newSelect.id = `ingredient-select-${selectIdCounter++}`;
-	
-	newSelect.innerHTML = `
-		<option value="0">재료 이름</option>
-			${ingredientsList.map(ingredient =>
-				`<option value="${ingredient.icode}">${ingredient.name}</option>`
-			).join('')}
-    `;
-    console.log("ingredientsList : " + ingredientsList);
-    newSelectCell.appendChild(newSelect);
-    newRow.appendChild(newSelectCell);
-    
-    const newAmountCell = document.createElement('td');
-    const newAmountInput = document.createElement('input');
-    newAmountInput.type = 'text';
-    newAmountInput.name = 'amount';
-    newAmountInput.placeholder = '수량';
-    newAmountCell.appendChild(newAmountInput);
-    newRow.appendChild(newAmountCell);
-    
-    const newTypeCell = document.createElement('td');
-    const newTypeInput = document.createElement('input');
-    newTypeInput.type = 'text';
-    newTypeInput.name = 'type';
-    newTypeInput.placeholder = '단위(개/g)';
-    newTypeCell.appendChild(newTypeInput);
-    newRow.appendChild(newTypeCell);
-    
-    const newDeleteCell = document.createElement('td');
-    const newDeleteBtn = document.createElement('span');
-    newDeleteBtn.className = 'ingredient-delete-btn';
-    newDeleteBtn.textContent = 'X';
-    newDeleteCell.appendChild(newDeleteBtn);
-    newRow.appendChild(newDeleteCell);
-    
+function setupMenuSelection() {
+    let selectedMenuItem = null;
+    document.querySelectorAll("#recipe-menu-name").forEach(menuItem => {
+        menuItem.addEventListener("click", () => handleMenuSelection(menuItem, selectedMenuItem));
+    });
+}
+
+function handleMenuSelection(menuItem, selectedMenuItem) {
+    if (selectedMenuItem) {
+        selectedMenuItem.classList.remove("selected");
+    }
+    menuItem.classList.add("selected");
+    selectedMenuItem = menuItem;
+
+    const mcode = menuItem.getAttribute("mcode");
+    document.getElementById("mcode").value = mcode;
+    fetchAndSetMenuImage(mcode);
+}
+
+function fetchAndSetMenuImage(mcode) {
+    fetch(`/getMenuImage?mcode=${mcode}`)
+        .then(response => {
+            if (!response.ok) throw new Error(response.status);
+            return response.json();
+        })
+        .then(data => {
+            const imageUrl = data.imgurl;
+            const menuImage = document.getElementById("menu-image");
+            menuImage.src = "/uploads/" + imageUrl;
+            menuImage.onerror = () => { menuImage.src = '/img/imgNone.png'; };
+        })
+        .catch(console.error);
+}
+
+function addChangeListener(selectElement) {
+    selectElement.addEventListener("change", handleIngredientSelection);
+}
+
+function handleIngredientSelection(event) {
+    if (event.target.matches("select[name='icode']")) {
+        const selectedIcode = event.target.value;
+        const row = event.target.closest('tr');
+        const typeInput = row.querySelector("input[name='type']");
+        
+        fetch(`/getTypeByIcode?icode=${selectedIcode}`)
+            .then(response => {
+                if (!response.ok) throw new Error(response.status);
+                return response.json();
+            })
+            .then(data => { typeInput.value = data.type; })
+            .catch(console.error);
+    }
+}
+
+function addDeleteEvent(deleteBtn) {
+    deleteBtn.addEventListener('click', () => {
+        const row = deleteBtn.closest('tr');
+        row.remove();
+        if (deleteBtn.classList.contains('delete-btn')) {
+            updateStepNumbers();
+        }
+    });
+}
+
+function addIngredientRow() {
+    const table = document.getElementById('ingredient-table');
+    const newRow = createIngredientRow();
     table.appendChild(newRow);
+    addChangeListener(newRow.querySelector('select'));
+    addDeleteEvent(newRow.querySelector('.ingredient-delete-btn'));
+}
+
+function createIngredientRow() {
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+        <th>재료 정보</th>
+        <td>
+            <select name="icode" id="ingredient-select-${selectIdCounter++}">
+                <option value="0">재료 이름</option>
+                ${ingredientsList.map(ingredient =>
+                    `<option value="${ingredient.icode}">${ingredient.name}</option>`
+                ).join('')}
+            </select>
+        </td>
+        <td><input type="text" name="amount" placeholder="수량"></td>
+        <td><input type="text" name="type" placeholder="단위(개/g)"></td>
+        <td><span class="ingredient-delete-btn">X</span></td>
+    `;
+    return newRow;
+}
+
+function addImageUploadEvent(orderImgCell) {
+    const imageInput = orderImgCell.querySelector('input[type="file"]');
+    const imageDisplay = orderImgCell.querySelector('img');
+    const imageInText = orderImgCell.querySelector(".order-img-text");
     
-    addDeleteEvent(newDeleteBtn);
-    addChangeListener(newSelect);
-});
+    orderImgCell.addEventListener('click', () => imageInput.click());
+    
+    imageInput.addEventListener('change', () => {
+        if (imageInput.files && imageInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imageDisplay.src = e.target.result;
+                imageDisplay.style.display = 'block';
+                imageInText.style.display = 'none';
+            };
+            reader.readAsDataURL(imageInput.files[0]);
+        }
+    });
+}
 
-	document.querySelectorAll('.ingredient-delete-btn').forEach(function(btn){
-		addDeleteEvent(btn);
-	});
+function updateStepNumbers() {
+    const rows = document.querySelectorAll('#recipe-steps tr');
+    rows.forEach((row, index) => {
+        const stepCell = row.querySelector('th');
+        const orderNumInput = stepCell.querySelector('input[name="orderNum"]');
+        stepCell.childNodes[0].textContent = `Step ${index + 1}`;
+        orderNumInput.value = index + 1;
+    });
+}
 
+function addOrderStep() {
+    const table = document.getElementById("recipe-steps");
+    const currentStepCount = table.getElementsByTagName('tr').length;
+    const newRow = createOrderStepRow(currentStepCount + 1);
+    table.appendChild(newRow);
+    addImageUploadEvent(newRow.querySelector('.order-img'));
+    addDeleteEvent(newRow.querySelector('.delete-btn'));
+}
 
-
-
-// 요리순서 추가 삭제 버튼 스크립트
-	function addImageUploadEvent(orderImgCell){
-		const imageInput = orderImgCell.querySelector('input[type="file"]');
-		const imageDisplay = orderImgCell.querySelector('img');
-		const imageInText = orderImgCell.querySelector(".order-img-text");
-		
-		orderImgCell.addEventListener('click', () => {
-			imageInput.click();
-		});
-		
-		imageInput.addEventListener('change', () => {
-			if(imageInput.files && imageInput.files[0]){
-				const reader = new FileReader();
-				reader.onload = function(e) {
-					imageDisplay.src = e.target.result;
-					imageDisplay.style.display = 'block';
-					imageInText.style.display = 'none';
-				}
-				reader.readAsDataURL(imageInput.files[0]);
-			}
-		});
-	}
-	
-	function addDeleteEvent(deleteBtn){
-		deleteBtn.addEventListener('click', () => {
-			const row = deleteBtn.closest('tr');
-			row.remove();
-			updateStepNumbers();
-		});
-	}
-	
-	function updateStepNumbers(){
-		const rows = document.querySelectorAll('#recipe-steps tr');
-		rows.forEach((row, index) => {
-			const stepCell = row.querySelector('th');
-			const orderNumInput = stepCell.querySelector('input[name="orderNum"]');
-			stepCell.childNodes[0].textContent = `Step ${index + 1}`;
-			orderNumInput.value = index + 1;
-		});
-	}
-
-// 요리 순서에서 추가 버튼 클릭하면 요소 추가
-	document.getElementById("recipe-order-add").addEventListener('click', () => {
-		
-		const table = document.getElementById("recipe-steps");
-		const currentStepCount = table.getElementsByTagName('tr').length;
-		
-		const newRow = document.createElement('tr');
-		
-		const newStepCell = document.createElement('th');
-		newStepCell.innerHTML = `Step ${currentStepCount + 1}<input type="hidden" name="orderNum" value="${currentStepCount + 1}">`;
-		newRow.appendChild(newStepCell);
-		
-		const newTextareaCell = document.createElement('td');
-		const newTextarea = document.createElement('textarea');
-		newTextarea.name = "orderContent";
-		newTextareaCell.appendChild(newTextarea);
-		newRow.appendChild(newTextareaCell);
-		
-		const newImageCell = document.createElement('td');
-		newImageCell.className = 'order-img';
-		const newImageText = document.createElement('p');
-		newImageText.className = 'order-img-text';
-		newImageText.innerHTML = '➕';
-		const newImageInput = document.createElement('input');
-		newImageInput.type = 'file';
-		newImageInput.name = 'cookingImg';
-		newImageInput.accept = 'image/*';
-		newImageInput.style.display = 'none';
-		const newImage = document.createElement('img');
-		newImage.style.display = 'none';
-		newImageCell.appendChild(newImageText);
-		newImageCell.appendChild(newImageInput);
-		newImageCell.appendChild(newImage);
-		
-		
-		newRow.appendChild(newImageCell);
-		
-		const newDeleteCell = document.createElement('td');
-		const newDeleteBtn = document.createElement('span');
-		newDeleteBtn.className = 'delete-btn';
-		newDeleteBtn.textContent = 'X';
-		newDeleteCell.appendChild(newDeleteBtn);
-		newRow.appendChild(newDeleteCell);
-		
-		table.appendChild(newRow);
-		
-		addImageUploadEvent(newImageCell);
-		addDeleteEvent(newDeleteBtn);
-	});
-	
-	document.querySelectorAll('.order-img').forEach(function(cell){
-		addImageUploadEvent(cell);
-	});
-	
-	document.querySelectorAll('.delete-btn').forEach(function(btn){
-		addDeleteEvent(btn);
-	});
-
+function createOrderStepRow(stepNumber) {
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+        <th>Step ${stepNumber}<input type="hidden" name="orderNum" value="${stepNumber}"></th>
+        <td><textarea name="orderContent"></textarea></td>
+        <td class="order-img">
+            <p class="order-img-text">➕</p>
+            <input type="file" name="cookingImg" accept="image/*" style="display:none;">
+            <img src="" style="display:none;">
+        </td>
+        <td><span class="delete-btn">X</span></td>
+    `;
+    return newRow;
+}
 </script>
-
-
-
-
 
 
 </body>

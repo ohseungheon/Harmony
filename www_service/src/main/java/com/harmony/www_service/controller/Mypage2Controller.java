@@ -205,7 +205,7 @@ public class Mypage2Controller {
 			List<RecipeOrderDto> orders = form.toRecipeOrderDtoList();
 			RecipeTagDto recipeTagDto = form.toRecipeTagDto();
 
-			service.updateEntireRecipe(recipeDto, ingredients, orders, form.getCookingImg(), recipeTagDto);
+			service.updateEntireRecipe(recipeDto, ingredients, orders, form.getCookingImg(), form.getExistingCookingImg(), recipeTagDto);
 
 			return "redirect:list?mno=" + member.getMno();
 		} catch (Exception e) {
