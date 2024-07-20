@@ -23,9 +23,16 @@ section {
 .recipe-registForm a {
 	display: inline-block;
 	padding: 10px 20px;
-	border: 1px solid #bee3f1;
-	background: #bee3f1;
+	border: 1px solid #666;
+	background: #fff;
 	border-radius: 5px;
+	font-size:14px;
+	color:#333;
+	transition:all 0.2s
+}
+.recipe-registForm a:hover{
+	border:1px solid #899ED5;
+	color:#899ED5;
 }
 
 #recipe-list-area {
@@ -34,11 +41,18 @@ section {
 	display: flex;
   	flex-wrap: wrap;
   	gap:50px;
-  	margin-left:50px;
+  	margin-left:55px;
 }
 .recipe-list-box{
 	width: 220px;
 	flex:1 1 1;
+}
+.recipe-list-box .recipe-list-box-link{
+	display:block;
+	transition:all 0.3s;
+}
+.recipe-list-box .recipe-list-box-link:hover{
+	transform:translateY(-5px);
 }
 .recipe-list-box .recipe-in-menuImg{
 	border:1px solid #eee;
@@ -83,6 +97,7 @@ section {
 	text-align:center;
 	font-size:12px;
 	padding:5px 0;
+	transition:all 0.3s
 }
 .recipe-list-updel .update-recipe:hover{
 	background:#eee;
@@ -103,7 +118,7 @@ section {
 		</div>
 		<div id="recipe-list-area">
 			<div th:each="recipeWithMenu : ${recipesWithMenu}" class="recipe-list-box">
-				<a th:href="@{/menu_all/recipe_detail(rcode=${recipeWithMenu.recipe.rcode})}">			
+				<a th:href="@{/menu_all/recipe_detail(rcode=${recipeWithMenu.recipe.rcode})}" class="recipe-list-box-link">			
 					<div class="recipe-in-menuImg">
 						<img th:src="@{'/uploads/' + ${recipeWithMenu.menu.imgurl}}" alt="메뉴 이미지">
 					</div>
@@ -111,6 +126,7 @@ section {
 							<h3 th:text="${recipeWithMenu.recipe.recipeName}">레시피 이름</h3>
 							<p th:text="${recipeWithMenu.menu.menuName}">메뉴 이름</p>
 					</div>
+				</a>
 					<div class="recipe-list-updel">
 						<div>
 							<a th:href="@{/my/recipe/updateForm(rcode=${recipeWithMenu.recipe.rcode})}"
@@ -121,7 +137,6 @@ section {
 								th:data-rcode="${recipeWithMenu.recipe.rcode}">삭제</a>
 						</div>
 					</div>
-				</a>
 			</div>
 		</div>
 	</section>
