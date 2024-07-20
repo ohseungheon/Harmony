@@ -1,9 +1,14 @@
 package com.harmony.www_service.service;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.harmony.www_service.dao.MyRecipeDao;
 import com.harmony.www_service.dto.IngredientDto;
@@ -11,9 +16,12 @@ import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.RecipeIngredientDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
 import com.harmony.www_service.dto.RecipeTagDto;
+import com.harmony.www_service.util.FileUploadUtil;
 
 @Service
 public class MyRecipeService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(RecipeService.class);
 	
 	@Autowired
 	private MyRecipeDao dao;
@@ -66,34 +74,87 @@ public class MyRecipeService {
 		return resultRecipeTag;
 	}
 	
+	@Transactional
+	public void updateEntireRecipe(RecipeDto recipeDto, List<RecipeIngredientDto> ingredients, 
+	                               List<RecipeOrderDto> orders, List<MultipartFile> cookingImgs, RecipeTagDto recipeTagDto) {
+	    updateMyRecipe(recipeDto);
+	    updateMyRecipeIngredients(ingredients, recipeDto.getRcode());
+	    updateMyRecipeOrders(orders, cookingImgs, recipeDto.getRcode());
+	    updateMyRecipeTag(recipeTagDto);
+	}
+	
+	
 	// 레시피 수정 Service
 	// 레시피 수정
-	public int updateMyRecipeService(RecipeDto recipeDto) {
+	@Transactional
+	public int updateMyRecipe(RecipeDto recipeDto) {
 		
-		return dao.updateMyRecipe(recipeDto);
+		logger.info("Updating recipe: {}", recipeDto);
+        int result = dao.updateMyRecipe(recipeDto);
+        if (result <= 0) {
+            throw new RuntimeException("Failed to update recipe");
+        }
+        return result;
 	}
 	
 	// 레시피 재료 수정
-	public int updateMyRecipeIngredientService(RecipeIngredientDto recipeIngredientDto) {
+	@Transactional
+	public int updateMyRecipeIngredients(List<RecipeIngredientDto> ingredients, int rcode) {
 		
-		int result = dao.updateMyRecipeIngredient(recipeIngredientDto);
-		if(result > 0) {
-			return recipeIngredientDto.getRicode();
-		}else {
-			throw new RuntimeException("Failed to register new ingredient");
-		}
+		logger.info("Updating recipe ingredients for rcode: {}", rcode);
+        // 기존 재료 삭제
+        dao.deleteAllRecipeIngredients(rcode);
+        // 새로운 재료 추가
+        for (RecipeIngredientDto ingredient : ingredients) {
+            int result = dao.insertMyRecipeIngredient(ingredient);
+            if (result <= 0) {
+                throw new RuntimeException("Failed to insert new ingredient");
+            }
+        }
+        return ingredients.size();
 	}
 	
 	// 레시지 요리순서 수정
-	public int updateMyRecipeOrderService(RecipeOrderDto recipeOrderDto) {
-		
-		return dao.updateMyRecipeOrder(recipeOrderDto);
+	@Transactional
+	public int updateMyRecipeOrders(List<RecipeOrderDto> orders, List<MultipartFile> cookingImgs, int rcode) {
+	    logger.info("Updating recipe orders for rcode: {}", rcode);
+	    dao.deleteAllRecipeOrders(rcode);
+	    for (int i = 0; i < orders.size(); i++) {
+	        RecipeOrderDto order = orders.get(i);
+	        if (cookingImgs != null && i < cookingImgs.size() && !cookingImgs.get(i).isEmpty()) {
+	            try {
+	                String fileName = FileUploadUtil.saveFile(cookingImgs.get(i).getOriginalFilename(), cookingImgs.get(i));
+	                order.setCookingImg(fileName);
+	            } catch (IOException e) {
+	                logger.error("Failed to upload file: ", e);
+	                throw new RuntimeException("Failed to upload cooking image", e);
+	            }
+	        }
+	        int result = dao.insertMyRecipeOrder(order);
+	        if (result <= 0) {
+	            throw new RuntimeException("Failed to insert new order");
+	        }
+	    }
+	    return orders.size();
 	}
 	
 	// 레시피 태그 수정
-	public int updateMyRecipeTagService(RecipeTagDto recipeTagDto) {
+	@Transactional
+	public int updateMyRecipeTag(RecipeTagDto recipeTagDto) {
 		
-		return dao.updateMyRecipeTag(recipeTagDto);
+		logger.info("Updating recipe tag: {}", recipeTagDto);
+        if (dao.existsRecipeTag(recipeTagDto.getRcode())) {
+            int result = dao.updateMyRecipeTag(recipeTagDto);
+            if (result <= 0) {
+                throw new RuntimeException("Failed to update recipe tag");
+            }
+        } else {
+            int result = dao.insertMyRecipeTag(recipeTagDto);
+            if (result <= 0) {
+                throw new RuntimeException("Failed to insert new recipe tag");
+            }
+        }
+        return 1;
 	}
 	
 	

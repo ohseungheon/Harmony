@@ -18,9 +18,11 @@
 	<!-- 레시피 등록 -->
 	<insert id="registMyRecipe" useGeneratedKeys="true"
 		keyProperty="rcode">
-		insert into recipe (mcode, mno, recipeName, introduce, url, category,
+		insert into recipe (mcode, mno, recipeName, introduce,
+		url, category,
 		portions, view)
-		values(#{mcode}, #{mno}, #{recipeName}, #{introduce}, #{url}, #{category},
+		values(#{mcode}, #{mno}, #{recipeName},
+		#{introduce}, #{url}, #{category},
 		#{portions}, 0)
 	</insert>
 
@@ -32,14 +34,17 @@
 
 	<!-- 레시피 요리순서 등록 -->
 	<insert id="registMyRecipeOrder">
-		insert into recipe_order (rcode, orderContent, orderNum, cookingImg)
-		values (#{rcode}, #{orderContent}, #{orderNum}, #{cookingImg})
+		insert into recipe_order (rcode, orderContent,
+		orderNum, cookingImg)
+		values (#{rcode}, #{orderContent}, #{orderNum},
+		#{cookingImg})
 	</insert>
 
 	<!-- 레시피 태그 등록 -->
 	<insert id="registMyRecipeTag">
 		insert into recipe_tag (rcode, tagContent)
-		values (#{rcode}, #{tagContent})
+		values
+		(#{rcode}, #{tagContent})
 	</insert>
 
 	<!-- 요리재료 icode로 type불러오기 -->
@@ -52,10 +57,12 @@
 		parameterType="com.harmony.www_service.dto.RecipeDto">
 		update recipe set
 		mcode = #{mcode},
-		recipeName = #{recipeName},
+		recipeName =
+		#{recipeName},
 		introduce = #{introduce},
-		url = #[url},
-		category = #{category},
+		url = #{url},
+		category =
+		#{category},
 		portions = #{portions}
 		where rcode = #{rcode}
 	</update>
@@ -65,7 +72,8 @@
 		parameterType="com.harmony.www_service.dto.RecipeIngredientDto">
 		update recipe_ingredient set
 		icode = #{icode},
-		amount = #{amount}
+		amount =
+		#{amount}
 		where ricode = #{ricode}
 	</update>
 
@@ -76,15 +84,17 @@
 		orderContent = #{orderContent},
 		orderNum = #{orderNum},
 		cookingImg = #{cookingImg}
-		where rcode = #{rcode}
+		where rocode =
+		#{rocode}
 	</update>
 
 	<!-- 레시피 태그 수정 -->
 	<update id="updateMyRecipeTag"
-		parameterType="com.harmony.www_service.dto.RecipeOrderDto">
+		parameterType="com.harmony.www_service.dto.RecipeTagDto">
 		update recipe_tag set
 		tagContent = #{tagContent}
-		where rcode = #{rcode}
+		where
+		rcode = #{rcode}
 	</update>
 
 	<!-- 레시피 수정을 위한 레시피 정보 -->
@@ -108,24 +118,63 @@
 
 	<!-- 레시피 수정을 위한 레시피 태그 정보 -->
 	<select id="getRecipeTagFindByRcode">
-		select * from recipe_tag where rcode = #{rcode}
+		select * from recipe_tag
+		where rcode = #{rcode}
 	</select>
 
 
 	<!-- 레시피 재료 삭제 -->
 	<delete id="deleteMyRecipeIngredient">
-		delete from recipe_ingredient where ricode = #{ricode}
+		delete from recipe_ingredient where ricode =
+		#{ricode}
+	</delete>
+	
+	<!-- 모든 레시피 재료 삭제 -->
+    <delete id="deleteAllRecipeIngredients">
+        DELETE FROM recipe_ingredient WHERE rcode = #{rcode}
+    </delete>
+
+	<!-- 모든 요리 순서 삭제 -->
+	<delete id="deleteAllRecipeOrders">
+		DELETE FROM recipe_order WHERE rcode = #{rcode}
 	</delete>
 
-	<!-- 레시피 요리순서 삭제 -->
-	<delete id="deleteMyRecipeOrder">
-		delete from recipe_order where rocode = #{rocode}
-	</delete>
-	
-	<select id="getIngredient" resultType="com.harmony.www_service.dto.IngredientDto">
+	<!-- 레시피 재료 추가 -->
+	<insert id="insertMyRecipeIngredient"
+		parameterType="com.harmony.www_service.dto.RecipeIngredientDto"
+		useGeneratedKeys="true" keyProperty="ricode">
+		INSERT INTO recipe_ingredient (rcode, icode, amount)
+		VALUES (#{rcode}, #{icode}, #{amount})
+	</insert>
+
+	<!-- 레시피 요리 순서 추가 -->
+	<insert id="insertMyRecipeOrder"
+		parameterType="com.harmony.www_service.dto.RecipeOrderDto">
+		INSERT INTO recipe_order (rcode, orderNum, orderContent, cookingImg)
+		VALUES (#{rcode}, #{orderNum}, #{orderContent}, #{cookingImg})
+	</insert>
+
+	<!-- 레시피 태그 추가 -->
+	<insert id="insertMyRecipeTag"
+		parameterType="com.harmony.www_service.dto.RecipeTagDto">
+		INSERT INTO recipe_tag (rcode, tagContent)
+		VALUES (#{rcode}, #{tagContent})
+	</insert>
+
+	<!-- 레시피 태그 존재 여부 확인 -->
+	<select id="existsRecipeTag" resultType="boolean">
+		SELECT COUNT(*) > 0
+		FROM recipe_tag
+		WHERE rcode = #{rcode}
+	</select>
+
+
+
+	<select id="getIngredient"
+		resultType="com.harmony.www_service.dto.IngredientDto">
 		select icode, name from ingredient
 	</select>
-	
+
 
 
 </mapper>

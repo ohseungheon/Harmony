@@ -240,16 +240,18 @@
     	color:#fff;
     	cursor:pointer;
     }
-    .recipe-regist-btns input[type="button"]{
-    	font-family: "Pretendard Variable", Pretendard;
-    	width:133px;
-    	height:44px;
-    	background:#fff;
-    	border:1px solid #F5A47D;
-    	border-radius:5px;
-    	color:#F5A47D;
-    	cursor:pointer;
-    }
+    .recipe-regist-btns a {
+	display:inline-block;
+	width: 133px;
+	background: #fff;
+	border: 1px solid #F5A47D;
+	border-radius: 5px;
+	color: #F5A47D;
+	cursor: pointer;
+	padding:12px 0;
+	font-size:14px;
+	box-sizing:border-box;
+}
     
     .recipe-menu-list{
     	margin:20px 0;
@@ -426,7 +428,7 @@
     
     <div class="recipe-regist-btns">
     	<input type="submit" value="등록">
-    	<input type="button" value="취소">
+    	<a th:href="@{/my/recipe/list(mno=${mno})}">취소</a>
     </div>
     </form>
 </section>

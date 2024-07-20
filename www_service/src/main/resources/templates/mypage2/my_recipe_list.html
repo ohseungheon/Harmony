@@ -2,184 +2,155 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Document</title>
+<title>레시피 리스트</title>
 <style>
-	section{
-		padding-top:30px !important;
-		padding-bottom:100px !important;
-	}
+section {
+	padding-top: 30px !important;
+	padding-bottom: 100px !important;
+}
 
-	.queen-page-title{
-		margin:50px 0;
-		text-align:center;
-		font-weight:500;
-	}
-	
-	.recipe-registForm{
-		text-align:right;
-		margin-bottom:20px;
-	}
-	.recipe-registForm a{
-		display:inline-block;
-		padding:10px 20px;
-		border:1px solid #bee3f1;
-		background:#bee3f1;
-		border-radius:5px;
-	}
-	
-	#recipe-list-area{
-		width:100%;
-		margin:0 auto;
-		background:rgb(190, 227, 241, 0.1);
-		border:1px solid #bee3f1;
-		border-radius:5px;
-		padding:20px;
-		box-sizing:border-box;
-	}
-	
-	.recipe-list-box{
-		width:100%;
-		height:100%;
-		border:1px solid #eee;
-		border-radius:5px;
-		background:#fff;
-		padding:20px;
-		box-sizing:border-box;
-		margin-bottom:20px;
-		display:flex;
-		position:relative;
-	}
-	.recipe-list-box .recipe-urlimg{
-		width:210px;
-		height:auto;
-	}
-	.recipe-list-box .recipe-urlimg img{
-		width:100%;
-		height:100%;
-	}
-	
-	.recipe-list-content h3{
-		padding:20px;
-		padding-bottom:10px;
-	}
-	.recipe-list-content p{
-		padding:20px;
-		font-size:14px;
-	}
-	
-	.recipe-list-updel div:first-child{
-		position:absolute;
-		right:50px;
-		top:90px;
-	}
-	.recipe-list-updel div:last-child{
-		position:absolute;
-		right:50px;
-		top:40px;
-	}
-	.recipe-list-updel a{
-		padding:10px 20px;
-		border:1px solid #eee;
-		border-radius:5px;
-		background:#f9f9f9;
-		box-sizing:border-box;
-		font-size:13px;
-		color:#999;
-	}
-	.recipe-list-updel a:hover{
-		background:#bee3f1;
-		color:#333;
-		border:1px solid #bee3f1;
-	}
+.queen-page-title {
+	margin: 50px 0;
+	text-align: center;
+	font-weight: 500;
+}
+
+.recipe-registForm {
+	text-align: right;
+	margin-bottom: 20px;
+}
+
+.recipe-registForm a {
+	display: inline-block;
+	padding: 10px 20px;
+	border: 1px solid #bee3f1;
+	background: #bee3f1;
+	border-radius: 5px;
+}
+
+#recipe-list-area {
+	width: 100%;
+	margin: 0 auto;
+	background: rgb(190, 227, 241, 0.1);
+	border: 1px solid #bee3f1;
+	border-radius: 5px;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.recipe-list-box {
+	width: 100%;
+	height: 100%;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	background: #fff;
+	padding: 20px;
+	box-sizing: border-box;
+	margin-bottom: 20px;
+	display: flex;
+	position: relative;
+}
+
+.recipe-list-box .recipe-urlimg {
+	width: 210px;
+	height: auto;
+}
+
+.recipe-list-box .recipe-urlimg img {
+	width: 100%;
+	height: 100%;
+}
+
+.recipe-list-content h3 {
+	padding: 20px;
+	padding-bottom: 10px;
+}
+
+.recipe-list-content p {
+	padding: 20px;
+	font-size: 14px;
+}
+
+.recipe-list-updel div:first-child {
+	position: absolute;
+	right: 50px;
+	top: 90px;
+}
+
+.recipe-list-updel div:last-child {
+	position: absolute;
+	right: 50px;
+	top: 40px;
+}
+
+.recipe-list-updel a {
+	padding: 10px 20px;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	background: #f9f9f9;
+	box-sizing: border-box;
+	font-size: 13px;
+	color: #999;
+}
+
+.recipe-list-updel a:hover {
+	background: #bee3f1;
+	color: #333;
+	border: 1px solid #bee3f1;
+}
 </style>
 </head>
 <body>
 	<header>
-		<th:block th:insert="~{/sub/header.html}"></th:block>
-	</header>
-	<section>
+        <th:block th:insert="~{/sub/header.html}"></th:block>
+    </header>
+    <section>
+        <h1 class="queen-page-title">나의 레시피</h1>
+        <div class="recipe-registForm"><a href="/my/recipe/registForm">레시피 등록</a></div>
+        <div id="recipe-list-area">
+            <div th:each="recipe : ${recipeList}" class="recipe-list-box">
+                <div class="recipe-list-content">
+                    <a th:href="@{/menu_all/recipe_detail(rcode=${recipe.rcode})}">
+                        <h3 th:text="${recipe.recipeName}">레시피 이름</h3>
+                        <p th:text="${recipe.introduce}">레시피 소개</p>
+                    </a>
+                </div>
+                <div class="recipe-list-updel">
+                    <div><a th:href="@{/my/recipe/updateForm(rcode=${recipe.rcode})}" class="update-recipe">수정</a></div>
+                    <div><a href="#" class="delete-recipe" th:data-rcode="${recipe.rcode}">삭제</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-		<h1 class="queen-page-title">나의 레시피</h1>
-		<div class="recipe-registForm"><a href="/my/recipe/registForm">레시피 등록</a></div>
-		<div id="recipe-list-area"></div>
-
-	</section>
-
-	<script>
-document.addEventListener('DOMContentLoaded', function() {
-	recipeList();
-});
-
-function recipeList() {
-	const urlParams = new URLSearchParams(window.location.search);
-	const mno = urlParams.get("mno");
-	
-    fetch(`/api/recipe/recipeList?mno=` + mno, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-    	console.log(data);
-    	
-    	
-    	let output = "";
-    	
-        data.forEach(recipe => {
-        	// redipe.url이 null이 아니면 slice, null이면 'default' 사용
-    		let url = recipe.url ? recipe.url.slice(-11) : 'default';
-    	
-        	output += '<div class="recipe-list-box">';
-        	output += `<div class="recipe-urlimg">`;
-        	output += "<img src='https://img.youtube.com/vi/" + url + "/mqdefault.jpg'>";
-        	output += `</div>`;
-        	output += '<div class="recipe-list-content">';
-        	output += `<a href="/menu_all/recipe_detail?rcode=${recipe.rcode}">`;
-        	output += `<h3>${recipe.recipeName}</h3>`;
-        	output += `<p>${recipe.introduce}</p>`;
-        	output += '</a>';
-        	output += '</div>'; //recipe-list-content
-        	output += '<div class="recipe-list-updel">';
-        	output += `<div><a href="/my/recipe/updateForm?rcode=${recipe.rcode}" class="update-recipe">수정</a></div>`; 
-        	output += `<div><a href="#" class="delete-recipe" data-rcode="${recipe.rcode}">삭제</a></div>`;
-        	output += '</div>';
-        	output += '</div>'; //recipe-list-box
-        });
-        document.getElementById('recipe-list-area').innerHTML = output;
-        
+    <script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.delete-recipe').forEach(link => {
-        	link.addEventListener("click", function(event){
-        		event.preventDefault();
-        		const rcode = this.getAttribute('data-rcode');
-        		deleteRecipe(rcode)
-        	});
+            link.addEventListener("click", function(event){
+                event.preventDefault();
+                const rcode = this.getAttribute('data-rcode');
+                if(confirm('정말로 이 레시피를 삭제하시겠습니까?')) {
+                    deleteRecipe(rcode);
+                }
+            });
         });
-    })
-    .catch(error => console.error('Error:', error));
-}
+    });
 
-function deleteRecipe(rcode){
-	fetch(`/api/recipe/recipeDelete?rcode=${rcode}`,{
-		method: 'DELETE',
-		headers: {
-			'Content-Type' : 'application/json',
-		},
-	})
-	.then(response => response.json())
-	.then(data => {
-		console.log(data);
-		recipeList();
-	})
-	.catch(error => console.error("Error: ", error));
-}
-
-
-
-
-
-
-</script>
+    function deleteRecipe(rcode) {
+        fetch(`/api/recipe/recipeDelete?rcode=${rcode}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // 삭제 후 페이지 새로고침
+            window.location.reload();
+        })
+        .catch(error => console.error("Error: ", error));
+    }
+    </script>
 </body>
 </html>
