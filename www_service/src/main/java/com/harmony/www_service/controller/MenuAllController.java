@@ -52,9 +52,11 @@ public class MenuAllController {
         RecipeDto recipeDto = recipeService.getRecipeByRcode(rcode);
         List<RecipeOrderDto> recipeOrderList = recipeService.getRecipeOrdersByRcode(rcode);
         List<RecipeIngredientDto> recipeIngredientList = recipeService.getRecipeIngredientsByRcode(rcode);
-
+        
         model.addAttribute("rcode", rcode);
         model.addAttribute("menuName",recipeDto.getMenuName());
+        model.addAttribute("view", recipeDto.getView());
+        model.addAttribute("portions", recipeDto.getPortions());
         model.addAttribute("recipeName", recipeDto.getRecipeName());
         model.addAttribute("introduce", recipeDto.getIntroduce());
         model.addAttribute("url", recipeDto.getUrl());
