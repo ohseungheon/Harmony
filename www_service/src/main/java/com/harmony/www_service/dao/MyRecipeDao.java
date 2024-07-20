@@ -61,9 +61,14 @@ public interface MyRecipeDao {
 	// 레시피 수정을 위한 레시피 태그 정보
 	public RecipeTagDto getRecipeTagFindByRcode(@Param("rcode") int rcode);
 
-	public int deleteMyRecipeIngredient(int ricode);
-
-	public int deleteMyRecipeOrder(int rocode);
+	public int deleteMyRecipeIngredient(@Param("ricode") int ricode);
+	public int deleteAllRecipeIngredients(@Param("rcode") int rcode);
+	public int deleteMyRecipeOrder(@Param("rocode") int rocode);
+	public int deleteAllRecipeOrders(@Param("rcode") int rcode);
+    public int insertMyRecipeIngredient(RecipeIngredientDto recipeIngredientDto);
+    public int insertMyRecipeOrder(RecipeOrderDto recipeOrderDto);
+    public int insertMyRecipeTag(RecipeTagDto recipeTagDto);
+    public boolean existsRecipeTag(@Param("rcode") int rcode);
 	
 	// 재료정보 리스트
 	public List<IngredientDto> getIngredient();

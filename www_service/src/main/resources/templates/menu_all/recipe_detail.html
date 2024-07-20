@@ -140,8 +140,17 @@
 	font-weight: 300;
 }
 
+
+.order-item .recipeDetail-orderImg-box{
+	width:350px;
+	min-height:100px;
+	background:#fff;
+	border:1px solid #f1f1f1;
+}
+
 .order-item .recipeDetail-orderImg img {
-	width: 350px;
+	display:block;
+	width: 100%;
 	height: auto;
 }
 
@@ -228,7 +237,7 @@
 				<div class="recipeDetail-orderNum">
 					<span th:text="${order.orderNum}"></span>
 				</div>
-				<div>
+				<div class="recipeDetail-orderImg-box">
 					<div class="recipeDetail-orderImg"
 						th:if="${order.cookingImg != null && order.cookingImg != ''}">
 						<img th:src="@{/uploads/} + ${order.cookingImg}" alt="조리 이미지" />
