@@ -14,6 +14,14 @@
 	<delete id="deleteMyRecipe">
 		delete from recipe where rcode = #{rcode}
 	</delete>
+	
+	<select id="recipeInMenu" resultType="com.harmony.www_service.dto.MenuDto">
+		SELECT r.rcode, r.mcode, m.menuName, m.imgurl
+		FROM recipe r
+		JOIN menu m
+		ON r.mcode = m.mcode
+		WHERE r.rcode = #{rcode}
+	</select>
 
 	<!-- 레시피 등록 -->
 	<insert id="registMyRecipe" useGeneratedKeys="true"

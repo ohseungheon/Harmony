@@ -306,7 +306,7 @@
     </div>
     
    	<!-- 레시피 등록 폼 -->
-    <form action="/my/recipe/regist" method="post" enctype="multipart/form-data">
+    <form id="recipeForm" action="/my/recipe/regist" method="post" enctype="multipart/form-data">
     <input type="hidden" name="mcode" id="mcode">
     <div class="recipe-regist-box1">
     	<table>
@@ -432,6 +432,19 @@
     </div>
     </form>
 </section>
+
+<script>
+
+document.getElementById('recipeForm').addEventListener('submit', function(e) {
+    const mcodeInput = document.getElementById('mcode');
+    if (!mcodeInput.value) {
+        e.preventDefault(); // 폼 제출을 막습니다
+        alert('메뉴를 선택해주세요.');
+        document.querySelector('.choice-menu-name').scrollIntoView({ behavior: 'smooth' });
+    }
+});
+
+</script>
 
 <script th:inline="javascript">
 // 전역 변수 및 상수

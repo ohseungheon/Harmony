@@ -27,6 +27,7 @@ import com.harmony.www_service.dto.RecipeIngredientDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
 import com.harmony.www_service.dto.RecipeTagDto;
 import com.harmony.www_service.dto.RecipeUpdateForm;
+import com.harmony.www_service.dto.RecipeWithMenuDto;
 import com.harmony.www_service.service.LoginService;
 import com.harmony.www_service.service.MyRecipeService;
 import com.harmony.www_service.util.FileUploadUtil;
@@ -48,9 +49,15 @@ public class Mypage2Controller {
 
 	
 	@GetMapping("/list")
-	public String myRecipeList(@RequestParam("mno") int mno, Model model) {
+	public String myRecipeList(@RequestParam("mno") int mno,
+			Model model) {
+		
         List<RecipeDto> recipeList = service.myRecipeService(mno);
         model.addAttribute("recipeList", recipeList);
+        
+        List<RecipeWithMenuDto> recipesWithMenu = service.getRecipesWithMenu(mno);
+        model.addAttribute("recipesWithMenu", recipesWithMenu);
+        
         return "mypage2/my_recipe_list";
     }
 
