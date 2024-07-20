@@ -1,6 +1,7 @@
 package com.harmony.www_service.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,10 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.harmony.www_service.dao.MyRecipeDao;
 import com.harmony.www_service.dto.IngredientDto;
+import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.RecipeIngredientDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
 import com.harmony.www_service.dto.RecipeTagDto;
+import com.harmony.www_service.dto.RecipeWithMenuDto;
 import com.harmony.www_service.util.FileUploadUtil;
 
 @Service
@@ -32,6 +35,18 @@ public class MyRecipeService {
 		List<RecipeDto> list = dao.myRecipe(mno);
 		
 		return list;
+	}
+	
+	public List<RecipeWithMenuDto> getRecipesWithMenu(int mno) {
+	    List<RecipeDto> recipes = dao.myRecipe(mno);
+	    List<RecipeWithMenuDto> result = new ArrayList<>();
+	    
+	    for (RecipeDto recipe : recipes) {
+	        MenuDto menu = dao.recipeInMenu(recipe.getRcode());
+	        result.add(new RecipeWithMenuDto(recipe, menu));
+	    }
+	    
+	    return result;
 	}
 	
 	// 나의 레시피 삭제

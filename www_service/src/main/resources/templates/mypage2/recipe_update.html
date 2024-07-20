@@ -334,7 +334,7 @@ section {
 		</div>
 
 		<!-- 레시피 수정 폼 -->
-		<form action="/my/recipe/update" method="post"
+		<form id="recipeForm" action="/my/recipe/update" method="post"
 			enctype="multipart/form-data">
 			<input type="hidden" name="mcode" id="current-mcode"
 				th:value="${recipe.mcode}"> <input type="hidden"
@@ -469,6 +469,28 @@ section {
 			</div>
 		</form>
 	</section>
+	
+	<script>
+	
+	document.getElementById('recipeForm').addEventListener('submit', function(e) {
+	    const mcodeInput = document.getElementById('current-mcode');
+	    const menuSelectionArea = document.querySelector('.choice-menu-name');
+	    
+	    if (!mcodeInput.value) {
+	        e.preventDefault(); // 폼 제출을 막습니다
+	        alert('메뉴를 선택해주세요.');
+	        menuSelectionArea.style.border = '2px solid red';
+	        menuSelectionArea.scrollIntoView({ behavior: 'smooth' });
+	        setTimeout(() => {
+	            menuSelectionArea.style.border = '';
+	        }, 3000);
+	    } else {
+	        console.log("Form data:", new FormData(this));
+	        // 폼 제출 전에 추가적인 유효성 검사나 데이터 처리를 할 수 있습니다.
+	    }
+	});
+	
+	</script>
 
 	<script th:inline="javascript">
     console.log("Recipe data:", /*[[${recipe}]]*/ null);

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.harmony.www_service.dto.IngredientDto;
+import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.RecipeIngredientDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
@@ -16,6 +17,9 @@ public interface MyRecipeDao {
 
 	// 나의 레시피 리스트
 	public List<RecipeDto> myRecipe(@Param("mno") int mno);
+	
+	//레시피에 등록된 메뉴
+	public MenuDto recipeInMenu(@Param("rcode") int rcode);
 
 	// 나의 레시피 삭제
 	public int deleteMyRecipe(@Param("rcode") int rcode);
