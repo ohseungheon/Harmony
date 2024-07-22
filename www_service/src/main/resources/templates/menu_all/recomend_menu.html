@@ -4,28 +4,17 @@
     <meta charset="UTF-8">
     <title>날씨 기반 메뉴 추천</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-        }
+
         .weather-container {
-            padding: 20px;
             margin-top: 20px;
-            border-radius: 8px;
-            text-align: center;
         }
         .weather-item {
             font-size: 16px;  
         }
-        .weather-icon {
-            font-size: 20px;
-            margin: 0 5px; 
-            vertical-align: middle; 
+        .weather-item span{
+        	font-size:40px;
+        	padding-left:20px;
+        	font-weight:bold;
         }
         .menu-list {
             display: flex;
@@ -71,7 +60,6 @@
 
     <div id="weather-container" class="weather-container">
     </div>
-    <h1>현재 날씨에 이런 메뉴 어때요?</h1>
     <div id="menu-list" class="menu-list">
     </div>
 
@@ -142,6 +130,7 @@
                 const content = `
                     <div class="weather-item">
                         ${temp}°C <span class="weather-icon">${icon}</span> ${simplifiedDescription}
+                        <span>이런 메뉴는 어때요?</span>
                     </div>
                 `;
 
