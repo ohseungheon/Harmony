@@ -204,7 +204,9 @@
 	<section>
 		<div class="recipeDetail-intro-area">
 			<div class="recipeDetail-intro-img">
-				<img src="/uploads/step7.png">
+				<img th:if="${not #lists.isEmpty(recipeOrderList)}" 
+		             th:src="@{/uploads/} + ${recipeOrderList[#lists.size(recipeOrderList) - 1].cookingImg}" 
+		             alt="대표 이미지">
 				<div class="zzim-btn">
 					<button class="like-button"  id="recipe-reco-btn" onclick="toggleLike(event, this)">
 						<i class="far fa-heart"><span>찜하기</span></i>
