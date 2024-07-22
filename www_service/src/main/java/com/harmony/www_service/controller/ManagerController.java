@@ -24,7 +24,7 @@ public class ManagerController {
 	IngredientService_dally iService;
 	@Autowired
 	MenuReqService mrService;
-	
+
 	// 재료 등록 페이지
 	@RequestMapping("/ingredients_regist")
 	public String goRegist() {
@@ -89,27 +89,64 @@ public class ManagerController {
 	}
 
 	// 요청 메뉴 리스트 조회 기능
-	@GetMapping("/menuReqlist")
-	public List<MenuReqDto> getList() {
-		System.out.println("menuRestController 진입-----------------");
-		List<MenuReqDto> list = mrService.getReqMenuList();
-
-		return list;
+	@RequestMapping("/do_menu_req_list")
+	public String getList(Model model) {
+		System.out.println("menuController 진입-----------------");
+		List<MenuReqDto> lists = mrService.getReqMenuList();
+		if(lists == null) {
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
+		}
+		model.addAttribute("list", lists);
+		System.out.println("^^^^^^^^^^^^^^^^^^^^" + lists);
+		
+		return "manger/menu_approval";
 	}
 
-	// (승인 시)요청 메뉴를 정식 메뉴로 등록
-	@PostMapping("/addMenuReq")
-	public void addMenuReq(@RequestParam("mrDto") MenuReqDto mrDto) {
-		System.out.println("~~~~~~~ menuReqRestController 진입 ~~~~~~~");
-		int result = mrService.addMenu(mrDto);
+	// 요청 메뉴 처리 - 승인 / 반려
+	@RequestMapping("/do_reqMenu_process")
+	public String accessMenuReq(@RequestParam("mrDto") MenuReqDto mrDto) {
 
-	}
+		String state = mrDto.getState();
+		
+		if (state.equals("승인")) {
+			// 요청 메뉴를 정식 메뉴로 등록
+			System.out.println("~~~~~~~ 메뉴 등록 컨트롤러 ~~~~~~~");
+			int result_add = mrService.addMenu(mrDto);
+			if (result_add == 1) {
+				System.out.println("정식 메뉴 등록 성공");
+			} else {
+				System.out.println("정식 메뉴 등록 실패");
+			}
 
-	// (승인 or 반려 시)요청메뉴를 요청메뉴테이블에서 삭제
-	@DeleteMapping("/deleteMenuReq")
-	public void deleteMenuReq(int mrcode) {
-		System.out.println("+++++++++ delete rests 진입 ++++++++++");
-		int result = mrService.deleteMenu(mrcode);
+			// 요청메뉴를 요청메뉴테이블에서 삭제
+			System.out.println("+++++++++ 요청 메뉴 삭제 컨트롤러 ++++++++++");
+			int result_delete = mrService.deleteMenu(mrDto.getMrcode());
+			if (result_delete == 1) {
+				System.out.println("메뉴 삭제 성공");
+			} else {
+				System.out.println("메뉴 삭제 실패");
+			}
+			
+		}else if(state.equals("반려")) {
+			// 요청메뉴를 요청메뉴테이블에서 삭제
+			System.out.println("+++++++++ 요청 메뉴 삭제 컨트롤러 ++++++++++");
+			int result_delete = mrService.deleteMenu(mrDto.getMrcode());
+			if (result_delete == 1) {
+				System.out.println("메뉴 삭제 성공");
+			} else {
+				System.out.println("메뉴 삭제 실패");
+			}
+			
+		}
+		
+		return "redirect:/menu_req_list";
 	}
 
 }

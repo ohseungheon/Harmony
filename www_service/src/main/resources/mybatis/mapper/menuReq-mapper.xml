@@ -6,7 +6,8 @@
 
 	<select id="findMenuRequest"
 		resultType="com.harmony.www_service.dto.MenuReqDto">
-		SELECT mr.mrcode, mr.mno, m.username, mr.menuName, mr.category, mr.imgUrl
+		SELECT mr.mrcode, mr.mno, m.username, mr.menuName,
+		mr.category, mr.imgUrl, mr.state
 		FROM menu_request mr
 		LEFT JOIN member m
 		ON mr.mno = m.mno
@@ -14,13 +15,16 @@
 
 	<insert id="registRequestMenuToMenu">
 		INSERT INTO menu
-		(menuName, category, imgUrl, VIEW, type)
+		(menuName, category, imgUrl, VIEW,
+		type)
 		values
-		(#{mDto.menuName}, #{mDto.category}, #{mDto.imgUrl}, #{mDto.VIEW}, #{mDto.type})
+		(#{mrDto.menuName}, #{mrDto.category}, #{mrDto.imgUrl},
+		#{mrDto.VIEW}, #{mrDto.type})
 	</insert>
 
 	<delete id="deleteRequestMenu">
 		DELETE FROM menu_request
 		mrcode = #{mrcode}
 	</delete>
+
 </mapper>

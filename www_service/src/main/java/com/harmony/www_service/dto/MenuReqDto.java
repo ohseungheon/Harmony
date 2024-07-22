@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class MenuReqDto {
+	private String state;
     private int mrcode;
     private int mno;
     private String username;
