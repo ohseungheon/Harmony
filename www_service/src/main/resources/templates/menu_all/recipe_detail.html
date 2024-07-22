@@ -216,10 +216,10 @@
 			<div class="recipeDetail-info">
 				<div class="recipeDetail-info-area1">
 					<p>
-						<i class="fa fa-eye"></i>[[${view}]]
+						<i class="fa fa-eye"></i><span th:text="${view}"></span>
 					</p>
 					<p>
-						<i class="fa fa-heart"></i>0
+						<i class="fa fa-heart"></i><span th:text="${recipeRecommend != null ? recipeRecommend.recommendCnt : 0}"></span>
 					</p>
 				</div>
 				<div class="recipeDetail-info-area2">
@@ -257,8 +257,7 @@
 		</div>
 
 		<div class="recipeDetail-tag">
-			<p>#백종원</p>
-			<p>#돼지갈비찜</p>
+			<p th:text="${recipeGetTagDto.tagContent}"></p>
 		</div>
 
 		<div class="reference-video">
