@@ -2,6 +2,7 @@ package com.harmony.www_service.controller;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -11,7 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.harmony.www_service.dao.MainTopRecipeDao;
 import com.harmony.www_service.dto.MemberDto;
+import com.harmony.www_service.dto.PopularRecipeDto;
+import com.harmony.www_service.dto.TopViewDto;
 import com.harmony.www_service.service.LoginService;
 
 @Controller
@@ -19,6 +23,9 @@ public class MainController {
 	
 	@Autowired
 	private LoginService loginService;
+	
+	@Autowired
+	private MainTopRecipeDao mainTopRecipeDao;
 	
 	 @RequestMapping("/")
 	    public String root(Model model) {
@@ -47,6 +54,13 @@ public class MainController {
 	        model.addAttribute("username", username);
 	        model.addAttribute("role", role != null ? role : "No role found");
 	        
+//	        최다 조회수, 인기 레시피
+	        List<TopViewDto> topViewList = mainTopRecipeDao.topView();
+			List<PopularRecipeDto> popularRecipeList = mainTopRecipeDao.popularRecipe();
+			
+			model.addAttribute("topViewList", topViewList);
+			model.addAttribute("popularRecipeList", popularRecipeList);
+			
 	        return "main/home";
 	    }
 }
