@@ -185,7 +185,7 @@
                     <img src="/uploads/${menu.imgurl}" alt="${menu.menuName}" class="menuImage">
                     <div class="menuName">
                         ${menu.menuName}
-                        <button class="like-button" onclick="toggleLike(event, this)">
+                        <button class="like-button" onclick="toggleLike(event, this, '${menu.mcode}')">
                             <i class="far fa-heart"></i>
                         </button>
                     </div>
@@ -198,9 +198,16 @@
         window.location.href = `/menu_all/recipe_list?mcode=${mcode}`;
     }
 
-    function toggleLike(event, button) {
+    function toggleLike(event, button, mcode) {
         event.stopPropagation();
         button.classList.toggle('liked');
+
+        fetch('/api/favor-menu/'+mcode)
+        .then(res => res.text())
+        .then(msg => {
+            console.log(msg);
+            alert(msg);
+        })
     }
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">

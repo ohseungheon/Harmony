@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmony.www_service.dao.FavorMenuDao">
+
+	<delete id="deleteFavorMenu">
+		DELETE FROM favorite_menu WHERE fmcode= #{fmcode}
+	</delete>
+
+	<insert id="insertFavorMenu">
+		INSERT INTO favorite_menu(mno, mcode) VALUES (#{mno}, #{mcode})
+	</insert>
+
+	<select id="isPresentFavor">
+		SELECT fmcode FROM favorite_menu WHERE mno = #{mno} AND mcode = #{mcode};
+	</select>
+</mapper>
