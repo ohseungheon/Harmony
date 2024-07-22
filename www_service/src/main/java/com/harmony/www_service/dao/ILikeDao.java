@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.harmony.www_service.dto.Menu_favoriteDto_by;
+import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.Recipe_recommendDto_by;
 
 @Mapper
@@ -14,6 +15,12 @@ public interface ILikeDao {
 	public List<Recipe_recommendDto_by> getRecipeLike(@Param("mno") int mno);
 
 	public List<Menu_favoriteDto_by> getMenuLike(@Param("mno") int mno);
+
+	
+	//메인 - 레시피 찜 3개만 가져오기
+	public List<Recipe_recommendDto_by> getMainRecipeLike(int mno);
+	//메인 - 나의 레시피 3개만 가져오기
+	public List<RecipeDto> getMyRecipeList(int mno);
 
 	public void deleteRecipeReco(@Param("rrcode") int rrcode);
 
@@ -30,4 +37,5 @@ public interface ILikeDao {
 	 * 이미 되어있을 경우 해당 데이터 rrcode 반환
 	 */
 	public Optional<Integer> isPresentRecommend(@Param("mno") int mno, @Param("rcode") int rcode);
+
 }

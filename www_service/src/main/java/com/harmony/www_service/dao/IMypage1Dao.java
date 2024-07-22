@@ -26,6 +26,9 @@ public interface IMypage1Dao {
 	// 싹 다~ 가져오기
 	public List<FridgeIngredientDto> getAllList(@Param("mno") int mno);
 	
+	// 싹 가져오는데 유통기한 임박한거 10개만 가져오기 
+	public List<FridgeIngredientDto> getAllDayList(@Param("mno") int mno);
+	
 	//등록했던 재료 삭제 
 	public void deleteMaterial(@Param("fcode") int fcode);
 	
