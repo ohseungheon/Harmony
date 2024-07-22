@@ -1,231 +1,223 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" as="style" crossorigin
-        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
 
-        body {
-            font-family: "Pretendard Variable", Pretendard;
-            color: #333;
-            font-size: 16px;
-        }
+	body {
+		font-family: "Pretendard Variable", Pretendard;
+		color: #333;
+		font-size: 16px;
+	}
 
-        body {
-            background-image: url('/img/background.png');
-            /* 배경 이미지 경로 */
-            background-size: cover;
-            /* 이미지가 전체 화면을 덮도록 설정 */
-            background-position: center;
-            /* 이미지가 중앙에 위치하도록 설정 */
-            /* background-repeat: no-repeat; /* 이미지 반복을 하지 않도록 설정 */
-            background-repeat: repeat-y;
-            /* 이미지 반복을 하지 않도록 설정 */
-            /* background-attachment: fixed; /* 배경 이미지가 스크롤과 함께 움직이지 않도록 설정 */
-            margin: 0;
-            /* 기본 margin 제거 */
-            padding: 0;
-            /* 기본 padding 제거 */
-        }
+	body {
+		background-image: url('/img/background.png');
+		/* 배경 이미지 경로 */
+		background-size: cover;
+		/* 이미지가 전체 화면을 덮도록 설정 */
+		background-position: center;
+		/* 이미지가 중앙에 위치하도록 설정 */
+		/* background-repeat: no-repeat; /* 이미지 반복을 하지 않도록 설정 */
+		background-repeat: repeat-y;
+		/* 이미지 반복을 하지 않도록 설정 */
+		/* background-attachment: fixed; /* 배경 이미지가 스크롤과 함께 움직이지 않도록 설정 */
+		margin: 0;
+		/* 기본 margin 제거 */
+		padding: 0;
+		/* 기본 padding 제거 */
+	}
 
-        a {
-            text-decoration: none;
-            color: #333;
-        }
+	a {
+		text-decoration: none;
+		color: #333;
+	}
 
-        ul {
-            list-style: none;
-        }
+	ul {
+		list-style: none;
+	}
 
-        section {
-            width: 1140px;
-            margin: 50px auto;
-            background-color: rgba(255, 255, 255, 0.99);
-        }
+	section {
+		width: 1140px;
+		margin: 50px auto;
+		background-color: rgba(255, 255, 255, 0.99);
+	}
 
-        header {
-            width: 100%;
-            margin: 0 auto;
-            border-bottom: 1px solid #eee;
-            background-color: rgba(255, 255, 255, 0.90);
-        }
+	header {
+		width: 100%;
+		height: 150px;
+		margin: 0 auto;
+		border-bottom: 1px solid #eee;
+		background-color: rgba(255, 255, 255, 0.90);
+	}
 
-        .head {
-            width: 1140px;
-            height: 100%;
-            margin: 0 auto;
-            position: relative;
-        }
+	.head {
+		width: 1140px;
+		height: 85px;
+		margin: 0 auto;
+		position: relative;
+	}
 
-        .head .img {
-            text-align: center;
-            padding-top: 10px;
-        }
+	.head .img {
+		text-align: center;
+		padding-top: 10px;
+	}
 
-        .head .img img {
-            width: 200px;
-        }
+	.head .img img {
+		width: 200px;
+	}
 
-        .head-nav {
-            width: 1140px;
-            margin: 0 auto;
-        }
+	.head-nav {
+		width: 1140px;
+		margin: 0 auto;
+		height: 45px;
+	}
 
-        .head-nav .login-area span a {
-            margin-left: 70px;
-            font-size: 14px;
-            color: #999;
-            font-weight: 500;
-        }
+	.head-nav .login-area span a {
+		margin-left: 16px;
+		font-size: 14px;
+		color: #999;
+		font-weight: 500;
+	}
 
-        .head-nav .login-area span a:hover {
-            color: #333;
-        }
+	.head-nav .login-area span a:hover {
+		color: #333;
+	}
 
-        .head-nav {
-            padding: 20px 0 0;
-            display: flex;
-            justify-content: space-between;
-            gap: 30px;
-        }
+	.head-nav {
+		padding: 20px 0 0;
+		display: flex;
+		justify-content: space-between;
+	}
 
-        .head-nav-hyperlink {
-            display: flex;
-            list-style: none;
-        }
+	.head-nav-hyperlink {
+		display: flex;
+		list-style: none;
+	}
 
-        .head-nav-hyperlink a {
-            margin-right: 16px;
-        }
+	.head-nav-hyperlink a {
+		margin-right: 16px;
+	}
 
-        .menu-slide-container {
-            display: none;
-            position: absolute;
-            top: 37px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #BDE3F0;
-            padding: 10px;
-            z-index: 1000;
-        }
+	.menu-slide-container {
+		display: none;
+		position: absolute;
+		top: 37px;
+		background: rgba(255, 255, 255, 0.9);
+		border: 1px solid #BDE3F0;
+		padding: 10px;
+		z-index: 1000;
+	}
 
-        .menu-slide-container.active {
-            display: block;
-        }
+	.menu-slide-container.active {
+		display: block;
+	}
 
-        .head-nav-hyperlink li {
-            position: relative;
-			padding-bottom: 10px;
-        }
+	.head-nav-hyperlink li {
+		position: relative;
+		padding-bottom: 10px;
+	}
 
-        .menu-slide-container a {
-            display: block;
-			width:140px;
-            padding: 10px;
-            color: #333;
-        }
+	.menu-slide-container a {
+		display: block;
+		width: 140px;
+		padding: 10px;
+		color: #333;
+	}
 
-        .menu-slide-container a:hover {
-            background: #f0f0f0;
-        }
+	.menu-slide-container a:hover {
+		background: #f0f0f0;
+	}
 
-		#king-header-harmony-info{
-			color:red;
-			font-weight: bold;
-		}
-    </style>
-</head>
+	#king-header-harmony-info {
+		color: red;
+		font-weight: bold;
+	}
+</style>
 
-<body>
+<div class="head">
+	<div class="img">
+		<a th:href="@{/}"><img th:src="@{/img/logo.png}"></a>
+	</div>
 
-    <header>
-        <div class="head">
-            <div class="img">
-                <a th:href="@{/}"><img th:src="@{/img/logo.png}"></a>
-            </div>
+</div>
+<div class="head-nav">
+	<div class="head-nav-hyperlink">
+		<li>
+			<a th:href="@{/}">뭐먹지?</a>
+			<div id="head_menu_slide_container1" class="menu-slide-container">
+				<a href="/menu_all/menu_all_list">메뉴 검색</a>
+				<a href="/menu_all/recipe_all_list">레시피 찾기</a>
+				<a href="/menu1/main">냉장고를 부탁해 <span id="king-header-harmony-info">ⓘ</span></a>
+				<a href="#">추천 레시피</a>
+			</div>
+		</li>
+		<li>
+			<a th:href="@{/}">뭐듣지?</a>
+			<div id="head_menu_slide_container2" class="menu-slide-container">
+				<a href="#">음악 메인</a>
+			</div>
+		</li>
+		<li>
+			<a th:href="@{/}">뭐하지?</a>
+			<div id="head_menu_slide_container3" class="menu-slide-container">
+				<a href="#">게임 메인</a>
+			</div>
+		</li>
+	</div>
+	<div class="login-area">
+		<span th:if="${#authentication.principal == 'anonymousUser'}">
+			<a th:href="@{/login_page}">로그인</a>
+		</span>
+		<span th:if="${#authentication.principal == 'anonymousUser'}">
+			<a th:href="@{/regist_page}">회원가입</a>
+		</span>
+		<span th:if="${#authentication.principal != 'anonymousUser'}">
+			<a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" th:href="@{/mypage_main(mno=${mno})}"
+				id="nick"></a>
+			<a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" th:href="@{/ingredients_list}"
+				id="nick"></a>
+		</span>
+		<span th:if="${#authentication.principal != 'anonymousUser'}">
+			<a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" th:href="@{/mypage_main(mno=${mno})}">
+				마이 페이지 </a>
+			<a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" th:href="@{/ingredients_list}">
+				관리자 페이지 </a>
+		</span>
+		<span th:if="${#authentication.principal != 'anonymousUser'}">
+			<a th:href="@{/logout}" id="logout">로그아웃</a>
+		</span>
+	</div>
+</div>
 
-        </div>
-        <div class="head-nav">
-            <div class="head-nav-hyperlink">
-                <li>
-                    <a th:href="@{/}">뭐먹지?</a>
-                    <div id="head_menu_slide_container1" class="menu-slide-container">
-                        <a href="#">메뉴 검색</a>
-                        <a href="#">레시피 찾기</a>
-                        <a href="#">냉장고를 부탁해 <span id="king-header-harmony-info">ⓘ</span></a>
-                        <a href="#">추천 레시피</a>
-                    </div>
-                </li>
-                <li>
-                    <a th:href="@{/}">뭐듣지?</a>
-                    <div id="head_menu_slide_container2" class="menu-slide-container">
-                        <a href="#">음악 메인</a>
-                    </div>
-                </li>
-                <li>
-                    <a th:href="@{/}">뭐하지?</a>
-                    <div id="head_menu_slide_container3" class="menu-slide-container">
-                        <a href="#">게임 메인</a>
-                    </div>
-                </li>
-            </div>
-            <div class="login-area">
-                <span th:if="${#authentication.principal == 'anonymousUser'}">
-                    <a th:href="@{/login_page}">로그인</a>
-                </span>
-                <span th:if="${#authentication.principal == 'anonymousUser'}">
-                    <a th:href="@{/regist_page}">회원가입</a>
-                </span>
-                <span th:if="${#authentication.principal != 'anonymousUser'}">
-                    <a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"
-                        th:href="@{/mypage_main(mno=${mno})}" id="nick"></a>
-                    <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" th:href="@{/ingredients_list}"
-                        id="nick"></a>
-                </span>
-                <span th:if="${#authentication.principal != 'anonymousUser'}">
-                    <a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"
-                        th:href="@{/mypage_main(mno=${mno})}">
-                        마이 페이지 </a>
-                    <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" th:href="@{/ingredients_list}">
-                        관리자 페이지 </a>
-                </span>
-                <span th:if="${#authentication.principal != 'anonymousUser'}">
-                    <a th:href="@{/logout}" id="logout">로그아웃</a>
-                </span>
-            </div>
-        </div>
-    </header>
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		fetch('/api/login/nickname')
+			.then(response => response.text())
+			.then(data => {
+				if (data !== null && data.trim() !== '') {
+					document.getElementById("nick").innerHTML = data + " 님";
+				}
+			});
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            fetch('/api/login/nickname')
-                .then(response => response.text())
-                .then(data => {
-                    if (data !== null && data.trim() !== '') {
-                        document.getElementById("nick").innerHTML = data + " 님";
-                    }
-                });
+		const navItems = document.querySelectorAll('.head-nav-hyperlink li');
+		const menuSlideContainers = document.querySelectorAll('.menu-slide-container');
 
-            const navItems = document.querySelectorAll('.head-nav-hyperlink li');
-            const menuSlideContainers = document.querySelectorAll('.menu-slide-container');
+		navItems.forEach((navItem, index) => {
+			navItem.addEventListener('mouseenter', () => {
+				menuSlideContainers[index].classList.add('active');
+			});
 
-            navItems.forEach((navItem, index) => {
-                navItem.addEventListener('mouseenter', () => {
-                    menuSlideContainers[index].classList.add('active');
-                });
-
-                navItem.addEventListener('mouseleave', () => {
-                    menuSlideContainers[index].classList.remove('active');
-                });
-            });
-        });
-    </script>
-</body>
+			navItem.addEventListener('mouseleave', () => {
+				menuSlideContainers[index].classList.remove('active');
+			});
+		});
+	});
+</script>
 
 </html>
