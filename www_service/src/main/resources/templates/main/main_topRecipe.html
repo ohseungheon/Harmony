@@ -17,8 +17,8 @@
 		font-weight:400;
 		margin-bottom:30px;
 	}
-	.maxView ul li,
-	.popularRecipe ul li{
+	.maxView ul li a,
+	.popularRecipe ul li a{
 		display:flex;
 		align-items:center;
 		justify-content:space-between;
@@ -26,8 +26,8 @@
 		padding:20px;
 		box-sizing:border-box;
 	}
-	.maxView ul li:last-child,
-	.popularRecipe ul li:last-child{
+	.maxView ul li a:last-child,
+	.popularRecipe ul li a:last-child{
 		border-bottom:1px solid #eee;
 	}
 	
@@ -80,19 +80,21 @@
 		<h2>최다 조회 레시피</h2>
 			<ul>
 				<li th:each="list1, i : ${topViewList}">
-					<div class="maxView-info-list">
-						<h5 th:text="${i.count}"></h5>
-						<div class="maxView-info-img">
-							<img th:src="@{'/uploads/' + ${list1.imgurl}}">
+					<a th:href="@{/menu_all/recipe_detail(rcode=${list1.rcode})}">
+						<div class="maxView-info-list">
+							<h5 th:text="${i.count}"></h5>
+							<div class="maxView-info-img">
+								<img th:src="@{'/uploads/' + ${list1.imgurl}}">
+							</div>
+							<div class="maxView-info-name">
+								<p th:text="${list1.recipeName}"></p>
+								<p th:text="${list1.menuName}"></p>
+							</div>
 						</div>
-						<div class="maxView-info-name">
-							<p th:text="${list1.recipeName}"></p>
-							<p th:text="${list1.menuName}"></p>
+						<div class="maxView-info-view">
+							<p th:text="'조회수 ' + ${list1.view}"></p>
 						</div>
-					</div>
-					<div class="maxView-info-view">
-						<p th:text="'조회수 ' + ${list1.view}"></p>
-					</div>
+					</a>
 				</li>
 			</ul>
 		</div>
@@ -100,19 +102,21 @@
 		<h2>인기 레시피</h2>
 			<ul>
 				<li th:each="list2, i : ${popularRecipeList}">
-					<div class="popularRecipe-info-list">
-						<h5 th:text="${i.count}"></h5>
-						<div class="popularRecipe-info-img">
-							<img th:src="@{'/uploads/' + ${list2.imgurl}}">
+					<a th:href="@{/menu_all/recipe_detail(rcode=${list2.rcode})}">
+						<div class="popularRecipe-info-list">
+							<h5 th:text="${i.count}"></h5>
+							<div class="popularRecipe-info-img">
+								<img th:src="@{'/uploads/' + ${list2.imgurl}}">
+							</div>
+							<div class="popularRecipe-info-name">
+								<p th:text="${list2.recipeName}"></p>
+								<p th:text="${list2.menuName}"></p>
+							</div>
 						</div>
-						<div class="popularRecipe-info-name">
-							<p th:text="${list2.recipeName}"></p>
-							<p th:text="${list2.menuName}"></p>
+						<div class="popularRecipe-info-view">
+							<p th:text="'추천수 ' + ${list2.recommendCnt}"></p>
 						</div>
-					</div>
-					<div class="popularRecipe-info-view">
-						<p th:text="'추천수 ' + ${list2.recommendCnt}"></p>
-					</div>
+					</a>
 				</li>
 			</ul>
 		</div>

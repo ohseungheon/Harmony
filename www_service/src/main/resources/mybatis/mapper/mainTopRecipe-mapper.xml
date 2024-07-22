@@ -6,7 +6,7 @@
 
 	<select id="topView"
 		resultType="com.harmony.www_service.dto.TopViewDto">
-		select r.recipeName, m.menuName, m.imgurl, r.`view`
+		select r.rcode, r.recipeName, m.menuName, m.imgurl, r.`view`
 		from recipe r
 		join
 		menu m
