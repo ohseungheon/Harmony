@@ -12,48 +12,49 @@
 	</header>
 	<section>
 		<h2>요청 메뉴 리스트</h2>
-    <form id="dally_form" th:action="@{/menu_req_list}" th:method="post">
-      <div th:each="menu : ${list}">
-        <div id="dally_menu_image">
-          <label>이미지</label>
-          <input type="text" th:field="*{imageUrl}" th:value="${'/uploads/' + ${menu.imgUrl}}">
-        </div>
-        <div id="dally_menu_mrcode">
-          <label>요청 메뉴 번호:</label>
-          <input type="text" th:field="*{mrcode}" th:value="${menu.mrcode}" />
-        </div>
-        <div id="dally_menu_state">
-          <label>처리 상태:</label>
-          <input type="text" th:field="*{state}" th:value="${menu.state}" />
-        </div>
-        <div id="dally_menu_menuName">
-          <label>메뉴 이름:</label>
-          <input type="text" th:field="*{menuName}" th:value="${menu.menuName}" />
-        </div>
-        <div id="dally_menu_category">
-          <label>카테고리:</label>
-          <input type="text" th:field="*{category}" th:value="${menu.category}" />
-        </div>
-        <div id="dally_menu_username">
-          <label>요청 아이디:</label>
-          <input type="text" th:field="*{username}" th:value="${menu.username}" />
-        </div>
-      </div>
-    </form>
-    <button type="button" th:onclick="apporveMenu(event)">승인</button></td>
-    <button type="button" th:onclick="returnMenu(event)">반려</button></td>
+    <table>
+      <thead>
+        <tr>
+          <th>요청 메뉴 번호</th>
+          <th>메뉴 이미지</th>
+          <th>메뉴 이름</th>
+          <th>요청 아이디</th>
+          <th>카테고리</th>
+          <th>단위</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="menu : ${list}">
+          <td th:text="${menu.mrcode}">요청 메뉴 번호</td>
+          <td><img th:src="@{'/uploads/' + ${menu.imgUrl}}" style="width: 150px; height: 150px;"></td>
+          <td th:text="${menu.menuName}">메뉴 이름</td>
+          <td th:text="${menu.username}">요청 아이디</td>
+          <td th:text="${menu.category}">카테고리</td>
+          <!--<td th:text="${menu.type}">단위</td>-->
+          <td>
+            <form th:action="@{/do_access}" method="post" style="display: inline;">
+              <input type="hidden" name="mrcode" th:value="${menu.mrcode}">
+              <input type="hidden" name="state" th:value="${menu.state}">
+              <input type="hidden" name="mno" th:value="${menu.mno}">
+              <input type="hidden" name="imgUrl" th:value="${menu.imgUrl}">
+              <input type="hidden" name="menuName" th:value="${menu.menuName}">
+              <input type="hidden" name="username" th:value="${menu.username}">
+              <input type="hidden"  name="category" th:value="${menu.category}">
+              <!--<input type="hidden" name="type" th:value="${menu.type}">-->
+              <button type="submit">승인</button>
+            </form>
+            <form th:action="@{/do_return}" method="post" style="display: inline;">
+              <input type="hidden" name="mrcode" th:value="${menu.mrcode}">
+              <button type="submit">반려</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 	</section>
 
 	<script>
-    var form = document.getElementById('dally_form');
-    function apporveMenu(event){
-      
-      form.submit();
-    }
 
-    function returnMenu(mrcode){
-
-    }
 	</script>
 </body>
 </html>

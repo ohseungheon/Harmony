@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.harmony.www_service.dao.IRequestMenuDao;
+import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.MenuReqDto;
 
 @Service
@@ -28,8 +29,8 @@ public class MenuReqService {
 		return rmDao.findById(mrcode);
 	}
 	// 승인 시 - 메뉴 등록하기
-	public int addMenu(MenuReqDto mrDto) {
-		boolean result = rmDao.registRequestMenuToMenu(mrDto);
+	public int addMenu(MenuDto mDto) {
+		boolean result = rmDao.registRequestMenuToMenu(mDto);
 		if (result) {
 			return 1;
 		}else {
