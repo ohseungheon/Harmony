@@ -17,4 +17,9 @@ public class MenuListService {
         
         return menuListDao.getMenuListByCategory(category);
     }
+
+    public List<MenuDto> getAllMenus(){
+
+        return menuListDao.getAllMenus();
+    }
 }

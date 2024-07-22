@@ -103,4 +103,9 @@ public class MenuService {
    public List<MenuDto> searchMenus(String term) {
       return menuListDao.searchMenus(term);
    }
+
+   public List<MenuDto> getAllmenus(){
+
+      return menuListDao.getAllMenus();
+   }
 }
