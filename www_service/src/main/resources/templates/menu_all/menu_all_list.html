@@ -123,11 +123,12 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        loadMenu('한식');
+        // 페이지 로드 시 전체 메뉴를 기본으로 표시합니다.
+        MenuAllList();
     });
 
     function MenuAllList() {
-        fetch('/api/menu/menu_all_list', {
+        fetch('/api/menu/menu_all', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -202,12 +203,12 @@
         })
     }
 
-    // 엔터 키 입력 시 검색 실행
     document.getElementById('searchInput').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             searchMenu();
         }
     });
+
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </body>

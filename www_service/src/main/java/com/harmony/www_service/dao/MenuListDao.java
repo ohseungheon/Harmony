@@ -11,4 +11,6 @@ public interface MenuListDao {
     List<MenuDto> getMenuListByCategory(String category);
 
     List<MenuDto> searchMenus(String term);
+
+    List<MenuDto> getAllMenus();
 }
