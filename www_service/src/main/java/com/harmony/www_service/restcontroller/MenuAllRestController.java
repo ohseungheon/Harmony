@@ -71,6 +71,11 @@ public class MenuAllRestController {
         return menuService.searchMenus(term);
     }
 
+    @GetMapping("/searchRecipe")
+    public List<RecipeDto> searchRecipe(@RequestParam("term") String term){
+        return recipeService.searchRecipe(term);
+    }
+
     @GetMapping("/menu_all")
     public List<MenuDto> getAllMenus(){
 

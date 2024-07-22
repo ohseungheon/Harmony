@@ -171,7 +171,7 @@
 </div>
 <div class="search-container">
     <input type="text" id="searchInput" placeholder="메뉴 검색...">
-    <button onclick="searchMenu()">검색</button>
+    <button onclick="searchRecipe()">검색</button>
 </div>
 <section>
     <div id="recipeList">
@@ -318,9 +318,24 @@
         window.location.href = `/menu_all/recipe_detail?rcode=${rcode}`;
     }
 
+    function searchRecipe() {
+        const searchTerm = document.getElementById('searchInput').value;
+        fetch(`/api/menu/searchRecipe?term=${encodeURIComponent(searchTerm)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            updateRecipeList(data);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
     document.getElementById('searchInput').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
-            searchMenu();
+            searchRecipe();
         }
     });
 

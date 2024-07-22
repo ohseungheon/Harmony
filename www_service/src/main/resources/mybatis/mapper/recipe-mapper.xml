@@ -62,4 +62,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             )
         </if>
     </select>
+
+    <select id="searchRecipe" resultType="com.harmony.www_service.dto.RecipeDto">
+        SELECT * FROM recipe WHERE recipeName LIKE CONCAT('%', #{term}, '%')
+    </select>
 </mapper>
