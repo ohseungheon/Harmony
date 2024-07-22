@@ -9,48 +9,35 @@
             margin:50px 0;
             text-align: center;
         }
-        
         #recipeList{
-            width: 100%;
-            margin: 0 auto;
-            background: rgb(190, 227, 241, 0.1);
-            border: 1px solid #bee3f1;
-            border-radius: 5px;
-            padding: 20px;
-            box-sizing: border-box;
+        	display:flex;
+        	gap:30px;
         }
-
+        
         .recipeList{
-            width: 100%;
-            height: 100%;
-            border: 1px solid #eee;
-            border-radius: 5px;
-            background: #fff;
-            padding: 20px;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-            display: flex;
-            position: relative;
+        	width:220px;
         }
-
-        .recipeList .recipe-urlimg{
-            width: 210px;
-            height: auto;
+        .elsa-recipe-list-img{
+        	width:100%;
+        	height:200px;
+        	border:1px solid #eee;
+        	border-radius:5px;
+        	overflow:hidden;
+        	box-sizing:border-box;
         }
-
-        .recipeList .recipe-urlimg img{
-            width: 100%;
-            height: 100%;
+        
+        .elsa-recipe-list-info{
+        	padding:5px;
+        	padding-top:10px;
         }
-
-        .recipeList-content h3{
-            padding: 20px;
-            padding-bottom: 10px;
+        .elsa-recipe-list-info h3{
+        	font-size:13px;
+        	color:#666;
+        	font-weight:400;
+        	padding-bottom:7px;
         }
-
-        .recipeList-content p{
-            padding: 20px;
-            font-size: 14px;
+        .elsa-recipe-list-info p{
+        	font-size:15px;
         }
     </style>
 </head>
@@ -62,14 +49,15 @@
     <h1 class="elsa-page-title">뭐뭐뭐 레시피</h1>
     <div id="recipeList">
         <div th:each="recipe : ${recipeList}" class="recipeList" th:onclick="'loadRecipeDetail(\'' + ${recipe.rcode} + '\')'">
-            <div class="recipe-urlimg">
-            <!-- #strings.substring()과 #strings.length()는 Thymeleaf의 문자열 유틸리티 메서드로, JavaScript의 slice() 기능을 대체합니다. -->
-                <img th:src="'https://img.youtube.com/vi/' + ${recipe.url != null ? #strings.substring(recipe.url, #strings.length(recipe.url) - 11) : 'default'} + '/mqdefault.jpg'">
-            </div>
             <div class="recipeList-content">
                 <a href="#">
-                    <h3 th:text="${recipe.recipeName}"></h3>
-                    <p th:text="${recipe.introduce}"></p>
+                	<div class="elsa-recipe-list-img">
+                		<img src="">
+                	</div>
+                	<div class="elsa-recipe-list-info">
+	                    <h3 th:text="${recipe.recipeName}"></h3>
+	                    <p th:text="${recipe.introduce}"></p>
+                    </div>
                 </a>
             </div>
         </div>
