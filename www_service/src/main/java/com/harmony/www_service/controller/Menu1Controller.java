@@ -49,9 +49,20 @@ public class Menu1Controller {
       //메뉴1 화면에서 사용할 사용자가 가지고 있는 재료를 세션에 저장
       session.setAttribute("InFridgeIngredientList", FridgeIngredientList); 
       
+      List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session
+              .getAttribute("NoInFridgeIngredientList");   // 세션에서 사용하지 않을 재료 리스트 불러옴
+        
+        
+        if (NoInFridgeIngredientList == null) {
+           NoInFridgeIngredientList = new ArrayList<>();
+        }
+      
       // 가지고 있는 재료로 만들 수 있는 메뉴 리스트 
       List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(FridgeIngredientList);
+      List<MenuDto> showCanMakeMenuList2 = menuService.getCanMakeMenu2(FridgeIngredientList);
       model.addAttribute("showCanMakeMenuList", showCanMakeMenuList);
+      model.addAttribute("showCanMakeMenuList2", showCanMakeMenuList2);
+      model.addAttribute("NoInFridgeIngredientList", NoInFridgeIngredientList);
 
       return "menu1/menu_harmony1";
    }
