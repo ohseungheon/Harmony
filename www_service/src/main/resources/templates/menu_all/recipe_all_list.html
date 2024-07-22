@@ -143,6 +143,7 @@
     <div class="filterButtons">
         <button onclick="toggleFilter('filterDiv')">카테고리 검색</button>
         <button onclick="toggleFilter('ingredientDiv')">재료별 검색</button>
+        <button onclick="toggleFilter('themeDiv')">테마 검색</button>
     </div>
 </div>  
 <div id="filterDiv" class="filter-container">
@@ -151,6 +152,15 @@
         <h4>레시피 카테고리</h4>
         <div class="checkbox-group">
             <!-- 여기에 동적으로 레시피 카테고리 체크박스가 추가됩니다 -->
+        </div>
+    </div>
+</div>
+<div id="themeDiv" class="filter-container">
+    <p class="filter-description"><i>*원하시는 테마를 선택하세요.*</i></p>
+    <div id="recipeThemesCheckbox" class="filter-section">
+        <h4>레시피 테마</h4>
+        <div class="checkbox-group">
+            <!-- 여기에 동적으로 테마 체크박스가 추가됩니다 -->
         </div>
     </div>
 </div>
@@ -165,7 +175,6 @@
 </div>
 <div class="search-container">
     <input type="text" id="searchInput" placeholder="레시피 이름 + 내용 + 카테고리 + 테마">
-    <button onclick="searchRecipe()">검색</button>
 </div>
 <section>
     <div id="recipeList">
@@ -179,34 +188,34 @@
 <script>
     let selectedCategories = [];
     let excludedIngredients = [];
+    let selectedThemes = [];
     let filteredRecipes = [];
     let searchTimeout;
-    
+
     document.addEventListener('DOMContentLoaded', function() {
         loadRecipeCategories();
         loadIngredients();
-        fetchFilteredRecipes(); // 초기 로딩 시 모든 레시피 표시
-        
-        // 검색 입력 필드에 이벤트 리스너 추가
+        loadRecipeThemes();
+        fetchFilteredRecipes();
+
         document.getElementById('searchInput').addEventListener('input', function() {
             clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(searchRecipe, 300); // 300ms 디바운스
+            searchTimeout = setTimeout(fetchFilteredRecipes, 300);
         });
     });
-    
+
     function toggleFilter(divId) {
-        const filterDiv = document.getElementById(divId);
-        const otherDivId = divId === 'filterDiv' ? 'ingredientDiv' : 'filterDiv';
-        const otherDiv = document.getElementById(otherDivId);
-        
-        if (filterDiv.style.display === 'none' || filterDiv.style.display === '') {
-            filterDiv.style.display = 'block';
-            otherDiv.style.display = 'none';
-        } else {
-            filterDiv.style.display = 'none';
-        }
+        const filterDivs = ['filterDiv', 'ingredientDiv', 'themeDiv'];
+        filterDivs.forEach(div => {
+            const element = document.getElementById(div);
+            if (div === divId) {
+                element.style.display = element.style.display === 'none' || element.style.display === '' ? 'block' : 'none';
+            } else {
+                element.style.display = 'none';
+            }
+        });
     }
-    
+
     function loadRecipeCategories() {
         fetch('/api/menu/recipe-categories')
             .then(response => response.json())
@@ -223,7 +232,7 @@
             })
             .catch(error => console.error('Error:', error));
     }
-    
+
     function loadIngredients() {
         fetch('/api/menu/ingredients')
             .then(response => response.json())
@@ -240,17 +249,39 @@
             })
             .catch(error => console.error('Error:', error));
     }
-    
+
+    function loadRecipeThemes() {
+        fetch('/api/menu/recipe-themes')
+            .then(response => response.json())
+            .then(themes => {
+                const themeGroup = document.querySelector('#recipeThemesCheckbox .checkbox-group');
+                themes.forEach(theme => {
+                    const checkbox = document.createElement('div');
+                    checkbox.innerHTML = `
+                        <input type="checkbox" name="recipeTheme" value="${theme}" id="theme${theme.replace(/\s+/g, '')}" onchange="applyThemeFilter()">
+                        <label for="theme${theme.replace(/\s+/g, '')}">${theme}</label>
+                    `;
+                    themeGroup.appendChild(checkbox);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
     function applyFilter() {
         selectedCategories = Array.from(document.querySelectorAll('input[name="recipeCategory"]:checked')).map(input => input.value);
         fetchFilteredRecipes();
     }
-    
+
+    function applyThemeFilter() {
+        selectedThemes = Array.from(document.querySelectorAll('input[name="recipeTheme"]:checked')).map(input => input.value);
+        fetchFilteredRecipes();
+    }
+
     function applyIngredientFilter() {
         excludedIngredients = Array.from(document.querySelectorAll('#ingredientCheckboxes input[name="ingredient"]:checked')).map(input => input.value);
         fetchFilteredRecipes();
     }
-    
+
     function fetchFilteredRecipes() {
         const params = new URLSearchParams();
         
@@ -261,37 +292,30 @@
         if (excludedIngredients.length > 0) {
             params.append('ingredient', excludedIngredients.join(','));
         }
-    
+
+        if (selectedThemes.length > 0) {
+            params.append('theme', selectedThemes.join(','));
+        }
+
+        const searchTerm = document.getElementById('searchInput').value;
+        if (searchTerm) {
+            params.append('searchTerm', searchTerm);
+        }
+
         fetch(`/api/menu/filtered_recipe_list?${params.toString()}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-            console.log('Received data:', data);
-            if (Array.isArray(data)) {
-                filteredRecipes = data;
-                updateRecipeList(filteredRecipes);
-            } else {
-                console.error('Received data is not an array:', data);
-                filteredRecipes = [];
-                updateRecipeList([]);
-            }
+            filteredRecipes = data;
+            updateRecipeList(filteredRecipes);
         })
-        .catch(error => {
-            console.error('Error:', error);
-            filteredRecipes = [];
-            updateRecipeList([]);
-        });
+        .catch(error => console.error('Error:', error));
     }
-    
+
     function updateRecipeList(data) {
         let html = '';
         if (Array.isArray(data) && data.length > 0) {
@@ -318,22 +342,12 @@
         event.stopPropagation();
         button.classList.toggle('liked');
     }
-    
-    function loadRecipeDetail(rcode){
+
+    function loadRecipeDetail(rcode) {
         window.location.href = `/menu_all/recipe_detail?rcode=${rcode}`;
     }
 
-    function searchRecipe() {
-        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-        
-        const searchResults = filteredRecipes.filter(recipe => 
-            recipe.recipeName.toLowerCase().includes(searchTerm) ||
-            recipe.introduce.toLowerCase().includes(searchTerm) ||
-            recipe.menuName.toLowerCase().includes(searchTerm)
-        );
 
-        updateRecipeList(searchResults);
-    }
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </body>

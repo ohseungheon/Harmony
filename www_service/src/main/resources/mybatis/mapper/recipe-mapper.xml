@@ -40,6 +40,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY category
     </select>
 
+    <select id="getAllThemes" resultType="string">
+        SELECT DISTINCT theme FROM recipe WHERE theme IS NOT NULL AND theme != ''
+    </select>
+
     <select id="getFilteredRecipes" resultType="com.harmony.www_service.dto.RecipeDto">
         SELECT DISTINCT r.*, m.menuName 
         FROM recipe r
@@ -60,6 +64,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                     #{ing}
                 </foreach>
             )
+        </if>
+        <if test="theme != null and theme.size() > 0">
+            AND (
+            <foreach item="thm" collection="theme" separator=" OR ">
+                r.theme LIKE CONCAT('%', #{thm}, '%')
+            </foreach>
+            )
+        </if>
+        <if test="searchTerm != null and searchTerm != ''">
+            AND (r.recipeName LIKE CONCAT('%', #{searchTerm}, '%')
+            OR r.introduce LIKE CONCAT('%', #{searchTerm}, '%')
+            OR m.menuName LIKE CONCAT('%', #{searchTerm}, '%'))
         </if>
     </select>
 
