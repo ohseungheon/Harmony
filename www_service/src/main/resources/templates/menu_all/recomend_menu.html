@@ -9,12 +9,37 @@
             margin-top: 20px;
         }
         .weather-item {
-            font-size: 16px;  
+            font-size: 16px;
+            display:flex;
+            align-items:center;
+        }
+        .weather-item .weather-item-text{
+        	font-size:20px;
+        	padding-left:20px;
         }
         .weather-item span{
-        	font-size:40px;
+        	font-size:20px;
         	padding-left:20px;
         	font-weight:bold;
+        }
+        .weather-item .weather-icon{
+        	display:flex;
+        	align-items:center;
+        }
+        .weather-item .weather-icon div{
+        	padding-left:10px;
+        }
+        .weather-item .weather-icon div p{
+        	color:#777;
+        	font-size:13px;
+        	text-align:center;
+        }
+        .weather-item .weather-icon div p:last-child{
+        	font-size:18px;
+        }
+        .weather-item .weather-icon .wicon{
+        	display:inline-block;
+        	font-size:40px;
         }
         .menu-list {
             display: flex;
@@ -24,29 +49,28 @@
             margin-top: 20px;
         }
         .menu-item {
-            width: 200px;
-            border-radius: 10px;
+            width: 210px;
+            height:210px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
             cursor: pointer;
+            position:relative;
         }
-        .menu-item:nth-child(1) { background-color: #ffb3ba; }
-        .menu-item:nth-child(2) { background-color: #baffc9; }
-        .menu-item:nth-child(3) { background-color: #bae1ff; }
-        .menu-item:nth-child(4) { background-color: #ffffba; }
         .menu-item img {
             width: 100%;
-            height: 150px;
+            height: 100%;
             object-fit: cover;
         }
         .menu-info {
-            padding: 15px;
+        	width:100%;
+        	position:absolute;
+        	bottom:0;
+            background:rgb(0, 0, 0, 0.6);
             text-align: center;
+            padding:15px 0;
         }
         .menu-name {
-            font-weight: bold;
-            margin-bottom: 10px;
+        	color:#fff;
+            font-weight: 400;
         }
         .menu-button {
             background-color: white;
@@ -129,8 +153,14 @@
 
                 const content = `
                     <div class="weather-item">
-                        ${temp}°C <span class="weather-icon">${icon}</span> ${simplifiedDescription}
-                        <span>이런 메뉴는 어때요?</span>
+                        <div class="weather-icon">
+                        	<p class="wicon">${icon}</p>
+                        	<div>
+	                        	<p>${temp}°C </p>
+	                        	<p>${simplifiedDescription}</p>
+	                        </div>
+                        </div>
+                        <p class="weather-item-text">이런 메뉴는 어때요?</p>
                     </div>
                 `;
 
@@ -139,11 +169,11 @@
                 // 온도에 따른 메뉴 추천
                 let recommendedMenus;
                 if (temp < 26) {
-                    recommendedMenus = ['라멘', '돈카츠', '짬뽕', '딤섬'];
+                    recommendedMenus = ['라멘', '돈카츠', '짬뽕', '딤섬', '소바'];
                 } else if (temp >= 26 && temp < 27) {
-                    recommendedMenus = ['김치찌개', '소바', '스테이크', '삼계탕'];
+                    recommendedMenus = ['김치찌개', '소바', '스테이크', '삼계탕', '라멘'];
                 } else {
-                    recommendedMenus = ['하이라이스', '와플', '동태찌개', '호박죽'];
+                    recommendedMenus = ['하이라이스', '와플', '동태찌개', '호박죽', '소바'];
                 }
 
                 const menuList = document.getElementById('menu-list');
