@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+      img{
+        width: 200px;
+        height: 250px;
+      }
+      #dally_reqest_menu_info{
+        display: flex;
+        flex-direction: column;
+      }
     </style>
 </head>
 <body>
@@ -16,11 +24,16 @@
 </section>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        findList();
+  document.addEventListener("DOMContentLoaded", () => {
+    findList();
+    
+    // (승인 시)메뉴 테이블에 데이터 추가
+    accept_btn.addEventListener("click", () => {
+      addReqMenu(mrcode);
     });
+  });
 
-    // 요청 메뉴 리스트 ajax 요청 보내기
+    // 요청 메뉴 리스트 불러오기 - ajax 요청 보내기
     function findList() {
       fetch("/manager/menuReqlist")
         .then((response) => {
@@ -38,13 +51,17 @@
 
           for (var i = 0; i < data.length; i++) {
             var menuReq_content =
-              '<div class="add_menu_form"><form th:action="@{}" method="post">' + 
-              '<div id="dally_menu_img"><input type="hidden" name="imgUrl" th:value=""><img src="/uploads/' +
-              data[i].imgUrl + '"> ' + '</div><div id="dally_menu_menuName">'
-              + data[i].menuName + '</div><div id="dally_menu_category">' + data[i].category +
-              '<div id="dally_menu_mno"><input type="hidden" >' + 
-              '</div><div id="dally_menu_username">' + data[i].username +'</div><button id="dally_accept">승인</button>' + 
-              '<button id="dally_return">반려</button>';
+              '<div class="dally_reqest_menu_info">' +
+              '<div id="request_menu_dto">' +
+              '<div id="dally_menu_mrcode>' + data[i].mrcode + '</div>' +
+              '<div id="dally_menu_img"><img src="/uploads/' + data[i].imgUrl + '"> ' + '</div>' +
+              '<div id="dally_menu_menuName">' + data[i].menuName + '</div>' +
+              '<div id="dally_menu_category">' + data[i].category + '</div>' +
+              '<div id="dally_menu_username">' + data[i].username +'</div>' +
+              '</div>' +
+              '<div class="response_btns">' +
+              '<button id="dally_accept">승인</button>' + ' ' +
+              '<button id="dally_return">반려</button>' + '</div>';
               menuReq_container.innerHTML += menuReq_content;
           }
 
@@ -53,16 +70,48 @@
     }
 
 
-    // 추가 메뉴 승인 => 메뉴로 추가
-    function addMenu(){
+
+    function addReqMenu(mrcode){
       const accept_btn = document.getElementById('dally_accept');
-      const return_btn = document.getElementById('dally_return');
+      
+      fetch("/manager/addMenuReq")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            "Network response was not ok" + response.statusText
+          );
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if(data === 1){
+          alert("요청메뉴가 승인되었습니다.");
+          findList();
+          
+        }
+      })
+      .catch((error) => console.error("Error:" + error));
+    }
 
-      accept_btn.addEventListener("click", () => {
-        const 
+    // // (승인 / 반려 시)요청메뉴 테이블에서 데이터 삭제
+    // function deleteReqMenu(){
+    //   const return_btn = document.getElementById('dally_return');
+    // }
 
-      });
-    }    
+    // for (var i = 0; i < data.length; i++) {
+    //         var menuReq_content =
+    //           //'<div class="add_menu_form"><form th:action="@{}" method="post">' + 
+    //           '<div id="dally_reqest_menu_info">' +
+    //           '<div id="dally_menu_mrcode><input type="hidden" name="mrcode" th:value="' + data[i].mrcode +'">' +
+    //           '<div id="dally_menu_img"><input type="hidden" name="imgUrl" th:value=""><img src="/uploads/' +
+    //           data[i].imgUrl + '"> ' + '</div><div id="dally_menu_menuName">'
+    //           + data[i].menuName + '</div><div id="dally_menu_category">' + data[i].category +
+    //           '<div id="dally_menu_mno"><input type="hidden" >' + 
+    //           '</div><div id="dally_menu_username">' + data[i].username +'</div><button id="dally_accept">승인</button>' + 
+    //           '<button id="dally_return">반려</button>' + '</div>';
+    //           menuReq_container.innerHTML += menuReq_content;
+    //       }
+
 </script>
 </body>
 </html>
