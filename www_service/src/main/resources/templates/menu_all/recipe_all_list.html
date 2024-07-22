@@ -179,11 +179,19 @@
 <script>
     let selectedCategories = [];
     let excludedIngredients = [];
+    let filteredRecipes = [];
+    let searchTimeout;
     
     document.addEventListener('DOMContentLoaded', function() {
         loadRecipeCategories();
         loadIngredients();
         fetchFilteredRecipes(); // 초기 로딩 시 모든 레시피 표시
+        
+        // 검색 입력 필드에 이벤트 리스너 추가
+        document.getElementById('searchInput').addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(searchRecipe, 300); // 300ms 디바운스
+        });
     });
     
     function toggleFilter(divId) {
@@ -269,14 +277,17 @@
         .then(data => {
             console.log('Received data:', data);
             if (Array.isArray(data)) {
-                updateRecipeList(data);
+                filteredRecipes = data;
+                updateRecipeList(filteredRecipes);
             } else {
                 console.error('Received data is not an array:', data);
+                filteredRecipes = [];
                 updateRecipeList([]);
             }
         })
         .catch(error => {
             console.error('Error:', error);
+            filteredRecipes = [];
             updateRecipeList([]);
         });
     }
@@ -313,28 +324,17 @@
     }
 
     function searchRecipe() {
-        const searchTerm = document.getElementById('searchInput').value;
-        fetch(`/api/menu/searchRecipe?term=${encodeURIComponent(searchTerm)}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            updateRecipeList(data);
-        })
-        .catch(error => console.error('Error:', error));
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        
+        const searchResults = filteredRecipes.filter(recipe => 
+            recipe.recipeName.toLowerCase().includes(searchTerm) ||
+            recipe.introduce.toLowerCase().includes(searchTerm) ||
+            recipe.menuName.toLowerCase().includes(searchTerm)
+        );
+
+        updateRecipeList(searchResults);
     }
-
-    document.getElementById('searchInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            searchRecipe();
-        }
-    });
-
-
-    </script>
+</script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </body>
 </html>
