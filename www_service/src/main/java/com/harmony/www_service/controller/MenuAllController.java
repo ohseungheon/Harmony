@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.harmony.www_service.dao.RecipeDao;
+import com.harmony.www_service.dto.PopularRecipeDto;
 import com.harmony.www_service.dto.RecipeDto;
+import com.harmony.www_service.dto.RecipeGetTagDto;
 import com.harmony.www_service.dto.RecipeIngredientDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
 import com.harmony.www_service.service.RecipeService;
@@ -52,6 +54,9 @@ public class MenuAllController {
         RecipeDto recipeDto = recipeService.getRecipeByRcode(rcode);
         List<RecipeOrderDto> recipeOrderList = recipeService.getRecipeOrdersByRcode(rcode);
         List<RecipeIngredientDto> recipeIngredientList = recipeService.getRecipeIngredientsByRcode(rcode);
+        RecipeGetTagDto recipeGetTagDto = recipeDao.recipeGetTag(rcode);
+        recipeDao.recipeViewCount(rcode);
+        PopularRecipeDto recipeRecommend = recipeDao.recipeRecommendCount(rcode);
         
         model.addAttribute("rcode", rcode);
         model.addAttribute("menuName",recipeDto.getMenuName());
@@ -62,6 +67,8 @@ public class MenuAllController {
         model.addAttribute("url", recipeDto.getUrl());
         model.addAttribute("recipeOrderList", recipeOrderList);
         model.addAttribute("recipeIngredientList", recipeIngredientList);
+        model.addAttribute("recipeGetTagDto", recipeGetTagDto);
+        model.addAttribute("recipeRecommend", recipeRecommend);
 
         return "menu_all/recipe_detail";
     }
