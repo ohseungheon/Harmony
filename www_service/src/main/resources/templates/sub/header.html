@@ -100,7 +100,7 @@
 		list-style: none;
 	}
 
-	.head-nav-hyperlink a {
+	.head-nav-hyperlink >li >a {
 		margin-right: 16px;
 	}
 
@@ -125,7 +125,7 @@
 
 	.menu-slide-container a {
 		display: block;
-		width: 140px;
+		width: 150px;
 		padding: 10px;
 		color: #333;
 	}
@@ -149,22 +149,22 @@
 <div class="head-nav">
 	<div class="head-nav-hyperlink">
 		<li>
-			<a th:href="@{/}">뭐먹지?</a>
+			<a th:href="@{/}">🍲뭐먹지?</a>
 			<div id="head_menu_slide_container1" class="menu-slide-container">
-				<a href="/menu_all/menu_all_list">메뉴 검색</a>
-				<a href="/menu_all/recipe_all_list">레시피 찾기</a>
-				<a href="/menu1/main">냉장고를 부탁해 <span id="king-header-harmony-info">ⓘ</span></a>
-				<a href="#">추천 레시피</a>
+				<a href="/menu_all/menu_all_list">📁메뉴 검색</a>
+				<a href="/menu_all/recipe_all_list">📁레시피 찾기</a>
+				<a href="/menu1/main">🪄냉장고를 부탁해 <span id="king-header-harmony-info">ⓘ</span></a>
+				<a href="/#main_video"> 🎲랜덤 추천 </a>
 			</div>
 		</li>
 		<li>
-			<a th:href="@{/}">뭐듣지?</a>
+			<a th:href="@{/}">🎧뭐듣지?</a>
 			<div id="head_menu_slide_container2" class="menu-slide-container">
 				<a href="#">음악 메인</a>
 			</div>
 		</li>
 		<li>
-			<a th:href="@{/}">뭐하지?</a>
+			<a th:href="@{/}">🎮뭐하지?</a>
 			<div id="head_menu_slide_container3" class="menu-slide-container">
 				<a href="#">게임 메인</a>
 			</div>
