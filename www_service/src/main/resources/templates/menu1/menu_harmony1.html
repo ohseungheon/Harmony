@@ -257,9 +257,19 @@ input[type="submit"]:hover {
 
 	<!-- 모달 구조 추가 -->
 	<div id="howToUseModal" class="modal">
-		<div class="modal-content">
-			<span class="close">x</span>
-			<p>안녕하세요</p>
+		<div id="howToUseModal" class="modal">
+			<div class="modal-content">
+				<span class="close">x</span>
+				<p>*왼쪽의 회원님의 냉장고에 등록된 재료를 기준으로 요리가능한 메뉴를 보여주는 서비스입니다.</p>
+				<p>1. 좌측 재료목록에서 제외시키고자 하는 재료를 '제외'버튼을 눌러 해당 재료가 포함되지 않은 메뉴들이 우측에
+					나타납니다.</p>
+				<p>2. 제외시킨 재료에 '복원'버튼을 클릭하면 다시 해당 재료가 포함된 매뉴들이 나타납니다.</p>
+				<p>3. 원하는 재료를 선택/제외 하고 난 뒤 우측에 출력되는 메뉴를 클릭할 시 해당 메뉴의 레시피 리스트로
+					이동합니다.</p>
+				<p>4. 상단의 '재료부족허용'을 체크하게 되면 재료가 1~2가지 부족한 메뉴도 나타납니다.</p>
+				<p>5. 4번의 기능이 체크되어있을 시 재료가 1가지 부족한 메뉴의 경우, 메뉴의 상단에 부족한 재료명이
+					표기됩니다.</p>
+			</div>
 		</div>
 	</div>
 
@@ -353,13 +363,14 @@ input[type="submit"]:hover {
             row.classList.remove('remove_highlight');
             }
         });
-        rows2.forEach(row => {
-            if (!selectedRows.includes(row)) { // <-- Fixed the issue here
-                row2.classList.add('remove_highlight');
-            } else {
-                row2.classList.remove('remove_highlight');
-            }
-        });
+        
+      rows2.forEach(row => {
+           if (!selectedRows.includes(row)) { // <-- Fixed the issue here
+              row.classList.add('remove_highlight');
+         } else {
+            row.classList.remove('remove_highlight');
+       }
+      });
     }
 
 
