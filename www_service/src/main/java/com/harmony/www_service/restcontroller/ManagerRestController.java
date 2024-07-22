@@ -3,6 +3,7 @@ package com.harmony.www_service.restcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,12 +42,21 @@ public class ManagerRestController {
 		return list;
 	}
 	
-	// 요청 메뉴 등록 - 승인된 메뉴
+	// (승인 시)요청 메뉴를 정식 메뉴로 등록 
 	@PostMapping("/addMenuReq")
 	public void addMenuReq(@RequestParam("mrDto") MenuReqDto mrDto) {
 		System.out.println("~~~~~~~ menuReqRestController 진입 ~~~~~~~");
 		int result = mrService.addMenu(mrDto);
 		
 	}
+	
+	// (승인 or 반려 시)요청메뉴를 요청메뉴테이블에서 삭제
+	@DeleteMapping("/deleteMenuReq")
+	public void deleteMenuReq(int mrcode) {
+		System.out.println("+++++++++ delete rests 진입 ++++++++++");
+		int result = mrService.deleteMenu(mrcode);
+	}
+
+	
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 }
