@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         #menuList {
             display: flex;
@@ -95,11 +96,13 @@
             width: 300px;
             font-size: 16px;
         }
-
-
     </style>
 </head>
+
 <body>
+    <header>
+        <th:block th:insert="~{/sub/header.html}"></th:block>
+    </header>
     <div class="menuButton">
         <button onclick="MenuAllList()">전체</button>
         <span class="divider">|</span>
@@ -121,59 +124,59 @@
 
     <div id="menuList"></div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // 페이지 로드 시 전체 메뉴를 기본으로 표시합니다.
-        MenuAllList();
-    });
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 페이지 로드 시 전체 메뉴를 기본으로 표시합니다.
+            MenuAllList();
+        });
 
-    function MenuAllList() {
-        fetch('/api/menu/menu_all', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            updateMenuList(data);
-        })
-        .catch(error => console.error('Error:', error));
-    }
+        function MenuAllList() {
+            fetch('/api/menu/menu_all', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    updateMenuList(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
-    function loadMenu(category) {
-        fetch(`/api/menu/menu_all_list?category=${encodeURIComponent(category)}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            updateMenuList(data);
-        })
-        .catch(error => console.error('Error:', error));
-    }
+        function loadMenu(category) {
+            fetch(`/api/menu/menu_all_list?category=${encodeURIComponent(category)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    updateMenuList(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
-    function searchMenu() {
-        const searchTerm = document.getElementById('searchInput').value;
-        fetch(`/api/menu/search?term=${encodeURIComponent(searchTerm)}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            updateMenuList(data);
-        })
-        .catch(error => console.error('Error:', error));
-    }
+        function searchMenu() {
+            const searchTerm = document.getElementById('searchInput').value;
+            fetch(`/api/menu/search?term=${encodeURIComponent(searchTerm)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    updateMenuList(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
-    function updateMenuList(data) {
-        let html = '';
-        data.forEach(menu => {
-            html += `
+        function updateMenuList(data) {
+            let html = '';
+            data.forEach(menu => {
+                html += `
                 <div class="menuItem" onclick="loadRecipeList('${menu.mcode}')">
                     <img src="/uploads/${menu.imgurl}" alt="${menu.menuName}" class="menuImage">
                     <div class="menuName">
@@ -183,33 +186,33 @@
                         </button>
                     </div>
                 </div>`;
-        });
-        document.getElementById('menuList').innerHTML = html;
-    }
-    
-    function loadRecipeList(mcode) {
-        window.location.href = `/menu_all/recipe_list?mcode=${mcode}`;
-    }
-
-    function toggleLike(event, button, mcode) {
-        event.stopPropagation();
-        button.classList.toggle('liked');
-
-        fetch('/api/favor-menu/'+mcode)
-        .then(res => res.text())
-        .then(msg => {
-            console.log(msg);
-            alert(msg);
-        })
-    }
-
-    document.getElementById('searchInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            searchMenu();
+            });
+            document.getElementById('menuList').innerHTML = html;
         }
-    });
 
-</script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        function loadRecipeList(mcode) {
+            window.location.href = `/menu_all/recipe_list?mcode=${mcode}`;
+        }
+
+        function toggleLike(event, button, mcode) {
+            event.stopPropagation();
+            button.classList.toggle('liked');
+
+            fetch('/api/favor-menu/' + mcode)
+                .then(res => res.text())
+                .then(msg => {
+                    console.log(msg);
+                    alert(msg);
+                })
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                searchMenu();
+            }
+        });
+
+    </script>
 </body>
+
 </html>
