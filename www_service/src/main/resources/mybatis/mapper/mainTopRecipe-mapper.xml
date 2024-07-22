@@ -18,14 +18,14 @@
 	<select id="popularRecipe"
 		resultType="com.harmony.www_service.dto.PopularRecipeDto">
 		SELECT r.rcode, r.recipeName, m.menuName, m.imgurl, COUNT(rr.rcode)
-		recommendCount
+		recommendCnt
 		FROM recipe r
 		JOIN recipe_recommend rr
 		ON r.rcode = rr.rcode
 		JOIN menu m
 		ON m.mcode = r.mcode
 		GROUP BY r.rcode, r.recipeName, m.menuName
-		ORDER BY recommendCount desc
+		ORDER BY recommendCnt desc
 		limit 5
 	</select>
 
