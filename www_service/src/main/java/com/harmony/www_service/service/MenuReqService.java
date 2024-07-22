@@ -23,9 +23,9 @@ public class MenuReqService {
 		return list;
 	}
 
-	// 승인 시 - 1. 메뉴 등록하기
+	// 승인 시 - 메뉴 등록하기
 	public int addMenu(MenuReqDto mrDto) {
-		boolean result = rmDao.registRequestMenu(mrDto);
+		boolean result = rmDao.registRequestMenuToMenu(mrDto);
 		if (result) {
 			return 1;
 		}else {
@@ -34,7 +34,7 @@ public class MenuReqService {
 		
 	}
 	
-	// 승인 시 - 2. 요청메뉴 테이블에서 메뉴 삭제하기
+	// 승인 & 반려 시 - 요청메뉴 테이블에서 메뉴 삭제하기
 	public int deleteMenu(int mrcode) {
 		boolean result = rmDao.deleteRequestMenu(mrcode);
 		if(result) {
@@ -43,4 +43,6 @@ public class MenuReqService {
 			return 0;
 		}
 	}
+	
+	
 }

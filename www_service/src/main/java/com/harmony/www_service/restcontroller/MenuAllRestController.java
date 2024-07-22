@@ -3,6 +3,7 @@ package com.harmony.www_service.restcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,4 +65,21 @@ public class MenuAllRestController {
         @RequestParam(value = "ingredient", required = false) List<Integer> ingredient) {
         return recipeService.getFilteredRecipeList(category, ingredient);
     }
+
+    @GetMapping("/search")
+    public List<MenuDto> searchMenus(@RequestParam("term") String term) {
+        return menuService.searchMenus(term);
+    }
+
+    @GetMapping("/searchRecipe")
+    public List<RecipeDto> searchRecipe(@RequestParam("term") String term){
+        return recipeService.searchRecipe(term);
+    }
+
+    @GetMapping("/menu_all")
+    public List<MenuDto> getAllMenus(){
+
+        return menuListService.getAllMenus();
+    }
+
 }

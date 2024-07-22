@@ -7,6 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * FROM menu WHERE category = #{category}
     </select>
 
+    <select id="searchMenus" resultType="com.harmony.www_service.dto.MenuDto">
+        SELECT * FROM menu WHERE menuName LIKE CONCAT('%', #{term}, '%') OR category LIKE CONCAT('%', #{term}, '%')
+    </select>
+
     <select id="getFilteredMenuList" resultType="com.harmony.www_service.dto.MenuDto">
         SELECT DISTINCT m.*
         FROM menu m
@@ -19,5 +23,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="ingredients != null and ingredients != ''">
             AND ri.icode IN (${ingredients})
         </if>
+    </select>
+
+    <select id="getAllMenus" resultType="com.harmony.www_service.dto.MenuDto">
+        SELECT * FROM menu
     </select>
 </mapper>

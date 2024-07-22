@@ -99,4 +99,10 @@ public class MenuService {
         if (ingredients == null) ingredients = "";
         return menuDao.getFilteredMenuList(categories, ingredients);
     }
+
+   public List<MenuDto> searchMenus(String term) {
+      return menuListDao.searchMenus(term);
+   }
+
+   
 }

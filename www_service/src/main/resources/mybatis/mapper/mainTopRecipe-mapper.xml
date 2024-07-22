@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmony.www_service.dao.MainTopRecipeDao">
+
+	<select id="topView"
+		resultType="com.harmony.www_service.dto.TopViewDto">
+		select r.recipeName, m.menuName, m.imgurl, r.`view`
+		from recipe r
+		join
+		menu m
+		on r.mcode = m.mcode
+		order by view desc
+		limit 5
+	</select>
+
+	<select id="popularRecipe"
+		resultType="com.harmony.www_service.dto.PopularRecipeDto">
+		SELECT r.rcode, r.recipeName, m.menuName, m.imgurl, COUNT(rr.rcode)
+		recommendCnt
+		FROM recipe r
+		JOIN recipe_recommend rr
+		ON r.rcode = rr.rcode
+		JOIN menu m
+		ON m.mcode = r.mcode
+		GROUP BY r.rcode, r.recipeName, m.menuName
+		ORDER BY recommendCnt desc
+		limit 5
+	</select>
+
+</mapper>

@@ -9,4 +9,8 @@ import com.harmony.www_service.dto.MenuDto;
 @Mapper
 public interface MenuListDao {
     List<MenuDto> getMenuListByCategory(String category);
+
+    List<MenuDto> searchMenus(String term);
+
+    List<MenuDto> getAllMenus();
 }
