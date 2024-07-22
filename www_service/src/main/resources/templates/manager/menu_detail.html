@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    </style>
+</head>
+<body>
+<header>
+<th:block th:insert="~{/sub/header.html}"></th:block>
+</header>
+<section>
+    <h2>요청 메뉴 승인 페이지</h2>
+    <div class="dally_addform_container">
+      <form id="menuReqForm" th:action="@{/do_reqMenu_process}" method="post">
+        <input id="dally_form_state" type="hidden" name="state" th:value="'대기'">
+        <input type="hidden" name="mrcode" th:value="${list.mrcode}">
+        <input type="hidden" name="mno" th:value="${list.mno}">
+        <input type="hidden" name="imgUrl" th:value="${list.imgUrl}">
+        <img th:src="@{'/uploads/' + ${list.imgUrl}}">
+        <input type="text" name="menuName" th:value="${list.menuName}">
+        <input type="text" name="username" th:value="${list.username}">
+        <input type="text" name="category" th:value="${list.category}">
+      </form>
+      <div id="dally_btns">
+        <button id="dally_accept" onclick="accept_menu()" type="button">승인</button>
+        <button id="dally_return" onclick="return_menu()" type="button">반려</button>
+      </div>
+    </div>
+</section>
+
+<script>
+  var form = document.getElementById('menuReqForm');
+  var form_state = document.getElementById('dally_form_state');
+
+  // 승인 => 메뉴로 추가
+  function accept_menu(){
+    form_state.value = "승인";
+    form.submit();
+
+  } 
+  // 반려
+  function return_menu(){
+    form_state.value = "반려";
+    form.submit();
+  }
+</script>
+</body>
+</html>
