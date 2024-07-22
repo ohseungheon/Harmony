@@ -62,8 +62,10 @@ public class MenuAllRestController {
     @GetMapping("/filtered_recipe_list")
     public List<RecipeDto> getFilteredRecipeList(
         @RequestParam(value = "category", required = false) List<String> category,
-        @RequestParam(value = "ingredient", required = false) List<Integer> ingredient) {
-        return recipeService.getFilteredRecipeList(category, ingredient);
+        @RequestParam(value = "ingredient", required = false) List<Integer> ingredient,
+        @RequestParam(value = "theme", required = false) List<String> theme,
+        @RequestParam(value = "searchTerm", required = false) String searchTerm) {
+        return recipeService.getFilteredRecipeList(category, ingredient, theme, searchTerm);
     }
 
     @GetMapping("/search")
@@ -80,6 +82,12 @@ public class MenuAllRestController {
     public List<MenuDto> getAllMenus(){
 
         return menuListService.getAllMenus();
+    }
+
+    @GetMapping("/recipe-themes")
+    public List<String> getRecipeThemes(){
+
+        return recipeService.getAllThemes();
     }
 
 }

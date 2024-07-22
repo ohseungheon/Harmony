@@ -52,11 +52,19 @@ public class RecipeService {
         return recipeDao.getRecipeCategories();
     }
 
-    public List<RecipeDto> getFilteredRecipeList(List<String> category, List<Integer> ingredient) {
-        if ((category == null || category.isEmpty()) && (ingredient == null || ingredient.isEmpty())) {
+    public List<String> getAllThemes() {
+
+        return recipeDao.getAllThemes();
+    }
+
+    public List<RecipeDto> getFilteredRecipeList(List<String> category, List<Integer> ingredient, List<String> theme, String searchTerm) {
+        if ((category == null || category.isEmpty()) && 
+            (ingredient == null || ingredient.isEmpty()) && 
+            (theme == null || theme.isEmpty()) &&
+            (searchTerm == null || searchTerm.isEmpty())) {
             return recipeDao.getAllRecipes();
         }
-        return recipeDao.getFilteredRecipes(category, ingredient);
+        return recipeDao.getFilteredRecipes(category, ingredient, theme, searchTerm);
     }
 
     public List<RecipeDto> searchRecipe(String term) {

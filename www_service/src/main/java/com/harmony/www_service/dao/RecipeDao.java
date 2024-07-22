@@ -27,10 +27,13 @@ public interface RecipeDao {
 
     List<String> getRecipeCategories();
 
-    List<RecipeDto> getFilteredRecipes(@Param("category") List<String> category, @Param("ingredient") List<Integer> ingredient);
+    List<RecipeDto> getFilteredRecipes(@Param("category") List<String> category, @Param("ingredient") List<Integer> ingredient, @Param("theme") List<String> theme, @Param("searchTerm") String searchTerm);
 
     List<RecipeDto> searchRecipe(String term);
     
+    List<String> getAllThemes();
+
+
 //    레시피 태그 가져오기
     RecipeGetTagDto recipeGetTag(@Param("rcode") int rcode);
     
