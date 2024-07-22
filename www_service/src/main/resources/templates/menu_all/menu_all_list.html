@@ -38,16 +38,7 @@
             padding: 10px;
             text-align: center;
             font-weight: bold;
-            position: relative; /* 추가: menuName 내부에 버튼 위치를 잡기 위해 */
-        }
-
-        .filter-container {
-            display: none;
-            background: rgba(107, 213, 252, 0.1);
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            position: relative;
         }
 
         .menuButton {
@@ -74,59 +65,14 @@
             text-decoration: underline;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .filterButtons {
-            display: flex;
-            justify-content: flex-start;
-            margin-bottom: 20px;
-        }
-
-        .filterButtons button {
-            margin-right: 10px;
-        }
-
-        .filter-description {
-            font-style: italic;
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        .filter-section {
-            margin-bottom: 15px;
-        }
-
-        .filter-section h4 {
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            margin-right: 5px;
-        }
-
-        .checkbox-group label {
-            cursor: pointer;
-        }
-
         .like-button {
             background: none;
             border: none;
             cursor: pointer;
             position: absolute;
-            top: 50%; /* 추가: 메뉴 이름의 중간 높이에 맞춤 */
-            right: 10px; /* 추가: 오른쪽 끝에 맞춤 */
-            transform: translateY(-50%); /* 추가: 세로 가운데 정렬 */
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
         }
 
         .like-button i {
@@ -138,6 +84,19 @@
         .like-button.liked i {
             color: #e74c3c;
         }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container input {
+            width: 300px;
+            font-size: 16px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -155,6 +114,11 @@
         <button onclick="loadMenu('기타')">기타</button>
     </div>
 
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="메뉴 검색...">
+        <button onclick="searchMenu()">검색</button>
+    </div>
+
     <div id="menuList"></div>
 
 <script>
@@ -162,9 +126,37 @@
         loadMenu('한식');
     });
 
+    function MenuAllList() {
+        fetch('/api/menu/menu_all_list', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            updateMenuList(data);
+        })
+        .catch(error => console.error('Error:', error));
+    }
 
     function loadMenu(category) {
         fetch(`/api/menu/menu_all_list?category=${encodeURIComponent(category)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            updateMenuList(data);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function searchMenu() {
+        const searchTerm = document.getElementById('searchInput').value;
+        fetch(`/api/menu/search?term=${encodeURIComponent(searchTerm)}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -202,6 +194,13 @@
         event.stopPropagation();
         button.classList.toggle('liked');
     }
+
+    // 엔터 키 입력 시 검색 실행
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            searchMenu();
+        }
+    });
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </body>
