@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.RecipeIngredientDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
@@ -26,4 +27,6 @@ public interface RecipeDao {
     List<String> getRecipeCategories();
 
     List<RecipeDto> getFilteredRecipes(@Param("category") List<String> category, @Param("ingredient") List<Integer> ingredient);
+
+    List<RecipeDto> searchRecipe(String term);
 }

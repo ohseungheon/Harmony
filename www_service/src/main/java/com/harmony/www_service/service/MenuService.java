@@ -104,8 +104,5 @@ public class MenuService {
       return menuListDao.searchMenus(term);
    }
 
-   public List<MenuDto> getAllmenus(){
-
-      return menuListDao.getAllMenus();
-   }
+   
 }

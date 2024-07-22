@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.harmony.www_service.dao.RecipeDao;
+import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.RecipeIngredientDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
@@ -58,4 +59,7 @@ public class RecipeService {
         return recipeDao.getFilteredRecipes(category, ingredient);
     }
 
+    public List<RecipeDto> searchRecipe(String term) {
+        return recipeDao.searchRecipe(term);
+    }
 }
