@@ -64,4 +64,9 @@ public class MenuAllRestController {
         @RequestParam(value = "ingredient", required = false) List<Integer> ingredient) {
         return recipeService.getFilteredRecipeList(category, ingredient);
     }
+
+    @GetMapping("/search")
+    public List<MenuDto> searchMenus(@RequestParam("term") String term) {
+        return menuService.searchMenus(term);
+    }
 }
