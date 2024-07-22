@@ -14,6 +14,7 @@ public interface Menu1Dao {
 	IngredientDto showOneIngredient(@Param("icode") int icode);
 	//MenuDto showCanMakeMenu();
     List<MenuDto> showCanMakeMenu(@Param("icodeList") List<Integer> icodeList, @Param("size") Integer size);
+    List<MenuDto> showCanMakeMenu2(@Param("icodeList") List<Integer> icodeList, @Param("size") Integer size);
     List<IngredientDto> selectExcludeIngredient(@Param("icodeList") List<Integer> icodeList,@Param("mno") int mno);
     int getMno(@Param("username") String username);
     
