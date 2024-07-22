@@ -23,4 +23,18 @@
   	<delete id="deleteRecipeReco">
   		DELETE FROM recipe_recommend WHERE rrcode= #{rrcode}
   	</delete>
+  	
+  	<!-- 메인 좋아요3개만 -->
+  	<select id="getMainRecipeLike" resultType="com.harmony.www_service.dto.Recipe_recommendDto_by">
+  		SELECT rr.*, r.recipeName 
+  		FROM recipe_recommend rr 
+  		JOIN recipe r 
+  		ON rr.rcode = r.rcode 
+  		WHERE rr.mno = #{mno}
+  		LIMIT 3
+  	</select>
+  	<!-- 나의 레시피 3개만 -->
+  	<select id="getMyRecipeList" resultType="com.harmony.www_service.dto.RecipeDto">
+  		SELECT * FROM recipe WHERE mno = #{mno} LIMIT 3
+  	</select>
   </mapper>

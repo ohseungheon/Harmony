@@ -58,6 +58,16 @@
 		WHERE f.mno = #{mno} 
 		ORDER BY f.deadline ASC
 	</select>
+	
+	<!-- 유통기한 임박 10개 리스트 -->
+	<select id="getAllDayList" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+		SELECT i.*, f.* FROM fridge f 
+		JOIN ingredient i 
+		ON f.icode = i.icode 
+		WHERE f.mno = #{mno} 
+		ORDER BY f.deadline ASC
+		LIMIT 10
+	</select>
 
 	<!-- 재료삭제 -->
 	<delete id="deleteMaterial">

@@ -19,6 +19,7 @@ import com.harmony.www_service.dao.IMypage1Dao;
 import com.harmony.www_service.dto.FridgeIngredientDto;
 import com.harmony.www_service.dto.MemberDto_by;
 import com.harmony.www_service.dto.Menu_favoriteDto_by;
+import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.Recipe_recommendDto_by;
 import com.harmony.www_service.service.LikeService;
 import com.harmony.www_service.service.MemberService;
@@ -79,10 +80,17 @@ public class Mypage1Controller {
 		MemberDto_by member = memberService.getMemberByUsername(username);
 		int mno = member.getMno();
 		model.addAttribute("mno", mno);
-
+		
 		// 마이프로필
 		model.addAttribute("member", member);
-
+		
+		//메인 - 좋아요 3개만 나오게
+		List<Recipe_recommendDto_by> recipeLike = likeDao.getMainRecipeLike(mno);
+		model.addAttribute("recipeLike", recipeLike);
+		//메인 - 내가 등록한 레시피 3개만 나오게
+		List<RecipeDto> myRecipe = likeDao.getMyRecipeList(mno);
+		model.addAttribute("my", myRecipe);
+		
 		// all냉동
 		List<FridgeIngredientDto> ice = myDao.getAllIceList(mno);
 		System.out.println("냉동all====" + ice);
@@ -95,10 +103,21 @@ public class Mypage1Controller {
 		List<FridgeIngredientDto> food = myDao.getAllFoodList(mno);
 		System.out.println("상온all>>>>" + food);
 		model.addAttribute("food", food);
-
+		
 		// 디데이
-
+		//내 재료 all 중 유통기한 임박 10개만 
+		List<FridgeIngredientDto> dd = myDao.getAllDayList(mno);
+		List<Long> days = new ArrayList<>();
 		LocalDate now = LocalDate.now();
+		
+		for(FridgeIngredientDto i : dd) {
+			long dday = ChronoUnit.DAYS.between(i.getDeadline(), now);
+			days.add(dday);
+		}
+		model.addAttribute("dd", dd);
+		model.addAttribute("days", days);
+		System.out.println("임박한거디데이!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+days);
+		//
 		List<Long> daysBetween_ice = new ArrayList<>();
 		List<Long> daysBetween_cool = new ArrayList<>();
 		List<Long> daysBetween_food = new ArrayList<>();
