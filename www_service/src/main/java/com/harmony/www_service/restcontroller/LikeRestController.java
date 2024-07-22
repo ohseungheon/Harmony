@@ -34,7 +34,6 @@ public class LikeRestController {
 	// 레시피 찜(좋아요, 추천) 등록 레시피 코드 필요
 	@GetMapping("/recipe-reco/{rcode}")
 	public String insertRecommend(@PathVariable("rcode") int rcode) {
-		System.out.println("instRecipeReco");
 		String msg = "비정상적인 작동";
 
 		// security 내부의 로그인 되어 있는 아이디( username ) 불러오기
