@@ -189,6 +189,7 @@ public class Mypage2Controller {
 
 		return "mypage2/recipe_update";
 	}
+	
 
 	// 레시피 수정
 	@PostMapping("/update")
