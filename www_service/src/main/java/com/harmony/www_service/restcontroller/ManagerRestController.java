@@ -33,14 +33,4 @@ public class ManagerRestController {
 		return result;
 	}
 	
-	// 요청 메뉴 리스트 조회 기능
-	@GetMapping("/menuReqlist")
-	public List<MenuReqDto> getList(){
-		System.out.println("menuRestController 진입-----------------");
-		List<MenuReqDto> list = mrService.getReqMenuList();
-		
-		return list;
-	}
-	
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 }

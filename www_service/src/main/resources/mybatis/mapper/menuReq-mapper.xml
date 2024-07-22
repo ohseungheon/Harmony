@@ -12,6 +12,10 @@
 		LEFT JOIN member m
 		ON mr.mno = m.mno
 	</select>
+	
+	<select id="findById" resultType="com.harmony.www_service.dto.MenuReqDto">
+		SELECT * FROM menu_request
+	</select>
 
 	<insert id="registRequestMenuToMenu">
 		INSERT INTO menu
@@ -26,5 +30,6 @@
 		DELETE FROM menu_request
 		mrcode = #{mrcode}
 	</delete>
+
 
 </mapper>

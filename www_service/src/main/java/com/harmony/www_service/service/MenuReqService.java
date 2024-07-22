@@ -14,7 +14,7 @@ public class MenuReqService {
 	@Autowired
 	IRequestMenuDao rmDao;
 
-	// 요청 메뉴 리스트 불러오기
+	// 전체 요청 메뉴 리스트 불러오기
 	public List<MenuReqDto> getReqMenuList() {
 		System.out.println("---------- menuReq service 진입 ----------");
 		List<MenuReqDto> list = rmDao.findMenuRequest();
@@ -23,6 +23,10 @@ public class MenuReqService {
 		return list;
 	}
 
+	// 요청 메뉴 디테일
+	public MenuReqDto getDetail(int mrcode) {
+		return rmDao.findById(mrcode);
+	}
 	// 승인 시 - 메뉴 등록하기
 	public int addMenu(MenuReqDto mrDto) {
 		boolean result = rmDao.registRequestMenuToMenu(mrDto);

@@ -1,50 +1,51 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <style>
-    </style>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+</style>
 </head>
 <body>
-<header>
-<th:block th:insert="~{/sub/header.html}"></th:block>
-</header>
-<section>
-    <h2>요청 메뉴 리스트</h2>
-    <div class="dally_addform_container">
-      <form id="menuReqForm" th:action="@{/do_reqMenu_process}" method="post">
-        <input id="dally_form_state" type="hidden" name="state" th:value="'대기'">
-        <input type="hidden" name="mrcode" th:value="${list.mrcode}">
-        <input type="hidden" name="mno" th:value="${list.mno}">
-        <input type="hidden" name="imgUrl" th:value="${list.imgUrl}">
-        <img th:src="@{'/uploads/' + ${list.imgUrl}}">
-        <input type="text" name="menuName" th:value="${list.menuName}">
-        <input type="text" name="username" th:value="${list.username}">
-        <input type="text" name="category" th:value="${list.category}">
-      </form>
-      <div id="dally_btns">
-        <button id="dally_accept" onclick="accept_menu()" type="button">승인</button>
-        <button id="dally_return" onclick="return_menu()" type="button">반려</button>
-      </div>
-    </div>
-</section>
+	<header>
+		<th:block th:insert="~{/sub/header.html}"></th:block>
+	</header>
+	<section>
+		<h2>요청 메뉴 리스트</h2>
+		<div class="dally_menuReq_list">
+      <table>
+        <tr>
+          <th>이미지</th>
+          <th>요청 상태</th>
+          <th>메뉴코드</th>
+          <th>메뉴명</th>
+          <th>카테고리</th>
+          <th>요청아이디</th>
+        </tr>
+        <tr th:each="menu : ${list}" id="${menu.mrcode}">
+            <td><img th:src="'/uploads/' + ${menu.imgUrl}" style="width: 150px; height: 150px;"></td>
+            <td th:text = "${menu.state}"></td>
+            <td th:text = "${menu.mrcode}"></td>
+            <td th:text = "${menu.menuName}"></td>
+            <td th:text = "${menu.category}"></td>
+            <td th:text = "${menu.username}"></td>
+            <td><button type="button" th:onclick="apporveMenu(mrcode)">승인</button></td>
+            <td><button type="button" th:onclick="returnMenu(mrcode)">반려</button></td>
+          </tr>
+        </tr>
+      </table>
+		</div>
+	</section>
 
-<script>
-  var form = document.getElementById('menuReqForm');
-  var form_state = document.getElementById('dally_form_state');
+	<script>
+    function apporveMenu(){
+      
 
-  // 승인 => 메뉴로 추가
-  function accept_menu(){
-    form_state.value = "승인";
-    form.submit();
+    }
 
-  } 
-  // 반려
-  function return_menu(){
-    form_state.value = "반려";
-    form.submit();
-  }
-</script>
+    function returnMenu(){
+
+    }
+	</script>
 </body>
 </html>

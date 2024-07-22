@@ -82,32 +82,27 @@ public class ManagerController {
 		return "redirect:/ingredients_list";
 	}
 
+	// -------------------------- 요청 메뉴 -------------------------------
+	
 	// 요청받은 메뉴 리스트
 	@RequestMapping("/menu_req_list")
-	public String getReqMenuList() {
-		return "manager/menu_approval";
-	}
-
-	// 요청 메뉴 리스트 조회 기능
-	@RequestMapping("/do_menu_req_list")
-	public String getList(Model model) {
-		System.out.println("menuController 진입-----------------");
+	public String getReqMenuList(Model model) {
 		List<MenuReqDto> lists = mrService.getReqMenuList();
-		if(lists == null) {
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
-		}
 		model.addAttribute("list", lists);
 		System.out.println("^^^^^^^^^^^^^^^^^^^^" + lists);
 		
-		return "manger/menu_approval";
+		return "manager/menu_approval";
 	}
+
+	// 요청 메뉴 승인 버튼 페이지
+//	@RequestMapping("/do_menu_req_detail")
+//	public String getList(Model model, @RequestParam("mrcode") int mrcode) {
+//		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//		MenuReqDto result = mrService.getDetail(mrcode);
+//		model.addAttribute("menu", result);
+//		
+//		return "manager/menu_detail";
+//	}
 
 	// 요청 메뉴 처리 - 승인 / 반려
 	@RequestMapping("/do_reqMenu_process")
