@@ -84,7 +84,7 @@ public class ManagerController {
 
 	// 요청받은 메뉴 리스트
 	@RequestMapping("/menu_req_list")
-	public String getList() {
+	public String getReqMenuList() {
 		return "manager/menu_approval";
 	}
 
