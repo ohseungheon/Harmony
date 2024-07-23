@@ -50,8 +50,15 @@ public class MyPage1RestController {
 	@GetMapping("/{fcode}")
     public ResponseEntity<FridgeIngredientDto> getIngredient(@PathVariable("fcode") int fcode) {
 		FridgeIngredientDto ingredient = myDao.getIngredientByFcode(fcode);
-		System.out.println("해당냉장고코드"+fcode+"해당재료데이터들"+ingredient);
+		//System.out.println("해당냉장고코드"+fcode+"해당재료데이터들"+ingredient);
         return ResponseEntity.ok(ingredient);
     }
 	
+	@PostMapping("/material_insert")
+	public ResponseEntity<String> materialInsert(@RequestBody FridgeIngredientDto material) {
+		myDao.insertFridge(material);
+		myDao.insertIngredient(material);
+		System.out.println("등록재료########"+material);
+	    return ResponseEntity.ok("재료정보가 성공적으로 등록되었습니다🍖");
+	}
 }

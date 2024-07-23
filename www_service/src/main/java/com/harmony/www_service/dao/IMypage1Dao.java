@@ -40,4 +40,9 @@ public interface IMypage1Dao {
 	
 	//fcode로 해당 재료 데이터 가져오기 
 	public FridgeIngredientDto getIngredientByFcode(@Param("fcode") int fcode);
+	
+	//재료등록
+	public void insertFridge(@Param("material") FridgeIngredientDto material);
+	
+	public void insertIngredient(@Param("material") FridgeIngredientDto material);
 }

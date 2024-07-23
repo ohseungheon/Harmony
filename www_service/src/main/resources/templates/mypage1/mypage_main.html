@@ -361,15 +361,17 @@ main {
 	background-color: rgb(0, 0, 0);
 	background-color: rgba(0, 0, 0, 0.4);
 }
-
+#modalData{
+	margin-bottom: 20px;
+}
 /* 모달 콘텐츠 */
 .modal-content {
 	background-color: #fefefe;
 	margin: 15% auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 50%;
-	height: 50%;
+	width: 400px;
+    height: 300px;
 }
 
 /* 닫기 버튼 */
@@ -391,6 +393,16 @@ main {
 	flex-direction: column;
 	align-items: center;
 	margin: 20px;
+}
+.by-deadline-box {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 10px;
+}
+#by-button-group {
+	display: flex; 
+	margin: 10px;
 }
 </style>
 </head>
@@ -599,35 +611,43 @@ main {
 			<div class="modal-content">
 				<span class="close">&times;</span>
 				<div class="by-modal">
-					<h3 id="modalData">재료 수정</h3>
+					<h2 id="modalData">재료 수정</h2>
 					<form id="m-updateForm" th:action="@{/mypage1/material_update}" method="POST">
-						<label for="modalName" class="m-label">이름</label> 
-						<input type="text" id="modalName" class="m-text" value="" readonly> 
-						
-						<label for="modalCategory" class="m-label">카테고리</label> 
-						<input type="text" id="modalCategory" class="m-text" value="" readonly> 
-						
-						<label for="modalCount" class="m-label">수량/중량</label> 
-						<input type="number" id="modalCount" class="m-text" value=""> 
-						
-						<label for="modalKeeptype" class="m-label">보관상태</label> 
-						<select id="modalKeeptype" name="modalKeeptype" class="m-text">
-		    				<option value="냉장">냉장</option>
-                   	 		<option value="냉동">냉동</option>
-                    		<option value="상온">상온</option>
-		    			</select>
-		    			
-						<label for="modalDeadline" class="m-label">유통기한</label>
-						<input type="text" id="modalDeadline" class="m-text" value="">
-						
-						<label for="modalMemo" class="m-label">메모</label> 
-						<input type="text" id="modalMemo" class="m-text" value=""> 
+						<div class="by-deadline-box">
+							<label for="modalName" class="m-label">이름</label> 
+							<input type="text" id="modalName" class="m-text" value="" readonly> 
+						</div>
+						<div class="by-deadline-box">
+							<label for="modalCategory" class="m-label">카테고리</label> 
+							<input type="text" id="modalCategory" class="m-text" value="" readonly> 
+						</div>
+						<div class="by-deadline-box">
+							<label for="modalCount" class="m-label">수량/중량</label> 
+							<input type="number" id="modalCount" class="m-text" value=""> 
+						</div>
+						<div class="by-deadline-box">
+							<label for="modalKeeptype" class="m-label">보관상태</label> 
+							<select id="modalKeeptype" name="modalKeeptype" class="m-text">
+		    					<option value="냉장">냉장</option>
+                   	 			<option value="냉동">냉동</option>
+                    			<option value="상온">상온</option>
+		    				</select>
+		    			</div>
+		    			<div class="by-deadline-box">
+							<label for="modalDeadline" class="m-label">유통기한</label>
+							<input type="text" id="modalDeadline" class="m-text" value="">
+						</div>
+						<div class="by-deadline-box">
+							<label for="modalMemo" class="m-label">메모</label> 
+							<input type="text" id="modalMemo" class="m-text" value=""> 
+						</div>
 						
 						<input type="hidden" id="modalFcode" name="modalFcode" value="">
 	    				<input type="hidden" id="modalMno" name="modalMno" value="">
-	    				
-						<input type="submit" value="수정"> 
-						<input type="button" value="목록">
+	    				<div id="by-btn-group">
+							<input type="submit" value="수정"> 
+							<input type="button" value="목록">
+						</div>	
 					</form>
 				</div>
 			</div>
