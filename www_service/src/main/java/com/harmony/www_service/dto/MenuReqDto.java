@@ -11,4 +11,6 @@ public class MenuReqDto {
     private String menuName;
     private String category;
     private String imgUrl;
+    
+    
 }

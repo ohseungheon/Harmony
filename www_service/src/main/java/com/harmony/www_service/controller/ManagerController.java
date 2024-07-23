@@ -108,12 +108,12 @@ public class ManagerController {
 	public String accessMenuReq(@RequestParam("mrcode") int mrcode,
 			@RequestParam("menuName") String menuName,
 			@RequestParam("category") String category,
-			@RequestParam("imgUrl") String imgUrl
+			@RequestParam("imgurl") String imgurl
 			) {
 		// type 처리할 방법 생각해보기 (하드코딩)
-		MenuDto mDto =new MenuDto();
+		MenuDto mDto = new MenuDto();
 		mDto.setMenuName(menuName);
-		mDto.setImgurl(imgUrl);
+		mDto.setImgurl(imgurl);
 		mDto.setCategory(category);
 		mDto.setType("중량");
 		mrService.addMenu(mDto);

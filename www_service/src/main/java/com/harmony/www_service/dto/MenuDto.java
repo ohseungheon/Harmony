@@ -14,4 +14,5 @@ public class MenuDto {
     private String imgurl;
     private int VIEW;
     private String type;
+ 
 }
