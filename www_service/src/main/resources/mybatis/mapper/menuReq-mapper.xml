@@ -19,15 +19,15 @@
 
 	<insert id="registRequestMenuToMenu">
 		INSERT INTO menu
-		(menuName, category, imgUrl, VIEW,
+		(menuName, category, imgurl, VIEW,
 		type)
 		values
-		(#{mDto.menuName}, #{mDto.category}, #{mDto.imgUrl},
+		(#{mDto.menuName}, #{mDto.category}, #{mDto.imgurl},
 		#{mDto.VIEW}, #{mDto.type})
 	</insert>
 
 	<delete id="deleteRequestMenu">
-		DELETE FROM menu_request
+		DELETE FROM menu_request WHERE
 		mrcode = #{mrcode}
 	</delete>
 
