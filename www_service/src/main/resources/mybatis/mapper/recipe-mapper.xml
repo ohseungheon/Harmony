@@ -167,7 +167,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 랜덤 레시피 -->
 	<select id="randomRecipe"
 		resultType="com.harmony.www_service.dto.RecipeDto">
-		select r.mcode, r.recipeName,
+		select r.mcode, r.rcode, r.recipeName,
 		(SELECT ro.cookingImg
 		FROM
 		recipe_order ro
