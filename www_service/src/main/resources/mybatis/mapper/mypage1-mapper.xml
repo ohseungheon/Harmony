@@ -102,4 +102,5 @@
 		ON f.icode = i.icode 
 		WHERE f.fcode = #{fcode} 
 	</select>
+	
 </mapper>

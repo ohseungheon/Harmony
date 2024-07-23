@@ -41,12 +41,12 @@ public class Mypage1Controller {
 	@RequestMapping("/info_update")
 	public String infoUpdate(Model model) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println("아이디---------------" + username);
+		//System.out.println("아이디---------------" + username);
 		model.addAttribute("username", username);
 
 		MemberDto_by member = memDao.getmemberList(username);
 		model.addAttribute("member", member);
-		System.out.println("멤버=============" + member);
+		//System.out.println("멤버=============" + member);
 		return "mypage1/info_update";
 	}
 
@@ -55,18 +55,18 @@ public class Mypage1Controller {
 	public String like_hate_list(Model model) {
 		// 로그인한 회원번호로 좋아요 출력
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println("아이디===============" + username);
+		//System.out.println("아이디===============" + username);
 		MemberDto_by member = memberService.getMemberByUsername(username);
 		int mno = member.getMno();
-		System.out.println("mno>>>>>>" + mno);
+		//System.out.println("mno>>>>>>" + mno);
 		model.addAttribute("mno", mno);
 		// 추천한 레시피 리스트
 		List<Recipe_recommendDto_by> recipeLike = likeService.getRecipeLike(mno);
-		System.out.println("레시피좋아요!!!!!!!!!!!!!!" + recipeLike);
+		//System.out.println("레시피좋아요!!!!!!!!!!!!!!" + recipeLike);
 		model.addAttribute("recipeLike", recipeLike);
 		// 좋아요 메뉴 리스트
 		List<Menu_favoriteDto_by> menuLike = likeService.getMenuLike(mno);
-		System.out.println("메뉴좋아요!!!!!!!!" + menuLike);
+		//System.out.println("메뉴좋아요!!!!!!!!" + menuLike);
 		model.addAttribute("menuLike", menuLike);
 
 		return "mypage1/like_hate_list";
@@ -76,7 +76,7 @@ public class Mypage1Controller {
 	@RequestMapping("/mypage_main")
 	public String mypageMain(Model model) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println("아이디===============" + username);
+		//System.out.println("아이디===============" + username);
 		MemberDto_by member = memberService.getMemberByUsername(username);
 		int mno = member.getMno();
 		model.addAttribute("mno", mno);
@@ -93,15 +93,15 @@ public class Mypage1Controller {
 		
 		// all냉동
 		List<FridgeIngredientDto> ice = myDao.getAllIceList(mno);
-		System.out.println("냉동all====" + ice);
+		//System.out.println("냉동all====" + ice);
 		model.addAttribute("ice", ice);
 		// all냉장
 		List<FridgeIngredientDto> cool = myDao.getAllCoolList(mno);
-		System.out.println("냉장all+++" + cool);
+		//System.out.println("냉장all+++" + cool);
 		model.addAttribute("cool", cool);
 		// all상온
 		List<FridgeIngredientDto> food = myDao.getAllFoodList(mno);
-		System.out.println("상온all>>>>" + food);
+		//System.out.println("상온all>>>>" + food);
 		model.addAttribute("food", food);
 		
 		// 디데이
@@ -117,7 +117,7 @@ public class Mypage1Controller {
 		}
 		model.addAttribute("dd", dd);
 		model.addAttribute("days", days);
-		System.out.println("임박한거디데이!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+days);
+		//System.out.println("임박한거디데이!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+days);
 		//
 		List<Long> daysBetween_ice = new ArrayList<>();
 		List<Long> daysBetween_cool = new ArrayList<>();
@@ -150,7 +150,7 @@ public class Mypage1Controller {
 	@RequestMapping("/material_update")
 	public String goMaterialUpdate(@RequestParam("fcode") int fcode, Model model) {
 		FridgeIngredientDto fi = myDao.getMaterialList(fcode);
-		System.out.println("수정할재료정보리스트" + fi);
+		//System.out.println("수정할재료정보리스트" + fi);
 		model.addAttribute("material", fi);
 		
 		List<String> keeptypes = Arrays.asList("냉장", "냉동", "상온"); // 옵션데이터
