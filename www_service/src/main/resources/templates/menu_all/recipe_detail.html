@@ -24,7 +24,7 @@
 			margin-top: 25px;
 		}
 
-		.like-button {
+		#recipe-reco-btn {
 			font-family: "Pretendard Variable", Pretendard;
 			border: 1px solid #899ED5;
 			color: #899ED5;
@@ -32,11 +32,11 @@
 			padding: 6px 10px;
 		}
 
-		.like-button i {
+		#recipe-reco-btn i {
 			font-size: 15px;
 		}
 
-		.like-button i span {
+		#recipe-reco-btn i span {
 			font-family: "Pretendard Variable", Pretendard;
 			font-weight: 500;
 			padding-left: 5px;
@@ -208,7 +208,7 @@
 					th:src="@{/uploads/} + ${recipeOrderList[#lists.size(recipeOrderList) - 1].cookingImg}"
 					alt="대표 이미지">
 				<div class="zzim-btn">
-					<button class="like-button" id="recipe-reco-btn" onclick="toggleLike(event, this)">
+					<button class="" id="recipe-reco-btn" th:onclick="'toggleLike(event, this, ' + ${rcode} + ')'">
 						<i class="far fa-heart"><span>찜하기</span></i>
 					</button>
 				</div>
@@ -271,15 +271,24 @@
 	</section>
 
 	<script>
-		function toggleLike(event, button) {
+		async function toggleLike(event, button, rcode) {
 			event.stopPropagation();
-			button.classList.toggle('liked');
+			try {
+				const result_msg = await recipeRecommendWithRcode(rcode);
+				if (result_msg.includes('취소')) {
+					button.classList.remove('liked');
+				} else if (result_msg.includes('성공')) {
+					button.classList.add('liked');
+				}
+			} catch (error) {
+				console.error('Error:', error);
+			}
 		}
 
 		// id 속성에 'recipe-reco-btn' 값이 입력되어 있으면 해당 태그 클릭 시
 		// 로그인 되어 있는 사용자 이름으로 레시피 추천 등록 또는 추천 삭제(취소) 동작
 		document.addEventListener('DOMContentLoaded', () => {
-			document.getElementById('recipe-reco-btn').addEventListener('click', recipeRecommend);
+			// document.getElementById('recipe-reco-btn').addEventListener('click', recipeRecommend);
 
 		})
 
@@ -288,7 +297,7 @@
 		 * URL의 쿼리스트링에 rcode라는 변수 명으로 레시피 코드가 포함되어 있어야 동작함.
 		 * ex) /menu_all/recipe_detail?rcode=16
 		*/
-		function recipeRecommend() {
+		function recipeRecommendWithoutRcode() {
 			const urlParams = new URLSearchParams(location.search);
 			rcode = urlParams.get('rcode');
 			console.log(rcode);
@@ -301,9 +310,41 @@
 				})
 		}
 
+		async function recipeRecommendWithRcode(rcode) {
+			const response = await fetch(`/api/recipe-reco/${rcode}`);
+			if (!response.ok) {
+				throw new Error('Network response was not ok ' + response.statusText);
+			}
+			const msg = await response.text();
+			alert(msg);
+			return msg;
+		}
+
+		// 사용자가 찜 한 레시피인지 확인
+		async function checkIfRecipeLiked(rcode) {
+			const response = await fetch(`/api/check-recipe-liked/${rcode}`);
+			if (!response.ok) {
+				throw new Error('Network response was not ok ' + response.statusText);
+			}
+			const isLiked = await response.json();
+			return isLiked;
+		}
+
 		// 페이지 로드 시
-		document.addEventListener('DOMContentLoaded', () => {
+		document.addEventListener('DOMContentLoaded', async () => {
+			const recipeRecoBtn = document.getElementById('recipe-reco-btn');
 			
+			const urlParams = new URLSearchParams(location.search);
+			rcode = urlParams.get('rcode');
+
+			try {
+				const isLiked = await checkIfRecipeLiked(rcode);
+				if (isLiked) {
+					recipeRecoBtn.classList.add('liked');
+				}
+			} catch (error) {
+				console.error('Error:', error);
+			}
 		});
 
 	</script>
