@@ -1,191 +1,252 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Recipe List</title>
-    <style>
-        #recipeList {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .recipe {
-            width: 225px;
-            background-color: #E0E0E0;
-            color: black;
-            border-radius: 5px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            position: relative;
-        }
-        .recipe:hover {
-            transform: translateY(-5px);
-        }
-        .recipe h3 {
-            padding: 10px;
-            margin: 0;
-            background-color: #D0D0D0;
-            font-size: 16px;
-        }
-        .recipe p {
-            padding: 5px 10px;
-            margin: 0;
-            font-size: 14px;
-        }
-        .recipe .menuName {
-            font-weight: bold;
-        }
-        .recipe .introduce {
-            height: 60px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-        }
-        .filter-container {
-            display: none;
-            background: rgba(107, 213, 252, 0.1);
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            max-width: 1000px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        .filterButtons {
-            display: flex;
-            justify-content: flex-start;
-            margin-bottom: 20px;
-        }
-        .filterButtons button {
-            margin-right: 10px;
-            background: none;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 10px 15px;
-            color: black;
-            transition: background-color 0.3s, text-decoration 0.3s;
-        }
-        .filterButtons button:hover {
-            background-color: #e0e0e0;
-            text-decoration: underline;
-        }
-        .filter-description {
-            font-style: italic;
-            color: #666;
-            margin-bottom: 15px;
-        }
-        .filter-section {
-            margin-bottom: 15px;
-        }
-        .filter-section h4 {
-            margin-bottom: 10px;
-            color: #333;
-        }
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .checkbox-group input[type="checkbox"] {
-            margin-right: 5px;
-        }
-        .checkbox-group label {
-            cursor: pointer;
-        }
-        .like-button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-        }
+<meta charset="UTF-8">
+<title>Recipe List</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<style>
+#recipeList {
+	width: 1140px;
+	margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 22.5px;
+	display: flex;
+}
 
-        .like-button i {
-            font-size: 24px;
-            color: #ccc;
-            transition: color 0.3s;
-        }
+.recipe {
+	width: 210px;
+	cursor: pointer;
+}
 
-        .like-button.liked i {
-            color: #e74c3c;
-        }
+.recipe .elsa-recipe-all-img {
+	width: 100%;
+	height: 210px;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	overflow: hidden;
+	box-sizing: border-box;
+}
 
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+.recipe .elsa-recipe-all-img img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
 
-        .search-container input {
-            width: 300px;
-            font-size: 16px;
-        }
-    </style>
+.recipe .elsa-recipe-all-info {
+	padding: 5px;
+	padding-top: 10px;
+}
+
+.recipe .elsa-recipe-all-info h3 {
+	font-size: 13px;
+	color: #666;
+	font-weight: 400;
+	padding-bottom: 7px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.recipe .elsa-recipe-all-info p {
+	font-size: 14px;
+	line-height: 22px;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+.filter-container {
+	display: none;
+	background: rgba(107, 213, 252, 0.1);
+	border: 1px solid #ddd;
+	padding: 20px;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	max-width: 1000px;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+.filterButtons {
+	display: flex;
+	justify-content: flex-start;
+	margin-bottom: 20px;
+}
+
+.filterButtons button {
+	margin-right: 10px;
+	background: none;
+	border: none;
+	font-size: 16px;
+	cursor: pointer;
+	padding: 10px 15px;
+	color: black;
+	transition: background-color 0.3s, text-decoration 0.3s;
+}
+
+.filterButtons button:hover {
+	background-color: #e0e0e0;
+	text-decoration: underline;
+}
+
+.filter-description {
+	font-style: italic;
+	color: #666;
+	margin-bottom: 15px;
+}
+
+.filter-section {
+	margin-bottom: 15px;
+}
+
+.filter-section h4 {
+	margin-bottom: 10px;
+	color: #333;
+}
+
+.checkbox-group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+	margin-right: 5px;
+}
+
+.checkbox-group label {
+	cursor: pointer;
+}
+
+.like-button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	transform: translateY(-50%);
+}
+
+.like-button i {
+	font-size: 24px;
+	color: #ccc;
+	transition: color 0.3s;
+}
+
+.like-button.liked i {
+	color: #e74c3c;
+}
+
+.search-container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+
+.search-container input {
+	font-family: "Pretendard Variable", Pretendard;
+	width: 300px;
+	height: 40px;
+	padding-left: 5px;
+	box-sizing: border-box;
+	font-size: 15px;
+	color: #333;
+	border: 1px solid #F5A47D;
+	border-radius: 5px 0 0 5px;
+}
+
+.search-container button {
+	font-family: "Pretendard Variable", Pretendard;
+	width: 50px;
+	background: #F5A47D;
+	border: 0;
+	color: #fff;
+	border-radius: 0 5px 5px 0;
+	cursor: pointer;
+}
+</style>
 </head>
 <body>
-<header>
-    <th:block th:insert="~{/sub/header.html}"></th:block>
-</header>
-<div class="container">
-    <div class="filterButtons">
-        <button onclick="toggleFilter('filterDiv')">카테고리 검색</button>
-        <button onclick="toggleFilter('ingredientDiv')">재료별 검색</button>
-        <button onclick="toggleFilter('themeDiv')">테마 검색</button>
-    </div>
-</div>  
-<div id="filterDiv" class="filter-container">
-    <p class="filter-description"><i>*원하시는 카테고리를 선택하세요.*</i></p>
-    <div id="recipeCategoriesCheckbox" class="filter-section">
-        <h4>레시피 카테고리</h4>
-        <div class="checkbox-group">
-            <!-- 여기에 동적으로 레시피 카테고리 체크박스가 추가됩니다 -->
-        </div>
-    </div>
-</div>
-<div id="themeDiv" class="filter-container">
-    <p class="filter-description"><i>*원하시는 테마를 선택하세요.*</i></p>
-    <div id="recipeThemesCheckbox" class="filter-section">
-        <h4>레시피 테마</h4>
-        <div class="checkbox-group">
-            <!-- 여기에 동적으로 테마 체크박스가 추가됩니다 -->
-        </div>
-    </div>
-</div>
-<div id="ingredientDiv" class="filter-container">
-    <p class="filter-description"><i>*이런 재료가 들어간 레시피를 찾아보세요*</i></p>
-    <div class="filter-section">
-        <h4>재료</h4>
-        <div id="ingredientCheckboxes" class="checkbox-group">
-            <!-- 여기에 동적으로 체크박스가 추가됩니다 -->
-        </div>
-    </div>
-</div>
-<div class="search-container">
-    <input type="text" id="searchInput" placeholder="레시피 이름 + 내용 + 카테고리 + 테마">
-</div>
-<section>
-    <div id="recipeList">
-        <div class="recipe" th:each="recipe : ${recipes}" th:onclick="'loadRecipeDetail(\'' + ${recipe.rcode} + '\')'">
-            <h3 th:text="${recipe.recipeName}">Recipe Name</h3>
-            <p class="menuName">메뉴: <span th:text="${recipe.menuName}">Menu Name</span></p>
-            <p class="introduce" th:text="${recipe.introduce}">Introduce</p>
-        </div>
-    </div>
-</section>
-<script>
+	<header>
+		<th:block th:insert="~{/sub/header.html}"></th:block>
+	</header>
+	<div class="container">
+		<div class="filterButtons">
+			<button onclick="toggleFilter('filterDiv')">카테고리 검색</button>
+			<button onclick="toggleFilter('ingredientDiv')">재료별 검색</button>
+			<button onclick="toggleFilter('themeDiv')">테마 검색</button>
+		</div>
+	</div>
+	<div id="filterDiv" class="filter-container">
+		<p class="filter-description">
+			<i>*원하시는 카테고리를 선택하세요.*</i>
+		</p>
+		<div id="recipeCategoriesCheckbox" class="filter-section">
+			<h4>레시피 카테고리</h4>
+			<div class="checkbox-group">
+				<!-- 여기에 동적으로 레시피 카테고리 체크박스가 추가됩니다 -->
+			</div>
+		</div>
+	</div>
+	<div id="themeDiv" class="filter-container">
+		<p class="filter-description">
+			<i>*원하시는 테마를 선택하세요.*</i>
+		</p>
+		<div id="recipeThemesCheckbox" class="filter-section">
+			<h4>레시피 테마</h4>
+			<div class="checkbox-group">
+				<!-- 여기에 동적으로 테마 체크박스가 추가됩니다 -->
+			</div>
+		</div>
+	</div>
+	<div id="ingredientDiv" class="filter-container">
+		<p class="filter-description">
+			<i>*이런 재료가 들어간 레시피를 찾아보세요*</i>
+		</p>
+		<div class="filter-section">
+			<h4>재료</h4>
+			<div id="ingredientCheckboxes" class="checkbox-group">
+				<!-- 여기에 동적으로 체크박스가 추가됩니다 -->
+			</div>
+		</div>
+	</div>
+	<div class="search-container">
+		<input type="text" id="searchInput"
+			placeholder="레시피 이름 + 내용 + 카테고리 + 테마">
+		<button>
+			<i><img src="/img/search-icon.png"></i>
+		</button>
+	</div>
+	<section>
+		<div id="recipeList">
+			<div class="recipe" th:each="recipe : ${recipes}"
+				th:onclick="'loadRecipeDetail(\'' + ${recipe.rcode} + '\')'">
+				<div class="elsa-recipe-all-img">
+					<img
+						th:src="${lastImg.get(recipe.rcode).startsWith('DEFAULT:') ? 
+              					(lastImg.get(recipe.rcode).substring(8)) : 
+              					('/uploads/' + lastImg.get(recipe.rcode))}">
+				</div>
+				<div class="elsa-recipe-all-info">
+					<h3 th:text="${recipe.recipeName}"></h3>
+					<p th:text="${recipe.menuName}"></p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script>
     let selectedCategories = [];
     let excludedIngredients = [];
     let selectedThemes = [];
@@ -310,27 +371,30 @@
         })
         .then(response => response.json())
         .then(data => {
-            filteredRecipes = data;
-            updateRecipeList(filteredRecipes);
+            updateRecipeList(data.recipes, data.lastImgMap);
         })
         .catch(error => console.error('Error:', error));
     }
 
-    function updateRecipeList(data) {
-        let html = '';
-        if (Array.isArray(data) && data.length > 0) {
-            data.forEach(recipe => {
+    function updateRecipeList(filteredRecipes, lastImgMap) {
+    	let html = '';
+        if (Array.isArray(filteredRecipes) && filteredRecipes.length > 0) {
+            filteredRecipes.forEach(recipe => {
                 html += `
-                    <div class="recipe" onclick="loadRecipeDetail('${recipe.rcode}')">
-                        <h3>${recipe.recipeName}</h3>
-                        <p class="menuName">
-                            메뉴: <span>${recipe.menuName}</span>
-                            <button class="like-button" onclick="toggleLike(event, this)">
-                                <i class="far fa-heart"></i>
-                            </button>
-                        </p>
-                        <p class="introduce">${recipe.introduce}</p>
-                    </div>`;
+                	<div class="recipe" th:each="recipe : ${recipes}"
+    				th:onclick="'loadRecipeDetail(\'' + ${recipe.rcode} + '\')'">
+    				<div class="elsa-recipe-all-img">
+    					<img
+    						th:src="${lastImg.get(recipe.rcode).startsWith('DEFAULT:') ? 
+                  					(lastImg.get(recipe.rcode).substring(8)) : 
+                  					('/uploads/' + lastImg.get(recipe.rcode))}">
+    				</div>
+    				<div class="elsa-recipe-all-info">
+    					<h3 th:text="${recipe.recipeName}"></h3>
+    					<p th:text="${recipe.menuName}"></p>
+    				</div>
+    			</div>
+                `;
             });
         } else { 
             html = '<p>검색 결과가 없습니다.</p>';
@@ -349,6 +413,6 @@
 
 
 </script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 </body>
 </html>

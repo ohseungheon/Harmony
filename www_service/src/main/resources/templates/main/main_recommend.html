@@ -23,9 +23,12 @@
 	.randomRecipe ul li a div,
 	.randomMenu ul li a div{
 		width:210px;
-		height:160px;
+		height:210px;
 		border:1px solid #eee;
 		overflow:hidden;
+	}
+	.randomMenu ul li a div{
+		position:relative;
 	}
 	.randomRecipe ul li a div:hover img,
 	.randomMenu ul li a div:hover img{
@@ -41,15 +44,22 @@
 	}
 	.randomRecipe ul li a p,
 	.randomMenu ul li a p{
-		width:200px;
-		padding:5px;
+		width:210px;
+		padding:10px 0;
 		padding-top:10px;
 		line-height:22px;
 		font-size:14px;
+		
 	}
 	.randomMenu ul li a p{
-		font-size:17px;
-		text-align:center;
+		width:100%;
+		color:#fff;
+		font-size:15px;
+		padding:10px 0;
+		padding-left:10px;
+		background:rgb(0, 0, 0, 0.5);
+		position:absolute;
+		bottom:0;
 	}
 </style>
 </head>
@@ -80,8 +90,8 @@
 						th:href="@{/menu_all/recipe_list(mcode=${randMenu.mcode})}">
 						<div>
 							<img th:src="@{'/uploads/' + ${randMenu.imgurl}}">
+							<p th:text="${randMenu.menuName}"></p>
 						</div>
-						<p th:text="${randMenu.menuName}"></p>
 					</a>
 				</li>
 			</ul>

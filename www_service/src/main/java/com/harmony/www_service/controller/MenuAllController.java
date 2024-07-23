@@ -42,9 +42,19 @@ public class MenuAllController {
     @GetMapping("/menu_all/recipe_all_list")
     public String recipe_all_list(Model model) {
 
-        List<RecipeDto> recipes = recipeDao.getAllRecipes();
+    	List<RecipeDto> recipes = recipeDao.getAllRecipes();
         model.addAttribute("recipes", recipes);
 
+        Map<Integer, String> lastImgMap = new HashMap<>();
+        for (RecipeDto recipe : recipes) {
+            RecipeOrderDto lastImg = recipeDao.recipeLastCookImg(recipe.getRcode());
+            String imgPath = (lastImg != null && lastImg.getLastCookingImg() != null) 
+                             ? lastImg.getLastCookingImg() 
+                             : "DEFAULT:/img/imgNone2.png";  // 기본 이미지에 접두어 추가
+            lastImgMap.put(recipe.getRcode(), imgPath);
+        }
+        model.addAttribute("lastImg", lastImgMap);
+        
         return "menu_all/recipe_all_list";
     }
 

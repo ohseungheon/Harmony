@@ -1,17 +1,22 @@
 package com.harmony.www_service.restcontroller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.harmony.www_service.dao.RecipeDao;
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.MenuDto;
+import com.harmony.www_service.dto.RecipeAllResponseDto;
 import com.harmony.www_service.dto.RecipeDto;
+import com.harmony.www_service.dto.RecipeOrderDto;
 import com.harmony.www_service.service.IngredientService;
 import com.harmony.www_service.service.MenuListService;
 import com.harmony.www_service.service.MenuService;
@@ -31,6 +36,9 @@ public class MenuAllRestController {
 
     @Autowired
     private RecipeService recipeService;
+    
+    @Autowired
+    private RecipeDao recipeDao;
 
     @GetMapping("/menu_all_list")
     public List<MenuDto> getMenuListByCategory(@RequestParam("category") String category){
@@ -60,12 +68,25 @@ public class MenuAllRestController {
     }
     
     @GetMapping("/filtered_recipe_list")
-    public List<RecipeDto> getFilteredRecipeList(
+    public ResponseEntity<RecipeAllResponseDto> getFilteredRecipeList(
         @RequestParam(value = "category", required = false) List<String> category,
         @RequestParam(value = "ingredient", required = false) List<Integer> ingredient,
         @RequestParam(value = "theme", required = false) List<String> theme,
         @RequestParam(value = "searchTerm", required = false) String searchTerm) {
-        return recipeService.getFilteredRecipeList(category, ingredient, theme, searchTerm);
+    	
+    	List<RecipeDto> recipes = recipeService.getFilteredRecipeList(category, ingredient, theme, searchTerm);
+
+        Map<Integer, String> lastImgMap = new HashMap<>();
+        for (RecipeDto recipe : recipes) {
+            RecipeOrderDto lastImg = recipeDao.recipeLastCookImg(recipe.getRcode());
+            lastImgMap.put(recipe.getRcode(), lastImg.getLastCookingImg());
+        }
+
+        RecipeAllResponseDto response = new RecipeAllResponseDto();
+        response.setRecipes(recipes);
+        response.setLastImgMap(lastImgMap);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/search")
