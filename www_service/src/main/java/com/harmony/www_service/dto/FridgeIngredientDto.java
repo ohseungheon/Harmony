@@ -2,9 +2,13 @@ package com.harmony.www_service.dto;
 
 import java.time.LocalDate;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FridgeIngredientDto {
 	private int fcode; //냉장고재료코드
 	private int mno;

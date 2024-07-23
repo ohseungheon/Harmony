@@ -109,6 +109,7 @@ public class Mypage1Controller {
 		List<FridgeIngredientDto> dd = myDao.getAllDayList(mno);
 		List<Long> days = new ArrayList<>();
 		LocalDate now = LocalDate.now();
+		model.addAttribute("now", now);
 		
 		for(FridgeIngredientDto i : dd) {
 			long dday = ChronoUnit.DAYS.between(i.getDeadline(), now);
@@ -151,7 +152,7 @@ public class Mypage1Controller {
 		FridgeIngredientDto fi = myDao.getMaterialList(fcode);
 		System.out.println("수정할재료정보리스트" + fi);
 		model.addAttribute("material", fi);
-
+		
 		List<String> keeptypes = Arrays.asList("냉장", "냉동", "상온"); // 옵션데이터
 		model.addAttribute("keeptypes", keeptypes);
 		return "mypage1/mypage_main";

@@ -7,14 +7,16 @@
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
 <style>
-section{
-	position:relative;
+section {
+	position: relative;
 }
-main{
-	position:absolute;
-	top:0;
-	left:-220px;
+
+main {
+	position: absolute;
+	top: 0;
+	left: -220px;
 }
+
 #by-section {
 	width: 1140px;
 	min-height: 1000px;
@@ -22,7 +24,7 @@ main{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	box-sizing:border-box;
+	box-sizing: border-box;
 }
 
 #by-myInfo {
@@ -30,7 +32,7 @@ main{
 	background: white;
 	border: 1px solid #ccc;
 	padding: 25px 0;
-	margin-bottom:30px;
+	margin-bottom: 30px;
 }
 
 #by-myInfo .info-inbox {
@@ -49,7 +51,7 @@ main{
 	width: 200px;
 	border: 1px solid #ccc;
 	padding: 25px 0;
-	background:#fff;
+	background: #fff;
 }
 
 #by-myInfo, #by-myInfo2 {
@@ -91,16 +93,15 @@ main{
 	height: 180px;
 	margin: 50px 20px;
 	position: relative;
-	
 	display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
 }
 
 .by-span {
 	margin-top: -30px;
-    margin-bottom: 23px;
+	margin-bottom: 23px;
 }
 
 .by-ingre-div {
@@ -114,14 +115,20 @@ main{
 #by-dday-span {
 	position: absolute;
 	margin-left: -10px;
-	margin-top: -220px;
+	margin-top: -170px;
+}
+
+#by-now-span {
+	position: absolute;
+	margin-left: 790px;
+	margin-top: -170px;
 }
 
 #by-dday-list {
 	border: 3px solid #e0ebf7;
 	background-color: white;
 	width: 870px;
-	height: 160px;
+	height: 100px;
 	margin-bottom: 115px;
 	margin-top: 35px;
 	padding: 20px;
@@ -139,8 +146,7 @@ main{
 	border: 2px solid #e0ebf7;
 	border-radius: 10px;
 	background-color: white;
-	width: 130px;
-	height: 130px;
+	width: 100px;
 	margin: 20px;
 	display: flex;
 	flex-direction: column;
@@ -163,7 +169,7 @@ main{
 #by-tab2 {
 	background-color: #e0ebf7;
 	width: 915px;
-	height: 570px;
+	height: 620px;
 	display: flex;
 	align-items: flex-start;
 	justify-content: flex-start;
@@ -185,7 +191,7 @@ main{
 	border: 1px solid #ddd;
 	outline: none;
 	transition: background-color 0.3s ease;
-	font-size: 19px;
+	font-size: 15px;
 }
 
 .tabs button:hover {
@@ -212,43 +218,39 @@ main{
 	border: 1px solid #ddd;
 	background-color: #fff;
 	box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15); /* 우하단에 그림자 추가 */
-	width: 390px;
-	height: 150px;
+	width: 170px;
 	padding: 10px;
-	margin: 15px;
+	margin: 20px;
 	box-sizing: border-box;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center; /* 수평 가운데 정렬 */
 	border-radius: 5px;
 }
 
 .by-mImg {
-	border: 2px solid #ddd;
 	box-sizing: border-box;
 	border-radius: 5px;
 	padding: 5px;
 }
 
 .by-list img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+	width: 75px;
 	box-sizing: border-box;
 }
 
 .by-mInfo {
 	flex-grow: 1;
-	padding-left: 20px;
 }
 
 #by-mName {
 	font-size: 18px;
-	text-align: left;
+	margin-bottom: 5px;
 }
 
 .by-form {
-	margin-left: 10px;
+	margin-top: 5px;
 }
 
 .by-form label, .by-form input {
@@ -257,9 +259,10 @@ main{
 }
 
 .by-form label {
-	width: 130px;
+	width: 50px;
 	text-align: right;
 	margin-right: 7px;
+	font-size: 11px;
 }
 
 .by-form .form-row {
@@ -270,69 +273,68 @@ main{
 
 .by-form input[type="text"] {
 	width: 70%;
-	padding: 5px;
-	border: 2px solid #ccc;
+	padding: 3px;
+	border: 1px solid #bbb;
 	box-sizing: border-box;
 	text-align: center;
 	margin-right: 10px;
 	border-radius: 5px;
-	font-size: 15px;
+	font-size: 13px;
 }
 
-.by-mbtn {
-	padding: 5px 5px;
-	font-size: 10px;
+.by-update-btn, .by-delete-btn {
+	padding: 5px 15px;
 	background-color: #FF9A8B;
 	color: white;
 	border: none;
 	cursor: pointer;
-	margin-right: 10px; /* 추가: 버튼을 왼쪽으로 이동 */
+	margin: 0 5px; /* 추가: 버튼을 왼쪽으로 이동 */
 	border-radius: 5px;
 }
 
-.by-mbtn:hover {
+.by-update-btn:hover, .by-delete-btn:hover {
 	background-color: #FF6F61;
 }
-.by-btn-div {
-	margin: 5px;
-}
-#by-btn-insert{
+
+#by-btn-insert {
 	width: 100px;
 	height: 33px;
-		
 	position: absolute;
 	margin-left: 813px;
 	margin-top: -40px;
 	background-color: white;
-    border: 1px solid #ccc;
-    text-align: center;
-    color: grey;
+	border: 1px solid #ccc;
+	text-align: center;
+	color: grey;
 }
+
 #by-btn-insert:hover {
 	background-color: #eee;
 }
-.by-jjim{
+
+.by-jjim {
 	border: 1px solid #eee;
 	width: 370px;
 	height: 40px;
 	margin: 5px 0;
 	display: flex;
-    align-items: center;
-    justify-content: center;
+	align-items: center;
+	justify-content: center;
 }
-.by-jjim span{
+
+.by-jjim span {
 	margin-left: 25px;
 }
+
 .by-jjim:hover {
 	background-color: #eee;
 }
 
 #by-menu-img {
-	width: 100px;
-	height: 70px;
+	width: 50%;
 	margin: 5px;
-	padding-bottom: 5px;
 }
+
 #by-menu-plus {
 	color: red;
 }
@@ -342,45 +344,53 @@ main{
 }
 
 .d-day-info {
-	text-align: center; 
-	font-size: 18px;
+	text-align: center;
+	font-size: 13px;
+	margin: 5px;
 }
 /* 모달 배경 */
 .modal {
-    display: none; /* 숨겨진 상태 */
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+	display: none; /* 기본적으로 숨김 */
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
 }
 
 /* 모달 콘텐츠 */
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 50%;
+	height: 50%;
 }
 
 /* 닫기 버튼 */
-.close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
 }
 
-.close-btn:hover,
-.close-btn:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.by-modal {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 20px;
 }
 </style>
 </head>
@@ -389,10 +399,10 @@ main{
 		<th:block th:insert="~{/sub/header.html}"></th:block>
 	</header>
 
-		<section>
+	<section>
 		<!-- 내정보 -->
 		<main>
-		
+
 			<div id="by-sidebar">
 				<div id="by-myInfo">
 					<div class="info-inbox">
@@ -410,7 +420,7 @@ main{
 						</p>
 					</div>
 				</div>
-	
+
 				<div id="by-myInfo2">
 					<div class="info-inbox">
 						<span id="by-nickName2"> MY PAGE </span>
@@ -434,240 +444,322 @@ main{
 					</div>
 				</div>
 			</div>
-		
+
 		</main>
-			<div id="by-section">
-				<!-- 상단 : 리스트 -->
-				<div class="by-div">
-					<div class="by-topdiv">
-						<span class="by-span">찜 레시피 LIST</span>
-							<div th:each="recipeLike : ${recipeLike}">
-								<a th:href="@{/menu_all/recipe_detail(rcode=${recipeLike.rcode})}">
-									<div class="by-jjim">
-										<span th:text="${recipeLike.recipeName} +' 👍'"></span>
-									</div>
-								</a>
+		<div id="by-section">
+			<!-- 상단 : 리스트 -->
+			<div class="by-div">
+				<div class="by-topdiv">
+					<span class="by-span">찜 레시피 LIST</span>
+					<div th:each="recipeLike : ${recipeLike}">
+						<a th:href="@{/menu_all/recipe_detail(rcode=${recipeLike.rcode})}">
+							<div class="by-jjim">
+								<span th:text="${recipeLike.recipeName} +' 👍'"></span>
 							</div>
-					</div>
-					<div class="by-topdiv">
-						<span class="by-span">나의 레시피 LIST</span>
-							<div th:each="my : ${my}">
-								<a th:href="@{/menu_all/recipe_detail(rcode=${my.rcode})}">
-									<div class="by-jjim">
-										<span th:text="${my.recipeName} +' 🍛'"></span>
-									</div>
-								</a>	
-							</div>
+						</a>
 					</div>
 				</div>
+				<div class="by-topdiv">
+					<span class="by-span">나의 레시피 LIST</span>
+					<div th:each="my : ${my}">
+						<a th:href="@{/menu_all/recipe_detail(rcode=${my.rcode})}">
+							<div class="by-jjim">
+								<span th:text="${my.recipeName} +' 🍛'"></span>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
 
-				<div class="by-ingre-div">
-					<!-- 중간 : 유통기한임박리스트 or 재료없으면 재료등록 버튼 -->
-					<div id="by-dday-list">
-						<span id="by-dday-span">유통기한 임박 LIST</span>
-							<div th:each="dd, iterStat : ${dd}">
-								<div class="by-dday">
-									<img id="by-menu-img" th:src="@{'/img/ingredient/'+ ${dd.imgUrl}}">
-										<div class="d-day-info">
-											<p id="by-menu-plus" th:if="${days[iterStat.index] > 0}"
-												th:text="'D+' + ${days[iterStat.index]}"></p>
-											<p id="by-menu-minus" th:if="${days[iterStat.index] < 0}"
-												th:text="'D' + ${days[iterStat.index]}"></p>
-											<p id="by-menu-d0" th:if="${days[iterStat.index] == 0}" 
-												th:text="'D-day'"></p>	
-										</div>
-									</div>
-								</div>
+			<div class="by-ingre-div">
+				<!-- 중간 : 유통기한임박리스트 or 재료없으면 재료등록 버튼 -->
+				<div id="by-dday-list">
+					<span id="by-dday-span">유통기한 임박 LIST</span> <span id="by-now-span">[[${now}]]</span>
+					<div th:each="dd, iterStat : ${dd}">
+						<div class="by-dday">
+							<img id="by-menu-img"
+								th:src="@{'/img/ingredient/'+ ${dd.imgUrl}}">
+							<div class="d-day-info">
+								<p id="by-menu-plus" th:if="${days[iterStat.index] > 0}"
+									th:text="'D+' + ${days[iterStat.index]}"></p>
+								<p id="by-menu-minus" th:if="${days[iterStat.index] < 0}"
+									th:text="'D' + ${days[iterStat.index]}"></p>
+								<p id="by-menu-d0" th:if="${days[iterStat.index] == 0}"
+									th:text="'D-day'"></p>
 							</div>
-					<!-- 하단 : 등록한 재료 전체 조회 -->
-					<div id="by-tab">
-						<span id="by-tab-span">나의 재료 LIST</span>
-						<button id="by-btn-insert">재료등록</button>
-						
-						<div class="tabs">
-							<button class="tab-button active" data-tab="cool">냉장</button>
-							<button class="tab-button" data-tab="ice">냉동</button>
-							<button class="tab-button" data-tab="food">상온</button>
 						</div>
-						<div id="by-tab2">
-							<!-- 냉장 -->
-							<div class="tab-content active" id="cool">
-								<div th:each="cool : ${cool}" class="by-list">
-									<div class="by-mImg">
-										<img th:src="@{'/img/ingredient/'+ ${cool.imgUrl}}">
+					</div>
+				</div>
+				<!-- 하단 : 등록한 재료 전체 조회 -->
+				<div id="by-tab">
+					<span id="by-tab-span">나의 재료 LIST</span>
+					<button id="by-btn-insert">재료등록</button>
+
+					<div class="tabs">
+						<button class="tab-button active" data-tab="cool">냉장</button>
+						<button class="tab-button" data-tab="ice">냉동</button>
+						<button class="tab-button" data-tab="food">상온</button>
+					</div>
+					<div id="by-tab2">
+						<!-- 냉장 -->
+						<div class="tab-content active" id="cool">
+							<div th:each="cool : ${cool}" class="by-list">
+								<div class="by-mImg">
+									<img th:src="@{'/img/ingredient/'+ ${cool.imgUrl}}">
+								</div>
+								<div class="by-mInfo">
+									<div id="by-mName">[[${cool.name}]]</div>
+								</div>
+								<div class="by-form">
+									<div class="form-row">
+										<label for="by-count">[[${cool.type}]]</label> <input
+											type="text" id="by-count" th:value="${cool.amount}" readonly>
 									</div>
-									<div class="by-mInfo">
-										<div id="by-mName">[[${cool.name}]]</div>
-									</div>
-									<div class="by-form">
-										<div class="form-row">
-											<label for="by-count">[[${cool.type}]]</label> <input
-												type="text" id="by-count" th:value="${cool.amount}" readonly>
-										</div>
-										<div class="form-row">
-											<label for="by-deadline">유통기한</label> <input type="text"
-												id="by-deadline" th:value="${cool.deadline}" readonly>
-										</div>
-									</div>
-									<div class="by-btn-div">
-										<!-- hidden input 추가 -->
-										<input type="hidden" class="fcode" th:value="${cool.fcode}">
-										<input type="hidden" name="icode" th:value="${cool.icode}">
-										<button id="by-update-btn" class="by-mbtn">수정</button>
-										<button id="by-delete-btn" class="by-mbtn">삭제</button>
+									<div class="form-row">
+										<label for="by-deadline">유통기한</label> <input type="text"
+											id="by-deadline" th:value="${cool.deadline}" readonly>
 									</div>
 								</div>
+								<div class="by-btn-div">
+									<!-- hidden input 추가 -->
+									<input type="hidden" class="fcode" th:value="${cool.fcode}">
+									<input type="hidden" name="icode" th:value="${cool.icode}">
+									<input type="hidden" name="category" th:value="${cool.category}">
+									<button id="by-update-btn" class="by-update-btn">수정</button>
+									<button id="by-delete-btn" class="by-delete-btn">삭제</button>
+								</div>
 							</div>
-							<!-- 냉동 -->
-							<div class="tab-content" id="ice">
-								<div th:each="ice : ${ice}" class="by-list">
-									<div class="by-mImg">
-										<img th:src="@{'/img/ingredient/'+ ${ice.imgUrl}}">
+						</div>
+						<!-- 냉동 -->
+						<div class="tab-content" id="ice">
+							<div th:each="ice : ${ice}" class="by-list">
+								<div class="by-mImg">
+									<img th:src="@{'/img/ingredient/'+ ${ice.imgUrl}}">
+								</div>
+								<div class="by-mInfo">
+									<div id="by-mName">[[${ice.name}]]</div>
+								</div>
+								<div class="by-form">
+									<div class="form-row">
+										<label for="by-count">[[${ice.type}]]</label> <input
+											type="text" id="by-count" th:value="${ice.amount}">
 									</div>
-									<div class="by-mInfo">
-										<div id="by-mName">[[${ice.name}]]</div>
+									<div class="form-row">
+										<label for="by-deadline">유통기한</label> <input type="text"
+											id="by-deadline" th:value="${ice.deadline}">
 									</div>
-									<div class="by-form">
-										<div class="form-row">
-											<label for="by-count">[[${ice.type}]]</label> <input
-												type="text" id="by-count" th:value="${ice.amount}">
-										</div>
-										<div class="form-row">
-											<label for="by-deadline">유통기한</label> <input type="text"
-												id="by-deadline" th:value="${ice.deadline}">
-										</div>
-									</div>
+								</div>
+								<div class="by-btn-div">
 									<!-- hidden input 추가 -->
 									<input type="hidden" class="fcode" th:value="${ice.fcode}">
 									<input type="hidden" name="icode" th:value="${ice.icode}">
-									<button id="by-update-btn" class="by-mbtn">수정</button>
-									<button id="by-delete-btn" class="by-mbtn">삭제</button>
+									<input type="hidden" name="category" th:value="${ice.category}">
+									<button id="by-update-btn" class="by-update-btn">수정</button>
+									<button id="by-delete-btn" class="by-delete-btn">삭제</button>
 								</div>
 							</div>
-							<!-- 상온 -->
-							<div class="tab-content" id="food">
-								<div th:each="food : ${food}" class="by-list">
-									<div class="by-mImg">
-										<img th:src="@{'/img/ingredient/'+ ${food.imgUrl}}">
+						</div>
+						<!-- 상온 -->
+						<div class="tab-content" id="food">
+							<div th:each="food : ${food}" class="by-list">
+								<div class="by-mImg">
+									<img th:src="@{'/img/ingredient/'+ ${food.imgUrl}}">
+								</div>
+								<div class="by-mInfo">
+									<div id="by-mName">[[${food.name}]]</div>
+								</div>
+								<div class="by-form">
+									<div class="form-row">
+										<label for="by-count">[[${food.type}]]</label> <input
+											type="text" id="by-count" th:value="${food.amount}">
 									</div>
-									<div class="by-mInfo">
-										<div id="by-mName">[[${food.name}]]</div>
+									<div class="form-row">
+										<label for="by-deadline">유통기한</label> <input type="text"
+											id="by-deadline" th:value="${food.deadline}">
 									</div>
-									<div class="by-form">
-										<div class="form-row">
-											<label for="by-count">[[${food.type}]]</label> <input
-												type="text" id="by-count" th:value="${food.amount}">
-										</div>
-										<div class="form-row">
-											<label for="by-deadline">유통기한</label> <input type="text"
-												id="by-deadline" th:value="${food.deadline}">
-										</div>
-									</div>
+								</div>
+								<div class="by-btn-div">
 									<!-- hidden input 추가 -->
 									<input type="hidden" class="fcode" th:value="${food.fcode}">
 									<input type="hidden" name="icode" th:value="${food.icode}">
-									<button id="by-update-btn" class="by-mbtn">수정</button>
-									<button id="by-delete-btn" class="by-mbtn">삭제</button>
+									<input type="hidden" name="category" th:value="${food.category}">
+									<button id="by-update-btn" class="by-update-btn">수정</button>
+									<button id="by-delete-btn" class="by-delete-btn">삭제</button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
-
-				</div>
 			</div>
-			
-			<!-- 재료 상세 모달 -->
-			<div id="edit-modal" class="modal">
-				<div class="modal-content">
-					<span class="close-btn">&times;</span>
-					<div id="modal-body">
+		</div>
+
+		<!-- 재료 상세 모달 -->
+		<!-- 모달 창 -->
+		<div id="myModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<div class="by-modal">
+					<h3 id="modalData">재료 수정</h3>
+					<form id="m-updateForm" th:action="@{/mypage1/material_update}" method="POST">
+						<label for="modalName" class="m-label">이름</label> 
+						<input type="text" id="modalName" class="m-text" value="" readonly> 
 						
-					</div>
+						<label for="modalCategory" class="m-label">카테고리</label> 
+						<input type="text" id="modalCategory" class="m-text" value="" readonly> 
+						
+						<label for="modalCount" class="m-label">수량/중량</label> 
+						<input type="number" id="modalCount" class="m-text" value=""> 
+						
+						<label for="modalKeeptype" class="m-label">보관상태</label> 
+						<select id="modalKeeptype" name="modalKeeptype" class="m-text">
+		    				<option value="냉장">냉장</option>
+                   	 		<option value="냉동">냉동</option>
+                    		<option value="상온">상온</option>
+		    			</select>
+		    			
+						<label for="modalDeadline" class="m-label">유통기한</label>
+						<input type="text" id="modalDeadline" class="m-text" value="">
+						
+						<label for="modalMemo" class="m-label">메모</label> 
+						<input type="text" id="modalMemo" class="m-text" value=""> 
+						
+						<input type="hidden" id="modalFcode" name="modalFcode" value="">
+	    				<input type="hidden" id="modalMno" name="modalMno" value="">
+	    				
+						<input type="submit" value="수정"> 
+						<input type="button" value="목록">
+					</form>
 				</div>
 			</div>
-		</section>
+		</div>
+
+	</section>
 
 	<script>
-	//DOMContentLoaded : 문서의 모든 요소가 로드되고 파싱되었을 때 실행
-	document.addEventListener('DOMContentLoaded', function() {
-	    const tabButtons = document.querySelectorAll('.tab-button');
-	    const tabContents = document.querySelectorAll('.tab-content');
-	    
-	    const modal = document.getElementById('edit-modal');
-	    const closeBtn = document.querySelector('.close-btn');
-	    const modalBody = document.getElementById('modal-body');
-	    
-	    
-	 	// 각 탭 버튼에 클릭 이벤트 리스너 추가
-	    tabButtons.forEach(button => {
-	        button.addEventListener('click', () => {
-	        	// 모든 버튼과 콘텐츠에서 'active' 클래스 제거
-	            tabButtons.forEach(btn => btn.classList.remove('active'));
-	            tabContents.forEach(content => content.classList.remove('active'));
+		$(document).ready(function() {
+			// 탭 전환 로직
+			$('.tab-button').on('click', function() {
+				var tabId = $(this).data('tab');
+				$('.tab-button').removeClass('active');
+				$(this).addClass('active');
+				$('.tab-content').removeClass('active');
+				$('#' + tabId).addClass('active');
+			});
+			
+			//모달
+			var modal = $('#myModal');
+    		var closeBtn = $('.close');
+			const modalName = document.getElementById("modalName");
+			const modalCategory = document.getElementById("modalCategory");
+			const modalCount = document.getElementById("modalCount");
+			const modalKeeptype = document.getElementById("modalKeeptype");
+			const modalDeadline = document.getElementById("modalDeadline");
+			const modalMemo = document.getElementById("modalMemo");
+			
+			// 모달 열기
+			$('.by-update-btn').on('click', function() {
+				var fcode = $(this).siblings(".fcode").val();
+				console.log("내재료",fcode);
+				
+				modal.show();
+				fetchModalData(fcode);
+			});
 
-	         	// 클릭된 버튼과 연결된 콘텐츠에 'active' 클래스 추가
-	            button.classList.add('active');
-	            const selectedTab = button.getAttribute('data-tab');
-	            document.getElementById(selectedTab).classList.add('active');
-	        });
-	    });
-	 	//
-	    $(document).on("click", "#by-update-btn", function() {
-	        const fcode = $(this).siblings(".fcode").val();
+			// 모달 닫기
+			closeBtn.on('click', function() {
+        		modal.hide();
+    		});
 
-	        $.ajax({
-	            url: '/material_update?fcode=' + fcode, // 수정 폼이 위치한 URL
-	            type: "GET",
-	            success: function(response) {
-	                modalBody.innerHTML = response; // AJAX로 가져온 HTML을 모달에 삽입
-	                modal.style.display = "block"; // 모달 열기
-	            },
-	            error: function(xhr, textStatus, errorThrown) {
-	                console.log("폼 로드 실패", textStatus, errorThrown);
-	            }
-	        });
-	    });
+			// 모달 데이터 가져오기
+			function fetchModalData(fcode) {
+				console.log("모달재료번호",fcode);
+				$.ajax({
+		            url: '/mypage1/' + fcode, // 서버에서 데이터를 가져올 URL
+		            type: 'GET',
+		            data: fcode,
+		            success: function(data) {
+		            	document.getElementById("modalFcode").value = data.fcode;
+		            	document.getElementById("modalMno").value = data.mno;
+		            	document.getElementById("modalName").value = data.name;
+		                document.getElementById("modalCategory").value = data.category;
+		                document.getElementById("modalCount").value = data.amount;
+		                document.getElementById("modalKeeptype").value = data.keeptype;
+		                document.getElementById("modalDeadline").value = data.deadline;
+		                document.getElementById("modalMemo").value = data.memo;
+		                
+		            	console.log("수정재료",data);
+		            },
+					error : function(error) {
+						console.error('Error:', error);
+					}
+				});
+			}
+			//모달 데이터 수정기능 
+			$("#m-updateForm").on("submit", function(event){
+				event.preventDefault();
+				
+				const fcode = $("#modalFcode").val();
+				const mno = $("#modalMno").val();
+		        const deadline = $("#modalDeadline").val();
+		        const amount = $("#modalCount").val();
+		        const keeptype = $("#modalKeeptype").val();
+		        const memo = $("#modalMemo").val();
 
-	    closeBtn.onclick = function() {
-	        modal.style.display = "none";
-	    }
+		        var jsonData = JSON.stringify({
+		        	fcode: fcode,
+		        	mno: mno,
+		        	deadline: deadline,
+		        	amount: amount,
+		        	keeptype: keeptype,
+		        	memo: memo
+		        });
+		        console.log(jsonData);
+				
+				$.ajax({
+					url: $(this).attr('action'),
+		            type: 'PUT',
+		            contentType: 'application/json', // JSON 형식으로 데이터 전송
+		            data: jsonData,
+		            dataType: 'text',
+		            success: function(response) {
+		                alert("재료정보가 성공적으로 수정되었습니다🍉");
+		                window.location.href = "/mypage_main";
+		            },
+		            error: function(xhr, status, error) {
+		                console.log('Status: ' + status);
+		                console.log('Error: ' + error);
+		                alert("재료수정 실패😫");
+		            }
+		        });
+			});
+		});
 
-	    window.onclick = function(event) {
-	        if (event.target === modal) {
-	            modal.style.display = "none";
-	        }
-	    }
-	 	
-	});
-	
-	
-	//삭제
-	$(document).on("click", "#by-delete-btn", function(e) {
-		if (confirm('재료를 삭제하시겠습니까?')) {
-		const fcode = $(this).siblings(".fcode").val();
-	    console.log(fcode);
-	    
-		$.ajax({
-			url: '/mypage1/material/'+fcode,
-			type: "DELETE",
-			success: function(response){
-				alert(response);
-				console.log("삭제성공");
-				location.reload(); // 페이지 새로고침
-			},
-			error: function(xhr, textStatus, errorThrown){
-				console.log("삭제실패", textStatus, errorThrown);
+		//삭제
+		$(document).on("click", "#by-delete-btn", function(e) {
+			if (confirm('재료를 삭제하시겠습니까?')) {
+				const fcode = $(this).siblings(".fcode").val();
+				console.log(fcode);
+
+				$.ajax({
+					url : '/mypage1/material/' + fcode,
+					type : "DELETE",
+					success : function(response) {
+						alert(response);
+						console.log("삭제성공");
+						location.reload(); // 페이지 새로고침
+					},
+					error : function(xhr, textStatus, errorThrown) {
+						console.log("삭제실패", textStatus, errorThrown);
+					}
+				});
 			}
 		});
-		}
-	});
-	
-	//재료등록
-	document.getElementById('by-btn-insert').addEventListener('click', function() {
-	    window.location.href = '/material_insert'; // 이동할 URL
-	});
+
+		//재료등록
+		document.getElementById('by-btn-insert').addEventListener('click',
+				function() {
+					window.location.href = '/material_insert'; // 이동할 URL
+				});
 	</script>
 </body>
 </html>

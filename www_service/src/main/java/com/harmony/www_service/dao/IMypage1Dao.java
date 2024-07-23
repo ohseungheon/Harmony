@@ -37,4 +37,7 @@ public interface IMypage1Dao {
 	
 	//등록했던 재료 수정 기능 
 	public void updateMaterial(@Param("material") FridgeIngredientDto material);
+	
+	//fcode로 해당 재료 데이터 가져오기 
+	public FridgeIngredientDto getIngredientByFcode(@Param("fcode") int fcode);
 }
