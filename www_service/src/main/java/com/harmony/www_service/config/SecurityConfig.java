@@ -36,6 +36,7 @@ public class SecurityConfig {
 						.requestMatchers("/menu_all/**").permitAll()
 						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
+						.requestMatchers("/menu1/**","menu2/**").authenticated()
 						// .anyRequest().authenticated()
 						.anyRequest().permitAll()
 						);
