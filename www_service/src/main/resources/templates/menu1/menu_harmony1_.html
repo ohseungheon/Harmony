@@ -25,7 +25,6 @@
 	margin: 5px 0;
 	padding: 12px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	psition:relative;
 }
 
 .row img {
@@ -92,7 +91,16 @@ button#xBtn:hover {
 	color: white;
 }
 
-
+input[type="submit"] {
+	font-size: 16px;
+	padding: 8px 12px;
+	background-color: #00acc1;
+	color: white;
+	border: 2px solid #0097a7;
+	border-radius: 12px;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.3s;
+}
 
 input[type="submit"]:hover {
 	background-color: #0097a7;
@@ -145,8 +153,8 @@ input[type="submit"]:hover {
 	margin: 15% auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 90%;
-	max-width: 500px;
+	width: 80%;
+	max-width: 300px;
 	text-align: center;
 	border-radius: 10px;
 }
@@ -163,35 +171,6 @@ input[type="submit"]:hover {
 	text-decoration: none;
 	cursor: pointer;
 }
-
-.asd {
-    position: absolute; /* 툴팁을 이 요소에 상대적으로 위치시키기 위해 필요 */
-    display: inline-block; /* 툴팁이 정확히 이 요소 위에 표시되도록 하기 위해 */
-    cursor: pointer; /* 클릭할 수 있는 요소를 나타내는 커서 변경 */
-}
-
-.asd .tooltip {
-    visibility: hidden; /* 기본적으로 숨김 상태 */
-    width: 120px; /* 툴팁의 너비 */
-    background-color: #555; /* 툴팁 배경색 */
-    color: #fff; /* 툴팁 텍스트 색상 */
-    text-align: center; /* 텍스트 가운데 정렬 */
-    border-radius: 6px; /* 툴팁의 둥근 모서리 */
-    padding: 5px; /* 툴팁 내부 여백 */
-    position: absolute; /* 절대 위치 */
-    z-index: 1; /* 다른 요소 위에 표시되도록 */
-    bottom: 255%; /* 요소 위쪽에 위치시키기 위해 */
-    left: 50%; /* 수평 중앙 정렬 */
-    margin-left: -60px; /* 수평 중앙 정렬을 위한 오프셋 */
-    opacity: 0; /* 기본적으로 불투명 상태 */
-    transition: opacity 0.3s; /* 페이드 인 효과 */
-}
-
-.asd:hover .tooltip {
-    visibility: visible; /* 마우스 오버 시 툴팁 표시 */
-    opacity: 1; /* 완전히 불투명 상태로 변경 */
-}
-
 </style>
 </head>
 <body>
@@ -227,11 +206,7 @@ input[type="submit"]:hover {
 		<br>
 
 		<div style="text-align: center">제외된 재료</div>
-
-		<div id="NoUseIngredient">
-
-
-		</div>
+		<div id="NoUseIngredient"></div>
 
 		<br>
 
@@ -241,13 +216,9 @@ input[type="submit"]:hover {
 
 		<div id="canMakeMenuDiv" class="container">
 			<div class="row" style="display: none;">만들 수 있는 메뉴</div>
-			<div th:each="dto : ${showCanMakeMenuList}" class="row row9"
+			<div th:each="dto : ${showCanMakeMenuList}" class="row"
 				th:id="'canMakeMenuMcode' + ${dto.mcode}">
 				<input type="hidden" value="${dto.mcode}">
-				   <p class="asd">
-                    ⓘ
-                    <span class="tooltip">안녕하세요</span>
-                </p>
 				<div class="container2">
 					<div>
 						<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
@@ -265,7 +236,7 @@ input[type="submit"]:hover {
 		<div id="canMakeMenuDiv2" class="container">
 			<div class="row" style="display: none;">만들 수 있는 메뉴2</div>
 			<div th:each="dto : ${showCanMakeMenuList2}" class="row"
-				th:id="'canMakeMenuMcode2_' + ${dto.mcode}">
+				th:id="'canMakeMenuMcode' + ${dto.mcode}">
 				<input type="hidden" value="${dto.mcode}">
 				<div class="container2">
 					<div>
@@ -286,18 +257,19 @@ input[type="submit"]:hover {
 
 	<!-- 모달 구조 추가 -->
 	<div id="howToUseModal" class="modal">
-		<div class="modal-content">
-			<span class="close">x</span>
-			<p>*왼쪽의 회원님의 냉장고에 등록된 재료를 기준으로 요리가능한 메뉴를 보여주는 서비스입니다.</p>
-			<br>
-			<p>1. 좌측 재료목록에서 제외시키고자 하는 재료를 '제외'버튼을 눌러 해당 재료가 포함되지 않은 메뉴들이 우측에
-				나타납니다.</p>
-			<p>2. 제외시킨 재료에 '복원'버튼을 클릭하면 다시 해당 재료가 포함된 매뉴들이 나타납니다.</p>
-			<p>3. 원하는 재료를 선택/제외 하고 난 뒤 우측에 출력되는 메뉴를 클릭할 시 해당 메뉴의 레시피 리스트로
-				이동합니다.</p>
-			<p>4. 상단의 '재료부족허용'을 체크하게 되면 재료가 1~2가지 부족한 메뉴도 나타납니다.</p>
-			<p>5. 4번의 기능이 체크되어있을 시 재료가 1가지 부족한 메뉴의 경우, 메뉴의 상단에 부족한 재료명이
-				표기됩니다.</p>
+		<div id="howToUseModal" class="modal">
+			<div class="modal-content">
+				<span class="close">x</span>
+				<p>*왼쪽의 회원님의 냉장고에 등록된 재료를 기준으로 요리가능한 메뉴를 보여주는 서비스입니다.</p>
+				<p>1. 좌측 재료목록에서 제외시키고자 하는 재료를 '제외'버튼을 눌러 해당 재료가 포함되지 않은 메뉴들이 우측에
+					나타납니다.</p>
+				<p>2. 제외시킨 재료에 '복원'버튼을 클릭하면 다시 해당 재료가 포함된 매뉴들이 나타납니다.</p>
+				<p>3. 원하는 재료를 선택/제외 하고 난 뒤 우측에 출력되는 메뉴를 클릭할 시 해당 메뉴의 레시피 리스트로
+					이동합니다.</p>
+				<p>4. 상단의 '재료부족허용'을 체크하게 되면 재료가 1~2가지 부족한 메뉴도 나타납니다.</p>
+				<p>5. 4번의 기능이 체크되어있을 시 재료가 1가지 부족한 메뉴의 경우, 메뉴의 상단에 부족한 재료명이
+					표기됩니다.</p>
+			</div>
 		</div>
 	</div>
 
@@ -324,47 +296,20 @@ input[type="submit"]:hover {
     function toggleHighlight(event, icode) {
         const button = event.currentTarget;
         const row = button.closest('.row');
-        const checkboxBtn = document.getElementById('toggle-checkbox');
-        let checked = checkboxBtn.checked;
+        console.log("==========================toggleHighlight row" + row)
         row.classList.toggle('highlight');
 
         if (row.classList.contains('highlight')) {
             NoUseIngredient(event);
             deleteIngredient(event, icode);
-            if(!checked){
             mcodeListForIcodeList(event, icode);
-            } else{
-            	
-            mcodeListForIcodeList2(event, icode);
-            }
-            
         } else {
             NoUseIngredient(event);
             undoIngredient2(event, icode);
-            if(!checked){
-                mcodeListForIcodeList(event, icode);
-                } else{
-                	
-                mcodeListForIcodeList2(event, icode);
-                }
-                
+            mcodeListForIcodeList(event, icode);
         }
     }
-    function toggleHighlight2(event, icode) {
-    	
-        const btn = document.getElementById('icode'+icode);
-        const checkboxBtn = document.getElementById('toggle-checkbox');
-        const row = btn.closest('.row');
 
-        let checked = checkboxBtn.checked;
-        console.log("============================toggleHighlight2 row================="+row.id);
-        row.classList.toggle('highlight');
-
-      
-    }
-    
-    
-    
     function goRecipeList(event, mcode) {
         event.preventDefault();
         window.location.href = '/menu_all/recipe_list?mcode=' + mcode;
@@ -406,53 +351,50 @@ input[type="submit"]:hover {
             console.error('Error:', error);
         });
     }
-    function mcodeListForIcodeList2(event, icode) {
-        event.preventDefault();
-        fetch("/menu1/mcodeListForIcodeList2?icode=" + icode, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            NoUseIngredient(event);
-            toggle2(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
 
     function toggle2(mcodes) {
         let selectedRows = mcodes.map(mcode => document.getElementById("canMakeMenuMcode" + mcode));
-        let selectedRows2 = mcodes.map(mcode => document.getElementById("canMakeMenuMcode2_" + mcode));
         let rows = document.querySelectorAll('#canMakeMenuDiv .row:not(:first-child)'); // Exclude header row
         let rows2 = document.querySelectorAll('#canMakeMenuDiv2 .row:not(:first-child)'); // Exclude header row
-        let checkBtn = document.getElementById('toggle-checkbox');        
-        console.log("================make mcode================ : "+mcodes);
-        console.log("================selectedRows================ : "+selectedRows.length);
-        console.log("================rows================ : "+rows.length);
-        console.log("================rows2================ : "+rows2.length);
-        let check = checkBtn.checked;
+        let checkBtn = document.getElementById('toggle-checkbox')        
+        console.log("================selectedRows================ : "+selectedRows.length)
+        console.log("================rows================ : "+rows.length)
+        console.log("================rows2================ : "+rows2.length)
+        let check = document.getElementById('toggle-checkbox').checked;
     
+        if (!check) {
         
-            rows.forEach(row => {
-                if (!selectedRows.includes(row)) {
-                    row.classList.add('remove_highlight');
-                } else {
-                    row.classList.remove('remove_highlight');
-                }
-            });
-            
-            rows2.forEach(row2 => {
-                if (!selectedRows2.includes(row2)) {
-                    row2.classList.add('remove_highlight');
-                } else {
-                    row2.classList.remove('remove_highlight');
-                }
-            });
+        rows.forEach(row => {
+            if (!selectedRows.includes(row)) {
+                row.classList.add('remove_highlight');
+            } else {
+                row.classList.remove('remove_highlight');
+            }
+        });
+        
+
+          }else{
+        	  
+        rows2.forEach(row => {
+            if (!selectedRows.includes(row)) {
+                row.classList.add('remove_highlight');
+            } else {
+                row.classList.remove('remove_highlight');
+            }
+        });
+        
+        	  
+        	  
+          }
+        
+        
+        
+        
+        
+
+        
     }
+
 
     function NoUseIngredient(event) {
         event.preventDefault();
@@ -471,102 +413,8 @@ input[type="submit"]:hover {
         });
     }
 
-    function undoIngredient(event, icode) {
-        event.preventDefault();
-        const checkboxBtn = document.getElementById('toggle-checkbox');
-
-        let checked = checkboxBtn.checked;
-        event.preventDefault();
-        if(!checked){ 
-        	fetch("/menu1/undoIngredient_menu1?icode=" + icode, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle undoing the ingredient
-        	NoUseIngredient(event);
-            toggle2(data);
-            toggleHighlight2(event, icode)
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-        
-        }else{fetch("/menu1/undoIngredient_menu2?icode=" + icode, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle undoing the ingredient
-        	NoUseIngredient(event);
-            toggle2(data);
-            toggleHighlight2(event, icode)
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-        	
-        	
-        }
-        
-        
-      
-    }
-    
-    
-    function NoUseIngredientAllDelete2(event) {
-    	event.preventDefault();
-        const checkboxBtn = document.getElementById('toggle-checkbox');
-        let checked = checkboxBtn.checked
-        fetch("/menu1/NoUseIngredientAllDelete", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("NoUseIngredient").innerHTML =data;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-    
-    
-    function NoUseIngredientAllDelete(event) {
-    	event.preventDefault();
-        const checkboxBtn = document.getElementById('toggle-checkbox');
-        let checked = checkboxBtn.checked
-        
-        
-    	window.location.href = '/menu1/main?checked='+checked;
-    }
-    
-    
-    window.onload = function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const checked = urlParams.get('checked') === 'true';  // URL에서 체크박스 상태 가져오기
-
-        const checkboxBtn = document.getElementById('toggle-checkbox');
-        if (checkboxBtn) {
-            checkboxBtn.checked = checked;  // 체크박스 상태 설정
-            document.getElementById('canMakeMenuDiv').style.display = checked ? 'none' : 'flex';
-            document.getElementById('canMakeMenuDiv2').style.display = checked ? 'flex' : 'none';
-        }
-    };
-    
-    
-    
     function undoIngredient2(event, icode) {
-    	const checkboxBtn = document.getElementById('toggle-checkbox');
-    
+        event.preventDefault();
         fetch("/menu1/undoIngredient2?icode=" + icode, {
             method: "GET",
             headers: {
@@ -589,35 +437,6 @@ input[type="submit"]:hover {
             html += '';
         } else {
             // 배열이 있고 데이터가 있는 경우
-            html += '<div">';
-            html += '<div>메뉴추천에서 제외한 메뉴</div>';
-            html += '<div>복원</div>';
-            html += '</div>';
-
-            jsonData.forEach(item => {
-                html += '<div>';
-                html += '<div>' + item.name + '</div>';
-                html += '<div><button type="button" onclick="undoIngredient(event, \'' + item.icode + '\')">x</button></div>';
-                html += '<button  onclick="NoUseIngredientAllDelete(event)"> 전체삭제</button>';
-                
-                html += '<form id="mainForm" action="/menu1/main" method="get">'
-                html += '<input type="submit" value="초기화">		</form>'
-
-            html += '</div>';
-            });
-
-        }
-
-        return html;
-    }
-
-    function CreateNoUseIngredientTable_backUp(jsonData) {
-        var html = '';
-
-        if (jsonData.length === 0) {
-            html += '';
-        } else {
-            // 배열이 있고 데이터가 있는 경우
             html += '<table border="1" style="margin: 0 auto; text-align: center;">';
             html += '<tr>';
             html += '<th>메뉴추천에서 제외한 메뉴</th>';
@@ -636,33 +455,7 @@ input[type="submit"]:hover {
 
         return html;
     }
-    
- 
-    function CreateNoUseIngredientTable_backUp(jsonData) {
-        var html = '';
 
-        if (jsonData.length === 0) {
-            html += '';
-        } else {
-            // 배열이 있고 데이터가 있는 경우
-            html += '<table border="1" style="margin: 0 auto; text-align: center;">';
-            html += '<tr>';
-            html += '<th>메뉴추천에서 제외한 메뉴</th>';
-            html += '<th>복원</th>';
-            html += '</tr>';
-
-            jsonData.forEach(item => {
-                html += '<tr>';
-                html += '<td>' + item.name + '</td>';
-                html += '<td><button type="button" onclick="undoIngredient(event, \'' + item.icode + '\')">x</button></td>';
-                html += '</tr>';
-            });
-
-            html += '</table>';
-        }
-
-        return html;
-    }
     document.getElementById('toggle-checkbox').addEventListener('change', function() {
         var isChecked = this.checked;
         document.getElementById('canMakeMenuDiv').style.display = isChecked ? 'none' : 'flex';
