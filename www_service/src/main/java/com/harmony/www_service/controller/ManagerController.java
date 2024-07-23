@@ -5,14 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.IngredientDtoWithFile;
+import com.harmony.www_service.dto.MemberDtoForDashBoard;
 import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.MenuReqDto;
+import com.harmony.www_service.service.DashBoardService;
 import com.harmony.www_service.service.IngredientService_dally;
 import com.harmony.www_service.service.MenuReqService;
 
@@ -23,6 +26,14 @@ public class ManagerController {
 	IngredientService_dally iService;
 	@Autowired
 	MenuReqService mrService;
+	@Autowired
+	DashBoardService dbService;
+	
+	
+	@GetMapping(value = "/manager")
+	public String managerMain() {
+		return "manager/index";
+	}
 
 	// 재료 등록 페이지
 	@RequestMapping("/ingredients_regist")
@@ -93,16 +104,6 @@ public class ManagerController {
 		return "manager/menu_approval";
 	}
 
-	// 요청 메뉴 승인 버튼 페이지
-//	@RequestMapping("/do_menu_req_detail")
-//	public String getList(Model model, @RequestParam("mrcode") int mrcode) {
-//		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//		MenuReqDto result = mrService.getDetail(mrcode);
-//		model.addAttribute("menu", result);
-//		
-//		return "manager/menu_detail";
-//	}
-
 	// 요청 메뉴 처리 - 승인
 	@RequestMapping("/do_access")
 	public String accessMenuReq(@RequestParam("mrcode") int mrcode,
@@ -128,4 +129,28 @@ public class ManagerController {
 		mrService.deleteMenu(mrcode);
 		return "redirect:/menu_req_list";
 	}
+	
+	// ----------------------------- 대시보드 ------------------------------
+	
+	// 연령대별 회원수 통계
+	public String memsByAges(Model model) {
+		List<MemberDtoForDashBoard> result = dbService.NumberOfMemsByAgeGroup();
+		model.addAttribute("list", result);
+		return "redirect:/manager";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
