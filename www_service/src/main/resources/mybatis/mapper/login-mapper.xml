@@ -27,8 +27,8 @@
   	
   	<!-- 회원가입 member -->
   	<insert id="registMember">
-  		insert into member (username, nickName, addr, birth, phone)
-  		values (#{username}, #{nickName}, #{addr}, #{birth}, #{phone})
+  		insert into member (username, nickName, addr, birth, phone, gender)
+  		values (#{username}, #{nickName}, #{addr}, #{birth}, #{phone}, #{gender})
   	</insert>
   
   </mapper>

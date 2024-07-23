@@ -14,4 +14,5 @@ public class MemberDto {
 	private String addr;
 	private LocalDate birth;
 	private String phone;
+	private String gender;
 }

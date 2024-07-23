@@ -14,5 +14,6 @@ public class UserMemberDto {
 	private String addr;
 	private LocalDate birth;
 	private String phone;
+	private String gender;
 
 }

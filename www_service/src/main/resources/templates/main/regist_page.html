@@ -40,8 +40,27 @@ section {
 	padding: 5px;
 	font-size: 16px;
 	color: #333;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 	box-sizing: border-box;
+}
+.date-area{
+	width:100%;
+	margin:10px 0 20px;
+	display:flex;
+	align-items:center;
+	padding-left:5px;
+	border-bottom:1px solid #ccc;
+	box-sizing:border-box;
+}
+.date-area p{
+	color:#999;
+	font-size:13px;
+	margin-right:100px;
+}
+#by-div input[type="date"]{
+	height:40px;
+	border:0;
+	color:#999;
 }
 
 #by-div input[type="text"]::placeholder {
@@ -65,6 +84,32 @@ section {
 #by-div button:hover {
 	background-color: #fab18f; /* 마우스 오버 시 색상 변경 */
 }
+
+.gender-area{
+	display:flex;
+	margin-top:15px;
+}
+.genderlabel{
+	width:220px;
+	padding:10px 0;
+	border:1px solid #eee;
+	text-align:center;
+	cursor:pointer;
+}
+.genderlabel:first-child{
+	border-radius:5px 0 0 5px;
+}
+.genderlabel:last-child{
+	border-radius:0 5px 5px 0;
+}
+.genderlabel input{
+	display:none;
+}
+
+.genderlabel.selected {
+    border-color: #F5A47E;
+    color: #F5A47E;
+}
 </style>
 </head>
 <body>
@@ -77,9 +122,16 @@ section {
 				<input type="text" name="username" id="username" placeholder="아이디">
 				<input type="text" name="password" id="password" placeholder="비밀번호">
 				<input type="text" name="nickName" id="nickName" placeholder="닉네임">
-				<input type="text" name="addr" id="addr" placeholder="주소"> <input
-					type="text" name="birth" id="birth" placeholder="생년월일"> <input
-					type="text" name="phone" id="phone" placeholder="휴대폰 번호">
+				<input type="text" name="addr" id="addr" placeholder="주소">
+				<div class="date-area">
+					<p>생년월일</p>
+					<input type="date" name="birth" id="birth" placeholder="생년월일">
+				</div>
+				<input type="text" name="phone" id="phone" placeholder="휴대폰 번호">
+				<div class="gender-area">
+					<label class="genderlabel" for="gender1"><input type="radio" name="gender" id="gender1" value="남자">남자</label>
+					<label class="genderlabel" for="gender2"><input type="radio" name="gender" id="gender2" value="여자">여자</label>
+				</div>
 				<button id="registBtn">회원가입</button>
 			</form>
 		</div>
@@ -88,13 +140,27 @@ section {
 	<script>
 document.addEventListener("DOMContentLoaded", () => {
 	const registbtn = document.querySelector("#registBtn");
+	const genderLabels = document.querySelectorAll('.genderlabel');
+	
 	console.log(registbtn);
+	
 	registbtn.addEventListener("click", (event) => {
 		event.preventDefault();
-		
 		submitRegist(event);
+		
 	});
-
+	
+	
+	// 성별 라디오 버튼에 이벤트 리스너 추가
+    genderLabels.forEach(label => {
+        label.addEventListener('click', () => {
+            // 모든 라벨에서 'selected' 클래스 제거
+            genderLabels.forEach(l => l.classList.remove('selected'));
+            // 클릭된 라벨에 'selected' 클래스 추가
+            label.classList.add('selected');
+        });
+    });
+	
 
 	function submitRegist(event){
 		
@@ -104,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		const addr = document.getElementById("addr").value;
 		const birth = document.getElementById("birth").value;
 		const phone = document.getElementById("phone").value;
+        const selectedGender = document.querySelector('input[name="gender"]:checked').value;
 		
 		const data = {
 				username : username,
@@ -111,14 +178,15 @@ document.addEventListener("DOMContentLoaded", () => {
 				nickName : nickName,
 				addr : addr,
 				birth : birth,
-				phone : phone
+				phone : phone,
+				gender : selectedGender
 		}
-		alert(JSON.stringify(data));
+		console.log(selectedGender);
 		
 		const xhttp = new XMLHttpRequest();
 		xhttp.onload = function(){
 			if(this.status === 200){
-				const response = JSON.parse(this.responseText);
+				const response = this.responseText;
 				
 				if(response === "success"){
 					alert("회원가입 성공!");
