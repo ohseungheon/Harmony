@@ -43,6 +43,9 @@
 		line-height:22px;
 		font-size:14px;
 	}
+	.randomMenu ul li a p{
+		font-size:17px;
+	}
 </style>
 </head>
 <body>
@@ -51,7 +54,8 @@
 		<div>
 			<ul>
 				<li th:each="randRecipe : ${randomRecipe}">
-					<a th:href="@{#}">
+					<a th:if="${randRecipe != null and randRecipe.rcode != null}"
+						th:href="@{/menu_all/recipe_detail(rcode=${randRecipe.rcode})}">
 						<div>
 							<img th:src="@{'/uploads/' + ${randRecipe.lastCookingImg}}">
 						</div>
@@ -67,7 +71,8 @@
 		<div>
 			<ul>
 				<li th:each="randMenu : ${randomMenu}">
-					<a th:href="@{#}">
+					<a th:if="${randMenu != null and randMenu.mcode != null}"
+						th:href="@{/menu_all/recipe_list(mcode=${randMenu.mcode})}">
 						<div>
 							<img th:src="@{'/uploads/' + ${randMenu.imgurl}}">
 						</div>
