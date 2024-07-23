@@ -112,11 +112,91 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		OR category
 		LIKE CONCAT('%', #{term}, '%')
 	</select>
+    <select id="getRecipeListByMcode" parameterType="int" resultType="com.harmony.www_service.dto.RecipeDto">
+        SELECT * FROM recipe WHERE mcode = #{mcode}
+    </select>
 
-	<!-- 레시피 태그 가져오기 -->
-	<select id="recipeGetTag"
-		resultType="com.harmony.www_service.dto.RecipeGetTagDto">
-		select r.rcode, rt.tagContent
+    <select id="getRecipeByRcode" parameterType="int" resultType="com.harmony.www_service.dto.RecipeDto">
+        SELECT r.*, m.menuName FROM recipe r JOIN menu m ON r.mcode = m.mcode WHERE r.rcode = #{rcode}
+    </select>
+
+    <select id="getRecipeIngredientsByRcode" parameterType="int" resultType="com.harmony.www_service.dto.RecipeIngredientDto">
+        SELECT ri.ricode AS ricode, ri.rcode, ri.icode, ri.amount, i.name FROM recipe_ingredient ri JOIN ingredient i ON ri.icode = i.icode WHERE ri.rcode = #{rcode}
+    </select>
+
+    <select id="getRecipeOrdersByRcode" parameterType="int" resultType="com.harmony.www_service.dto.RecipeOrderDto">
+        SELECT rocode, rcode, orderContent, orderNum, cookingImg FROM recipe_order WHERE rcode = #{rcode} ORDER BY orderNum
+    </select>
+
+    <select id="getRecipeListByMenuName" parameterType="String" resultType="com.harmony.www_service.dto.RecipeDto">
+        SELECT r.* 
+        FROM recipe r
+        JOIN menu m ON r.mcode = m.mcode
+        WHERE m.menuName = #{menuName}
+    </select>
+
+    <select id="getAllRecipes" resultType="com.harmony.www_service.dto.RecipeDto">
+        SELECT r.*, m.menuName
+        FROM recipe r
+        JOIN menu m ON r.mcode = m.mcode
+        ORDER BY r.rcode
+    </select>
+
+    <select id="getRecipeCategories" resultType="String">
+        SELECT DISTINCT category 
+        FROM recipe 
+        WHERE category IS NOT NULL AND category != ''
+        ORDER BY category
+    </select>
+
+    <select id="getAllThemes" resultType="string">
+        SELECT DISTINCT theme FROM recipe WHERE theme IS NOT NULL AND theme != ''
+    </select>
+
+    <select id="getFilteredRecipes" resultType="com.harmony.www_service.dto.RecipeDto">
+        SELECT DISTINCT r.*, m.menuName 
+        FROM recipe r
+        JOIN menu m ON r.mcode = m.mcode
+        WHERE 1=1
+        <if test="category != null and category.size() > 0">
+            AND r.category IN
+            <foreach item="cat" collection="category" open="(" separator="," close=")">
+                #{cat}
+            </foreach>
+        </if>
+        <if test="ingredient != null and ingredient.size() > 0">
+            AND r.rcode NOT IN (
+                SELECT DISTINCT ri.rcode
+                FROM recipe_ingredient ri
+                WHERE ri.icode IN
+                <foreach item="ing" collection="ingredient" open="(" separator="," close=")">
+                    #{ing}
+                </foreach>
+            )
+        </if>
+        <if test="theme != null and theme.size() > 0">
+            AND (
+            <foreach item="thm" collection="theme" separator=" OR ">
+                r.theme LIKE CONCAT('%', #{thm}, '%')
+            </foreach>
+            )
+        </if>
+        <if test="searchTerm != null and searchTerm != ''">
+            AND (r.recipeName LIKE CONCAT('%', #{searchTerm}, '%')
+            OR r.introduce LIKE CONCAT('%', #{searchTerm}, '%')
+            OR m.menuName LIKE CONCAT('%', #{searchTerm}, '%'))
+        </if>
+    </select>
+
+    <select id="searchRecipe" resultType="com.harmony.www_service.dto.RecipeDto">
+        SELECT * FROM recipe WHERE recipeName LIKE CONCAT('%', #{term}, '%')
+        OR introduce LIKE CONCAT('%', #{term}, '%') 
+        OR category LIKE CONCAT('%', #{term}, '%')
+    </select>
+    
+    <!-- 레시피 태그 가져오기 -->
+    <select id="recipeGetTag" resultType="com.harmony.www_service.dto.RecipeGetTagDto">
+        select r.rcode, rt.tagContent 
 		from recipe r
 		join recipe_tag
 		rt
@@ -164,5 +244,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		limit 5
 	</select>
 
+    
+    <!-- 어떤 사용자가 어떤 레시피를 조회 했는지 (봤는지) 등록 -->
+    <insert id="insert_recent_view">
+        INSERT INTO recent_view(mno, rcode) VALUES (#{mno}, #{rcode})
+    </insert>
 
 </mapper>

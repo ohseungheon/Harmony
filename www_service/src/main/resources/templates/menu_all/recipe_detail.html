@@ -204,11 +204,11 @@
 	<section>
 		<div class="recipeDetail-intro-area">
 			<div class="recipeDetail-intro-img">
-				<img th:if="${not #lists.isEmpty(recipeOrderList)}" 
-		             th:src="@{/uploads/} + ${recipeOrderList[#lists.size(recipeOrderList) - 1].cookingImg}" 
-		             alt="대표 이미지">
+				<img th:if="${not #lists.isEmpty(recipeOrderList)}"
+					th:src="@{/uploads/} + ${recipeOrderList[#lists.size(recipeOrderList) - 1].cookingImg}"
+					alt="대표 이미지">
 				<div class="zzim-btn">
-					<button class="like-button"  id="recipe-reco-btn" onclick="toggleLike(event, this)">
+					<button class="like-button" id="recipe-reco-btn" onclick="toggleLike(event, this)">
 						<i class="far fa-heart"><span>찜하기</span></i>
 					</button>
 				</div>
@@ -219,7 +219,8 @@
 						<i class="fa fa-eye"></i><span th:text="${view}"></span>
 					</p>
 					<p>
-						<i class="fa fa-heart"></i><span th:text="${recipeRecommend != null ? recipeRecommend.recommendCnt : 0}"></span>
+						<i class="fa fa-heart"></i><span
+							th:text="${recipeRecommend != null ? recipeRecommend.recommendCnt : 0}"></span>
 					</p>
 				</div>
 				<div class="recipeDetail-info-area2">
@@ -277,8 +278,8 @@
 
 		// id 속성에 'recipe-reco-btn' 값이 입력되어 있으면 해당 태그 클릭 시
 		// 로그인 되어 있는 사용자 이름으로 레시피 추천 등록 또는 추천 삭제(취소) 동작
-		document.addEventListener('DOMContentLoaded', () =>{
-			document.getElementById('recipe-reco-btn').addEventListener('click',recipeRecommend);
+		document.addEventListener('DOMContentLoaded', () => {
+			document.getElementById('recipe-reco-btn').addEventListener('click', recipeRecommend);
 
 		})
 
@@ -288,10 +289,10 @@
 		 * ex) /menu_all/recipe_detail?rcode=16
 		*/
 		function recipeRecommend() {
-			const urlParams = new URLSearchParams(location.search); 
+			const urlParams = new URLSearchParams(location.search);
 			rcode = urlParams.get('rcode');
 			console.log(rcode);
-			
+
 			fetch('/api/recipe-reco/' + rcode)
 				.then(res => res.text())
 				.then(msg => {
@@ -299,6 +300,12 @@
 					alert(msg);
 				})
 		}
+
+		// 페이지 로드 시
+		document.addEventListener('DOMContentLoaded', () => {
+			
+		});
+
 	</script>
 </body>
 
