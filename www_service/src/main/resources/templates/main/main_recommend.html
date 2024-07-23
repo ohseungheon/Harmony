@@ -2,9 +2,81 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>랜덤추천 레시피</title>
+<title>랜덤추천 레시피, 메뉴</title>
+<style>
+	.randomRecipe,
+	.randomMenu{
+		width:1140px;
+		margin:100px auto;
+	}
+	.randomRecipe h2,
+	.randomMenu h2{
+		font-size:20px;
+		font-weight:400;
+		margin-bottom:30px;
+	}
+	.randomRecipe ul,
+	.randomMenu ul{
+		display:flex;
+		justify-content:space-between;
+	}
+	.randomRecipe ul li a div,
+	.randomMenu ul li a div{
+		width:210px;
+		height:160px;
+		border:1px solid #eee;
+		border-radius:10px;
+		overflow:hidden;
+	}
+	.randomRecipe ul li a div img,
+	.randomMenu ul li a div img{
+		display:inline-block;
+		width:100%;
+		height:100%;
+		object-fit:cover;
+	}
+	.randomRecipe ul li a p,
+	.randomMenu ul li a p{
+		width:200px;
+		padding:5px;
+		padding-top:10px;
+		line-height:22px;
+		font-size:14px;
+	}
+</style>
 </head>
 <body>
-
+	<div class="randomRecipe">
+		<h2>랜덤 레시피</h2>
+		<div>
+			<ul>
+				<li th:each="randRecipe : ${randomRecipe}">
+					<a th:href="@{#}">
+						<div>
+							<img th:src="@{'/uploads/' + ${randRecipe.lastCookingImg}}">
+						</div>
+						<p th:text="${randRecipe.recipeName}"></p>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="randomMenu">
+		<h2>랜덤 메뉴</h2>
+		<div>
+			<ul>
+				<li th:each="randMenu : ${randomMenu}">
+					<a th:href="@{#}">
+						<div>
+							<img th:src="@{'/uploads/' + ${randMenu.imgurl}}">
+						</div>
+						<p th:text="${randMenu.menuName}"></p>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
 </body>
 </html>
