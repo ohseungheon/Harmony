@@ -183,14 +183,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		limit 5
 	</select>
 
-	<!-- 랜덤 메뉴 -->
-	<select id="randomMenu" resultType="com.harmony.www_service.dto.MenuDto">
-		select r.mcode, m.menuName, m.imgurl
-		from menu m
-		join recipe r
-		on m.mcode = r.mcode
-		order by rand()
-		limit 5
+	<!-- 랜덤 메뉴 중복제거-->
+	<select id="randomMenu"
+		resultType="com.harmony.www_service.dto.MenuDto">
+		SELECT m.mcode, m.menuName, m.imgurl
+		FROM (
+		SELECT DISTINCT mcode
+		FROM recipe
+		ORDER BY RAND()
+		LIMIT 5
+		) AS random_recipes
+		JOIN menu m ON m.mcode = random_recipes.mcode
 	</select>
 
 	<!-- 어떤 사용자가 어떤 레시피를 조회 했는지 (봤는지) 등록 -->

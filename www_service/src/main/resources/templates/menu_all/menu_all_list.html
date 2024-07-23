@@ -1,130 +1,190 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        #menuList {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+<meta charset="UTF-8">
+<title>Document</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<style>
+#menuList {
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 22.5px;
+	border-top:1px solid #eee;
+	padding:30px 0;
+}
 
-        .menuItem {
-            width: 225px;
-            background-color: #E0E0E0;
-            color: black;
-            border-radius: 5px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            position: relative;
-        }
+.menuItem {
+	width: 210px;
+	height: 200px;
+	position: relative;
+	background-color: #fff;
+	color: #fff;
+	overflow: hidden;
+	transition: transform 0.3s ease;
+	cursor: pointer;
+	border: 1px solid #eee;
+	box-sizing: border-box;
+}
 
-        .menuItem:hover {
-            transform: translateY(-5px);
-        }
+.menuItem:hover {
+	transform: translateY(-5px);
+}
 
-        .menuImage {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
+.menuImage {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
 
-        .menuName {
-            padding: 10px;
-            text-align: center;
-            font-weight: bold;
-            position: relative;
-        }
+.menuName {
+	width: 100%;
+	text-align: center;
+	font-weight: 400;
+	font-size: 15px;
+	position: absolute;
+	bottom: 0;
+	background: rgb(0, 0, 0, 0.7);
+	text-align: left;
+	padding: 10px 0;
+	padding-left: 10px;
+	box-sizing: border-box;
+}
 
-        .menuButton {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+.menuButton {
+	width:100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 40px;
+	gap: 30px;
+	box-sizing: border-box;
+}
 
-        .menuButton button,
-        .custom-button {
-            background: none;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 10px 15px;
-            color: black;
-            transition: background-color 0.3s, text-decoration 0.3s;
-        }
+.menuButton button {
+	font-family: "Pretendard Variable", Pretendard;
+	background: #fff;
+	border: 0;
+	border-bottom: 2px solid #999;
+	cursor: pointer;
+	padding: 10px 15px;
+	box-sizing: border-box;
+	transition:all 0.3s;
+}
 
-        .menuButton button:hover,
-        .custom-button:hover {
-            background-color: #e0e0e0;
-            text-decoration: underline;
-        }
+.menuButton button span {
+	display: inline-block;
+	transition: all 0.3s;
+	font-size: 18px;
+	font-weight: 300;
+	color: #333;
+}
 
-        .like-button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-        }
+.menuButton button:hover span{
+	transform: translateY(-3px);
+}
+.menuButton button:hover{
+	border-bottom:2px solid #F5A47D;
+}
 
-        .like-button i {
-            font-size: 24px;
-            color: #ccc;
-            transition: color 0.3s;
-        }
+.menuButton button.selected {
+    border-bottom: 2px solid #F5A47D;
+}
 
-        .like-button.liked i {
-            color: #e74c3c;
-        }
+.menuButton button.selected span {
+    transform: translateY(-3px);
+}
 
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+.like-button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	transform: translateY(-50%);
+}
 
-        .search-container input {
-            width: 300px;
-            font-size: 16px;
-        }
-    </style>
+.like-button i {
+	font-size: 24px;
+	color: #ccc;
+	transition: color 0.3s;
+}
+
+.like-button.liked i {
+	color: #e74c3c;
+}
+
+.search-container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+
+.search-container input {
+	font-family: "Pretendard Variable", Pretendard;
+	width: 300px;
+	height:40px;
+	padding-left:5px;
+	box-sizing:border-box;
+	font-size: 15px;
+	color:#333;
+	border:1px solid #F5A47D;
+	border-radius:5px 0 0 5px;
+}
+.search-container button{
+	font-family: "Pretendard Variable", Pretendard;
+	width:50px;
+	background:#F5A47D;
+	border:0;
+	color:#fff;
+	border-radius:0 5px 5px 0;
+	cursor:pointer;
+}
+</style>
 </head>
 
 <body>
-    <header>
-        <th:block th:insert="~{/sub/header.html}"></th:block>
-    </header>
-    <div class="menuButton">
-        <button onclick="MenuAllList()">전체</button>
-        <span class="divider">|</span>
-        <button onclick="loadMenu('한식')">한식</button>
-        <span class="divider">|</span>
-        <button onclick="loadMenu('일식')">일식</button>
-        <span class="divider">|</span>
-        <button onclick="loadMenu('중식')">중식</button>
-        <span class="divider">|</span>
-        <button onclick="loadMenu('양식')">양식</button>
-        <span class="divider">|</span>
-        <button onclick="loadMenu('기타')">기타</button>
-    </div>
+	<header>
+		<th:block th:insert="~{/sub/header.html}"></th:block>
+	</header>
+	<section>
+		<div class="menuButton">
+			<button onclick="MenuAllList()">
+				<span>전체</span>
+			</button>
+			<button onclick="loadMenu('한식')">
+				<span>한식</span>
+			</button>
+			<button onclick="loadMenu('일식')">
+				<span>일식</span>
+			</button>
+			<button onclick="loadMenu('중식')">
+				<span>중식</span>
+			</button>
+			<button onclick="loadMenu('양식')">
+				<span>양식</span>
+			</button>
+			<button onclick="loadMenu('기타')">
+				<span>기타</span>
+			</button>
+		</div>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="메뉴 이름 + 카테고리">
-        <button onclick="searchMenu()">검색</button>
-    </div>
+		<div class="search-container">
+			<input type="text" id="searchInput" placeholder="메뉴 이름 + 카테고리">
+			<button onclick="searchMenu()">
+				<i><img src="/img/search-icon.png"></i>
+			</button>
+		</div>
 
-    <div id="menuList"></div>
+		<div id="menuList"></div>
+	</section>
 
-    <script>
+	<script>
         document.addEventListener('DOMContentLoaded', function () {
             // 페이지 로드 시 전체 메뉴를 기본으로 표시합니다.
             MenuAllList();
@@ -140,6 +200,7 @@
                 .then(response => response.json())
                 .then(data => {
                     updateMenuList(data);
+                    updateSelectedButton('전체');
                 })
                 .catch(error => console.error('Error:', error));
         }
@@ -154,6 +215,7 @@
                 .then(response => response.json())
                 .then(data => {
                     updateMenuList(data);
+                    updateSelectedButton(category);
                 })
                 .catch(error => console.error('Error:', error));
         }
@@ -181,9 +243,6 @@
                     <img src="/uploads/${menu.imgurl}" alt="${menu.menuName}" class="menuImage">
                     <div class="menuName">
                         ${menu.menuName}
-                        <button class="like-button" onclick="toggleLike(event, this, '${menu.mcode}')">
-                            <i class="far fa-heart"></i>
-                        </button>
                     </div>
                 </div>`;
             });
@@ -211,6 +270,19 @@
                 searchMenu();
             }
         });
+        
+        function updateSelectedButton(category) {
+            // 모든 버튼에서 'selected' 클래스 제거
+            document.querySelectorAll('.menuButton button').forEach(button => {
+                button.classList.remove('selected');
+            });
+            
+            // 선택된 카테고리 버튼에 'selected' 클래스 추가
+            const selectedButton = Array.from(document.querySelectorAll('.menuButton button')).find(button => button.textContent.trim() === category);
+            if (selectedButton) {
+                selectedButton.classList.add('selected');
+            }
+        }
 
     </script>
 </body>
