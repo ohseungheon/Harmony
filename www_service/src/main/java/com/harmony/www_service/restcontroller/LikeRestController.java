@@ -3,6 +3,7 @@ package com.harmony.www_service.restcontroller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -98,5 +99,20 @@ public class LikeRestController {
 		return msg;
 	}
 
-
+	@GetMapping("/check-recipe-liked/{rcode}")
+	public ResponseEntity<Boolean> checkIfRecipeLiked(@PathVariable("rcode") int rcode) {
+		// security 내부의 로그인 되어 있는 아이디( username ) 불러오기
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		// username으로 회원 정보 테이블의 mno 불러오기
+		Optional<Integer> mno_ = memberService.getMnoByUsername(username);
+		if (mno_.isPresent()) {
+			int mno = mno_.get();
+			Optional<Integer> rrcodeOptional = likeDao.isPresentRecommend(mno, rcode);
+			if (rrcodeOptional.isPresent()) {
+				return ResponseEntity.ok(true);
+			}
+		}
+		return ResponseEntity.ok(false);
+	}
 }
