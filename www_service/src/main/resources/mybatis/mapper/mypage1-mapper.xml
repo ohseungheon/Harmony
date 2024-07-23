@@ -95,4 +95,11 @@
 		AND 
 			mno = #{material.mno}
 	</update>
+	
+	<select id="getIngredientByFcode" resultType="com.harmony.www_service.dto.FridgeIngredientDto">
+		SELECT i.*, f.* FROM fridge f 
+		JOIN ingredient i 
+		ON f.icode = i.icode 
+		WHERE f.fcode = #{fcode} 
+	</select>
 </mapper>
