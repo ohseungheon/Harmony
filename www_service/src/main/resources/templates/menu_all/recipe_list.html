@@ -11,12 +11,20 @@
         }
         #recipeList{
         	display:flex;
-        	gap:30px;
+        	gap:10px;
         }
         
         .recipeList{
         	width:220px;
         }
+        
+        .recipeList-content{
+        	transition:all 0.3s;
+        }
+        .recipeList-content:hover{
+        	transform:translateY(-5px);
+        }
+        
         .elsa-recipe-list-img{
         	width:100%;
         	height:200px;
@@ -24,6 +32,12 @@
         	border-radius:5px;
         	overflow:hidden;
         	box-sizing:border-box;
+        }
+        .elsa-recipe-list-img img{
+        	display:block;
+        	width:100%;
+        	height:100%;
+        	object-fit:cover;
         }
         
         .elsa-recipe-list-info{
@@ -35,9 +49,17 @@
         	color:#666;
         	font-weight:400;
         	padding-bottom:7px;
+        	white-space:nowrap;
+        	overflow:hidden;
+        	text-overflow:ellipsis;
         }
         .elsa-recipe-list-info p{
-        	font-size:15px;
+        	font-size:14px;
+        	line-height:22px;
+        	overflow:hidden;
+        	display:-webkit-box;
+        	-webkit-line-clamp:2;
+        	-webkit-box-orient:vertical;
         }
     </style>
 </head>
@@ -52,7 +74,7 @@
             <div class="recipeList-content">
                 <a href="#">
                 	<div class="elsa-recipe-list-img">
-                		<img src="">
+                		<img th:src="@{'/uploads/' + ${lastImg.get(recipe.rcode)}}">
                 	</div>
                 	<div class="elsa-recipe-list-info">
 	                    <h3 th:text="${recipe.recipeName}"></h3>

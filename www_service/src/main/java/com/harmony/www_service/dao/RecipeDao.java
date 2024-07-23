@@ -42,4 +42,10 @@ public interface RecipeDao {
     
 //    레시피 디테일 좋아요수
     PopularRecipeDto recipeRecommendCount(@Param("rcode") int rcode);
+    
+//    레시피 리스트 마지막 요리순서 이미지 가져오기
+    RecipeOrderDto recipeLastCookImg(@Param("rcode") int rcode);
+    
+//    레시피 영상 5개 가져오기
+    List<RecipeDto> recipeGetUrl();
 }

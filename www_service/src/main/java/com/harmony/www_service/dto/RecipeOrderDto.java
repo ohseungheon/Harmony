@@ -9,4 +9,5 @@ public class RecipeOrderDto {
     private String orderContent;
     private int orderNum;
     private String cookingImg;
+    private String lastCookingImg;
 }

@@ -3,8 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <title>레시피영상</title>
+<style>
+	#main{
+		width:1140px;
+		margin:0 auto;
+	}
+	.main-recipe-video{
+		width:100%;
+		text-align:left;
+	}
+	.main-recipe-video h2{
+		font-size:20px;
+		font-weight:400;
+		margin-bottom:30px;
+	}
+	
+	.main-recipe-video ul{
+		display:flex;
+		justify-content:space-between;
+	}
+</style>
 </head>
 <body>
-
+	<div id="main">
+		<div class="main-recipe-video">
+			<h2>레시피 영상</h2>
+			<div>
+				<ul>
+					<li th:each="recipe : ${recipeDto}">
+						<a th:href="@{#}">
+							<iframe th:src="@{'https://www.youtube.com/embed/' + ${recipe.url}}" width="210" height="150" frameborder="0" allowfullscreen></iframe>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

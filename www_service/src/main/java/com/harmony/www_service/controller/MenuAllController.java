@@ -1,6 +1,8 @@
 package com.harmony.www_service.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,8 +45,17 @@ public class MenuAllController {
     @GetMapping("/menu_all/recipe_list")
     public String recipe_list(@RequestParam("mcode") int mcode, Model model){
         List<RecipeDto> recipeList = recipeService.getRecipeListByMcode(mcode);
+        
+     // 각 레시피의 마지막 요리 이미지를 가져옵니다.
+        Map<Integer, String> lastImgMap = new HashMap<>();
+        for (RecipeDto recipe : recipeList) {
+            RecipeOrderDto lastImg = recipeDao.recipeLastCookImg(recipe.getRcode());
+            lastImgMap.put(recipe.getRcode(), lastImg.getLastCookingImg());
+        }
+        
         model.addAttribute("mcode", mcode);
         model.addAttribute("recipeList", recipeList);
+        model.addAttribute("lastImg", lastImgMap);
 
         return "menu_all/recipe_list";
     }
