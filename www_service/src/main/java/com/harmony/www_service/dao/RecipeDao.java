@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.PopularRecipeDto;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.RecipeGetTagDto;
@@ -49,6 +50,12 @@ public interface RecipeDao {
     
 //    레시피 영상 5개 가져오기
     List<RecipeDto> recipeGetUrl();
+    
+//    랜덤 레시피
+    List<RecipeDto> randomRecipe();
+    
+//    랜덤 메뉴
+    List<MenuDto> randomMenu();
 
     // 사용자가 본 최근 레시피 등록 recent_view + 1 
     public void insert_recent_view(@Param("mno") int mno, @Param("rcode") int rcode);

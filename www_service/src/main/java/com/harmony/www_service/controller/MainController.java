@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.harmony.www_service.dao.MainTopRecipeDao;
 import com.harmony.www_service.dao.RecipeDao;
 import com.harmony.www_service.dto.MemberDto;
+import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.PopularRecipeDto;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.TopViewDto;
@@ -70,6 +71,15 @@ public class MainController {
 			List<RecipeDto> recipeDto = recipeDao.recipeGetUrl();
 			
 			model.addAttribute("recipeDto", recipeDto);
+			
+			// 랜덤 레시피
+			List<RecipeDto> randomRecipe = recipeDao.randomRecipe();
+			model.addAttribute("randomRecipe", randomRecipe);
+			
+			// 랜덤 메뉴
+			List<MenuDto> randomMenu = recipeDao.randomMenu();
+			model.addAttribute("randomMenu", randomMenu);
+			
 			
 	        return "main/home";
 	    }

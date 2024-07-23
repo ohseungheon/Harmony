@@ -15,4 +15,5 @@ public class RecipeDto {
     private int view;
     private String menuName;
     private String theme;
+    private String lastCookingImg;
 }
