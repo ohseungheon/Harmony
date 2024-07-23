@@ -87,7 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <!-- 레시피 태그 가져오기 -->
     <select id="recipeGetTag" resultType="com.harmony.www_service.dto.RecipeGetTagDto">
-    	select r.rcode, rt.tagContent 
+        select r.rcode, rt.tagContent 
 		from recipe r
 		join recipe_tag rt
 		on r.rcode = rt.rcode
@@ -96,12 +96,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <!-- 레시피 디테일 들어갈때 마다 view +1 -->
     <select id="recipeViewCount">
-    	update recipe set view = view + 1 where rcode = #{rcode}
+        update recipe set view = view + 1 where rcode = #{rcode}
     </select>
     
     <!-- 레시피 디테일 좋아요 눌린수 -->
     <select id="recipeRecommendCount" resultType="com.harmony.www_service.dto.PopularRecipeDto">
-    	select r.rcode, count(rr.rrcode) recommendCnt
+        select r.rcode, count(rr.rrcode) recommendCnt
 		from recipe r 
 		join recipe_recommend rr 
 		on r.rcode = rr.rcode
@@ -109,4 +109,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		group by r.rcode
     </select>
     
+    <!-- 어떤 사용자가 어떤 레시피를 조회 했는지 (봤는지) 등록 -->
+    <insert id="insert_recent_view">
+        INSERT INTO recent_view(mno, rcode) VALUES (#{mno}, #{rcode})
+    </insert>
+
 </mapper>

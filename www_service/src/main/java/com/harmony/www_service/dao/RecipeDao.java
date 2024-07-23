@@ -42,4 +42,7 @@ public interface RecipeDao {
     
 //    레시피 디테일 좋아요수
     PopularRecipeDto recipeRecommendCount(@Param("rcode") int rcode);
+
+    // 사용자가 본 최근 레시피 등록 recent_view + 1 
+    public void insert_recent_view(@Param("mno") int mno, @Param("rcode") int rcode);
 }
