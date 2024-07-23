@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.harmony.www_service.dao.MainTopRecipeDao;
+import com.harmony.www_service.dao.RecipeDao;
 import com.harmony.www_service.dto.MemberDto;
 import com.harmony.www_service.dto.PopularRecipeDto;
+import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.TopViewDto;
 import com.harmony.www_service.service.LoginService;
 
@@ -26,6 +28,9 @@ public class MainController {
 	
 	@Autowired
 	private MainTopRecipeDao mainTopRecipeDao;
+	
+	@Autowired
+	private RecipeDao recipeDao;
 	
 	 @RequestMapping("/")
 	    public String root(Model model) {
@@ -54,13 +59,24 @@ public class MainController {
 	        model.addAttribute("username", username);
 	        model.addAttribute("role", role != null ? role : "No role found");
 	        
-//	        최다 조회수, 인기 레시피
+	        // 최다 조회수, 인기 레시피
 	        List<TopViewDto> topViewList = mainTopRecipeDao.topView();
 			List<PopularRecipeDto> popularRecipeList = mainTopRecipeDao.popularRecipe();
 			
 			model.addAttribute("topViewList", topViewList);
 			model.addAttribute("popularRecipeList", popularRecipeList);
 			
+			// 레시피 영상
+			List<RecipeDto> recipeDto = recipeDao.recipeGetUrl();
+			
+			model.addAttribute("recipeDto", recipeDto);
+			
 	        return "main/home";
 	    }
+	 
+	 
+	 
+	 
+	 
+	 
 }

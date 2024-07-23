@@ -3,6 +3,115 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.harmony.www_service.dao.RecipeDao">
+	<select id="getRecipeListByMcode" parameterType="int"
+		resultType="com.harmony.www_service.dto.RecipeDto">
+		SELECT * FROM recipe WHERE mcode = #{mcode}
+	</select>
+
+	<select id="getRecipeByRcode" parameterType="int"
+		resultType="com.harmony.www_service.dto.RecipeDto">
+		SELECT r.*, m.menuName FROM recipe r JOIN menu m ON r.mcode
+		= m.mcode WHERE
+		r.rcode = #{rcode}
+	</select>
+
+	<select id="getRecipeIngredientsByRcode" parameterType="int"
+		resultType="com.harmony.www_service.dto.RecipeIngredientDto">
+		SELECT ri.ricode AS ricode, ri.rcode, ri.icode, ri.amount,
+		i.name FROM
+		recipe_ingredient ri JOIN ingredient i ON ri.icode =
+		i.icode WHERE
+		ri.rcode = #{rcode}
+	</select>
+
+	<select id="getRecipeOrdersByRcode" parameterType="int"
+		resultType="com.harmony.www_service.dto.RecipeOrderDto">
+		SELECT rocode, rcode, orderContent, orderNum, cookingImg
+		FROM recipe_order
+		WHERE rcode = #{rcode} ORDER BY orderNum
+	</select>
+
+	<select id="getRecipeListByMenuName" parameterType="String"
+		resultType="com.harmony.www_service.dto.RecipeDto">
+		SELECT r.*
+		FROM recipe r
+		JOIN menu m ON r.mcode = m.mcode
+		WHERE m.menuName = #{menuName}
+	</select>
+
+	<select id="getAllRecipes"
+		resultType="com.harmony.www_service.dto.RecipeDto">
+		SELECT r.*, m.menuName
+		FROM recipe r
+		JOIN menu m ON r.mcode =
+		m.mcode
+		ORDER BY r.rcode
+	</select>
+
+	<select id="getRecipeCategories" resultType="String">
+		SELECT DISTINCT
+		category
+		FROM recipe
+		WHERE category IS NOT NULL AND category != ''
+		ORDER
+		BY category
+	</select>
+
+	<select id="getAllThemes" resultType="string">
+		SELECT DISTINCT theme FROM
+		recipe WHERE theme IS NOT NULL AND theme != ''
+	</select>
+
+	<select id="getFilteredRecipes"
+		resultType="com.harmony.www_service.dto.RecipeDto">
+		SELECT DISTINCT r.*, m.menuName
+		FROM recipe r
+		JOIN menu m ON r.mcode =
+		m.mcode
+		WHERE 1=1
+		<if test="category != null and category.size() > 0">
+			AND r.category IN
+			<foreach item="cat" collection="category" open="("
+				separator="," close=")">
+				#{cat}
+			</foreach>
+		</if>
+		<if test="ingredient != null and ingredient.size() > 0">
+			AND r.rcode NOT IN (
+			SELECT DISTINCT ri.rcode
+			FROM recipe_ingredient ri
+			WHERE ri.icode IN
+			<foreach item="ing" collection="ingredient" open="("
+				separator="," close=")">
+				#{ing}
+			</foreach>
+			)
+		</if>
+		<if test="theme != null and theme.size() > 0">
+			AND (
+			<foreach item="thm" collection="theme" separator=" OR ">
+				r.theme LIKE
+				CONCAT('%', #{thm}, '%')
+			</foreach>
+			)
+		</if>
+		<if test="searchTerm != null and searchTerm != ''">
+			AND (r.recipeName LIKE CONCAT('%', #{searchTerm}, '%')
+			OR
+			r.introduce LIKE CONCAT('%', #{searchTerm}, '%')
+			OR m.menuName LIKE
+			CONCAT('%', #{searchTerm}, '%'))
+		</if>
+	</select>
+
+	<select id="searchRecipe"
+		resultType="com.harmony.www_service.dto.RecipeDto">
+		SELECT * FROM recipe WHERE recipeName LIKE CONCAT('%',
+		#{term}, '%')
+		OR introduce LIKE CONCAT('%', #{term}, '%')
+		OR category
+		LIKE CONCAT('%', #{term}, '%')
+	</select>
     <select id="getRecipeListByMcode" parameterType="int" resultType="com.harmony.www_service.dto.RecipeDto">
         SELECT * FROM recipe WHERE mcode = #{mcode}
     </select>
@@ -89,25 +198,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="recipeGetTag" resultType="com.harmony.www_service.dto.RecipeGetTagDto">
         select r.rcode, rt.tagContent 
 		from recipe r
-		join recipe_tag rt
+		join recipe_tag
+		rt
 		on r.rcode = rt.rcode
-		where r.rcode = #{rcode}
-    </select>
-    
-    <!-- 레시피 디테일 들어갈때 마다 view +1 -->
-    <select id="recipeViewCount">
-        update recipe set view = view + 1 where rcode = #{rcode}
-    </select>
-    
-    <!-- 레시피 디테일 좋아요 눌린수 -->
-    <select id="recipeRecommendCount" resultType="com.harmony.www_service.dto.PopularRecipeDto">
-        select r.rcode, count(rr.rrcode) recommendCnt
-		from recipe r 
-		join recipe_recommend rr 
+		where r.rcode =
+		#{rcode}
+	</select>
+
+	<!-- 레시피 디테일 들어갈때 마다 view +1 -->
+	<select id="recipeViewCount">
+		update recipe set view = view + 1 where rcode =
+		#{rcode}
+	</select>
+
+	<!-- 레시피 디테일 좋아요 눌린수 -->
+	<select id="recipeRecommendCount"
+		resultType="com.harmony.www_service.dto.PopularRecipeDto">
+		select r.rcode, count(rr.rrcode) recommendCnt
+		from recipe r
+		join recipe_recommend rr
 		on r.rcode = rr.rcode
 		where r.rcode = #{rcode}
 		group by r.rcode
-    </select>
+	</select>
+
+	<!-- 레시피 요리순서 마지막 사진 가져오기 -->
+	<select id="recipeLastCookImg"
+		resultType="com.harmony.www_service.dto.RecipeOrderDto">
+		SELECT r.rcode,
+		(SELECT ro.cookingImg
+		FROM recipe_order ro
+		WHERE ro.rcode = r.rcode
+		ORDER BY ro.rocode DESC
+		LIMIT 1) as
+		lastCookingImg
+		FROM recipe r
+		where rcode = #{rcode}
+	</select>
+
+	<!-- 레시피 영상 가져오기 5개 랜덤 근데 뒤에서 11자리 자르기를 곁들인 -->
+	<select id="recipeGetUrl"
+		resultType="com.harmony.www_service.dto.RecipeDto">
+		SELECT RIGHT(url, 11) url FROM recipe
+		order by rand()
+		limit 5
+	</select>
+
     
     <!-- 어떤 사용자가 어떤 레시피를 조회 했는지 (봤는지) 등록 -->
     <insert id="insert_recent_view">

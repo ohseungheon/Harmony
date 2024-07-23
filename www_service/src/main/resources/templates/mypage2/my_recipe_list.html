@@ -75,11 +75,18 @@ section {
 	color:#666;
 	font-weight:400;
 	padding-bottom:7px;
+	white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 .recipe-list-content p{
 	font-size:15px;
 	color:#333;
 	font-weight:500;
+	overflow:hidden;
+    display:-webkit-box;
+    -webkit-line-clamp:1;
+    -webkit-box-orient:vertical;
 }
 
 .recipe-list-updel{
