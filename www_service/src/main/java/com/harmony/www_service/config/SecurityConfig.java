@@ -36,7 +36,8 @@ public class SecurityConfig {
 						.requestMatchers("/menu_all/**").permitAll()
 						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
-						.anyRequest().authenticated()
+						// .anyRequest().authenticated()
+						.anyRequest().permitAll()
 						);
 		http
 				.formLogin((auth) -> auth
