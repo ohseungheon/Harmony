@@ -63,13 +63,12 @@
 }
 
 .filter-container {
-	display: none;
-	background: rgba(107, 213, 252, 0.1);
+	width:1140px;
+	margin:0 auto;
 	border: 1px solid #ddd;
 	padding: 20px;
 	border-radius: 5px;
 	margin-bottom: 20px;
-	max-width: 1000px;
 }
 
 .container {
@@ -122,10 +121,16 @@
 }
 
 .checkbox-group input[type="checkbox"] {
+	display:none;
 	margin-right: 5px;
 }
 
 .checkbox-group label {
+	display:inline-block;
+	width:100px;
+	border:1px solid #eee;
+	padding:10px 0;
+	text-align:center;
 	cursor: pointer;
 }
 
@@ -185,10 +190,14 @@
 	<div class="container">
 		<div class="filterButtons">
 			<button onclick="toggleFilter('filterDiv')">카테고리 검색</button>
-			<button onclick="toggleFilter('ingredientDiv')">재료별 검색</button>
+		</div>
+			<!-- <button onclick="toggleFilter('ingredientDiv')">재료별 검색</button> -->
+		<div class="filterButtons">
 			<button onclick="toggleFilter('themeDiv')">테마 검색</button>
 		</div>
 	</div>
+	
+	<!-- 카테고리 필터 -->
 	<div id="filterDiv" class="filter-container">
 		<p class="filter-description">
 			<i>*원하시는 카테고리를 선택하세요.*</i>
@@ -200,6 +209,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 테마 필터 -->
 	<div id="themeDiv" class="filter-container">
 		<p class="filter-description">
 			<i>*원하시는 테마를 선택하세요.*</i>
@@ -211,17 +222,21 @@
 			</div>
 		</div>
 	</div>
-	<div id="ingredientDiv" class="filter-container">
+	
+	<!-- 재료 필터 -->
+	<!-- <div id="ingredientDiv" class="filter-container">
 		<p class="filter-description">
 			<i>*이런 재료가 들어간 레시피를 찾아보세요*</i>
 		</p>
 		<div class="filter-section">
 			<h4>재료</h4>
 			<div id="ingredientCheckboxes" class="checkbox-group">
-				<!-- 여기에 동적으로 체크박스가 추가됩니다 -->
+				여기에 동적으로 체크박스가 추가됩니다
 			</div>
 		</div>
-	</div>
+	</div> -->
+	
+	<!-- 검색바 -->
 	<div class="search-container">
 		<input type="text" id="searchInput"
 			placeholder="레시피 이름 + 내용 + 카테고리 + 테마">
@@ -229,6 +244,8 @@
 			<i><img src="/img/search-icon.png"></i>
 		</button>
 	</div>
+	
+	<!-- 레시피 리스트 -->
 	<section>
 		<div id="recipeList">
 			<div class="recipe" th:each="recipe : ${recipes}"
@@ -246,6 +263,7 @@
 			</div>
 		</div>
 	</section>
+	
 	<script>
     let selectedCategories = [];
     let excludedIngredients = [];
@@ -277,6 +295,7 @@
         });
     }
 
+    /* 카테고리 필터 */
     function loadRecipeCategories() {
         fetch('/api/menu/recipe-categories')
             .then(response => response.json())
@@ -294,6 +313,7 @@
             .catch(error => console.error('Error:', error));
     }
 
+    /* 재료 필터 */
     function loadIngredients() {
         fetch('/api/menu/ingredients')
             .then(response => response.json())
@@ -311,6 +331,7 @@
             .catch(error => console.error('Error:', error));
     }
 
+    /* 테마 필터 */
     function loadRecipeThemes() {
         fetch('/api/menu/recipe-themes')
             .then(response => response.json())
