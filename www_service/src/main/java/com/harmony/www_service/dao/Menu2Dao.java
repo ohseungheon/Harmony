@@ -14,5 +14,6 @@ public interface Menu2Dao {
     public void insertMenuRequest(@Param("menuReq")MenuReqDto menuReq);
     public List<MenuReqWithMember> findAll();
 
-    public List<MenuDto> canMakeMenuThatLack2(@Param("icodeList")List<Integer> icodeList);
+    public List<MenuDto> canMakeMenuThatLack2(@Param("icodeList")List<Integer> icodeList, @Param("exceptList")List<Integer> exceptList);
+    public List<MenuDto> canMakeMenuThatLack2WithoutExcepts(@Param("icodeList")List<Integer> icodeList);
 }

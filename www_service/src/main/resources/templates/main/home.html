@@ -1,48 +1,52 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
-    section{
-    	margin:150px auto !important;
-    }
-    #main_banner{
-    	margin-top:100px !important;
-    }
+        section {
+            margin: 70px auto !important;
+        }
+
+        #main_banner {
+            margin-top: 80px !important;
+        }
     </style>
 </head>
+
 <body>
-<header>
-<th:block th:insert="~{/sub/header.html}"></th:block>
-</header>
+    <header>
+        <th:block th:insert="~{/sub/header.html}"></th:block>
+    </header>
 
-<!-- 배너영역 -->
-<section id="main_banner">
-	<th:block th:insert="~{/main/main_banner.html}"></th:block>
-</section>
+    <!-- 배너영역 -->
+    <section id="main_banner">
+        <th:block th:insert="~{/main/main_banner.html}"></th:block>
+    </section>
 
-<!-- 날씨별 추천 레시피 -->
-<section id="main_weather_recommend">
-    <th:block th:insert="~{/menu_all/recomend_menu.html}"></th:block>
-</section>
+    <!-- 날씨별 추천 레시피 -->
+    <section id="main_weather_recommend">
+        <th:block th:insert="~{/menu_all/recomend_menu.html}"></th:block>
+    </section>
 
-<!-- 최다 조회 레시피, 인기 레시피 -->
-<section id="main_topRecipe">
-	<th:block th:insert="~{/main/main_topRecipe.html}"></th:block>
-</section>
+    <!-- 최다 조회 레시피, 인기 레시피 -->
+    <section id="main_topRecipe">
+        <th:block th:insert="~{/main/main_topRecipe.html}"></th:block>
+    </section>
 
-<!-- 레시피 영상 -->
-<section id="main_video">
-	<th:block th:insert="~{/main/main_video.html}"></th:block>
-</section>
+    <!-- 레시피 영상 -->
+    <section id="main_video">
+        <th:block th:insert="~{/main/main_video.html}"></th:block>
+    </section>
 
-<!-- 랜덤 추천 레시피, 랜덤 추천 메뉴 -->
-<section id="main_recommend">
-	<th:block th:insert="~{/main/main_recommend.html}"></th:block>
-</section>
-<script>
+    <!-- 랜덤 추천 레시피, 랜덤 추천 메뉴 -->
+    <section id="main_recommend">
+        <th:block th:insert="~{/main/main_recommend.html}"></th:block>
+    </section>
+    <script>
 
-</script>
+    </script>
 </body>
+
 </html>

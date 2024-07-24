@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.harmony.www_service.dao.IMypage1Dao;
 import com.harmony.www_service.dto.FridgeIngredientDto;
+import com.harmony.www_service.dto.Harmony2Dto;
 import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.service.MemberService;
 import com.harmony.www_service.service.Menu2Service;
@@ -53,8 +53,9 @@ public class Menu2RestCon {
      * 냉장고를 부탁해 시즌 2
      */
     @PostMapping("/menu-selections")
-    public List<MenuDto> getMenuBySelections(@RequestBody Map<String,List<Integer>> icodeList_){
-        List<Integer> icodeList = icodeList_.get("icodeList");
-        return service.canMakeMenuThatLack2(icodeList);
+    public List<MenuDto> getMenuBySelections(@RequestBody Harmony2Dto harmony2Dto){
+        List<Integer> icodeList = harmony2Dto.getSelections();
+        List<Integer> exceptList = harmony2Dto.getExceptions();
+        return service.canMakeMenuThatLack2(icodeList, exceptList);
     }
 }

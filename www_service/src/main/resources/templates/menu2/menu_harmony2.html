@@ -147,7 +147,10 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ icodeList: selections })
+                body: JSON.stringify({ 
+                    'selections': selections,
+                    'exceptions': unselections
+                })
             })
                 .then(response => response.json())
                 .then(menuList => {
