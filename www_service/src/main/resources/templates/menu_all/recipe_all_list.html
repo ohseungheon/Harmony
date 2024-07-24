@@ -243,17 +243,18 @@
 	</div>
 
 	<!-- 재료 필터 -->
-	<!-- <div id="ingredientDiv" class="filter-container">
+	<div id="ingredientDiv" class="filter-container">
 		<p class="filter-description">
-			<i>*이런 재료가 들어간 레시피를 찾아보세요*</i>
+			<i>*제외 할 재료를 선택하세요*</i>
+			
 		</p>
 		<div class="filter-section">
 			<h4>재료</h4>
 			<div id="ingredientCheckboxes" class="checkbox-group">
-				여기에 동적으로 체크박스가 추가됩니다
+				<!-- 여기에 동적으로 체크박스가 추가됩니다 -->
 			</div>
 		</div>
-	</div> -->
+	</div>
 
 	<!-- 검색바 -->
 	<div class="search-container">
@@ -296,7 +297,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         loadRecipeCategories();
-        //loadIngredients();
+        loadIngredients();
         loadRecipeThemes();
         fetchInitialRecipes();
 
@@ -372,7 +373,6 @@
                 const input = checkbox.querySelector('input');
                 input.addEventListener('change', function() {
                     updateCheckboxStyle(this);
-                    updateExcludedIngredients();
                     applyFilters();
                 });
                 checkboxesContainer.appendChild(checkbox);
