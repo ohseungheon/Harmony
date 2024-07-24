@@ -1,7 +1,9 @@
 package com.harmony.www_service.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.harmony.www_service.dao.RecipeDao;
 import com.harmony.www_service.dao.RecipeMenuDao;
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.MemberDto;
@@ -47,6 +50,8 @@ public class Mypage2Controller {
 	@Autowired
 	private RecipeMenuDao menuDao;
 
+	@Autowired
+	private RecipeDao recipeDao;
 	
 	@GetMapping("/list")
 	public String myRecipeList(@RequestParam("mno") int mno,
@@ -57,6 +62,15 @@ public class Mypage2Controller {
         
         List<RecipeWithMenuDto> recipesWithMenu = service.getRecipesWithMenu(mno);
         model.addAttribute("recipesWithMenu", recipesWithMenu);
+        
+     // 각 레시피의 마지막 요리 이미지를 가져옵니다.
+        Map<Integer, String> lastImgMap = new HashMap<>();
+        for (RecipeDto recipe : recipeList) {
+            RecipeOrderDto lastImg = recipeDao.recipeLastCookImg(recipe.getRcode());
+            lastImgMap.put(recipe.getRcode(), lastImg.getLastCookingImg());
+        }
+        
+        model.addAttribute("lastImg", lastImgMap);
         
         return "mypage2/my_recipe_list";
     }

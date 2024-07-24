@@ -55,6 +55,7 @@ section {
 	transform:translateY(-5px);
 }
 .recipe-list-box .recipe-in-menuImg{
+	width:100%;
 	border:1px solid #eee;
 	border-radius:5px;
 	overflow:hidden;
@@ -62,7 +63,7 @@ section {
 .recipe-list-box .recipe-in-menuImg img{
 	display:block;
 	width:100%;
-	height:200px;
+	height:auto;
 	object-fit:cover;
 }
 .recipe-list-content{
@@ -127,7 +128,7 @@ section {
 			<div th:each="recipeWithMenu : ${recipesWithMenu}" class="recipe-list-box">
 				<a th:href="@{/menu_all/recipe_detail(rcode=${recipeWithMenu.recipe.rcode})}" class="recipe-list-box-link">			
 					<div class="recipe-in-menuImg">
-						<img th:src="@{'/uploads/' + ${recipeWithMenu.menu.imgurl}}" alt="메뉴 이미지">
+						<img th:src="@{'/uploads/' + ${lastImg.get(recipeWithMenu.recipe.rcode)}}">
 					</div>
 					<div class="recipe-list-content">
 							<h3 th:text="${recipeWithMenu.recipe.recipeName}">레시피 이름</h3>
