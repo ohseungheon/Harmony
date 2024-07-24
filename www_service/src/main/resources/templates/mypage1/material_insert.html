@@ -7,53 +7,168 @@
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
 <style>
-#by-section {
-	margin: 20px;
-}
-label {
-	margin-right: 10px;
-}
-input, select {
-	margin-bottom: 10px;
-	display: block;
-}
-.by-radio {
-	display: inline;
-	margin-right: 5px;
-}
-.by-ingre-span{
-	border: 1px solid #eee;
-	width: 100px;
-	display: inline-block;
-	margin: 5px;
-	padding: 5px;
-	cursor: pointer;
-}
-.by-ingre-span img {
-	width: 90%;
+
+#category-tabs{
+	display:flex;
+	justify-content:center;
+	gap:20px;
 }
 .tab {
-	display: inline-block;
-	margin-right: 10px;
+	width:70px;
+	text-align:center;
 	padding: 10px;
-	border: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 	cursor: pointer;
 }
+.tab span{
+	display: inline-block;
+	transition: all 0.3s;
+	font-size: 18px;
+	font-weight: 300;
+	color: #333;
+}
+.tab:hover{
+	border-bottom:1px solid #F5A47D;
+}
+.tab:hover span{
+	transform: translateY(-3px);
+}
+
 .tab-content {
 	display: none;
 	margin-top: 20px;
 }
 .active-tab {
-	background-color: #eee;
-	border-bottom: none;
+	border-bottom:2px solid #F5A47D;
 }
+
+.ingre-container {
+	display: flex;
+	justify-content:center;
+	flex-wrap: wrap;
+	text-align:center;
+	border-bottom:1px solid #eee;
+	padding-bottom:20px;
+	margin-bottom:50px;
+}
+
+.by-radio {
+	display: inline;
+	margin-right: 5px;
+}
+.by-ingre-span{
+	display: block;
+	width: 80px;
+	padding: 5px;
+	cursor: pointer;
+}
+.by-ingre-span img {
+	width: 40px;
+	height:40px;
+	border:1px solid #ccc;
+	border-radius:50%;
+	padding:10px;
+	margin-bottom:10px;
+	object-fit:contain;
+}
+.by-ingre-span p{
+	font-size:14px;
+}
+
+input[type="text"]{
+	width:200px;
+	height:30px;
+	padding-left:5px;
+	box-sizing:border-box;
+}
+
+.insertForm-box{
+	width:600px;
+	margin:0 auto;
+}
+
+.insertForm-inbox1{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	margin:40px 0 20px;
+	gap:50px;
+}
+.insertForm-inbox1 label input{
+	width:200px;
+	border:0;
+	font-size:30px;
+}
+
+.insertForm-inbox2{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	margin:20px 0;
+}
+.inbox2-category{
+	display:flex;
+	align-items:center;
+}
+.inbox2-category label{
+	padding-right:4px;
+}
+.inbox2-amount{
+	position:relative;
+}
+.inbox2-amount-in1{
+	position:absolute;
+	right:0;
+	top:-25px;
+	display:flex;
+}
+
+.insertForm-inbox3{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	margin:20px 0;
+}
+.insertForm-inbox3 select{
+	width:200px;
+	height:30px;
+	box-sizing:border-box;
+}
+.insertForm-inbox3 input[type="date"]{
+	width:200px;
+	height:30px;
+	box-sizing:border-box;
+}
+
+.insertForm-inbox4{
+	display:flex;
+	align-items:center;
+	flex-direction:column;
+	margin:20px 0;
+}
+.insertForm-inbox4 textarea{
+	width:600px;
+	height:150px;
+}
+
+.insertForm-inbox5{
+	display:flex;
+	justify-content:center;
+	margin:20px 0;
+}
+.insertForm-inbox5 input{
+	width:100px;
+	padding:10px 0;
+	background:#F5A47D;
+	border:0;
+	margin:0 15px;
+	color:#fff;
+}
+
 .active-content {
 	display: block;
 }
-.ingre-container {
-	display: flex;
-	flex-wrap: wrap;
-}
+
 .tooltip {
   position: relative;
   display: inline-block;
@@ -87,14 +202,15 @@ input, select {
 		<th:block th:insert="~{/sub/header.html}"></th:block>
 	</header>
 	<section>
+	
 		<div id="by-section">
 			<!-- 카테고리 탭 -->
 			<div id="category-tabs">
-				<div class="tab" data-category="육류">육류</div>
-				<div class="tab" data-category="해산물">해산물</div>
-				<div class="tab" data-category="채소_과일">채소/과일</div>
-				<div class="tab" data-category="유제품">유제품</div>
-				<div class="tab" data-category="기타">기타</div>
+				<div class="tab" data-category="육류"><span>육류</span></div>
+				<div class="tab" data-category="해산물"><span>해산물</span></div>
+				<div class="tab" data-category="채소_과일"><span>채소/과일</span></div>
+				<div class="tab" data-category="유제품"><span>유제품</span></div>
+				<div class="tab" data-category="기타"><span>기타</span></div>
 			</div>
 				
 			<!-- 재료 목록 -->
@@ -108,7 +224,7 @@ input, select {
 							th:data-category="${ingre.category}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
-							[[${ingre.name}]]
+							<p>[[${ingre.name}]]</p>
 						</span>
 					</div>
 				</div>
@@ -123,7 +239,7 @@ input, select {
 							th:data-category="${ingre.category}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
-							[[${ingre.name}]]
+							<p>[[${ingre.name}]]</p>
 						</span>
 					</div>
 				</div>
@@ -138,7 +254,7 @@ input, select {
 							th:data-category="${ingre.category}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
-							[[${ingre.name}]]
+							<p>[[${ingre.name}]]</p>
 						</span>
 					</div>
 				</div>
@@ -153,7 +269,7 @@ input, select {
 							th:data-category="${ingre.category}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
-							[[${ingre.name}]]
+							<p>[[${ingre.name}]]</p>
 						</span>
 					</div>
 				</div>
@@ -168,54 +284,69 @@ input, select {
 							th:data-category="${ingre.category}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
-							[[${ingre.name}]]
+							<p>[[${ingre.name}]]</p>
 						</span>
 					</div>
 				</div>
 			</div>
 		
+			<div class="insertForm-box">
 				<form id="insertForm" method="POST">
-				
-					<img id="previewImage" src="" style="width: 150px; height: auto;"> 
-					
-					<input type="hidden" id="imgUrl" name="imgUrl"> 
-					
-					<label for="name">재료이름</label> 
-					<input type="text" id="name" name="name" readonly> 
-					
-					<label for="deadline">카테고리</label>
-					<input type="text" id="category" name="category" readonly> 
-					
-					<label for="deadline">유통기한</label> 
-					<span id="tip" class="tooltip">TIP
-  						<span class="tooltiptext" id="tip-text"></span>
-					</span>
-					<input type="date" id="deadline" name="deadline"> 
-					
-					
-					<label for="quantity">수량</label> 
-					<input class="by-radio" type="radio" id="quantity" name="type" value="수량"> 
-					<label for="weight">중량</label> 
-					<input class="by-radio" type="radio" id="weight" name="type" value="중량"> 
-					
-					<label for="amount">수량/중량</label> 
-					<input type="text" id="amount" name="amount"> 
-					
-					<label for="keeptype">보관상태</label> 
-					<select id="keeptype" name="keeptype">
-						<option th:each="keeptype : ${keeptypes}" th:value="${keeptype}"
-							th:text="${keeptype}" th:selected="${keeptype}"></option>
-					</select> 
-					
-					<label for="memo">메모</label> 
-					<input type="text" id="memo" name="memo"> 
-					
-					<input type="hidden" id="icode" name="icode">
-					<input type="hidden" id="mno" name="mno" th:value="${mno}"> 
-					
-					<input type="submit" value="등록"> 
-					<input type="button" value="목록" onclick="window.location.href='/mypage_main'">
+					<div class="insertForm-inbox1">
+						<div class="insertForm-inbox1-img">
+							<img id="previewImage" src="" style="width: 150px; height: auto;">
+							<input type="hidden" id="imgUrl" name="imgUrl"> 
+						</div> 
+						<label for="name">
+							<input type="text" id="name" name="name" readonly> 
+						</label> 
+					</div>	
+					<div class="insertForm-inbox2">				
+						<div class="inbox2-category">		
+							<label for="deadline">카테고리</label>
+							<input type="text" id="category" name="category" readonly> 
+						</div>
+						<div class="inbox2-amount">
+							<div class="inbox2-amount-in1">
+								<label for="quantity">수량</label> 
+								<input class="by-radio" type="radio" id="quantity" name="type" value="수량">
+								<label for="weight">중량</label> 
+								<input class="by-radio" type="radio" id="weight" name="type" value="중량">
+							</div> 
+							<div class="inbox2-amount-in2">
+								<label for="amount">수량/중량</label> 
+								<input type="text" id="amount" name="amount">
+							</div>
+						</div> 
+					</div>
+					<div class="insertForm-inbox3">
+						<div class="inbox3-keep">
+							<label for="keeptype">보관상태</label> 
+							<select id="keeptype" name="keeptype">
+								<option th:each="keeptype : ${keeptypes}" th:value="${keeptype}"
+									th:text="${keeptype}" th:selected="${keeptype}"></option>
+							</select>
+						</div>
+						<div class="inbox3-dead">
+							<label for="deadline">유통기한</label> 
+							<span id="tip" class="tooltip">TIP
+		  						<span class="tooltiptext" id="tip-text"></span>
+							</span>
+							<input type="date" id="deadline" name="deadline">
+						</div> 
+					</div>
+					<div class="insertForm-inbox4">
+						<label for="memo">메모</label> 
+						<textarea name="memo" id="memo"></textarea>
+						<input type="hidden" id="icode" name="icode">
+						<input type="hidden" id="mno" name="mno" th:value="${mno}"> 
+					</div>
+					<div class="insertForm-inbox5">						
+						<input type="submit" value="등록"> 
+						<input type="button" value="목록" onclick="window.location.href='/mypage_main'">
+					</div>
 				</form>
+			</div>
 		</div>
 	</section>
 

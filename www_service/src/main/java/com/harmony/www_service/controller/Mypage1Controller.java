@@ -165,6 +165,7 @@ public class Mypage1Controller {
 	// 재료등록페이지
 	@RequestMapping("/material_insert")
 	public String goMaterialInsert(Model model, @RequestParam("mno") int mno) {
+		
 		List<String> keeptypes = Arrays.asList("냉장", "냉동", "상온"); // 옵션데이터
 		model.addAttribute("keeptypes", keeptypes);
 		
