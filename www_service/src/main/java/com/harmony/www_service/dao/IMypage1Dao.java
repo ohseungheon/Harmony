@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.harmony.www_service.dto.FridgeIngredientDto;
+import com.harmony.www_service.dto.IngredientDto;
 
 @Mapper
 public interface IMypage1Dao {
@@ -42,7 +43,9 @@ public interface IMypage1Dao {
 	public FridgeIngredientDto getIngredientByFcode(@Param("fcode") int fcode);
 	
 	//재료등록
-	public void insertFridge(@Param("material") FridgeIngredientDto material);
+	public void insertFridge(@Param("fi") FridgeIngredientDto fi);
 	
-	public void insertIngredient(@Param("material") FridgeIngredientDto material);
+	public void insertIngredient(@Param("fi") FridgeIngredientDto fi);
+	//재료전체조회
+	public List<IngredientDto> allIngredientList();
 }

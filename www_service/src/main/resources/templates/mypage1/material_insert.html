@@ -21,6 +21,39 @@ input, select {
 	display: inline;
 	margin-right: 5px;
 }
+.by-ingre-span{
+	border: 1px solid #eee;
+	width: 100px;
+	display: inline-block;
+	margin: 5px;
+	padding: 5px;
+	cursor: pointer;
+}
+.by-ingre-span img {
+	width: 90%;
+}
+.tab {
+	display: inline-block;
+	margin-right: 10px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	cursor: pointer;
+}
+.tab-content {
+	display: none;
+	margin-top: 20px;
+}
+.active-tab {
+	background-color: #eee;
+	border-bottom: none;
+}
+.active-content {
+	display: block;
+}
+.ingre-container {
+	display: flex;
+	flex-wrap: wrap;
+}
 </style>
 </head>
 <body>
@@ -29,8 +62,91 @@ input, select {
 	</header>
 	<section>
 		<div id="by-section">
-				<form id="insertForm" th:action="@{/mypage1/material_insert}" method="POST">
+			<!-- 카테고리 탭 -->
+			<div id="category-tabs">
+				<div class="tab" data-category="육류">육류</div>
+				<div class="tab" data-category="해산물">해산물</div>
+				<div class="tab" data-category="채소_과일">채소/과일</div>
+				<div class="tab" data-category="유제품">유제품</div>
+				<div class="tab" data-category="기타">기타</div>
+			</div>
+				
+			<!-- 재료 목록 -->
+			<div id="육류" class="tab-content">
+				<div class="ingre-container">
+					<div th:each="ingre : ${ingre}" th:if="${ingre.category == '육류'}">
+						<span class="by-ingre-span" 
+							th:data-imgurl="${ingre.imgurl}" 
+							th:data-name="${ingre.name}" 
+							th:data-category="${ingre.category}" >
+							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
+							[[${ingre.name}]]
+						</span>
+					</div>
+				</div>
+			</div>
+			<div id="해산물" class="tab-content">
+				<div class="ingre-container">
+					<div th:each="ingre : ${ingre}" th:if="${ingre.category == '해산물'}">
+						<span class="by-ingre-span" 
+							th:data-icode="${ingre.icode}"
+							th:data-imgurl="${ingre.imgurl}" 
+							th:data-name="${ingre.name}" 
+							th:data-category="${ingre.category}">
+							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
+							[[${ingre.name}]]
+						</span>
+					</div>
+				</div>
+			</div>
+			<div id="채소_과일" class="tab-content">
+				<div class="ingre-container">
+					<div th:each="ingre : ${ingre}" th:if="${ingre.category == '채소 / 과일'}">
+						<span class="by-ingre-span" 
+							th:data-icode="${ingre.icode}"
+							th:data-imgurl="${ingre.imgurl}" 
+							th:data-name="${ingre.name}" 
+							th:data-category="${ingre.category}">
+							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
+							[[${ingre.name}]]
+						</span>
+					</div>
+				</div>
+			</div>
+			<div id="유제품" class="tab-content">
+				<div class="ingre-container">
+					<div th:each="ingre : ${ingre}" th:if="${ingre.category == '유제품'}">
+						<span class="by-ingre-span" 
+							th:data-icode="${ingre.icode}"
+							th:data-imgurl="${ingre.imgurl}" 
+							th:data-name="${ingre.name}" 
+							th:data-category="${ingre.category}">
+							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
+							[[${ingre.name}]]
+						</span>
+					</div>
+				</div>
+			</div>
+			<div id="기타" class="tab-content">
+				<div class="ingre-container">
+					<div th:each="ingre : ${ingre}" th:if="${ingre.category == '기타'}">
+						<span class="by-ingre-span" 
+							th:data-icode="${ingre.icode}"
+							th:data-imgurl="${ingre.imgurl}" 
+							th:data-name="${ingre.name}" 
+							th:data-category="${ingre.category}">
+							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
+							[[${ingre.name}]]
+						</span>
+					</div>
+				</div>
+			</div>
+		
+				<form id="insertForm" method="POST">
 					<img src=""> 
+					<label for="name">이미지URL</label> 
+					<input type="text" id="imgUrl" name="imgUrl"> 
+					
 					<label for="name">재료이름</label> 
 					<input type="text" id="name" name="name"> 
 					
@@ -42,10 +158,11 @@ input, select {
 					
 					<label for="amount">수량/중량</label> 
 					<input type="text" id="amount" name="amount"> 
+					
 					<label for="quantity">수량</label> 
-					<input class="by-radio" type="radio" id="quantity" name="type" value="quantity"> 
+					<input class="by-radio" type="radio" id="quantity" name="type" value="수량"> 
 					<label for="weight">중량</label> 
-					<input class="by-radio" type="radio" id="weight" name="type" value="weight"> 
+					<input class="by-radio" type="radio" id="weight" name="type" value="중량"> 
 					
 					<label for="keeptype">보관상태</label> 
 					<select id="keeptype" name="keeptype">
@@ -55,8 +172,8 @@ input, select {
 					
 					<input type="text" id="memo" name="memo" value="비고란"> 
 					
-					<input type="hidden" id="fcode" name="fcode"> 
-					<input type="hidden" id="mno" name="mno"> 
+					<input type="text" id="icode" name="icode">
+					<input type="text" id="mno" name="mno" th:value="${mno}"> 
 					
 					<input type="submit" value="등록"> 
 					<input type="button" value="목록" onclick="window.location.href='/mypage_main'">
@@ -66,10 +183,37 @@ input, select {
 
 	<script>
 		$(document).ready(function() {
+			// 탭 클릭 시 이벤트
+			$(".tab").on("click", function() {
+				const category = $(this).data("category");
+				$(".tab").removeClass("active-tab");
+				$(this).addClass("active-tab");
+				$(".tab-content").removeClass("active-content");
+				$("#" + category).addClass("active-content");
+			});
 
+			// 첫 번째 탭 활성화
+			//$(".tab").first().click();
+
+			// 재료 클릭 시 폼에 자동 입력
+			$(".by-ingre-span").on("click", function() {
+				const icode = $(this).data("icode");
+				const imgUrl = $(this).data("imgurl");
+				const name = $(this).data("name");
+				const category = $(this).data("category");
+				
+				$("#icode").val(icode);
+				$("#imgUrl").val(imgUrl);
+				$("#name").val(name);
+				$("#category").val(category);
+			});
+			
+			//재료등록 기능 
 			$("#insertForm").on("submit", function(event) {
 				event.preventDefault();
-
+				
+				const icode = $("#icode").val();
+				const imgUrl = $("#imgUrl").val();
 				const name = $("#name").val();
 				const category = $("#category").val();
 				const deadline = $("#deadline").val();
@@ -77,8 +221,11 @@ input, select {
 				const type = $("input[name='type']:checked").val();
 				const keeptype = $("#keeptype").val();
 				const memo = $("#memo").val();
+				const mno = $("#mno").val();
 
 				var jsonData = JSON.stringify({
+					icode: icode,
+					imgUrl: imgUrl,
 					name: name,
 					category: category,
 					deadline: deadline,
@@ -86,11 +233,12 @@ input, select {
 					type: type,
 					keeptype: keeptype,
 					memo: memo,
+					mno: mno
 				});
 				console.log(jsonData);
 
 				$.ajax({
-					url : $(this).attr('action'),
+					url : '/mypage1/material_insert',
 					type : 'POST',
 					contentType : 'application/json', // JSON 형식으로 데이터 전송
 					data : jsonData,
