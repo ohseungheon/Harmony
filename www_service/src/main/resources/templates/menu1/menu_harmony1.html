@@ -34,6 +34,17 @@
 	border-radius: 5px;
 }
 
+
+#category {
+    background-color: rgba(255, 100, 0, 0.5); /* 빨간색 배경에 80% 불투명도 적용 */
+    position: absolute;
+    bottom: 85%;
+    right: 23.5%;
+    width: 100px;
+    color:white;
+    border-radius: 4px;
+}
+
 .highlight {
 	background-color: rgba(0, 0, 0, 0.1);
 	filter: brightness(60%);
@@ -159,7 +170,7 @@ input[type="submit"]:hover {
 }
 
 .close:hover, .close:focus {
-	color: black;
+	color: red;
 	text-decoration: none;
 	cursor: pointer;
 }
@@ -168,11 +179,15 @@ input[type="submit"]:hover {
     position: absolute; /* 툴팁을 이 요소에 상대적으로 위치시키기 위해 필요 */
     display: inline-block; /* 툴팁이 정확히 이 요소 위에 표시되도록 하기 위해 */
     cursor: pointer; /* 클릭할 수 있는 요소를 나타내는 커서 변경 */
+    left: 67%;
+    bottom:38%;
+    color: #EB0000;
+
 }
 
-.asd .tooltip {
+ .tooltip {
     visibility: hidden; /* 기본적으로 숨김 상태 */
-    width: 120px; /* 툴팁의 너비 */
+    width: 100px; /* 툴팁의 너비 */
     background-color: #555; /* 툴팁 배경색 */
     color: #fff; /* 툴팁 텍스트 색상 */
     text-align: center; /* 텍스트 가운데 정렬 */
@@ -180,8 +195,8 @@ input[type="submit"]:hover {
     padding: 5px; /* 툴팁 내부 여백 */
     position: absolute; /* 절대 위치 */
     z-index: 1; /* 다른 요소 위에 표시되도록 */
-    bottom: 255%; /* 요소 위쪽에 위치시키기 위해 */
-    left: 50%; /* 수평 중앙 정렬 */
+    bottom: 30%; /* 요소 위쪽에 위치시키기 위해 */
+    left: 30%; /* 수평 중앙 정렬 */
     margin-left: -60px; /* 수평 중앙 정렬을 위한 오프셋 */
     opacity: 0; /* 기본적으로 불투명 상태 */
     transition: opacity 0.3s; /* 페이드 인 효과 */
@@ -229,6 +244,7 @@ input[type="submit"]:hover {
 		<div style="text-align: center">제외된 재료</div>
 
 		<div id="NoUseIngredient">
+                <button  onclick="NoUseIngredientAllDelete(event)"> 전체삭제</button>
 
 
 		</div>
@@ -252,6 +268,7 @@ input[type="submit"]:hover {
 					<div>
 						<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
 					</div>
+					<div id="category">[[${dto.category}]]</div>
 					<div>[[${dto.menuName}]]</div>
 					<div>
 						<button id="xBtn" type="button"
@@ -264,18 +281,23 @@ input[type="submit"]:hover {
 
 		<div id="canMakeMenuDiv2" class="container">
 			<div class="row" style="display: none;">만들 수 있는 메뉴2</div>
-			<div th:each="dto : ${showCanMakeMenuList2}" class="row"
+			<div th:each="dto : ${showCanMakeMenuList2}" class="row row9"
 				th:id="'canMakeMenuMcode2_' + ${dto.mcode}">
 				<input type="hidden" value="${dto.mcode}">
+				<p class="asd">
+                    ⓘ
+                    <span class="tooltip">안녕하세요</span>
+                </p>
 				<div class="container2">
 					<div>
 						<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
 					</div>
+						<div id="category">[[${dto.category}]]</div>
 					<div>[[${dto.menuName}]]</div>
 					<div>
 						<button id="xBtn" type="button"
 							th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
-							보러가기2</button>
+							보러가기</button>
 					</div>
 				</div>
 			</div>
@@ -598,7 +620,6 @@ input[type="submit"]:hover {
                 html += '<div>';
                 html += '<div>' + item.name + '</div>';
                 html += '<div><button type="button" onclick="undoIngredient(event, \'' + item.icode + '\')">x</button></div>';
-                html += '<button  onclick="NoUseIngredientAllDelete(event)"> 전체삭제</button>';
                 
                 html += '<form id="mainForm" action="/menu1/main" method="get">'
                 html += '<input type="submit" value="초기화">		</form>'
