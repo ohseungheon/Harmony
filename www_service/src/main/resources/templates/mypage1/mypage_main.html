@@ -162,12 +162,13 @@ main {
 }
 
 #by-tab {
-	width: 915px;
+	width: 920px;
 	border-radius: 20px;
 }
 
 #by-tab2 {
 	background-color: #e0ebf7;
+	border: 3px solid #e0ebf7;
 	width: 915px;
 	height: 620px;
 	display: flex;
@@ -439,7 +440,7 @@ main {
 					</div>
 					<div class="info-inbox2">
 						<p>
-							<a th:href="@{/material_insert}">재료 등록</a>
+							<a th:href="@{/material_insert(mno=${mno})}">재료 등록</a>
 						</p>
 						<p>
 							<a th:href="@{/my/recipe/registForm(mno=${mno})}">레시피 등록</a>
@@ -505,7 +506,9 @@ main {
 				<!-- 하단 : 등록한 재료 전체 조회 -->
 				<div id="by-tab">
 					<span id="by-tab-span">나의 재료 LIST</span>
-					<button id="by-btn-insert">재료등록</button>
+					<a th:href="@{/material_insert(mno=${mno})}">
+						<button id="by-btn-insert">재료등록</button>
+					</a>	
 
 					<div class="tabs">
 						<button class="tab-button active" data-tab="cool">냉장</button>
@@ -646,7 +649,6 @@ main {
 	    				<input type="hidden" id="modalMno" name="modalMno" value="">
 	    				<div id="by-btn-group">
 							<input type="submit" value="수정"> 
-							<input type="button" value="목록">
 						</div>	
 					</form>
 				</div>
@@ -775,11 +777,6 @@ main {
 			}
 		});
 
-		//재료등록
-		document.getElementById('by-btn-insert').addEventListener('click',
-				function() {
-					window.location.href = '/material_insert'; // 이동할 URL
-				});
 	</script>
 </body>
 </html>

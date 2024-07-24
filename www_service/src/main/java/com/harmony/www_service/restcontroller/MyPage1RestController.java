@@ -1,7 +1,11 @@
 package com.harmony.www_service.restcontroller;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,10 +59,28 @@ public class MyPage1RestController {
     }
 	
 	@PostMapping("/material_insert")
-	public ResponseEntity<String> materialInsert(@RequestBody FridgeIngredientDto material) {
+	public ResponseEntity<String> materialInsert(@RequestBody FridgeIngredientDto material, Model model) {
+		//String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		//System.out.println("아이디===============" + username);
+		//MemberDto_by member = memberService.getMemberByUsername(username);
+		//int mno = member.getMno();
+		//model.addAttribute("mno", mno);
+		/*
+		int mno = material.getMno();
+		String name = material.getName();
+		String category = material.getCategory();
+		LocalDate deadline = material.getDeadline(); 
+		String type = material.getType();
+		int amount = material.getAmount();
+		String keeptype = material.getKeeptype();
+		String memo = material.getMemo();
+		 */
+		//FridgeIngredientDto fi = new FridgeIngredientDto();
+		
+		System.out.println("등록재료########"+material);
+		
 		myDao.insertFridge(material);
 		myDao.insertIngredient(material);
-		System.out.println("등록재료########"+material);
 	    return ResponseEntity.ok("재료정보가 성공적으로 등록되었습니다🍖");
 	}
 }

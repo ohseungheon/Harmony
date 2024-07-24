@@ -13,10 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.harmony.www_service.dao.IIngredientDao;
 import com.harmony.www_service.dao.ILikeDao;
 import com.harmony.www_service.dao.IMemberDao;
 import com.harmony.www_service.dao.IMypage1Dao;
 import com.harmony.www_service.dto.FridgeIngredientDto;
+import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.MemberDto_by;
 import com.harmony.www_service.dto.Menu_favoriteDto_by;
 import com.harmony.www_service.dto.RecipeDto;
@@ -36,6 +38,8 @@ public class Mypage1Controller {
 	MemberService memberService;
 	@Autowired
 	LikeService likeService;
+	@Autowired
+	IIngredientDao ingreDao;
 
 	// 회원정보수정페이지 - 로그인한 회원번호로 회원정보 조회
 	@RequestMapping("/info_update")
@@ -160,9 +164,16 @@ public class Mypage1Controller {
 
 	// 재료등록페이지
 	@RequestMapping("/material_insert")
-	public String goMaterialInsert(Model model) {
+	public String goMaterialInsert(Model model, @RequestParam("mno") int mno) {
 		List<String> keeptypes = Arrays.asList("냉장", "냉동", "상온"); // 옵션데이터
 		model.addAttribute("keeptypes", keeptypes);
+		
+		model.addAttribute("mno", mno);
+		//재료 카테고리 위한
+		List<IngredientDto> ingredientCt = ingreDao.findByCategory(null);
+		List<IngredientDto> ingredientDto = myDao.allIngredientList();
+		model.addAttribute("ingre", ingredientDto);
+		System.out.println("재료싹다"+ingredientDto);
 		return "mypage1/material_insert";
 	}
 

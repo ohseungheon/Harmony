@@ -103,4 +103,18 @@
 		WHERE f.fcode = #{fcode} 
 	</select>
 	
+	<!-- 재료등록 -->
+	<insert id="insertFridge">
+		INSERT INTO fridge (mno, icode, keeptype, amount, deadline, memo) 
+		VALUES (#{fi.mno}, #{fi.icode}, #{fi.keeptype}, #{fi.amount}, #{fi.deadline}, #{fi.memo})
+	</insert>
+		
+	<insert id="insertIngredient">
+		INSERT INTO ingredient (name, type, imgUrl, category) 
+		VALUES (#{fi.name}, #{fi.type}, #{fi.imgUrl}, #{fi.category})
+	</insert>
+	
+	<select id="allIngredientList" resultType="com.harmony.www_service.dto.IngredientDto">
+		SELECT * FROM ingredient
+	</select>
 </mapper>
