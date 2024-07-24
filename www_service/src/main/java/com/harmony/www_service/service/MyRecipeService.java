@@ -128,7 +128,7 @@ public class MyRecipeService {
 	@Transactional
 	public int updateMyRecipe(RecipeDto recipeDto) {
 		
-		logger.info("Updating recipe: {}", recipeDto);
+		logger.info("서비스 Updating recipe: {}", recipeDto);
         int result = dao.updateMyRecipe(recipeDto);
         if (result <= 0) {
             throw new RuntimeException("Failed to update recipe");
