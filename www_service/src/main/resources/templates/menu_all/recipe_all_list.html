@@ -62,8 +62,8 @@
 }
 
 .filter-container {
-	width:1140px;
-	margin:0 auto;
+	width: 1140px;
+	margin: 0 auto;
 	border: 1px solid #ddd;
 	padding: 20px;
 	border-radius: 5px;
@@ -120,16 +120,16 @@
 }
 
 .checkbox-group input[type="checkbox"] {
-	display:none;
+	display: none;
 	margin-right: 5px;
 }
 
 .checkbox-group label {
-	display:inline-block;
-	width:100px;
-	border:1px solid #eee;
-	padding:10px 0;
-	text-align:center;
+	display: inline-block;
+	width: 100px;
+	border: 1px solid #eee;
+	padding: 10px 0;
+	text-align: center;
 	cursor: pointer;
 }
 
@@ -180,22 +180,28 @@
 	border-radius: 0 5px 5px 0;
 	cursor: pointer;
 }
+
+.checkbox-group input[type="checkbox"]:checked+label {
+	background-color: #F5A47D;
+	color: white;
+	border-color: #F5A47D;
+}
 </style>
 </head>
 <body>
 	<header>
 		<th:block th:insert="~{/sub/header.html}"></th:block>
 	</header>
-	<div class="container">
+	<!-- <div class="container">
 		<div class="filterButtons">
 			<button onclick="toggleFilter('filterDiv')">카테고리 검색</button>
 		</div>
-			<!-- <button onclick="toggleFilter('ingredientDiv')">재료별 검색</button> -->
+		<button onclick="toggleFilter('ingredientDiv')">재료별 검색</button>
 		<div class="filterButtons">
 			<button onclick="toggleFilter('themeDiv')">테마 검색</button>
 		</div>
-	</div>
-	
+	</div> -->
+
 	<!-- 카테고리 필터 -->
 	<div id="filterDiv" class="filter-container">
 		<p class="filter-description">
@@ -208,7 +214,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 테마 필터 -->
 	<div id="themeDiv" class="filter-container">
 		<p class="filter-description">
@@ -221,7 +227,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 재료 필터 -->
 	<!-- <div id="ingredientDiv" class="filter-container">
 		<p class="filter-description">
@@ -234,7 +240,7 @@
 			</div>
 		</div>
 	</div> -->
-	
+
 	<!-- 검색바 -->
 	<div class="search-container">
 		<input type="text" id="searchInput"
@@ -243,7 +249,7 @@
 			<i><img src="/img/search-icon.png"></i>
 		</button>
 	</div>
-	
+
 	<!-- 레시피 리스트 -->
 	<section>
 		<div id="recipeList">
@@ -262,27 +268,47 @@
 			</div>
 		</div>
 	</section>
-	
+
 	<script>
+	
     let selectedCategories = [];
     let excludedIngredients = [];
     let selectedThemes = [];
     let filteredRecipes = [];
     let searchTimeout;
+    
+    let initialRecipes = [];
+    let initialLastImgMap = {};
 
     document.addEventListener('DOMContentLoaded', function() {
         loadRecipeCategories();
-        loadIngredients();
+        //loadIngredients();
         loadRecipeThemes();
-        fetchFilteredRecipes();
+        fetchInitialRecipes();
 
         document.getElementById('searchInput').addEventListener('input', function() {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(fetchFilteredRecipes, 300);
         });
+        
+        document.querySelector('.search-container button').addEventListener('click', function() {
+            applyFilters();
+        });
     });
+    
 
-    function toggleFilter(divId) {
+    function fetchInitialRecipes() {
+    	fetch('/api/menu/filtered_recipe_list')
+        .then(response => response.json())
+        .then(data => {
+            initialRecipes = data.recipes;
+            initialLastImgMap = data.lastImgMap;
+            updateRecipeList(initialRecipes, initialLastImgMap);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    /* function toggleFilter(divId) {
         const filterDivs = ['filterDiv', 'ingredientDiv', 'themeDiv'];
         filterDivs.forEach(div => {
             const element = document.getElementById(div);
@@ -292,65 +318,108 @@
                 element.style.display = 'none';
             }
         });
-    }
+    } */
 
     /* 카테고리 필터 */
     function loadRecipeCategories() {
-        fetch('/api/menu/recipe-categories')
-            .then(response => response.json())
-            .then(categories => {
-                const categoryGroup = document.querySelector('#recipeCategoriesCheckbox .checkbox-group');
-                categories.forEach(category => {
-                    const checkbox = document.createElement('div');
-                    checkbox.innerHTML = `
-                        <input type="checkbox" name="recipeCategory" value="${category}" id="cat${category.replace(/\s+/g, '')}" onchange="applyFilter()">
-                        <label for="cat${category.replace(/\s+/g, '')}">${category}</label>
-                    `;
-                    categoryGroup.appendChild(checkbox);
+    fetch('/api/menu/recipe-categories')
+        .then(response => response.json())
+        .then(categories => {
+            const categoryGroup = document.querySelector('#recipeCategoriesCheckbox .checkbox-group');
+            categories.forEach(category => {
+                const checkbox = document.createElement('div');
+                checkbox.innerHTML = `
+                    <input type="checkbox" name="recipeCategory" value="${category}" id="cat${category.replace(/\s+/g, '')}">
+                    <label for="cat${category.replace(/\s+/g, '')}">${category}</label>
+                `;
+                const input = checkbox.querySelector('input');
+                input.addEventListener('change', function() {
+                    updateCheckboxStyle(this);
+                    applyFilters();
                 });
-            })
-            .catch(error => console.error('Error:', error));
-    }
+                categoryGroup.appendChild(checkbox);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
 
     /* 재료 필터 */
     function loadIngredients() {
-        fetch('/api/menu/ingredients')
-            .then(response => response.json())
-            .then(ingredients => {
-                const checkboxesContainer = document.getElementById('ingredientCheckboxes');
-                ingredients.forEach(ingredient => {
-                    const checkbox = document.createElement('div');
-                    checkbox.innerHTML = `
-                        <input type="checkbox" name="ingredient" value="${ingredient.icode}" id="ing${ingredient.icode}" onchange="applyIngredientFilter()">
-                        <label for="ing${ingredient.icode}">${ingredient.name}</label>
-                    `;
-                    checkboxesContainer.appendChild(checkbox);
+    	fetch('/api/menu/ingredients')
+        .then(response => response.json())
+        .then(ingredients => {
+            const checkboxesContainer = document.getElementById('ingredientCheckboxes');
+            ingredients.forEach(ingredient => {
+                const checkbox = document.createElement('div');
+                checkbox.innerHTML = `
+                    <input type="checkbox" name="ingredient" value="${ingredient.icode}" id="ing${ingredient.icode}" onchange="applyIngredientFilter(); updateCheckboxStyle(this)">
+                    <label for="ing${ingredient.icode}">${ingredient.name}</label>
+                `;
+                const input = checkbox.querySelector('input');
+                input.addEventListener('change', function() {
+                    updateCheckboxStyle(this);
+                    updateExcludedIngredients();
+                    applyFilters();
                 });
-            })
-            .catch(error => console.error('Error:', error));
+                checkboxesContainer.appendChild(checkbox);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+
     }
 
     /* 테마 필터 */
-    function loadRecipeThemes() {
-        fetch('/api/menu/recipe-themes')
-            .then(response => response.json())
-            .then(themes => {
-                const themeGroup = document.querySelector('#recipeThemesCheckbox .checkbox-group');
-                themes.forEach(theme => {
-                    const checkbox = document.createElement('div');
-                    checkbox.innerHTML = `
-                        <input type="checkbox" name="recipeTheme" value="${theme}" id="theme${theme.replace(/\s+/g, '')}" onchange="applyThemeFilter()">
-                        <label for="theme${theme.replace(/\s+/g, '')}">${theme}</label>
-                    `;
-                    themeGroup.appendChild(checkbox);
+function loadRecipeThemes() {
+    fetch('/api/menu/recipe-themes')
+        .then(response => response.json())
+        .then(themes => {
+            const themeGroup = document.querySelector('#recipeThemesCheckbox .checkbox-group');
+            themes.forEach(theme => {
+                const checkbox = document.createElement('div');
+                checkbox.innerHTML = `
+                    <input type="checkbox" name="recipeTheme" value="${theme}" id="theme${theme.replace(/\s+/g, '')}">
+                    <label for="theme${theme.replace(/\s+/g, '')}">${theme}</label>
+                `;
+                const input = checkbox.querySelector('input');
+                input.addEventListener('change', function() {
+                    updateCheckboxStyle(this);
+                    applyFilters();
                 });
-            })
-            .catch(error => console.error('Error:', error));
+                themeGroup.appendChild(checkbox);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+    
+    
+    function updateSelectedCategories() {
+        selectedCategories = Array.from(document.querySelectorAll('input[name="recipeCategory"]:checked')).map(input => input.value);
     }
 
-    function applyFilter() {
-        selectedCategories = Array.from(document.querySelectorAll('input[name="recipeCategory"]:checked')).map(input => input.value);
-        fetchFilteredRecipes();
+    function updateSelectedThemes() {
+        selectedThemes = Array.from(document.querySelectorAll('input[name="recipeTheme"]:checked')).map(input => input.value);
+    }
+
+    function updateExcludedIngredients() {
+        excludedIngredients = Array.from(document.querySelectorAll('#ingredientCheckboxes input[name="ingredient"]:checked')).map(input => input.value);
+    }
+    
+
+    function applyFilters() {
+    	console.log('Selected categories:', selectedCategories);
+        console.log('Selected themes:', selectedThemes);
+        console.log('Search term:', document.getElementById('searchInput').value);
+    	
+    	selectedCategories = Array.from(document.querySelectorAll('input[name="recipeCategory"]:checked')).map(input => input.value);
+        selectedThemes = Array.from(document.querySelectorAll('input[name="recipeTheme"]:checked')).map(input => input.value);
+        
+        const searchTerm = document.getElementById('searchInput').value;
+
+        if (selectedCategories.length === 0 && selectedThemes.length === 0 && !searchTerm) {
+            updateRecipeList(initialRecipes, initialLastImgMap);
+        } else {
+            fetchFilteredRecipes();
+        }
     }
 
     function applyThemeFilter() {
@@ -364,56 +433,72 @@
     }
 
     function fetchFilteredRecipes() {
-        const params = new URLSearchParams();
-        
-        if (selectedCategories.length > 0) {
-            params.append('category', selectedCategories.join(','));
-        }
-        
-        if (excludedIngredients.length > 0) {
-            params.append('ingredient', excludedIngredients.join(','));
-        }
+    	 const params = new URLSearchParams();
+    	    
+    	    if (selectedCategories.length > 0) {
+    	        params.append('category', selectedCategories.join(','));
+    	    }
+    	    
+    	    if (selectedThemes.length > 0) {
+    	        params.append('theme', selectedThemes.join(','));
+    	    }
 
-        if (selectedThemes.length > 0) {
-            params.append('theme', selectedThemes.join(','));
-        }
+    	    if (excludedIngredients.length > 0) {
+    	        params.append('ingredient', excludedIngredients.join(','));
+    	    }
 
-        const searchTerm = document.getElementById('searchInput').value;
-        if (searchTerm) {
-            params.append('searchTerm', searchTerm);
-        }
+    	    const searchTerm = document.getElementById('searchInput').value;
+    	    if (searchTerm) {
+    	        params.append('searchTerm', searchTerm);
+    	    }
 
-        fetch(`/api/menu/filtered_recipe_list?${params.toString()}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            updateRecipeList(data.recipes, data.lastImgMap);
-        })
-        .catch(error => console.error('Error:', error));
+    	    const url = `/api/menu/filtered_recipe_list?${params.toString()}`;
+    	    console.log('Fetching recipes with URL:', url);  // 요청 URL 로깅
+
+    	    fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Received data:', data); // 디버깅을 위한 로그
+                if (!data || !Array.isArray(data.recipes)) {
+                    throw new Error('Invalid data structure received from server');
+                }
+                updateRecipeList(data.recipes, data.lastImgMap || {});
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('recipeList').innerHTML = '<p>데이터를 불러오는 중 오류가 발생했습니다.</p>';
+            });
     }
 
     function updateRecipeList(filteredRecipes, lastImgMap) {
-    	let html = '';
+        let html = '';
         if (Array.isArray(filteredRecipes) && filteredRecipes.length > 0) {
             filteredRecipes.forEach(recipe => {
+                let imgUrl = '/img/imgNone2.png'; // 기본 이미지 경로 설정
+
+                if (lastImgMap && lastImgMap[recipe.rcode]) {
+                    if (lastImgMap[recipe.rcode].startsWith('DEFAULT:')) {
+                        imgUrl = lastImgMap[recipe.rcode].substring(8);
+                    } else {
+                        imgUrl = '/uploads/' + lastImgMap[recipe.rcode];
+                    }
+                }
+
                 html += `
-                	<div class="recipe" th:each="recipe : ${recipes}"
-    				th:onclick="'loadRecipeDetail(\'' + ${recipe.rcode} + '\')'">
-    				<div class="elsa-recipe-all-img">
-    					<img
-    						th:src="${lastImg.get(recipe.rcode).startsWith('DEFAULT:') ? 
-                  					(lastImg.get(recipe.rcode).substring(8)) : 
-                  					('/uploads/' + lastImg.get(recipe.rcode))}">
-    				</div>
-    				<div class="elsa-recipe-all-info">
-    					<h3 th:text="${recipe.recipeName}"></h3>
-    					<p th:text="${recipe.menuName}"></p>
-    				</div>
-    			</div>
+                    <div class="recipe" onclick="loadRecipeDetail('${recipe.rcode}')">
+                        <div class="elsa-recipe-all-img">
+                            <img src="${imgUrl}">
+                        </div>
+                        <div class="elsa-recipe-all-info">
+                            <h3>${recipe.recipeName || '제목 없음'}</h3>
+                            <p>${recipe.menuName || '메뉴 정보 없음'}</p>
+                        </div>
+                    </div>
                 `;
             });
         } else { 
@@ -429,6 +514,19 @@
 
     function loadRecipeDetail(rcode) {
         window.location.href = `/menu_all/recipe_detail?rcode=${rcode}`;
+    }
+    
+    function updateCheckboxStyle(checkbox) {
+        const label = checkbox.nextElementSibling;
+        if (checkbox.checked) {
+            label.style.backgroundColor = '#F5A47D';
+            label.style.color = 'white';
+            label.style.borderColor = '#F5A47D';
+        } else {
+            label.style.backgroundColor = '';
+            label.style.color = '';
+            label.style.borderColor = '';
+        }
     }
 
 
