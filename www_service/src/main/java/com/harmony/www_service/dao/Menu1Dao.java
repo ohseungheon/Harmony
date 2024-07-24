@@ -6,11 +6,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.harmony.www_service.dto.IngredientDto;
+import com.harmony.www_service.dto.IngredientDto2;
 import com.harmony.www_service.dto.MenuDto;
 
 @Mapper
 public interface Menu1Dao {
 	List<IngredientDto> showFridgeIngredient(@Param("mno") int mno);
+	List<IngredientDto2> showFridgeIngredientForDto(@Param("mno") int mno);
 	IngredientDto showOneIngredient(@Param("icode") int icode);
 	//MenuDto showCanMakeMenu();
     List<MenuDto> showCanMakeMenu(@Param("icodeList") List<Integer> icodeList, @Param("size") Integer size);

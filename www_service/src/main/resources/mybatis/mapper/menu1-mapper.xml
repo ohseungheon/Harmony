@@ -3,9 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.harmony.www_service.dao.Menu1Dao">
+	
+	
 	<select id="showFridgeIngredient" parameterType="int"
 		resultType="com.harmony.www_service.dto.IngredientDto">
-
+ 
 		SELECT *
 		FROM ingredient
 		WHERE icode IN (
@@ -15,12 +17,36 @@
 		WHERE mno = #{mno}
 		);
 
+  
 	</select>
+	
+	<select id="showFridgeIngredientForDto" parameterType="int"
+		resultType="com.harmony.www_service.dto.IngredientDto2">
+
+  
+		SELECT i.*, f.deadline,f.mno
+		FROM ingredient i
+		JOIN fridge f
+		ON i.icode = f.icode
+		WHERE mno=#{mno}
+		ORDER BY f.deadline;;
+  
+  
+  
+  
+  
+	</select>
+
+
+
+
+
 	<select id="getMno" resultType="int">
 
 		SELECT mno
 		FROM Member
-		WHERE username =#{username};
+		WHERE
+		username =#{username};
 
 	</select>
 
@@ -32,7 +58,8 @@
 		WHERE mcode IN (
 		SELECT mcode
 		FROM recipe
-		WHERE rcode IN (
+		WHERE rcode IN
+		(
 		SELECT rcode
 		FROM (
 		SELECT ri1.rcode
@@ -48,7 +75,8 @@
 				AND NOT EXISTS (
 				SELECT 1
 				FROM recipe_ingredient ri2
-				WHERE ri2.rcode = ri1.rcode
+				WHERE ri2.rcode =
+				ri1.rcode
 				AND ri2.icode NOT IN
 				<foreach item="item" index="index" collection="icodeList"
 					open="(" separator="," close=")">
@@ -68,29 +96,32 @@
 	</select>
 
 
-	<select id="showCanMakeMenu2" parameterType="java.util.List" resultType="com.harmony.www_service.dto.MenuDto">
+	<select id="showCanMakeMenu2" parameterType="java.util.List"
+		resultType="com.harmony.www_service.dto.MenuDto">
 		SELECT *
 		FROM menu
 		WHERE mcode IN (
-			SELECT mcode
-			FROM recipe
-			WHERE rcode IN (
-				SELECT ri1.rcode
-				FROM recipe_ingredient ri1
-				WHERE ri1.icode IN 
-				<foreach item="item" index="index" collection="icodeList" open="(" separator="," close=")">
-					#{item}
-				</foreach>
-				AND (
-					SELECT COUNT(*)
-					FROM recipe_ingredient ri2
-					WHERE ri2.rcode = ri1.rcode
-					AND ri2.icode NOT IN 
-					<foreach item="item" index="index" collection="icodeList" open="(" separator="," close=")">
-						#{item}
-					</foreach>
-				) &lt;= 2
-			)
+		SELECT mcode
+		FROM recipe
+		WHERE rcode IN (
+		SELECT ri1.rcode
+		FROM recipe_ingredient ri1
+		WHERE ri1.icode IN
+		<foreach item="item" index="index" collection="icodeList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		AND (
+		SELECT COUNT(*)
+		FROM recipe_ingredient ri2
+		WHERE ri2.rcode = ri1.rcode
+		AND ri2.icode NOT IN
+		<foreach item="item" index="index" collection="icodeList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		) &lt;= 2
+		)
 		)
 	</select>
 
@@ -102,6 +133,7 @@
 		SELECT *
 		FROM ingredient
 		WHERE icode = #{icode}
+
 		LIMIT 1;
 	</select>
 
@@ -112,7 +144,8 @@
 		WHERE icode IN (
 		SELECT icode
 		FROM Fridge
-		WHERE mno = #{mno}
+		WHERE
+		mno = #{mno}
 		)
 		<choose>
 			<!-- When icodeList is not empty -->

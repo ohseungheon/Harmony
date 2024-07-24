@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Document</title>
 <style>
-
 .container {
 	display: flex;
 	flex-direction: row;
@@ -25,7 +24,7 @@
 	margin: 5px 0;
 	padding: 12px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	position:relative;
+	position: relative;
 }
 
 .row img {
@@ -34,15 +33,14 @@
 	border-radius: 5px;
 }
 
-
 #category {
-    background-color: rgba(255, 100, 0, 0.5); /* 빨간색 배경에 80% 불투명도 적용 */
-    position: absolute;
-    bottom: 85%;
-    right: 23.5%;
-    width: 100px;
-    color:white;
-    border-radius: 4px;
+	background-color: rgba(255, 100, 0, 0.5); /* 빨간색 배경에 80% 불투명도 적용 */
+	position: absolute;
+	bottom: 85%;
+	right: 23.5%;
+	width: 100px;
+	color: white;
+	border-radius: 4px;
 }
 
 .highlight {
@@ -102,8 +100,6 @@ button#xBtn:hover {
 	transform: scale(1.1);
 	color: white;
 }
-
-
 
 input[type="submit"]:hover {
 	background-color: #0097a7;
@@ -176,36 +172,48 @@ input[type="submit"]:hover {
 }
 
 .asd {
-    position: absolute; /* 툴팁을 이 요소에 상대적으로 위치시키기 위해 필요 */
-    display: inline-block; /* 툴팁이 정확히 이 요소 위에 표시되도록 하기 위해 */
-    cursor: pointer; /* 클릭할 수 있는 요소를 나타내는 커서 변경 */
-    left: 67%;
-    bottom:38%;
-    color: #EB0000;
-
+	position: absolute; /* 툴팁을 이 요소에 상대적으로 위치시키기 위해 필요 */
+	display: inline-block; /* 툴팁이 정확히 이 요소 위에 표시되도록 하기 위해 */
+	cursor: pointer; /* 클릭할 수 있는 요소를 나타내는 커서 변경 */
+	left: 67%;
+	bottom: 38%;
+	color: #EB0000;
 }
 
- .tooltip {
-    visibility: hidden; /* 기본적으로 숨김 상태 */
-    width: 100px; /* 툴팁의 너비 */
-    background-color: #555; /* 툴팁 배경색 */
-    color: #fff; /* 툴팁 텍스트 색상 */
-    text-align: center; /* 텍스트 가운데 정렬 */
-    border-radius: 6px; /* 툴팁의 둥근 모서리 */
-    padding: 5px; /* 툴팁 내부 여백 */
-    position: absolute; /* 절대 위치 */
-    z-index: 1; /* 다른 요소 위에 표시되도록 */
-    bottom: 30%; /* 요소 위쪽에 위치시키기 위해 */
-    left: 30%; /* 수평 중앙 정렬 */
-    margin-left: -60px; /* 수평 중앙 정렬을 위한 오프셋 */
-    opacity: 0; /* 기본적으로 불투명 상태 */
-    transition: opacity 0.3s; /* 페이드 인 효과 */
+.tooltip {
+	visibility: hidden; /* 기본적으로 숨김 상태 */
+	width: 100px; /* 툴팁의 너비 */
+	background-color: #555; /* 툴팁 배경색 */
+	color: #fff; /* 툴팁 텍스트 색상 */
+	text-align: center; /* 텍스트 가운데 정렬 */
+	border-radius: 6px; /* 툴팁의 둥근 모서리 */
+	padding: 5px; /* 툴팁 내부 여백 */
+	position: absolute; /* 절대 위치 */
+	z-index: 1; /* 다른 요소 위에 표시되도록 */
+	bottom: 30%; /* 요소 위쪽에 위치시키기 위해 */
+	left: 30%; /* 수평 중앙 정렬 */
+	margin-left: -60px; /* 수평 중앙 정렬을 위한 오프셋 */
+	opacity: 0; /* 기본적으로 불투명 상태 */
+	transition: opacity 0.3s; /* 페이드 인 효과 */
 }
 
 .asd:hover .tooltip {
-    visibility: visible; /* 마우스 오버 시 툴팁 표시 */
-    opacity: 1; /* 완전히 불투명 상태로 변경 */
+	visibility: visible; /* 마우스 오버 시 툴팁 표시 */
+	opacity: 1; /* 완전히 불투명 상태로 변경 */
 }
+
+.high-value {
+	color: green;
+}
+
+.medium-value {
+	color: black;
+}
+
+.low-value {
+	color: red;
+}
+
 
 </style>
 </head>
@@ -227,11 +235,20 @@ input[type="submit"]:hover {
 		<div style="text-align: center">나의 냉장고 속 재료들</div>
 		<div id="haveIngredient" class="container">
 			<div class="row" style="display: none;">냉장고 재료</div>
-			<div th:each="dto : ${FridgeIngredientList}" class="row">
+			<div th:each="dto, iterStat : ${FridgeIngredientListForDto}"
+				class="row">
 				<input type="hidden" th:value="${dto.icode}"
 					th:id="'icode' + ${dto.icode}">
 				<div class="container2">
 					<div>[[${dto.name}]]</div>
+					<div>[[${dto.deadline}]]</div>
+					
+					
+					<div 
+					th:text="'D' + ${days[iterStat.index]}"
+        th:class="${days[iterStat.index] <= 3 ? 'low-value' : (days[iterStat.index] <= 20 ? 'medium-value' : 'high-value')}"
+					>
+					</div>
 					<div>
 						<button id="xBtn" type="button"
 							th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">재료빼기</button>
@@ -244,7 +261,7 @@ input[type="submit"]:hover {
 		<div style="text-align: center">제외된 재료</div>
 
 		<div id="NoUseIngredient">
-                <button  onclick="NoUseIngredientAllDelete(event)"> 전체삭제</button>
+			<button onclick="NoUseIngredientAllDelete(event)">전체삭제</button>
 
 
 		</div>
@@ -260,10 +277,7 @@ input[type="submit"]:hover {
 			<div th:each="dto : ${showCanMakeMenuList}" class="row row9"
 				th:id="'canMakeMenuMcode' + ${dto.mcode}">
 				<input type="hidden" value="${dto.mcode}">
-				   <p class="asd">
-                    ⓘ
-                    <span class="tooltip">안녕하세요</span>
-                </p>
+			
 				<div class="container2">
 					<div>
 						<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
@@ -285,14 +299,13 @@ input[type="submit"]:hover {
 				th:id="'canMakeMenuMcode2_' + ${dto.mcode}">
 				<input type="hidden" value="${dto.mcode}">
 				<p class="asd">
-                    ⓘ
-                    <span class="tooltip">안녕하세요</span>
-                </p>
+					ⓘ <span class="tooltip">안녕하세요</span>
+				</p>
 				<div class="container2">
 					<div>
 						<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
 					</div>
-						<div id="category">[[${dto.category}]]</div>
+					<div id="category">[[${dto.category}]]</div>
 					<div>[[${dto.menuName}]]</div>
 					<div>
 						<button id="xBtn" type="button"
@@ -413,7 +426,8 @@ input[type="submit"]:hover {
 
     function mcodeListForIcodeList(event, icode) {
         event.preventDefault();
-        fetch("/menu1/mcodeListForIcodeList?icode=" + icode, {
+        console.log("================icode=============: "+icode)
+        fetch("/menu1/mcodeListForIcodeList?icode= " + icode, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -421,6 +435,7 @@ input[type="submit"]:hover {
         })
         .then(response => response.json())
         .then(data => {
+        console.log("================data=============: "+data)
             NoUseIngredient(event);
             toggle2(data);
         })
@@ -428,6 +443,8 @@ input[type="submit"]:hover {
             console.error('Error:', error);
         });
     }
+    
+    
     function mcodeListForIcodeList2(event, icode) {
         event.preventDefault();
         fetch("/menu1/mcodeListForIcodeList2?icode=" + icode, {
