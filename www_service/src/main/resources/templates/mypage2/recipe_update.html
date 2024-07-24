@@ -358,30 +358,44 @@ section {
 					<tr>
 						<th>카테고리</th>
 						<td><select name="category" id="category-sel">
-								<option value="none">종류별</option>
-								<option value="밑반찬" th:selected="${recipe.category == '밑반찬'}">밑반찬</option>
-								<option value="메인반찬" th:selected="${recipe.category == '메인반찬'}">메인반찬</option>
+								<option value="">카테고리별</option>
 								<option value="국/탕" th:selected="${recipe.category == '국/탕'}">국/탕</option>
-								<option value="찌개" th:selected="${recipe.category == '찌개'}">찌개</option>
+								<option value="찜/조림" th:selected="${recipe.category == '찜/조림'}">찜/조림</option>
+								<option value="구이" th:selected="${recipe.category == '구이'}">구이</option>
+								<option value="찌개/전골" th:selected="${recipe.category == '찌개/전골'}">찌개/전골</option>
+								<option value="볶음"
+									th:selected="${recipe.category == '볶음'}">볶음</option>
 								<option value="디저트" th:selected="${recipe.category == '디저트'}">디저트</option>
-								<option value="면/만두" th:selected="${recipe.category == '면/만두'}">면/만두</option>
-								<option value="밥/죽/떡"
-									th:selected="${recipe.category == '밥/죽/떡'}">밥/죽/떡</option>
-								<option value="퓨전" th:selected="${recipe.category == '퓨전'}">퓨전</option>
-								<option value="김치/젓갈/장류"
-									th:selected="${recipe.category == '김치/젓갈/장류'}">김치/젓갈/장류</option>
-								<option value="양념/소스/잼"
-									th:selected="${recipe.category == '양념/소스/잼'}">양념/소스/잼</option>
-								<option value="양식" th:selected="${recipe.category == '양식'}">양식</option>
-								<option value="샐러드" th:selected="${recipe.category == '샐러드'}">샐러드</option>
-								<option value="스프" th:selected="${recipe.category == '스프'}">스프</option>
-								<option value="빵" th:selected="${recipe.category == '빵'}">빵</option>
-								<option value="과자" th:selected="${recipe.category == '과자'}">과자</option>
-								<option value="차/음료/술"
-									th:selected="${recipe.category == '차/음료/술'}">차/음료/술</option>
+								<option value="밥요리"
+									th:selected="${recipe.category == '밥요리'}">밥요리</option>
+								<option value="면요리"
+									th:selected="${recipe.category == '면요리'}">면요리</option>
+								<option value="튀김" th:selected="${recipe.category == '튀김'}">튀김</option>
 								<option value="기타" th:selected="${recipe.category == '기타'}">기타</option>
 						</select></td>
 					</tr>
+					<tr>
+    			<th>테마</th>
+    			<td>
+    				<select name="theme" id="theme-sel">
+    					<option value="">테마별</option>
+    					<option value="한식" th:selected="${recipe.theme == '한식'}">한식</option>
+    					<option value="중식" th:selected="${recipe.theme == '중식'}">중식</option>
+    					<option value="일식" th:selected="${recipe.theme == '일식'}">일식</option>
+    					<option value="양식" th:selected="${recipe.theme == '양식'}">양식</option>
+    					<option value="분식" th:selected="${recipe.theme == '분식'}">분식</option>
+    					<option value="야식/안주" th:selected="${recipe.theme == '야식/안주'}">야식/안주</option>
+    					<option value="생일/기념일" th:selected="${recipe.theme == '생일/기념일'}">생일/기념일</option>
+    					<option value="다이어트" th:selected="${recipe.theme == '다이어트'}">다이어트</option>
+    					<option value="파티" th:selected="${recipe.theme == '파티'}">파티</option>
+    					<option value="손님상" th:selected="${recipe.theme == '손님상'}">손님상</option>
+    					<option value="아이반찬" th:selected="${recipe.theme == '아이반찬'}">아이반찬</option>
+    					<option value="캠핑/피크닉" th:selected="${recipe.theme == '캠핑/피크닉'}">캠핑/피크닉</option>
+    					<option value="명절" th:selected="${recipe.theme == '명절'}">명절</option>
+    					<option value="기타" th:selected="${recipe.theme == '기타'}">기타</option>
+    				</select>
+    			</td>
+    		</tr>
 					<tr>
 						<th>인원</th>
 						<td><select name="portions" id="portions-sel">
@@ -521,10 +535,12 @@ function highlightSelectedMenu() {
 function loadInitialData() {
 	const categorySel = document.getElementById("category-sel");
     const portionsSel = document.getElementById("portions-sel");
+    const themeSel = document.getElementById("theme-sel");
     
     // 서버에서 전달받은 데이터를 사용
     const recipeCategory = /*[[${recipe.category}]]*/ '';
     const recipePortions = /*[[${recipe.portions}]]*/ '';
+    const recipeTheme = /*[[${recipe.theme}]]*/ '';
     
     if (categorySel && recipeCategory) {
         categorySel.value = recipeCategory;
@@ -534,8 +550,13 @@ function loadInitialData() {
         portionsSel.value = recipePortions;
     }
     
+    if (themeSel && recipeTheme) {
+        themeSel.value = recipeTheme;
+    }
+    
     console.log("Category:", recipeCategory); // 디버깅을 위한 로그
     console.log("Portions:", recipePortions); // 디버깅을 위한 로그
+    console.log("Theme:", recipeTheme); // 디버깅을 위한 로그
     
     loadMenuImage(document.getElementById("current-mcode").value);
     setupOrderImages();
@@ -577,7 +598,7 @@ function updateMenuImage(mcode) {
             const imageUrl = `/uploads/${data.imgurl}`;
             const menuImage = document.getElementById("menu-image");
             menuImage.src = imageUrl;
-            menuImage.onerror = () => { menuImage.src = '/img/imgNone.png'; };
+            menuImage.onerror = () => { menuImage.src = '/img/imgNone2.png'; };
         })
         .catch(error => console.error('Error:', error));
 }

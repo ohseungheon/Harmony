@@ -104,6 +104,7 @@ public class Mypage2Controller {
 			@RequestParam("icode") List<Integer> icode, @RequestParam("amount") List<Integer> amount,
 			@RequestParam("orderNum") List<Integer> orderNum, @RequestParam("orderContent") List<String> orderContent,
 			@RequestPart("cookingImg") List<MultipartFile> cookingImg, @RequestParam("tagContent") String tagContent,
+			@RequestParam("theme") String theme,
 			Model model) {
 
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -120,6 +121,7 @@ public class Mypage2Controller {
 		recipeDto.setUrl(url);
 		recipeDto.setCategory(category);
 		recipeDto.setPortions(portions);
+		recipeDto.setTheme(theme);
 		service.registMyRecipeService(recipeDto);
 
 		// int rcode = recipeDto.getRcode();
@@ -183,6 +185,7 @@ public class Mypage2Controller {
 
 		RecipeDto recipeDto = service.getRecipeService(rcode);
 		System.out.println("rcode= " + recipeDto.getRcode());
+		System.out.println("수정폼 recipe : " + recipeDto);
 		model.addAttribute("recipe", recipeDto);
 
 		List<RecipeIngredientDto> recipeIngredientDto = service.getRecipeIngredientService(rcode);
@@ -208,7 +211,7 @@ public class Mypage2Controller {
 	// 레시피 수정
 	@PostMapping("/update")
 	public String recipeUpdate(@ModelAttribute RecipeUpdateForm form, Model model) {
-
+		
 		try {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			MemberDto member = loginService.getMnoByUsernameService(username);
@@ -222,7 +225,8 @@ public class Mypage2Controller {
 			}
 
 			RecipeDto recipeDto = form.toRecipeDto(member.getMno());
-			logger.info("Recipe DTO before update: {}", recipeDto);
+			logger.info("컨트롤러 Recipe DTO before update: {}", recipeDto);
+			logger.info("Form theme value: {}", form.getTheme());
 			List<RecipeIngredientDto> ingredients = form.toRecipeIngredientDtoList();
 			List<RecipeOrderDto> orders = form.toRecipeOrderDtoList();
 			RecipeTagDto recipeTagDto = form.toRecipeTagDto();

@@ -16,6 +16,7 @@ public class RecipeUpdateForm {
     private String url;
     private String category;
     private int portions;
+    private String theme;
     private List<Integer> icode;
     private List<Integer> amount;
     private List<Integer> orderNum;
@@ -37,6 +38,7 @@ public class RecipeUpdateForm {
         dto.setUrl(this.url);
         dto.setCategory(this.category);
         dto.setPortions(this.portions);
+        dto.setTheme(this.theme);
         return dto;
     }
 

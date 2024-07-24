@@ -101,6 +101,7 @@
     	border-radius:5px;
     	padding:0 10px;
     }
+    
     .recipe-regist-box2 input[type="text"]{
     	font-family: "Pretendard Variable", Pretendard;
     	width:120px;
@@ -327,23 +328,38 @@
     			<th>카테고리</th>
     			<td>
     				<select name="category">
-    					<option value="none">종류별</option>
-    					<option value="밑반찬">밑반찬</option>
-    					<option value="메인반찬">메인반찬</option>
+    					<option value="none">카테고리별</option>
     					<option value="국/탕">국/탕</option>
-    					<option value="찌개">찌개</option>
+    					<option value="찜/조림">찜/조림</option>
+    					<option value="구이">구이</option>
+    					<option value="찌개/전골">찌개/전골</option>
+    					<option value="볶음">볶음</option>
     					<option value="디저트">디저트</option>
-    					<option value="면/만두">면/만두</option>
-    					<option value="밥/죽/떡">밥/죽/떡</option>
-    					<option value="퓨전">퓨전</option>
-    					<option value="김치/젓갈/장류">김치/젓갈/장류</option>
-    					<option value="양념/소스/잼">양념/소스/잼</option>
+    					<option value="밥요리">밥요리</option>
+    					<option value="면요리">면요리</option>
+    					<option value="튀김">튀김</option>
+    					<option value="기타">기타</option>
+    				</select>
+    			</td>
+    			</tr>
+    			<tr>
+    			<th>테마</th>
+    			<td>
+    				<select name="theme">
+    					<option value="none">테마별</option>
+    					<option value="한식">한식</option>
+    					<option value="중식">중식</option>
+    					<option value="일식">일식</option>
     					<option value="양식">양식</option>
-    					<option value="샐러드">샐러드</option>
-    					<option value="스프">스프</option>
-    					<option value="빵">빵</option>
-    					<option value="과자">과자</option>
-    					<option value="차/음료/술">차/음료/술</option>
+    					<option value="분식">분식</option>
+    					<option value="야식/안주">야식/안주</option>
+    					<option value="생일/기념일">생일/기념일</option>
+    					<option value="다이어트">다이어트</option>
+    					<option value="파티">파티</option>
+    					<option value="손님상">손님상</option>
+    					<option value="아이반찬">아이반찬</option>
+    					<option value="캠핑/피크닉">캠핑/피크닉</option>
+    					<option value="명절">명절</option>
     					<option value="기타">기타</option>
     				</select>
     			</td>
@@ -421,7 +437,7 @@
     		<tr>
     			<th>태그</th>
     			<td>
-    				<input type="text" name="tagContent" placeholder="예) 한식, 닭볶음탕">
+    				<input type="text" name="tagContent" placeholder="예) #한식, #닭볶음탕">
     			</td>
     		</tr>
     	</table>

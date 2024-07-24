@@ -14,8 +14,9 @@
 	<delete id="deleteMyRecipe">
 		delete from recipe where rcode = #{rcode}
 	</delete>
-	
-	<select id="recipeInMenu" resultType="com.harmony.www_service.dto.MenuDto">
+
+	<select id="recipeInMenu"
+		resultType="com.harmony.www_service.dto.MenuDto">
 		SELECT r.rcode, r.mcode, m.menuName, m.imgurl
 		FROM recipe r
 		JOIN menu m
@@ -28,10 +29,12 @@
 		keyProperty="rcode">
 		insert into recipe (mcode, mno, recipeName, introduce,
 		url, category,
-		portions, view)
-		values(#{mcode}, #{mno}, #{recipeName},
+		portions, view, theme)
+		values(#{mcode}, #{mno},
+		#{recipeName},
 		#{introduce}, #{url}, #{category},
-		#{portions}, 0)
+		#{portions}, 0,
+		#{theme})
 	</insert>
 
 	<!-- 레시피 재료 등록 -->
@@ -65,13 +68,12 @@
 		parameterType="com.harmony.www_service.dto.RecipeDto">
 		update recipe set
 		mcode = #{mcode},
-		recipeName =
-		#{recipeName},
+		recipeName = #{recipeName},
 		introduce = #{introduce},
 		url = #{url},
-		category =
-		#{category},
-		portions = #{portions}
+		category = #{category},
+		portions = #{portions},
+		theme = #{theme}
 		where rcode = #{rcode}
 	</update>
 
@@ -136,11 +138,11 @@
 		delete from recipe_ingredient where ricode =
 		#{ricode}
 	</delete>
-	
+
 	<!-- 모든 레시피 재료 삭제 -->
-    <delete id="deleteAllRecipeIngredients">
-        DELETE FROM recipe_ingredient WHERE rcode = #{rcode}
-    </delete>
+	<delete id="deleteAllRecipeIngredients">
+		DELETE FROM recipe_ingredient WHERE rcode = #{rcode}
+	</delete>
 
 	<!-- 모든 요리 순서 삭제 -->
 	<delete id="deleteAllRecipeOrders">
@@ -151,28 +153,33 @@
 	<insert id="insertMyRecipeIngredient"
 		parameterType="com.harmony.www_service.dto.RecipeIngredientDto"
 		useGeneratedKeys="true" keyProperty="ricode">
-		INSERT INTO recipe_ingredient (rcode, icode, amount)
+		INSERT INTO recipe_ingredient
+		(rcode, icode, amount)
 		VALUES (#{rcode}, #{icode}, #{amount})
 	</insert>
 
 	<!-- 레시피 요리 순서 추가 -->
 	<insert id="insertMyRecipeOrder"
 		parameterType="com.harmony.www_service.dto.RecipeOrderDto">
-		INSERT INTO recipe_order (rcode, orderNum, orderContent, cookingImg)
-		VALUES (#{rcode}, #{orderNum}, #{orderContent}, #{cookingImg})
+		INSERT INTO recipe_order (rcode, orderNum, orderContent,
+		cookingImg)
+		VALUES (#{rcode}, #{orderNum}, #{orderContent},
+		#{cookingImg})
 	</insert>
 
 	<!-- 레시피 태그 추가 -->
 	<insert id="insertMyRecipeTag"
 		parameterType="com.harmony.www_service.dto.RecipeTagDto">
 		INSERT INTO recipe_tag (rcode, tagContent)
-		VALUES (#{rcode}, #{tagContent})
+		VALUES
+		(#{rcode}, #{tagContent})
 	</insert>
 
 	<!-- 레시피 태그 존재 여부 확인 -->
 	<select id="existsRecipeTag" resultType="boolean">
 		SELECT COUNT(*) > 0
-		FROM recipe_tag
+		FROM
+		recipe_tag
 		WHERE rcode = #{rcode}
 	</select>
 
