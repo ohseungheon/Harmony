@@ -90,8 +90,11 @@ public class Menu2Service {
      * @param icodeList
      * @return List<MenuDto>
      */
-    public List<MenuDto> canMakeMenuThatLack2(@Param("icodeList")List<Integer> icodeList){
-		return dao.canMakeMenuThatLack2(icodeList);
+    public List<MenuDto> canMakeMenuThatLack2(List<Integer> icodeList, List<Integer> exceptList){
+        if (exceptList.size() == 0){
+            return dao.canMakeMenuThatLack2WithoutExcepts(icodeList);
+        }
+		return dao.canMakeMenuThatLack2(icodeList, exceptList);
 	}
 
 }
