@@ -54,6 +54,32 @@ input, select {
 	display: flex;
 	flex-wrap: wrap;
 }
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-weight: bold; /* TIP 텍스트 강조 */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 260px; /* 툴팁의 너비 */
+  background-color: #feff85; /* 배경 색상 */
+  color: black; /* 텍스트 색상 */
+  border-radius: 5px;
+  padding: 15px;
+  position: absolute;
+  z-index: 1;
+  left: 100%;
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: wrap; 
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
 </style>
 </head>
 <body>
@@ -76,9 +102,11 @@ input, select {
 				<div class="ingre-container">
 					<div th:each="ingre : ${ingre}" th:if="${ingre.category == '육류'}">
 						<span class="by-ingre-span" 
+							th:data-icode="${ingre.icode}"
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
-							th:data-category="${ingre.category}" >
+							th:data-category="${ingre.category}"
+							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							[[${ingre.name}]]
 						</span>
@@ -92,7 +120,8 @@ input, select {
 							th:data-icode="${ingre.icode}"
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
-							th:data-category="${ingre.category}">
+							th:data-category="${ingre.category}"
+							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							[[${ingre.name}]]
 						</span>
@@ -106,7 +135,8 @@ input, select {
 							th:data-icode="${ingre.icode}"
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
-							th:data-category="${ingre.category}">
+							th:data-category="${ingre.category}"
+							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							[[${ingre.name}]]
 						</span>
@@ -120,7 +150,8 @@ input, select {
 							th:data-icode="${ingre.icode}"
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
-							th:data-category="${ingre.category}">
+							th:data-category="${ingre.category}"
+							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							[[${ingre.name}]]
 						</span>
@@ -134,7 +165,8 @@ input, select {
 							th:data-icode="${ingre.icode}"
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
-							th:data-category="${ingre.category}">
+							th:data-category="${ingre.category}"
+							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							[[${ingre.name}]]
 						</span>
@@ -143,26 +175,31 @@ input, select {
 			</div>
 		
 				<form id="insertForm" method="POST">
-					<img src=""> 
-					<label for="name">이미지URL</label> 
-					<input type="text" id="imgUrl" name="imgUrl"> 
+				
+					<img id="previewImage" src="" style="width: 150px; height: auto;"> 
+					
+					<input type="hidden" id="imgUrl" name="imgUrl"> 
 					
 					<label for="name">재료이름</label> 
-					<input type="text" id="name" name="name"> 
+					<input type="text" id="name" name="name" readonly> 
 					
 					<label for="deadline">카테고리</label>
-					<input type="text" id="category" name="category"> 
+					<input type="text" id="category" name="category" readonly> 
 					
 					<label for="deadline">유통기한</label> 
-					<input type="text" id="deadline" name="deadline"> 
+					<span id="tip" class="tooltip">TIP
+  						<span class="tooltiptext" id="tip-text"></span>
+					</span>
+					<input type="date" id="deadline" name="deadline"> 
 					
-					<label for="amount">수량/중량</label> 
-					<input type="text" id="amount" name="amount"> 
 					
 					<label for="quantity">수량</label> 
 					<input class="by-radio" type="radio" id="quantity" name="type" value="수량"> 
 					<label for="weight">중량</label> 
 					<input class="by-radio" type="radio" id="weight" name="type" value="중량"> 
+					
+					<label for="amount">수량/중량</label> 
+					<input type="text" id="amount" name="amount"> 
 					
 					<label for="keeptype">보관상태</label> 
 					<select id="keeptype" name="keeptype">
@@ -170,10 +207,11 @@ input, select {
 							th:text="${keeptype}" th:selected="${keeptype}"></option>
 					</select> 
 					
-					<input type="text" id="memo" name="memo" value="비고란"> 
+					<label for="memo">메모</label> 
+					<input type="text" id="memo" name="memo"> 
 					
-					<input type="text" id="icode" name="icode">
-					<input type="text" id="mno" name="mno" th:value="${mno}"> 
+					<input type="hidden" id="icode" name="icode">
+					<input type="hidden" id="mno" name="mno" th:value="${mno}"> 
 					
 					<input type="submit" value="등록"> 
 					<input type="button" value="목록" onclick="window.location.href='/mypage_main'">
@@ -201,11 +239,22 @@ input, select {
 				const imgUrl = $(this).data("imgurl");
 				const name = $(this).data("name");
 				const category = $(this).data("category");
+				const tip = $(this).data("tip");
 				
 				$("#icode").val(icode);
 				$("#imgUrl").val(imgUrl);
 				$("#name").val(name);
 				$("#category").val(category);
+				$("#tip-text").text(tip); // 툴팁 내용 업데이트
+				
+				// 이미지 미리보기 업데이트
+				$("#previewImage").attr("src", "/img/ingredient/" + imgUrl);
+			});
+			
+			$("#tip").on("hover", function(){
+				const tip = $(this).data("tip");
+				
+				$("#tip")
 			});
 			
 			//재료등록 기능 

@@ -45,7 +45,6 @@ public interface IMypage1Dao {
 	//재료등록
 	public void insertFridge(@Param("fi") FridgeIngredientDto fi);
 	
-	public void insertIngredient(@Param("fi") FridgeIngredientDto fi);
 	//재료전체조회
 	public List<IngredientDto> allIngredientList();
 }
