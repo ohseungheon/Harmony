@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Document</title>
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
@@ -363,24 +365,80 @@ main {
 	background-color: rgba(0, 0, 0, 0.4);
 }
 #modalData{
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 }
 /* 모달 콘텐츠 */
 .modal-content {
 	background-color: #fefefe;
 	margin: 15% auto;
 	padding: 20px;
-	border: 1px solid #888;
-	width: 400px;
-    height: 300px;
+	width: 500px;
+	padding:30px 0;
+    border-radius:5px;
+    box-sizing:border-box;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    position:relative;
+}
+
+.modal-area-box{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:center;
+}
+.modal-area-box label{
+	width:60px;
+	font-size:14px;
+	font-weight:300;
+}
+.modal-box1 #modalName{
+	width:100px;
+	border:0;
+	font-size:25px;
+	padding-left:15px;
+	margin-bottom:10px;
+}
+.modal-box1 #modalCategory{
+	width:100px;
+	border:0;
+	font-size:25px;
+	padding-left:15px;
+}
+.modal-box2{
+	margin-bottom:25px;
+}
+.modal-box2 .by-deadline-box{
+	margin-bottom:15px;
+}
+.modal-box2 input{
+	font-family: "Pretendard Variable", Pretendard;
+	height:30px;
+	padding-left:5px;
+	box-sizing:border-box;
+}
+
+.modal-area-box textarea{
+	font-family: "Pretendard Variable", Pretendard;
+	width:400px;
+	height:100px;
+	padding:5px;
+	box-sizing:border-box;
+}
+.modal-area-box select{
+	width:100px;
+	height:30px;
+	font-family: "Pretendard Variable", Pretendard;
 }
 
 /* 닫기 버튼 */
 .close {
+	display:inline-block;
 	color: #aaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
+	font-size: 42px;
+	font-weight: 400;
+	position:absolute;
+	top:5px;
+	right:15px;
+	transition:all 0.2s;
 }
 
 .close:hover, .close:focus {
@@ -404,6 +462,19 @@ main {
 #by-button-group {
 	display: flex; 
 	margin: 10px;
+}
+#by-btn-group{
+	text-align:center;
+	margin-top:15px;
+}
+#by-btn-group input{
+	width:400px;
+	padding:10px 0;
+	background:#F5A47D;
+	color:#fff;
+	border:1px solid #F5A47D;
+	border-radius:5px;
+	cursor:pointer;
 }
 </style>
 </head>
@@ -616,40 +687,46 @@ main {
 				<div class="by-modal">
 					<h2 id="modalData">재료 수정</h2>
 					<form id="m-updateForm" th:action="@{/mypage1/material_update}" method="POST">
-						<div class="by-deadline-box">
-							<label for="modalName" class="m-label">이름</label> 
-							<input type="text" id="modalName" class="m-text" value="" readonly> 
+						<div class="modal-area-box">
+							<div class="modal-box1">
+								<div class="by-deadline-box">
+									<label for="modalName" class="m-label">재료명</label> 
+									<input type="text" id="modalName" class="m-text" value="" readonly> 
+								</div>
+								<div class="by-deadline-box">
+									<label for="modalCategory" class="m-label">카테고리</label> 
+									<input type="text" id="modalCategory" class="m-text" value="" readonly> 
+								</div>
+							</div>
+							<div class="modal-box2">
+				    			<div class="by-deadline-box">
+									<label for="modalDeadline" class="m-label">유통기한</label>
+									<input type="text" id="modalDeadline" class="m-text" value="">
+								</div>
+								<div class="by-deadline-box">
+									<label for="modalCount" class="m-label">수량/중량</label> 
+									<input type="number" id="modalCount" class="m-text" value=""> 
+								</div>
+								<div class="by-deadline-box">
+									<label for="modalKeeptype" class="m-label">보관상태</label> 
+									<select id="modalKeeptype" name="modalKeeptype" class="m-text">
+				    					<option value="냉장">냉장</option>
+		                   	 			<option value="냉동">냉동</option>
+		                    			<option value="상온">상온</option>
+				    				</select>
+				    			</div>
+			    			</div>
+			    			
+							<div class="by-deadline-box">
+								<textarea id="modalMemo" class="m-text"></textarea> 
+							</div>
+							
+							<input type="hidden" id="modalFcode" name="modalFcode" value="">
+		    				<input type="hidden" id="modalMno" name="modalMno" value="">
 						</div>
-						<div class="by-deadline-box">
-							<label for="modalCategory" class="m-label">카테고리</label> 
-							<input type="text" id="modalCategory" class="m-text" value="" readonly> 
-						</div>
-						<div class="by-deadline-box">
-							<label for="modalCount" class="m-label">수량/중량</label> 
-							<input type="number" id="modalCount" class="m-text" value=""> 
-						</div>
-						<div class="by-deadline-box">
-							<label for="modalKeeptype" class="m-label">보관상태</label> 
-							<select id="modalKeeptype" name="modalKeeptype" class="m-text">
-		    					<option value="냉장">냉장</option>
-                   	 			<option value="냉동">냉동</option>
-                    			<option value="상온">상온</option>
-		    				</select>
-		    			</div>
-		    			<div class="by-deadline-box">
-							<label for="modalDeadline" class="m-label">유통기한</label>
-							<input type="text" id="modalDeadline" class="m-text" value="">
-						</div>
-						<div class="by-deadline-box">
-							<label for="modalMemo" class="m-label">메모</label> 
-							<input type="text" id="modalMemo" class="m-text" value=""> 
-						</div>
-						
-						<input type="hidden" id="modalFcode" name="modalFcode" value="">
-	    				<input type="hidden" id="modalMno" name="modalMno" value="">
-	    				<div id="by-btn-group">
-							<input type="submit" value="수정"> 
-						</div>	
+		    				<div id="by-btn-group">
+								<input type="submit" value="수정"> 
+							</div>	
 					</form>
 				</div>
 			</div>
