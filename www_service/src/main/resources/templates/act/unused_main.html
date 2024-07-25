@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title> 체험 활동 정보 </title>
+    <style>
+        li {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        span:not(:last-child),
+        span:not(:first-child) {
+            width: 105px;
+        }
+
+        span:first-child {
+            width: 205px;
+        }
+
+        span:last-child {
+            width: 255px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <th:block th:insert="~{/sub/header.html}"></th:block>
+    </header>
+    <section>
+        <div id="king-listA">
+
+        </div>
+    </section>
+
+
+    <script>
+        let listA = [];
+        function test() {
+
+            fetch('https://apis.data.go.kr/6260000/BusanTourExprnInfoService/getTourExprnInfo?ServiceKey=D5L7bdiOo%2Fy2t3Wgb8RJ8xXHA9M3RGwICLVQlv2SZ7nEZP5tNxPylv0M24bldi4kkRrX80WeTnj%2Fkh5yJV0aow%3D%3D&pageNo=4&numOfRows=10&resultType=json')
+            .then(res=>res.json())
+            .then(data => console.log(data))
+            .catch(error => console.log("Error:", error));
+        }
+
+        test();
+
+        /**
+         * 
+        */
+        function rural_experience_activities() {
+            fetch('http://localhost:8888/proxy/rural-experience-activities/openapi/7c6343a264b304ed8904561e0614ffad8602ce12656aa622163c78296a68763e/Json/Grid_20170111000000000496_1/1/50')
+                .then(res => res.json())
+                .then(dataList => {
+                    listA = dataList.Grid_20170111000000000496_1.row;
+                    document.getElementById('king-listA').innerHTML = '';
+                    for (var i = 0; i < listA.length; i++) {
+                        document.getElementById('king-listA').innerHTML += create_ListA_Data(i, listA[i]);
+
+                        console.log(listA[i]);
+                    }
+                    // console.log(listA);
+                })
+                .catch(error => console.log("Error:", error));
+        }
+
+        function create_ListA_Data(i, data) {
+
+            return '<li>'   // + (i + 1) + '번째 데이터'
+                // + '<span>'
+                // + ' 코드 :  ' + data.CTRD_CODE
+                // + '</span>'
+                + '<span>'
+                + ' 마을이름 : ' + data.VILAGE_NM
+                + '</span>'
+                + '<span>'
+                + ' 시/도 : ' + data.CTRD_NM
+                + '</span>'
+                + '<span>'
+                + ' 시/군/구 : ' + data.SIGNGU_NM
+                + '</span>'
+                + '<span>'
+                + ' 선정일 : ' + data.SLCTN_YEAR
+                + '</span>'
+                + '<span>'
+                + ' 주소 : ' + data.VILAGE_DETAIL_ADRES
+                + '</span>'
+                + '</li>';
+        }
+
+
+        rural_experience_activities();
+    </script>
+</body>
+
+</html>
