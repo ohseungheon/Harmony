@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title> 농수산물 도·소매 정보 </title>
+    <title> 체험 활동 정보 </title>
     <style>
-
+        
     </style>
 </head>
 
@@ -13,21 +13,13 @@
     <header>
         <th:block th:insert="~{/sub/header.html}"></th:block>
     </header>
+    <section>
 
-    <script>
-        fetch('   http://211.237.50.150:7080/openapi/79857a1a677b19ecc51b7dfcd34fe727788b5349253ceb7820a0023b078adbee/xml/Grid_20170111000000000496_1/1/5',
-            {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            }
-        )
-            .then(res => res.json())
-            .then(dataList => console.log(dataList))
-            .catch(error => console.log("!!"))
-    </script>
+        
+    </section>
+    <footer>
+        <th:block th:insert="~{/sub/footer.html}"></th:block>
+    </footer>
 </body>
 
 </html>
