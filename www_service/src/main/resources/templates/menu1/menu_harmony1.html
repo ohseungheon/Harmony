@@ -4,43 +4,197 @@
 <meta charset="UTF-8">
 <title>Document</title>
 <style>
-.container {
+#mainForm{
+	margin-bottom:15px;
+}
+#mainForm input{
+	padding:5px 20px;
+	border:1px solid #ccc;
+	background:#f9f9f9;
+	cursor:pointer;
+}
+
+#all-area {
 	display: flex;
-	flex-direction: row;
-	margin: 20px 0;
+	justify-content: space-between;
+}
+
+.ingredient-area{
+	width:240px;
+}
+.ingredient-area-title{
+	text-align:center;
+	font-size:14px;
+	border:1px solid #ccc;
+	padding:5px 0;
+	margin-bottom:10px;
+}
+
+#haveIngredient {
+	height: 500px;
+	border: 1px solid #eee;
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	box-sizing:border-box;
 }
 
 .container2 {
 	display: flex;
-	flex-direction: column;
-	margin: 20px 0;
-}
-
-.row {
-	display: flex;
-	justify-content: space-between;
 	align-items: center;
-	border: 1px solid #ddd;
-	margin: 5px 0;
-	padding: 12px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	position: relative;
+	gap: 10px;
+	border:1px solid #ccc;
+	padding:10px;
+	margin-bottom:5px;
 }
 
-.row img {
-	max-width: 100px;
-	height: auto;
-	border-radius: 5px;
+.container2 div:nth-child(1) {
+	font-size: 14px;
 }
+
+.container2 div:nth-child(2) {
+	font-size: 12px;
+	color: #999;
+	font-weight: 300;
+}
+
+.container2 div:nth-child(3) {
+	font-size: 12px;
+}
+
 
 #category {
-	background-color: rgba(255, 100, 0, 0.5); /* 빨간색 배경에 80% 불투명도 적용 */
-	position: absolute;
-	bottom: 85%;
-	right: 23.5%;
-	width: 100px;
-	color: white;
-	border-radius: 4px;
+	font-size:13px;
+	padding-right:10px;
+	color:#888;
+}
+
+.except-ingre {
+	display: inline-block;
+	padding: 5px;
+	padding-top: 2px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background: #f9f9f9;
+	font-size: 13px;
+	border: 1px solid #ccc;
+}
+
+.except-ingre button {
+	background: none;
+	border: 0;
+	cursor: pointer;
+	font-size: 20px;
+	margin-left: 10px;
+	color: red;
+}
+
+#NoUseIngredient {
+	border: 1px solid #eee;
+	padding: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+#NoUseIngredient button{
+	padding:5px 20px;
+	border:1px solid #ccc;
+	background:#f9f9f9;
+	cursor:pointer;
+}
+
+.outIngre{
+	border:1px solid #ff4444 !important;
+	padding:0px 7px !important;
+	border-radius:5px !important;
+	color:#ff4444 !important;
+	transition:all 0.3s !important;
+}
+.outIngre:hover{
+	background:#ff4444 !important;
+	color:#fff !important;
+}
+
+.possible-recipe{
+	width:880px;
+}
+.possible-recipe-line {
+	display: flex;
+	justify-content:space-between;
+	align-items:center;
+	margin-bottom:10px;
+	padding:0 10px;
+	box-sizing:border-box;
+}
+
+.possible-recipe-line-box1{
+	display:flex;
+	gap:20px;
+}
+
+#howToUseBtn{
+	border:1px solid #899ED5;
+	background:#fff;
+	color:#899ED5;
+	padding:5px 15px;
+	border-radius:5px;
+	cursor:pointer;
+	transition:all 0.3s;
+}
+#howToUseBtn:hover{
+	background:#899ED5;
+	color:#fff;
+}
+
+#canMakeMenuDiv {
+	height: 500px;
+	overflow-y: scroll;
+	margin: 0;
+	border:1px solid #eee;
+	box-sizing:border-box;
+	flex-wrap:wrap;
+	gap:20px;
+	padding:10px;
+}
+.possible-menu{
+	width:180px;
+	border:1px solid #eee;
+}
+
+.possible-menu-img{
+	width:100%;
+	height:150px;
+	border-bottom:1px solid #eee;
+	box-sizing:border-box;
+}
+.possible-menu-img img{
+	width:100%;
+	height:100%;
+	object-fit:cover;
+}
+.possible-menu-info{
+	text-align:center;
+	border-bottom:1px solid #eee;
+	padding:10px 0;
+}
+.possible-menu-go{
+	text-align:center;
+}
+
+
+
+button#xBtn {
+	font-size: 13px;
+	padding:10px;
+	background-color: #fff;
+	border: 0;
+	cursor: pointer;
+	transition:all 0.3s;
+}
+
+button#xBtn:hover {
+	color: #ff4444;
 }
 
 .highlight {
@@ -85,53 +239,17 @@
 	z-index: 1;
 }
 
-button#xBtn {
-	font-size: 16px;
-	padding: 8px 12px;
-	background-color: #ffcccb;
-	border: 2px solid #ff7777;
-	border-radius: 12px;
-	cursor: pointer;
-	transition: background-color 0.3s, transform 0.3s;
-}
-
-button#xBtn:hover {
-	background-color: #ff4444;
-	transform: scale(1.1);
-	color: white;
-}
-
 input[type="submit"]:hover {
 	background-color: #0097a7;
 	transform: scale(1.05);
 }
 
-#haveIngredient, #canMakeMenuDiv, #canMakeMenuDiv2 {
-	max-height: 600px;
-	overflow-y: auto;
-	border: 1px solid #ddd;
-	margin-bottom: 20px;
-}
 
-#haveIngredient .row, #canMakeMenuDiv .row {
-	flex-direction: row;
-}
-
-#haveIngredient .row>div, #canMakeMenuDiv .row>div, #canMakeMenuDiv2 .row>div
-	{
-	flex: 1;
-	text-align: center;
-	margin: 0 10px;
-}
 
 #canMakeMenuDiv2 {
 	display: none; /* 처음에는 #canMakeMenuDiv2를 숨김 */
 }
 
-.row img {
-	width: 150px; /* 원하는 너비로 조절 */
-	height: 120px; /* 원하는 높이로 조절 */
-}
 
 /* Modal Styles */
 .modal {
@@ -213,8 +331,6 @@ input[type="submit"]:hover {
 .low-value {
 	color: red;
 }
-
-
 </style>
 </head>
 <body>
@@ -225,98 +341,103 @@ input[type="submit"]:hover {
 		<form id="mainForm" action="/menu1/main" method="get">
 			<input type="submit" value="초기화">
 		</form>
-		<br>
 
-		<div style="text-align: center">
-			<button id="howToUseBtn">어떻게 쓰나요</button>
-		</div>
-		<br>
 
-		<div style="text-align: center">나의 냉장고 속 재료들</div>
-		<div id="haveIngredient" class="container">
-			<div class="row" style="display: none;">냉장고 재료</div>
-			<div th:each="dto, iterStat : ${FridgeIngredientListForDto}"
-				class="row">
-				<input type="hidden" th:value="${dto.icode}"
-					th:id="'icode' + ${dto.icode}">
-				<div class="container2">
-					<div>[[${dto.name}]]</div>
-					<div>[[${dto.deadline}]]</div>
-					
-					
-					<div 
-					th:text="'D' + ${days[iterStat.index]}"
-        th:class="${days[iterStat.index] <= 3 ? 'low-value' : (days[iterStat.index] <= 20 ? 'medium-value' : 'high-value')}"
-					>
+		<div id="all-area">
+			<div class="ingredient-area">
+				<div class="ingredient-area-title">나의 냉장고 속 재료들</div>
+				<div id="haveIngredient" class="container">
+					<div class="row" style="display: none;">냉장고 재료</div>
+					<div th:each="dto, iterStat : ${FridgeIngredientListForDto}"
+						class="row">
+						<input type="hidden" th:value="${dto.icode}"
+							th:id="'icode' + ${dto.icode}">
+						<div class="container2">
+							<div>[[${dto.name}]]</div>
+							<div>[[${dto.deadline}]]</div>
+
+
+							<div th:text="'D' + ${days[iterStat.index]}"
+								th:class="${days[iterStat.index] <= 3 ? 'low-value' : (days[iterStat.index] <= 20 ? 'medium-value' : 'high-value')}">
+							</div>
+							<div>
+								<button id="xBtn" type="button" class="outIngre"
+									th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">-</button>
+							</div>
+						</div>
 					</div>
-					<div>
-						<button id="xBtn" type="button"
-							th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">재료빼기</button>
+				</div>
+				<div>
+					<div style="text-align: center">제외된 재료</div>
+					<div id="NoUseIngredient">
+						<button onclick="NoUseIngredientAllDelete(event)">전체삭제</button>
 					</div>
 				</div>
 			</div>
-		</div>
-		<br>
+			<!-- ingredient-area -->
 
-		<div style="text-align: center">제외된 재료</div>
-
-		<div id="NoUseIngredient">
-			<button onclick="NoUseIngredientAllDelete(event)">전체삭제</button>
-
-
-		</div>
-
-		<br>
-
-		<div>요리가능한 레시피</div>
-		<label><input type="checkbox" class="item-checkbox"
-			id="toggle-checkbox"> 재료가 부족해요</label>
-
-		<div id="canMakeMenuDiv" class="container">
-			<div class="row" style="display: none;">만들 수 있는 메뉴</div>
-			<div th:each="dto : ${showCanMakeMenuList}" class="row row9"
-				th:id="'canMakeMenuMcode' + ${dto.mcode}">
-				<input type="hidden" value="${dto.mcode}">
-			
-				<div class="container2">
-					<div>
-						<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
+			<div class="possible-recipe">
+				<div class="possible-recipe-line">
+					<div class="possible-recipe-line-box1">
+						<div>요리가능한 레시피</div>
+						<label><input type="checkbox" class="item-checkbox"
+							id="toggle-checkbox"> 재료가 부족해요</label>
 					</div>
-					<div id="category">[[${dto.category}]]</div>
-					<div>[[${dto.menuName}]]</div>
-					<div>
-						<button id="xBtn" type="button"
-							th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
-							보러가기</button>
+					<div class="howToUse">
+						<button id="howToUseBtn">어떻게 쓰나요?</button>
+					</div>
+				</div>
+				<div id="canMakeMenuDiv" class="container">
+					<div class="row" style="display: none;">만들 수 있는 메뉴</div>
+					<div th:each="dto : ${showCanMakeMenuList}" class="row row9"
+						th:id="'canMakeMenuMcode' + ${dto.mcode}">
+						<input type="hidden" value="${dto.mcode}">
+
+						<div class="possible-menu">
+							<div class="possible-menu-img">
+								<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
+							</div>
+							<div class="possible-menu-info">
+							<span id="category">[[${dto.category}]]</span>
+								[[${dto.menuName}]]
+							</div>
+							<div class="possible-menu-go">
+								<button id="xBtn" type="button"
+									th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
+									보러가기 ></button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="canMakeMenuDiv2" class="container">
+					<div class="row" style="display: none;">만들 수 있는 메뉴2</div>
+					<div th:each="dto : ${showCanMakeMenuList2}" class="row row9"
+						th:id="'canMakeMenuMcode2_' + ${dto.mcode}">
+						<input type="hidden" value="${dto.mcode}">
+						<p class="asd">
+							ⓘ <span class="tooltip">안녕하세요</span>
+						</p>
+						<div class="container2">
+							<div>
+								<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
+							</div>
+							<div class="possible-menu-info">
+							<span id="category">[[${dto.category}]]</span>
+								[[${dto.menuName}]]
+							</div>
+							<div class="possible-menu-go">
+								<button id="xBtn" type="button"
+									th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
+									보러가기 ></button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
+			<!-- possible-recipe -->
 		</div>
-
-		<div id="canMakeMenuDiv2" class="container">
-			<div class="row" style="display: none;">만들 수 있는 메뉴2</div>
-			<div th:each="dto : ${showCanMakeMenuList2}" class="row row9"
-				th:id="'canMakeMenuMcode2_' + ${dto.mcode}">
-				<input type="hidden" value="${dto.mcode}">
-				<p class="asd">
-					ⓘ <span class="tooltip">안녕하세요</span>
-				</p>
-				<div class="container2">
-					<div>
-						<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
-					</div>
-					<div id="category">[[${dto.category}]]</div>
-					<div>[[${dto.menuName}]]</div>
-					<div>
-						<button id="xBtn" type="button"
-							th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
-							보러가기</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<br>
+		<!-- all-area -->
 	</section>
 	<footer>
 		<th:block th:insert="~{/sub/footer.html}"></th:block>
@@ -631,20 +752,15 @@ input[type="submit"]:hover {
             html += '';
         } else {
             // 배열이 있고 데이터가 있는 경우
-            html += '<div">';
-            html += '<div>메뉴추천에서 제외한 메뉴</div>';
-            html += '<div>복원</div>';
-            html += '</div>';
-
             jsonData.forEach(item => {
                 html += '<div>';
-                html += '<div>' + item.name + '</div>';
-                html += '<div><button type="button" onclick="undoIngredient(event, \'' + item.icode + '\')">x</button></div>';
-                
                 html += '<form id="mainForm" action="/menu1/main" method="get">'
-                html += '<input type="submit" value="초기화">		</form>'
-
-            html += '</div>';
+                html += '<input type="submit" value="초기화">';
+				html += '</form>';
+                html += '<div class="except-ingre">' + item.name;
+                html += '<button type="button" onclick="undoIngredient(event, \'' + item.icode + '\')">x</button>';
+                html += '</div>';
+            	html += '</div>';
             });
 
         }
