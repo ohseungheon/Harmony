@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title> 농수산물 도·소매 정보 </title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <th:block th:insert="~{/sub/header.html}"></th:block>
+    </header>
+
+    <script>
+        fetch('   http://211.237.50.150:7080/openapi/79857a1a677b19ecc51b7dfcd34fe727788b5349253ceb7820a0023b078adbee/xml/Grid_20170111000000000496_1/1/5')
+        .then(res => res.json())
+        .then(dataList=> console.log(dataList))
+        .catch(error => console.log("!!"))
+    </script>
+</body>
+
+</html>
