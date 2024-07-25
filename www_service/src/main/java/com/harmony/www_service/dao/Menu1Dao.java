@@ -20,5 +20,10 @@ public interface Menu1Dao {
     List<IngredientDto> selectExcludeIngredient(@Param("icodeList") List<Integer> icodeList,@Param("mno") int mno);
     int getMno(@Param("username") String username);
     
+    
+    int countIntersection(@Param("fridgeIngredientList") List<Integer> fridgeIngredientList ,@Param("icodeList") List<Integer> icodeList);
+    
+    List<Integer> showFridgeIngredientIcodeList(@Param("mno") int mno);
+    List<Integer> showRecipeIngredientIcodeList(@Param("rcode") int rcode);
     List<Integer> getRcodeForMcode(int rcode);
 }

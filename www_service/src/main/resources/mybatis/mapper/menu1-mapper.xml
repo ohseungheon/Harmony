@@ -20,6 +20,31 @@
 
 
 	</select>
+	<select id="showFridgeIngredientIcodeList" parameterType="int"
+		resultType="java.lang.Integer">
+
+		SELECT icode
+		FROM ingredient
+		WHERE icode IN (
+		SELECT icode
+		FROM
+		Fridge
+		WHERE mno =
+		#{mno}
+		);
+	</select>
+
+	<select id="showRecipeIngredientIcodeList" parameterType="int"
+		resultType="java.lang.Integer">
+
+
+		SELECT icode
+		FROM recipe_ingredient
+		WHERE WHERE rcode =
+		#{rcode}
+		);
+
+	</select>
 
 	<select id="showFridgeIngredientForDto" parameterType="int"
 		resultType="com.harmony.www_service.dto.IngredientDto2">
@@ -174,34 +199,40 @@
 		FROM recipe
 		WHERE mcode = #{mcode}
 	</select>
-	
-	  <select id="countIntersection" parameterType="java.util.List" resultType="int">
-        SELECT COUNT(*)
-        FROM (
-            <foreach collection="values" item="val" separator=" UNION ALL ">
-                SELECT #{val} AS val
-            </foreach>
-        ) AS t1
-        WHERE val IN <foreach item="item" index="index" collection="icodeList"
-					open="(" separator="," close=")">
-					#{item}
-				</foreach>;
-    </select>
-    
-    
-    
-	
-	<select id="getCountFromValues" parameterType="java.util.List" resultType="int">
-        SELECT COUNT(*)
-        FROM (
-            <foreach collection="values" item="val" separator=" UNION ALL ">
-                SELECT #{val} AS val
-            </foreach>
-        ) AS t1
-        WHERE val IN (6, 3, 16, 23);
-    </select>
-	
-	
+
+	<select id="countIntersection" parameterType="java.util.List"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM (
+		<foreach collection="fridgeIngredientList" item="val"
+			separator=" UNION ALL ">
+			SELECT #{val} AS val
+		</foreach>
+		) AS t1
+		WHERE val IN
+		<foreach item="item" index="index" collection="icodeList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		;
+	</select>
+
+
+
+
+	<select id="getCountFromValues" parameterType="java.util.List"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM (
+		<foreach collection="values" item="val"
+			separator=" UNION ALL ">
+			SELECT #{val} AS val
+		</foreach>
+		) AS t1
+		WHERE val IN (6, 3, 16, 23);
+	</select>
+
+
 	<!-- <select id="showCanMakeMenu" parameterType="java.util.List" resultType="com.harmony.www_service.dto.MenuDto"> 
 		SELECT menuName FROM menu WHERE mcode IN ( SELECT mcode FROM recipe WHERE 
 		rcode IN ( SELECT rcode FROM ( SELECT ri1.rcode FROM recipe_ingredient ri1 

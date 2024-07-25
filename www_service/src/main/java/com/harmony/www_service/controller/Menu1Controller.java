@@ -48,6 +48,8 @@ public class Menu1Controller {
 		List<IngredientDto> FridgeIngredientList = menu1dao.showFridgeIngredient(mno);
 		model.addAttribute("FridgeIngredientList", FridgeIngredientList);
 		List<IngredientDto2> FridgeIngredientListForDto = menu1dao.showFridgeIngredientForDto(mno);
+		
+		
 		model.addAttribute("FridgeIngredientList", FridgeIngredientList);
 		model.addAttribute("FridgeIngredientListForDto", FridgeIngredientListForDto);
 
@@ -69,17 +71,29 @@ public class Menu1Controller {
 			long dday = -1*(ChronoUnit.DAYS.between(i.getDeadline(), now));
 			
 			days.add(dday);
+			
+			
 		}
 		
 
 		// 가지고 있는 재료로 만들 수 있는 메뉴 리스트
 		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(FridgeIngredientList);
 		List<MenuDto> showCanMakeMenuList2 = menuService.getCanMakeMenu2(FridgeIngredientList);
+		
+//		List<Integer> rcodeList = new ArrayList<>();
+//		for (MenuDto menu:showCanMakeMenuList2) {
+//			rcodeList.add(menu.getMcode())
+//		}
+		
 		model.addAttribute("showCanMakeMenuList", showCanMakeMenuList);
 		model.addAttribute("showCanMakeMenuList2", showCanMakeMenuList2);
 		model.addAttribute("NoInFridgeIngredientList", NoInFridgeIngredientList);
 		model.addAttribute("days", days);
-
+		
+		
+		//menu1dao.showFridgeIngredientIcodeList(mno);
+		//menu1dao.showRecipeIngredientIcodeList();
+		//menu1dao.countIntersection(null, null);
 		return "menu1/menu_harmony1";
 	}
 
@@ -487,5 +501,9 @@ public class Menu1Controller {
 		
 		return "";
 	}
+
+	
+	
+	
 
 }
