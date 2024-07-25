@@ -45,7 +45,7 @@
 .container2 {
 	display: flex;
 	align-items: center;
-	gap: 10px;
+	justify-content:space-between;
 	border: 1px solid #ccc;
 	padding: 10px;
 	margin-bottom: 5px;
@@ -207,7 +207,7 @@ button#xBtn:hover {
 }
 
 .highlight {
-	height:41.5px;
+	height:40px;
 	background-color: rgba(0, 0, 0, 0.1);
 	filter: brightness(60%);
 	transition: all 0.3s ease;
@@ -356,9 +356,6 @@ input[type="submit"]:hover {
 							th:id="'icode' + ${dto.icode}">
 						<div class="container2">
 							<div>[[${dto.name}]]</div>
-							<div>[[${dto.deadline}]]</div>
-
-
 							<div th:text="'D' + ${days[iterStat.index]}"
 								th:class="${days[iterStat.index] <= 3 ? 'low-value' : (days[iterStat.index] <= 20 ? 'medium-value' : 'high-value')}">
 							</div>
