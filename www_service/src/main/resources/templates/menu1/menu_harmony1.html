@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <title>Document</title>
 <style>
-#mainForm{
-	margin-bottom:15px;
+#mainForm {
+	margin-bottom: 15px;
 }
-#mainForm input{
-	padding:5px 20px;
-	border:1px solid #ccc;
-	background:#f9f9f9;
-	cursor:pointer;
+
+#mainForm input {
+	padding: 5px 20px;
+	border: 1px solid #ccc;
+	background: #f9f9f9;
+	cursor: pointer;
 }
 
 #all-area {
@@ -19,15 +20,16 @@
 	justify-content: space-between;
 }
 
-.ingredient-area{
-	width:240px;
+.ingredient-area {
+	width: 240px;
 }
-.ingredient-area-title{
-	text-align:center;
-	font-size:14px;
-	border:1px solid #ccc;
-	padding:5px 0;
-	margin-bottom:10px;
+
+.ingredient-area-title {
+	text-align: center;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	padding: 5px 0;
+	margin-bottom: 10px;
 }
 
 #haveIngredient {
@@ -37,16 +39,16 @@
 	display: flex;
 	flex-direction: column;
 	overflow-y: scroll;
-	box-sizing:border-box;
+	box-sizing: border-box;
 }
 
 .container2 {
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	border:1px solid #ccc;
-	padding:10px;
-	margin-bottom:5px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 5px;
 }
 
 .container2 div:nth-child(1) {
@@ -63,11 +65,10 @@
 	font-size: 12px;
 }
 
-
 #category {
-	font-size:13px;
-	padding-right:10px;
-	color:#888;
+	font-size: 13px;
+	padding-right: 10px;
+	color: #888;
 }
 
 .except-ingre {
@@ -82,9 +83,10 @@
 }
 
 .except-ingre button {
-	background: none;
-	border: 0;
-	cursor: pointer;
+	background: none !important;
+	border: 0 !important;
+	cursor: pointer !important;
+	padding: 0! important;
 	font-size: 20px;
 	margin-left: 10px;
 	color: red;
@@ -97,100 +99,107 @@
 	flex-wrap: wrap;
 	gap: 10px;
 }
-#NoUseIngredient button{
-	padding:5px 20px;
-	border:1px solid #ccc;
-	background:#f9f9f9;
-	cursor:pointer;
+
+#NoUseIngredient button {
+	padding: 5px 20px;
+	border: 1px solid #ccc;
+	background: #f9f9f9;
+	cursor: pointer;
 }
 
-.outIngre{
-	border:1px solid #ff4444 !important;
-	padding:0px 7px !important;
-	border-radius:5px !important;
-	color:#ff4444 !important;
-	transition:all 0.3s !important;
-}
-.outIngre:hover{
-	background:#ff4444 !important;
-	color:#fff !important;
+.outIngre {
+	border: 1px solid #ff4444 !important;
+	padding: 0px 7px !important;
+	border-radius: 5px !important;
+	color: #ff4444 !important;
+	transition: all 0.3s !important;
 }
 
-.possible-recipe{
-	width:880px;
+.outIngre:hover {
+	background: #ff4444 !important;
+	color: #fff !important;
 }
+
+.possible-recipe {
+	width: 880px;
+}
+
 .possible-recipe-line {
 	display: flex;
-	justify-content:space-between;
-	align-items:center;
-	margin-bottom:10px;
-	padding:0 10px;
-	box-sizing:border-box;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+	padding: 0 10px;
+	box-sizing: border-box;
 }
 
-.possible-recipe-line-box1{
-	display:flex;
-	gap:20px;
+.possible-recipe-line-box1 {
+	display: flex;
+	gap: 20px;
 }
 
-#howToUseBtn{
-	border:1px solid #899ED5;
-	background:#fff;
-	color:#899ED5;
-	padding:5px 15px;
-	border-radius:5px;
-	cursor:pointer;
-	transition:all 0.3s;
+#howToUseBtn {
+	border: 1px solid #899ED5;
+	background: #fff;
+	color: #899ED5;
+	padding: 5px 15px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: all 0.3s;
 }
-#howToUseBtn:hover{
-	background:#899ED5;
-	color:#fff;
+
+#howToUseBtn:hover {
+	background: #899ED5;
+	color: #fff;
 }
 
 #canMakeMenuDiv {
 	height: 500px;
 	overflow-y: scroll;
 	margin: 0;
-	border:1px solid #eee;
-	box-sizing:border-box;
-	flex-wrap:wrap;
-	gap:20px;
-	padding:10px;
-}
-.possible-menu{
-	width:180px;
-	border:1px solid #eee;
+	border: 1px solid #eee;
+	box-sizing: border-box;
+	flex-wrap: wrap;
+	gap: 20px;
+	padding: 10px;
+	padding-left: 35px;
 }
 
-.possible-menu-img{
-	width:100%;
-	height:150px;
-	border-bottom:1px solid #eee;
-	box-sizing:border-box;
-}
-.possible-menu-img img{
-	width:100%;
-	height:100%;
-	object-fit:cover;
-}
-.possible-menu-info{
-	text-align:center;
-	border-bottom:1px solid #eee;
-	padding:10px 0;
-}
-.possible-menu-go{
-	text-align:center;
+.possible-menu {
+	width: 180px;
+	border: 1px solid #eee;
 }
 
+.possible-menu-img {
+	width: 100%;
+	height: 150px;
+	border-bottom: 1px solid #eee;
+	box-sizing: border-box;
+}
 
+.possible-menu-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.possible-menu-info {
+	text-align: center;
+	border-bottom: 1px solid #eee;
+	padding: 10px 0;
+}
+
+.possible-menu-go {
+	text-align: center;
+}
 
 button#xBtn {
 	font-size: 13px;
-	padding:10px;
+	padding: 10px;
 	background-color: #fff;
 	border: 0;
 	cursor: pointer;
-	transition:all 0.3s;
+	transition: all 0.3s;
 }
 
 button#xBtn:hover {
@@ -198,27 +207,16 @@ button#xBtn:hover {
 }
 
 .highlight {
+	height:41.5px;
 	background-color: rgba(0, 0, 0, 0.1);
 	filter: brightness(60%);
-	transition: filter 0.3s ease;
-	position: relative;
+	transition: all 0.3s ease;
+	margin-bottom:5px;
 }
 
-.highlight::after {
-	content: '제외한 재료입니다';
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: rgba(255, 0, 0, 0.7);
-	color: white;
-	padding: 4px 8px;
-	border-radius: 4px;
-	font-size: 18px;
-	z-index: 1;
-}
 
 .remove_highlight {
+	height:228px;
 	background-color: rgba(0, 0, 0, 0.1);
 	filter: brightness(60%);
 	transition: all 0.3s ease;
@@ -244,12 +242,18 @@ input[type="submit"]:hover {
 	transform: scale(1.05);
 }
 
-
-
 #canMakeMenuDiv2 {
 	display: none; /* 처음에는 #canMakeMenuDiv2를 숨김 */
+	height: 500px;
+	overflow-y: scroll;
+	margin: 0;
+	border: 1px solid #eee;
+	box-sizing: border-box;
+	flex-wrap: wrap;
+	gap: 20px;
+	padding: 10px;
+	padding-left: 35px;
 }
-
 
 /* Modal Styles */
 .modal {
@@ -290,12 +294,10 @@ input[type="submit"]:hover {
 }
 
 .asd {
-	position: absolute; /* 툴팁을 이 요소에 상대적으로 위치시키기 위해 필요 */
 	display: inline-block; /* 툴팁이 정확히 이 요소 위에 표시되도록 하기 위해 */
 	cursor: pointer; /* 클릭할 수 있는 요소를 나타내는 커서 변경 */
-	left: 67%;
-	bottom: 38%;
 	color: #EB0000;
+	position:relative;
 }
 
 .tooltip {
@@ -308,8 +310,8 @@ input[type="submit"]:hover {
 	padding: 5px; /* 툴팁 내부 여백 */
 	position: absolute; /* 절대 위치 */
 	z-index: 1; /* 다른 요소 위에 표시되도록 */
-	bottom: 30%; /* 요소 위쪽에 위치시키기 위해 */
-	left: 30%; /* 수평 중앙 정렬 */
+	bottom: 20px; /* 요소 위쪽에 위치시키기 위해 */
+	left: 70px; /* 수평 중앙 정렬 */
 	margin-left: -60px; /* 수평 중앙 정렬을 위한 오프셋 */
 	opacity: 0; /* 기본적으로 불투명 상태 */
 	transition: opacity 0.3s; /* 페이드 인 효과 */
@@ -398,7 +400,7 @@ input[type="submit"]:hover {
 								<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
 							</div>
 							<div class="possible-menu-info">
-							<span id="category">[[${dto.category}]]</span>
+								<span id="category">[[${dto.category}]]</span>
 								[[${dto.menuName}]]
 							</div>
 							<div class="possible-menu-go">
@@ -407,6 +409,7 @@ input[type="submit"]:hover {
 									보러가기 ></button>
 							</div>
 						</div>
+
 					</div>
 				</div>
 
@@ -415,16 +418,16 @@ input[type="submit"]:hover {
 					<div th:each="dto : ${showCanMakeMenuList2}" class="row row9"
 						th:id="'canMakeMenuMcode2_' + ${dto.mcode}">
 						<input type="hidden" value="${dto.mcode}">
-						<p class="asd">
-							ⓘ <span class="tooltip">안녕하세요</span>
-						</p>
-						<div class="container2">
-							<div>
+						<div class="possible-menu">
+							<div class="possible-menu-img">
 								<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
 							</div>
 							<div class="possible-menu-info">
-							<span id="category">[[${dto.category}]]</span>
+								<span id="category">[[${dto.category}]]</span>
 								[[${dto.menuName}]]
+								<p class="asd">
+									ⓘ <span class="tooltip">안녕하세요</span>
+								</p>
 							</div>
 							<div class="possible-menu-go">
 								<button id="xBtn" type="button"
