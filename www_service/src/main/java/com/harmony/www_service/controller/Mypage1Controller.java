@@ -174,7 +174,7 @@ public class Mypage1Controller {
 		List<IngredientDto> ingredientCt = ingreDao.findByCategory(null);
 		List<IngredientDto> ingredientDto = myDao.allIngredientList();
 		model.addAttribute("ingre", ingredientDto);
-		System.out.println("재료싹다"+ingredientDto);
+		//System.out.println("재료싹다"+ingredientDto);
 		return "mypage1/material_insert";
 	}
 
