@@ -91,7 +91,7 @@ input[type="text"]{
 	display:flex;
 	align-items:center;
 	justify-content:center;
-	margin:40px 0 20px;
+	margin:50px 0 50px;
 	gap:50px;
 }
 .insertForm-inbox1 label input{
@@ -224,6 +224,7 @@ input[type="text"]{
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
 							th:data-category="${ingre.category}"
+							th:data-type="${ingre.type}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -239,6 +240,7 @@ input[type="text"]{
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
 							th:data-category="${ingre.category}"
+							th:data-type="${ingre.type}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -254,6 +256,7 @@ input[type="text"]{
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
 							th:data-category="${ingre.category}"
+							th:data-type="${ingre.type}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -269,6 +272,7 @@ input[type="text"]{
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
 							th:data-category="${ingre.category}"
+							th:data-type="${ingre.type}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -284,6 +288,7 @@ input[type="text"]{
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
 							th:data-category="${ingre.category}"
+							th:data-type="${ingre.type}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -306,17 +311,13 @@ input[type="text"]{
 					<div class="insertForm-inbox2">				
 						<div class="inbox2-category">		
 							<label for="deadline">카테고리</label>
-							<input type="text" id="category" name="category" readonly> 
+							<input type="text" id="category" name="category" placeholder="상단 카테고리를 선택해주세요." readonly> 
 						</div>
 						<div class="inbox2-amount">
 							<div class="inbox2-amount-in1">
-								<label for="quantity">수량</label> 
-								<input class="by-radio" type="radio" id="quantity" name="type" value="수량">
-								<label for="weight">중량</label> 
-								<input class="by-radio" type="radio" id="weight" name="type" value="중량">
 							</div> 
 							<div class="inbox2-amount-in2">
-								<label for="amount">수량/중량</label> 
+								<label for="amount" id="type">수량/중량</label> 
 								<input type="text" id="amount" name="amount">
 							</div>
 						</div> 
@@ -351,6 +352,10 @@ input[type="text"]{
 			</div>
 		</div>
 	</section>
+	
+	<footer>
+        <th:block th:insert="~{/sub/footer.html}"></th:block>
+    </footer>
 
 	<script>
 		$(document).ready(function() {
@@ -363,8 +368,8 @@ input[type="text"]{
 				$("#" + category).addClass("active-content");
 			});
 
-			// 첫 번째 탭 활성화
-			//$(".tab").first().click();
+			//첫 번째 탭 활성화
+			$(".tab").first().click();
 
 			// 재료 클릭 시 폼에 자동 입력
 			$(".by-ingre-span").on("click", function() {
@@ -372,12 +377,14 @@ input[type="text"]{
 				const imgUrl = $(this).data("imgurl");
 				const name = $(this).data("name");
 				const category = $(this).data("category");
+				const type = $(this).data("type");
 				const tip = $(this).data("tip");
 				
 				$("#icode").val(icode);
 				$("#imgUrl").val(imgUrl);
 				$("#name").val(name);
 				$("#category").val(category);
+				$("#type").text(type);
 				$("#tip-text").text(tip); // 툴팁 내용 업데이트
 				
 				// 이미지 미리보기 업데이트
@@ -400,7 +407,8 @@ input[type="text"]{
 				const category = $("#category").val();
 				const deadline = $("#deadline").val();
 				const amount = $("#amount").val();
-				const type = $("input[name='type']:checked").val();
+				//const type = $("input[name='type']:checked").val();
+				const type = $("#type").text();
 				const keeptype = $("#keeptype").val();
 				const memo = $("#memo").val();
 				const mno = $("#mno").val();
