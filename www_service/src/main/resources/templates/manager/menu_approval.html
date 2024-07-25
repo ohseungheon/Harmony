@@ -12,49 +12,54 @@
 	</header>
 	<section>
 		<h2>요청 메뉴 리스트</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>요청 메뉴 번호</th>
-          <th>메뉴 이미지</th>
-          <th>메뉴 이름</th>
-          <th>요청 아이디</th>
-          <th>카테고리</th>
-          <th>단위</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="menu : ${list}">
-          <td th:text="${menu.mrcode}">요청 메뉴 번호</td>
-          <td><img th:src="@{'/uploads/' + ${menu.imgUrl}}" style="width: 150px; height: 150px;"></td>
-          <td th:text="${menu.menuName}">메뉴 이름</td>
-          <td th:text="${menu.username}">요청 아이디</td>
-          <td th:text="${menu.category}">카테고리</td>
-          <!--<td th:text="${menu.type}">단위</td>-->
-          <td>
-            <form th:action="@{/do_access}" method="post" style="display: inline;">
-              <input type="hidden" name="mrcode" th:value="${menu.mrcode}">
-              <input type="hidden" name="state" th:value="${menu.state}">
-              <input type="hidden" name="mno" th:value="${menu.mno}">
-              <input type="hidden" name="imgurl" th:value="${menu.imgUrl}">
-              <input type="hidden" name="menuName" th:value="${menu.menuName}">
-              <input type="hidden" name="username" th:value="${menu.username}">
-              <input type="hidden"  name="category" th:value="${menu.category}">
-              <!--<input type="hidden" name="type" th:value="${menu.type}">-->
-              <button type="submit">승인</button>
-            </form>
-            <form th:action="@{/do_return}" method="post" style="display: inline;">
-              <input type="hidden" name="mrcode" th:value="${menu.mrcode}">
-              <button type="submit">반려</button>
-            </form>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+		<table>
+			<thead>
+				<tr>
+					<th>요청 메뉴 번호</th>
+					<th>메뉴 이미지</th>
+					<th>메뉴 이름</th>
+					<th>요청 아이디</th>
+					<th>카테고리</th>
+					<th>단위</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="menu : ${list}">
+					<td th:text="${menu.mrcode}">요청 메뉴 번호</td>
+					<td><img th:src="@{'/uploads/' + ${menu.imgUrl}}"
+						style="width: 150px; height: 150px;"></td>
+					<td th:text="${menu.menuName}">메뉴 이름</td>
+					<td th:text="${menu.username}">요청 아이디</td>
+					<td th:text="${menu.category}">카테고리</td>
+					<!--<td th:text="${menu.type}">단위</td>-->
+					<td>
+						<form th:action="@{/do_access}" method="post"
+							style="display: inline;">
+							<input type="hidden" name="mrcode" th:value="${menu.mrcode}">
+							<input type="hidden" name="state" th:value="${menu.state}">
+							<input type="hidden" name="mno" th:value="${menu.mno}"> <input
+								type="hidden" name="imgurl" th:value="${menu.imgUrl}"> <input
+								type="hidden" name="menuName" th:value="${menu.menuName}">
+							<input type="hidden" name="username" th:value="${menu.username}">
+							<input type="hidden" name="category" th:value="${menu.category}">
+							<!--<input type="hidden" name="type" th:value="${menu.type}">-->
+							<button type="submit">승인</button>
+						</form>
+						<form th:action="@{/do_return}" method="post"
+							style="display: inline;">
+							<input type="hidden" name="mrcode" th:value="${menu.mrcode}">
+							<button type="submit">반려</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</section>
-
+	<footer>
+		<th:block th:insert="~{/sub/footer.html}"></th:block>
+	</footer>
 	<script>
-
+		
 	</script>
 </body>
 </html>
