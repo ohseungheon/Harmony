@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/info")
-public class InfomationController {
+@RequestMapping("/act")
+public class ActivityController {
     @RequestMapping("/main")
     public String main(){
-        return "info/main";
+        return "act/main";
         // return "sub/ready_for_service";
     }
 }
