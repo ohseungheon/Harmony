@@ -309,6 +309,7 @@ main {
 	border: 1px solid #ccc;
 	text-align: center;
 	color: grey;
+	cursor:pointer;
 }
 
 #by-btn-insert:hover {
@@ -391,9 +392,6 @@ main {
 	font-weight:300;
 }
 
-.modal-box1{
-	margin-bottom:10px;
-}
 .modal-box1 #modalName{
 	width:187px;
 	border:0;
@@ -421,7 +419,7 @@ main {
 
 .modal-area-box textarea{
 	font-family: "Pretendard Variable", Pretendard;
-	width:400px;
+	width:350px;
 	height:100px;
 	padding:5px;
 	box-sizing:border-box;
@@ -471,7 +469,7 @@ main {
 	margin-top:15px;
 }
 #by-btn-group input{
-	width:400px;
+	width:350px;
 	padding:10px 0;
 	background:#F5A47D;
 	color:#fff;
@@ -553,8 +551,8 @@ main {
 			<div class="by-div">
 				<div class="by-topdiv">
 					<span class="by-span">찜 레시피 LIST</span>
-					<div class="by-for-if">
-						<div class="by-if" th:if="${#lists.isEmpty(recipeLike)}">
+					<div class="by-for-if" th:if="${#lists.isEmpty(recipeLike)}">
+						<div class="by-if">
 							<p>찜한 레시피가 없습니다.</p>
 						</div>
 					</div>
@@ -568,8 +566,8 @@ main {
 				</div>
 				<div class="by-topdiv">
 					<span class="by-span">나의 레시피 LIST</span>
-					<div class="by-for-if">
-						<div class="by-if" th:if="${#lists.isEmpty(my)}">
+					<div class="by-for-if" th:if="${#lists.isEmpty(my)}">
+						<div class="by-if">
 							<p>나의 레시피가 없습니다.</p>
 							<a th:href="@{/my/recipe/registForm(mno=${mno})}">+레시피 등록하기</a>
 						</div>
@@ -588,8 +586,8 @@ main {
 				<!-- 중간 : 유통기한임박리스트 or 재료없으면 재료등록 버튼 -->
 				<div id="by-dday-list">
 					<span id="by-dday-span">유통기한 임박 LIST</span> <span id="by-now-span">[[${now}]]</span>
-					<div class="by-for-if">
-						<div class="by-if" th:if="${#lists.isEmpty(dd)}">
+					<div class="by-for-if" th:if="${#lists.isEmpty(dd)}">
+						<div class="by-if">
 							<p>재료가 없습니다. 나의 냉장고에 재료를 등록하세요.</p>
 						</div>
 					</div>
@@ -621,8 +619,8 @@ main {
 						<button class="tab-button" data-tab="food">상온</button>
 					</div>
 					<div id="by-tab2">
-						<div class="by-for-if">
-							<div class="by-if" th:if="${#lists.isEmpty(cool) && #lists.isEmpty(ice) && #lists.isEmpty(food)}">
+						<div class="by-for-if" th:if="${#lists.isEmpty(cool) && #lists.isEmpty(ice) && #lists.isEmpty(food)}">
+							<div class="by-if">
 								<p>재료가 없습니다. 나의 냉장고에 재료를 등록하세요.</p>
 								<a th:href="@{/material_insert(mno=${mno})}">+재료등록하기</a>
 							</div>
@@ -668,11 +666,11 @@ main {
 								<div class="by-form">
 									<div class="form-row">
 										<label for="by-count">[[${ice.type}]]</label> <input
-											type="text" id="by-count" th:value="${ice.amount}">
+											type="text" id="by-count" th:value="${ice.amount}" readonly>
 									</div>
 									<div class="form-row">
 										<label for="by-deadline">유통기한</label> <input type="text"
-											id="by-deadline" th:value="${ice.deadline}">
+											id="by-deadline" th:value="${ice.deadline}" readonly>
 									</div>
 								</div>
 								<div class="by-btn-div">
@@ -697,11 +695,11 @@ main {
 								<div class="by-form">
 									<div class="form-row">
 										<label for="by-count">[[${food.type}]]</label> <input
-											type="text" id="by-count" th:value="${food.amount}">
+											type="text" id="by-count" th:value="${food.amount}" readonly>
 									</div>
 									<div class="form-row">
 										<label for="by-deadline">유통기한</label> <input type="text"
-											id="by-deadline" th:value="${food.deadline}">
+											id="by-deadline" th:value="${food.deadline}" readonly>
 									</div>
 								</div>
 								<div class="by-btn-div">
@@ -741,7 +739,7 @@ main {
 							<div class="modal-box2">
 				    			<div class="by-deadline-box">
 									<label for="modalDeadline" class="m-label">유통기한</label>
-									<input type="text" id="modalDeadline" class="m-text" value="">
+									<input type="date" id="modalDeadline" class="m-text" value="">
 								</div>
 								<div class="by-deadline-box">
 									<label for="modalCount" class="m-label">수량/중량</label> 
