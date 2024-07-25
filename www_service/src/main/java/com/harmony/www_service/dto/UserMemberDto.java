@@ -1,6 +1,7 @@
 package com.harmony.www_service.dto;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import lombok.Data;
 
@@ -15,5 +16,6 @@ public class UserMemberDto {
 	private LocalDate birth;
 	private String phone;
 	private String gender;
+	private Date joinDate;
 
 }

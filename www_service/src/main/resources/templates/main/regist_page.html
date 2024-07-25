@@ -30,7 +30,8 @@ section {
 	align-items: center;
 }
 
-#by-div input[type="text"] {
+#by-div input[type="text"],
+#by-div input[type="password"] {
 	width: 440px;
 	height: 50px;
 	font-family: "Pretendard Variable", Pretendard;
@@ -60,10 +61,11 @@ section {
 #by-div input[type="date"]{
 	height:40px;
 	border:0;
-	color:#999;
+	color:#333;
 }
 
-#by-div input[type="text"]::placeholder {
+#by-div input[type="text"]::placeholder,
+#by-div input[type="password"]::placeholder {
 	color: #999;
 	font-size: 13px;
 }
@@ -91,6 +93,8 @@ section {
 }
 .genderlabel{
 	width:220px;
+	font-size:14px;
+	color:#777;
 	padding:10px 0;
 	border:1px solid #eee;
 	text-align:center;
@@ -110,6 +114,11 @@ section {
     border-color: #F5A47E;
     color: #F5A47E;
 }
+
+#username-msg{
+	font-size:13px;
+	font-weight:300;
+}
 </style>
 </head>
 <body>
@@ -120,7 +129,8 @@ section {
 		<div id="by-div">
 			<form>
 				<input type="text" name="username" id="username" placeholder="아이디">
-				<input type="text" name="password" id="password" placeholder="비밀번호">
+				<p id="username-msg"></p>
+				<input type="password" name="password" id="password" placeholder="비밀번호">
 				<input type="text" name="nickName" id="nickName" placeholder="닉네임">
 				<input type="text" name="addr" id="addr" placeholder="주소">
 				<div class="date-area">
@@ -141,6 +151,34 @@ section {
 document.addEventListener("DOMContentLoaded", () => {
 	const registbtn = document.querySelector("#registBtn");
 	const genderLabels = document.querySelectorAll('.genderlabel');
+	const usernameInput = document.getElementById("username");
+	const usernameMessage = document.getElementById("username-msg");
+	
+	usernameInput.addEventListener("blur", checkUsername);
+	
+	function checkUsername() {
+        const username = usernameInput.value;
+        if (username.length === 0) return;
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            if (this.status === 200) {
+                const response = JSON.parse(this.responseText);
+                if (response.isDuplicate) {
+                    usernameMessage.textContent = "이미 사용 중인 아이디입니다.";
+                    usernameMessage.style.color = "red";
+                } else {
+                    usernameMessage.textContent = "사용 가능한 아이디입니다.";
+                    usernameMessage.style.color = "green";
+                }
+            } else {
+                usernameMessage.textContent = "아이디 확인 중 오류가 발생했습니다.";
+                usernameMessage.style.color = "red";
+            }
+        };
+        xhttp.open("GET", `http://localhost:8888/api/login/checkUsername?username=${username}`);
+        xhttp.send();
+    }
 	
 	console.log(registbtn);
 	
@@ -151,17 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 	
 	
-	// 성별 라디오 버튼에 이벤트 리스너 추가
-    genderLabels.forEach(label => {
-        label.addEventListener('click', () => {
-            // 모든 라벨에서 'selected' 클래스 제거
-            genderLabels.forEach(l => l.classList.remove('selected'));
-            // 클릭된 라벨에 'selected' 클래스 추가
-            label.classList.add('selected');
-        });
-    });
-	
-
 	function submitRegist(event){
 		
 		const username = document.getElementById("username").value;
@@ -183,6 +210,11 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 		console.log(selectedGender);
 		
+		if(usernameMessage.textContent === "이미 사용중인 아이디 입니다."){
+			alert("사용할 수 없는 아이디입니다. 다른 아이디를 입력해주세요.");
+			return;
+		}
+		
 		const xhttp = new XMLHttpRequest();
 		xhttp.onload = function(){
 			if(this.status === 200){
@@ -202,6 +234,17 @@ document.addEventListener("DOMContentLoaded", () => {
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send(JSON.stringify(data));
 	}
+	
+	// 성별 라디오 버튼에 이벤트 리스너 추가
+    genderLabels.forEach(label => {
+        label.addEventListener('click', () => {
+            // 모든 라벨에서 'selected' 클래스 제거
+            genderLabels.forEach(l => l.classList.remove('selected'));
+            // 클릭된 라벨에 'selected' 클래스 추가
+            label.classList.add('selected');
+        });
+    });
+	
 });
 </script>
 </body>
