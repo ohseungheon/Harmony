@@ -45,5 +45,11 @@ public class LoginService {
 		return result;
 		
 	}
+	
+	// 회원가입시 아이디 중복검사
+	public boolean isUsernameDuplicate(String username) {
+		
+		return loginDao.checkUsername(username) > 0;
+	}
 
 }

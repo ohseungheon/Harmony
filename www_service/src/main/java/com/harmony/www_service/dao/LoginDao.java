@@ -28,4 +28,7 @@ public interface LoginDao {
 	//nickname 가져오기
 	public String getNickname(@Param("username") String username);
 	
+	//아이디 중복검사
+	public int checkUsername(String username);
+	
 }

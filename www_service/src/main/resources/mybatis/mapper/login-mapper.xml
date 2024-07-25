@@ -27,8 +27,13 @@
   	
   	<!-- 회원가입 member -->
   	<insert id="registMember">
-  		insert into member (username, nickName, addr, birth, phone, gender)
-  		values (#{username}, #{nickName}, #{addr}, #{birth}, #{phone}, #{gender})
+  		insert into member (username, nickName, addr, birth, phone, gender, joinDate)
+  		values (#{username}, #{nickName}, #{addr}, #{birth}, #{phone}, #{gender}, NOW())
   	</insert>
+  	
+  	<!-- 아이디 중복검사 -->
+  	<select id="checkUsername" parameterType="string" resultType="int">
+    	SELECT COUNT(*) FROM member WHERE username = #{username}
+	</select>
   
   </mapper>
