@@ -6,6 +6,9 @@
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <style>
+section{
+	margin:150px auto !important;
+}
 .loginForm {
 	width: 600px;
 	margin: 50px auto;
@@ -94,6 +97,10 @@
 			<a th:href="@{/regist_page}">회원가입</a>
 		</div>
 	</section>
+	
+	<footer>
+        <th:block th:insert="~{/sub/footer.html}"></th:block>
+    </footer>
 
     <script>
     </script>
