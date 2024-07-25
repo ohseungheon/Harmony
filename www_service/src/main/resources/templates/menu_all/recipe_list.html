@@ -85,6 +85,10 @@
         </div>
     </div>
 </section>
+
+<footer>
+        <th:block th:insert="~{/sub/footer.html}"></th:block>
+    </footer>
 <script>
     function loadRecipeDetail(rcode){
         window.location.href = `/menu_all/recipe_detail?rcode=${rcode}`;
