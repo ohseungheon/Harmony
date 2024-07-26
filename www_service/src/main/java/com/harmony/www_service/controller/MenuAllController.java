@@ -106,7 +106,9 @@ public class MenuAllController {
         model.addAttribute("recipeIngredientList", recipeIngredientList);
         model.addAttribute("recipeGetTagDto", recipeGetTagDto);
         model.addAttribute("recipeRecommend", recipeRecommend);
-
+        System.out.println(recipeIngredientList);
+        System.out.println("");
+        System.out.println(recipeIngredientList);
         return "menu_all/recipe_detail";
     }
 

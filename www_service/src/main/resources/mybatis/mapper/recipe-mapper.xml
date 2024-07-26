@@ -17,9 +17,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getRecipeIngredientsByRcode" parameterType="int"
 		resultType="com.harmony.www_service.dto.RecipeIngredientDto">
-		SELECT ri.ricode AS ricode, ri.rcode, ri.icode, ri.amount,
-		i.name FROM
-		recipe_ingredient ri JOIN ingredient i ON ri.icode =
+		SELECT ri.ricode AS ricode, ri.rcode, ri.icode, ri.state, ri.amount, i.name, ri.type
+		FROM recipe_ingredient ri JOIN ingredient i ON ri.icode =
 		i.icode WHERE
 		ri.rcode = #{rcode}
 	</select>
