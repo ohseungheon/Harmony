@@ -78,6 +78,4 @@ public interface MyRecipeDao {
 	public List<IngredientDto> getIngredient();
 	
 	
-	
-
 }

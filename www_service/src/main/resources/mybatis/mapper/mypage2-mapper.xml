@@ -190,6 +190,6 @@
 		resultType="com.harmony.www_service.dto.IngredientDto">
 		select icode, name from ingredient
 	</select>
-
+	
 
 </mapper>
