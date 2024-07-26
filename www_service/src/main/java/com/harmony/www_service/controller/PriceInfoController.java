@@ -9,7 +9,17 @@ public class PriceInfoController {
     
     @RequestMapping("/main")
     public String main(){
-        return "price_info/food_price_chart";
+        return "price_info/price_info_main";
+    }
+    
+    @RequestMapping("/whole")
+    public String whole(){
+        return "price_info/whole_sale";
+    }
+    
+    @RequestMapping("/retail")
+    public String retail(){
+        return "price_info/retail_sale";
     }
     
 }
