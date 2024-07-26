@@ -88,6 +88,8 @@
 		SET 
 			deadline = #{material.deadline},
 			amount = #{material.amount},
+			type = #{material.type},
+			state = #{material.state},
 			keeptype = #{material.keeptype},
 			memo = #{material.memo}
 		WHERE 
@@ -103,13 +105,16 @@
 		WHERE f.fcode = #{fcode} 
 	</select>
 	
-	<!-- 재료등록 -->
+	<!-- 마이냉장고 재료등록 -->
 	<insert id="insertFridge">
-		INSERT INTO fridge (mno, icode, keeptype, amount, deadline, memo) 
-		VALUES (#{fi.mno}, #{fi.icode}, #{fi.keeptype}, #{fi.amount}, #{fi.deadline}, #{fi.memo})
+		INSERT INTO fridge (mno, icode, keeptype, state, amount, type, deadline, memo) 
+		VALUES (#{fi.mno}, #{fi.icode}, #{fi.keeptype}, #{fi.state}, #{fi.amount}, #{fi.type}, #{fi.deadline}, #{fi.memo})
 	</insert>
 		
 	<select id="allIngredientList" resultType="com.harmony.www_service.dto.IngredientDto">
 		SELECT * FROM ingredient
 	</select>
+	
+	
+	
 </mapper>

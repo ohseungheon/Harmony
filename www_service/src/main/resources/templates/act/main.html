@@ -2,63 +2,81 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title> 체험 활동 정보 </title>
-    <style>
-        table{
-			font-size: 10px;
-			border-collapse: collapse;      
-        }
-    </style>
+<meta charset="UTF-8">
+<title>체험 활동 정보</title>
+<style>
+table {
+	font-size: 10px;
+	border-collapse: collapse;
+}
+</style>
 </head>
 
 <body>
-    <header>
-        <th:block th:insert="~{/sub/header.html}"></th:block>
-    </header>
-    <section>
-    <table border="1">
-    	<thead>
-	    	<tr>
-	    		<th>번호</th>
-	    		<th>체험마을명</th>
-	    		<th>시도명</th>
-	    		<th>시군구명</th>
-	    		<th>체험프로그램구분</th>
-	    		<th>체험프로그램명</th>
-	    		<th>소재지도로명주소</th>
-	    		<th>대표자명</th>
-	    		<th>대표전화번호</th>
-	    		<th>홈페이지주소</th>
-	    		<th>관리기관명</th>
-	    		<th>위도</th>
-	    		<th>경도</th>
-	    	</tr>	
-    	</thead>
-    	<tbody>
-    		<tr th:each="act : ${act}">
-    			<td th:text="${act.vacode}"></td>
-    			<td th:text="${act.vname}"></td>
-    			<td th:text="${act.sido}"></td>
-    			<td th:text="${act.sgg}"></td>
-    			<td th:text="${act.acttype}"></td>
-    			<td th:text="${act.actname}"></td>
-    			<td th:text="${act.actadress}"></td>
-    			<td th:text="${act.ceo}"></td>
-    			<td th:text="${act.tel}"></td>
-    			<td th:text="${act.homeurl}"></td>
-    			<td th:text="${act.agencyname}"></td>
-    			<td th:text="${act.locationx}"></td>
-    			<td th:text="${act.locationy}"></td>
-    		</tr>
-    	</tbody>
-    </table>
-    
-    </section>
-    
-    <footer>
-        <th:block th:insert="~{/sub/footer.html}"></th:block>
-    </footer>
+	<header>
+		<th:block th:insert="~{/sub/header.html}"></th:block>
+	</header>
+
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9dc3cd9f3f49ffc9bf97e4d73894b388&libraries=services,clusterer,drawing"></script>
+	<section>
+
+		<div id="map" style="width: 500px; height: 400px;"></div>
+
+
+		<table border="1">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>체험마을명</th>
+					<th>시도명</th>
+					<th>시군구명</th>
+					<th>체험프로그램구분</th>
+					<th>체험프로그램명</th>
+					<th>소재지도로명주소</th>
+					<th>대표자명</th>
+					<th>대표전화번호</th>
+					<th>홈페이지주소</th>
+					<th>관리기관명</th>
+					<th>위도</th>
+					<th>경도</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="act : ${act}">
+					<td th:text="${act.vacode}"></td>
+					<td th:text="${act.vname}"></td>
+					<td th:text="${act.sido}"></td>
+					<td th:text="${act.sgg}"></td>
+					<td th:text="${act.acttype}"></td>
+					<td th:text="${act.actname}"></td>
+					<td th:text="${act.actadress}"></td>
+					<td th:text="${act.ceo}"></td>
+					<td th:text="${act.tel}"></td>
+					<td th:text="${act.homeurl}"></td>
+					<td th:text="${act.agencyname}"></td>
+					<td th:text="${act.locationx}"></td>
+					<td th:text="${act.locationy}"></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</section>
+
+	<footer>
+		<th:block th:insert="~{/sub/footer.html}"></th:block>
+	</footer>
+
+	<script>
+	    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	    var options = { //지도를 생성할 때 필요한 기본 옵션
+	    	center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+	    	level: 3 //지도의 레벨(확대, 축소 정도)
+	    };
+	
+	    var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+	    
+    </script>
 </body>
 
 </html>

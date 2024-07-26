@@ -48,6 +48,7 @@ public class MyPage1RestController {
 	@PutMapping("/material_update")
 	public ResponseEntity<String> materialUpdate(@RequestBody FridgeIngredientDto material) {
 		myDao.updateMaterial(material);
+		System.out.println("재료수정!!!!!!!!!"+material);
 	    return ResponseEntity.ok("재료정보가 성공적으로 수정되었습니다🍉");
 	}
 	
@@ -77,7 +78,7 @@ public class MyPage1RestController {
 		 */
 		//FridgeIngredientDto fi = new FridgeIngredientDto();
 		
-		//System.out.println("등록재료########"+material);
+		System.out.println("등록재료########"+material);
 		
 		myDao.insertFridge(material);
 	    return ResponseEntity.ok("재료정보가 성공적으로 등록되었습니다🍖");
