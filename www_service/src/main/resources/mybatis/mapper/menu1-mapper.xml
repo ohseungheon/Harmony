@@ -157,40 +157,60 @@
 
 
 	<select id="showCanMakeMenu2_exclude"
-		parameterType="java.util.List"
-		resultType="com.harmony.www_service.dto.MenuDto">
-		SELECT *
-		FROM menu
-		WHERE mcode IN (
-		SELECT mcode
-		FROM recipe
-		WHERE rcode IN (
-		SELECT ri1.rcode
-		FROM recipe_ingredient ri1
-		WHERE ri1.icode IN
-		<foreach item="item" index="index" collection="icodeList"
-			open="(" separator="," close=")">
-			#{item}
-		</foreach>
-		AND (
-		SELECT COUNT(*)
-		FROM recipe_ingredient ri2
-		WHERE ri2.rcode = ri1.rcode
-		AND ri2.icode NOT IN (23, 3, 17)
-		) &lt;= 2
-		AND ri1.rcode NOT IN (
-		SELECT ri3.rcode
-		FROM recipe_ingredient ri3
-		WHERE ri3.icode IN
-		<foreach item="item" index="index" collection="excludList"
-			open="(" separator="," close=")">
-			#{item}
-		</foreach>
-		)
-		)
-		)
-	</select>
-
+    parameterType="java.util.Map"
+    resultType="com.harmony.www_service.dto.MenuDto">
+    SELECT *
+    FROM menu
+    WHERE mcode IN (
+        SELECT mcode
+        FROM recipe
+        WHERE rcode IN (
+            SELECT ri1.rcode
+            FROM recipe_ingredient ri1
+            WHERE 
+            <if test="icodeList != null and icodeList.size() > 0">
+                ri1.icode IN
+                <foreach item="item" index="index" collection="icodeList"
+                    open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="icodeList == null or icodeList.size() == 0">
+                1=1
+            </if>
+            AND (
+                SELECT COUNT(*)
+                FROM recipe_ingredient ri2
+                WHERE ri2.rcode = ri1.rcode
+                <if test="icodeList != null and icodeList.size() > 0">
+                    AND ri2.icode NOT IN 
+                    <foreach item="item" index="index" collection="icodeList"
+                        open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="icodeList == null or icodeList.size() == 0">
+                    AND 1=1
+                </if>
+            ) &lt;= 2
+            AND ri1.rcode NOT IN (
+                SELECT ri3.rcode
+                FROM recipe_ingredient ri3
+                WHERE 
+                <if test="excludList != null and excludList.size() > 0">
+                    ri3.icode IN
+                    <foreach item="item" index="index" collection="excludList"
+                        open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="excludList == null or excludList.size() == 0">
+                    1=1
+                </if>
+            )
+        )
+    )
+</select>
 
 
 
@@ -270,12 +290,15 @@
 		resultType="int">
 		SELECT COUNT(*)
 		FROM (
-		<foreach collection="values" item="val"
+		<foreach collection="inFridgeList" item="item"
 			separator=" UNION ALL ">
-			SELECT #{val} AS val
+			SELECT #{item} AS item
 		</foreach>
 		) AS t1
-		WHERE val IN (6, 3, 16, 23);
+		WHERE val IN <foreach item="item" index="index" collection="icodeList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>;
 	</select>
 
 

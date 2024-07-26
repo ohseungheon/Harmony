@@ -45,7 +45,7 @@
 .container2 {
 	display: flex;
 	align-items: center;
-	justify-content:space-between;
+	justify-content: space-between;
 	border: 1px solid #ccc;
 	padding: 10px;
 	margin-bottom: 5px;
@@ -86,7 +86,7 @@
 	background: none !important;
 	border: 0 !important;
 	cursor: pointer !important;
-	padding: 0! important;
+	padding: 0 ! important;
 	font-size: 20px;
 	margin-left: 10px;
 	color: red;
@@ -207,16 +207,15 @@ button#xBtn:hover {
 }
 
 .highlight {
-	height:40px;
+	height: 40px;
 	background-color: rgba(0, 0, 0, 0.1);
 	filter: brightness(60%);
 	transition: all 0.3s ease;
-	margin-bottom:5px;
+	margin-bottom: 5px;
 }
 
-
 .remove_highlight {
-	height:228px;
+	height: 228px;
 	background-color: rgba(0, 0, 0, 0.1);
 	filter: brightness(60%);
 	transition: all 0.3s ease;
@@ -297,7 +296,7 @@ input[type="submit"]:hover {
 	display: inline-block; /* 툴팁이 정확히 이 요소 위에 표시되도록 하기 위해 */
 	cursor: pointer; /* 클릭할 수 있는 요소를 나타내는 커서 변경 */
 	color: #EB0000;
-	position:relative;
+	position: relative;
 }
 
 .tooltip {
@@ -422,9 +421,9 @@ input[type="submit"]:hover {
 							<div class="possible-menu-info">
 								<span id="category">[[${dto.category}]]</span>
 								[[${dto.menuName}]]
-								<p class="asd">
-									ⓘ <span class="tooltip">안녕하세요</span>
-								</p>
+								<p class="asd" th:if="${#lists.contains(showCanMakeMenuList, dto) == false}">
+                    ⓘ <span class="tooltip">[[${InFridgeIngredientList.size()}]] 개</span>
+                </p>
 							</div>
 							<div class="possible-menu-go">
 								<button id="xBtn" type="button"
@@ -547,7 +546,12 @@ input[type="submit"]:hover {
             console.error('Error:', error);
         });
     }
-
+    function decreaseNumber() {
+        var asdBtn = document.getElementById("asd");
+       
+        asdBtn.textContent = currentNumber - 1;
+    }
+    
     function mcodeListForIcodeList(event, icode) {
         event.preventDefault();
         console.log("================icode=============: "+icode)
