@@ -140,24 +140,28 @@ public class Mypage2Controller {
 			service.registMyRecipeIngredientService(recipeIngredientDto);
 
 		}
+		
+		if (orderNum.isEmpty() || orderContent.isEmpty() || cookingImg.isEmpty()) {
+		    // 예외를 던지거나 로그를 남기고 메서드를 종료
+		    throw new IllegalArgumentException("One of the required lists is empty.");
+		}
 
 		// 요리순서 등록 순서가 두개 이상이면 List로 등록
 		for (int i = 0; i < orderNum.size(); i++) {
+		    RecipeOrderDto recipeOrderDto = new RecipeOrderDto();
+		    recipeOrderDto.setRcode(recipeDto.getRcode());
+		    recipeOrderDto.setOrderContent(orderContent.size() > i ? orderContent.get(i) : ""); // orderContent 리스트 크기 확인
+		    recipeOrderDto.setOrderNum(orderNum.get(i));
 
-			RecipeOrderDto recipeOrderDto = new RecipeOrderDto();
-			recipeOrderDto.setRcode(recipeDto.getRcode());
-			recipeOrderDto.setOrderContent(orderContent.get(i));
-			recipeOrderDto.setOrderNum(orderNum.get(i));
+		    if (i < cookingImg.size() && !cookingImg.get(i).isEmpty()) {
+		        try {
+		            String cookimgImgName = FileUploadUtil.saveFile(cookingImg.get(i).getOriginalFilename(), cookingImg.get(i));
+		            recipeOrderDto.setCookingImg(cookimgImgName);
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
+		    }
 
-			if (!cookingImg.get(i).isEmpty()) {
-				try {
-					String cookimgImgName = FileUploadUtil.saveFile(cookingImg.get(i).getOriginalFilename(),
-							cookingImg.get(i));
-					recipeOrderDto.setCookingImg(cookimgImgName);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 
 			service.registMyRecipeOrderService(recipeOrderDto);
 

@@ -348,20 +348,20 @@ section {
 					<tr>
 						<th>레시피 제목</th>
 						<td><input type="text" name="recipeName"
-							th:value="${recipe.recipeName}"></td>
+							th:value="${recipe.recipeName}" required></td>
 					</tr>
 					<tr>
 						<th>요리 소개</th>
 						<td><input type="text" name="introduce"
-							th:value="${recipe.introduce}"></td>
+							th:value="${recipe.introduce}" required></td>
 					</tr>
 					<tr>
 						<th>동영상 주소</th>
-						<td><input type="text" name="url" th:value="${recipe.url}"></td>
+						<td><input type="text" name="url" th:value="${recipe.url}" required></td>
 					</tr>
 					<tr>
 						<th>카테고리</th>
-						<td><select name="category" id="category-sel">
+						<td><select name="category" id="category-sel" required>
 								<option value="">카테고리별</option>
 								<option value="국/탕" th:selected="${recipe.category == '국/탕'}">국/탕</option>
 								<option value="찜/조림" th:selected="${recipe.category == '찜/조림'}">찜/조림</option>
@@ -378,7 +378,7 @@ section {
 					</tr>
 					<tr>
 						<th>테마</th>
-						<td><select name="theme" id="theme-sel">
+						<td><select name="theme" id="theme-sel" required>
 								<option value="">테마별</option>
 								<option value="한식" th:selected="${recipe.theme == '한식'}">한식</option>
 								<option value="중식" th:selected="${recipe.theme == '중식'}">중식</option>
@@ -398,7 +398,7 @@ section {
 					</tr>
 					<tr>
 						<th>인원</th>
-						<td><select name="portions" id="portions-sel">
+						<td><select name="portions" id="portions-sel" required>
 								<option value="0">인원 선택</option>
 								<option value="1">1인</option>
 								<option value="2">2인</option>
@@ -414,16 +414,16 @@ section {
 						<tr>
 							<th>재료 정보</th>
 							<td><select name="icode"
-								th:id="'ingredient-select-' + ${i.index}">
+								th:id="'ingredient-select-' + ${i.index}" required>
 									<option value="0">재료 이름</option>
 							</select></td>
 							<td><input type="text" name="state"
-								placeholder="재료상태 예) 간거, 온거" th:value="${ingre.state}">
+								placeholder="재료상태 예) 간거, 온거" th:value="${ingre.state}" required>
 							</td>
 							<td><input type="text" name="amount" placeholder="수량"
-								th:value="${ingre.amount}"></td>
+								th:value="${ingre.amount}" required></td>
 							<td><input type="text" name="type" placeholder="단위(개/g)"
-								th:value="${ingre.type}"></td>
+								th:value="${ingre.type}" required></td>
 							<td><span class="ingredient-delete-btn">X</span></td>
 						</tr>
 				</table>
@@ -439,7 +439,7 @@ section {
 					<th:block th:each="order, i : ${recipeOrder}">
 						<tr>
 							<th>Step [[${i.index + 1}]] <input type="hidden"
-								name="orderNum" th:value="${i.index + 1}">
+								name="orderNum" th:value="${i.index + 1}" required>
 							</th>
 							<td><textarea name="orderContent"
 									placeholder="예) 소고기를 숭덩숭덩 썰어주세요"
@@ -511,54 +511,78 @@ section {
 
 	<script th:inline="javascript">
     console.log("Recipe data:", /*[[${recipe}]]*/ null);
-</script>
+	</script>
+	
 	<script th:inline="javascript">
     var ingredientsList = /*[[${ingredientList}]]*/ [];
-</script>
+	</script>
 
 	<script th:inline="javascript">
     var initialIngredients = /*[[${recipeIngredient}]]*/ [];
-</script>
+	</script>
 
 	<script th:inline="javascript">
 
-document.addEventListener("DOMContentLoaded", initializeApp);
+document.addEventListener("DOMContentLoaded", function(){
+	initializeApp();
+    getIngredients();
+});
 
-function initializeApp() {
-    loadInitialData();
+async function initializeApp() {
+	loadInitialData();
     setupEventListeners();
     highlightSelectedMenu();
-    getIngredients();
+    await getIngredients();
+    applyInitialIngredients();
 }
 
 //재료 정보 가져오기
 function getIngredients() {
-    const selects = document.querySelectorAll('select[name="icode"]');
-    
-    fetch('/api/ingredients')
-        .then(response => {
-        if(!response/ok){
-        	throw new Error('Network response was not ok');
-        }
-        return response.json();
-		})
-        .then(ingredients => {
-            console.log("Loaded ingredients:", ingredients);
-            selects.forEach((select) => {
-                const selectedValue = select.getAttribute('value');
-                ingredients.forEach(ingredient => {
-                    const option = document.createElement('option');
-                    option.value = ingredient.icode;
-                    option.textContent = ingredient.name;
-                    option.selected = (selectedValue == ingredient.icode);
-                    select.appendChild(option);
+    return new Promise((resolve, reject) => {
+        const selects = document.querySelectorAll('select[name="icode"]');
+        
+        fetch('/api/ingredients')
+            .then(response => response.json())
+            .then(ingredients => {
+                console.log("Loaded ingredients:", ingredients);
+                selects.forEach((select) => {
+                    const selectedValue = select.value; // 현재 선택된 값을 저장
+                    // select.innerHTML = '<option value="0">재료 이름</option>'; // 이 라인을 제거 또는 주석 처리
+                    ingredients.forEach(ingredient => {
+                        if (!select.querySelector(`option[value="${ingredient.icode}"]`)) {
+                            const option = document.createElement('option');
+                            option.value = ingredient.icode;
+                            option.textContent = ingredient.name;
+                            if (ingredient.icode == selectedValue) {
+                                option.selected = true;
+                            }
+                            select.appendChild(option);
+                        }
+                    });
                 });
+                resolve(ingredients);
+            })
+            .catch(error => {
+                console.error('Error loading ingredients:', error);
+                reject(error);
             });
-        })
-        .catch(error => {
-            console.error('Error loading ingredients:', error);
-            alert('재료 정보를 불러오는 데 실패했습니다. 페이지를 새로고침해 주세요.');
-        });
+    });
+}
+
+function applyInitialIngredients() {
+    initialIngredients.forEach((ingre, index) => {
+        const select = document.getElementById(`ingredient-select-${index}`);
+        if (select) {
+            const option = select.querySelector(`option[value="${ingre.icode}"]`);
+            if (option) {
+                option.selected = true;
+            } else {
+                console.warn(`Option with value ${ingre.icode} not found for ingredient ${index}`);
+            }
+        } else {
+            console.warn(`Select element not found for ingredient ${index}`);
+        }
+    });
 }
 
 
@@ -630,7 +654,7 @@ function updateSelectedMenu(menuItem) {
 }
 
 function updateMenuImage(mcode) {
-    fetch(`/api/getMenuImage?mcode=${mcode}`)  // '/api/' 추가
+    fetch(`/api/getMenuImage?mcode=${mcode}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -658,15 +682,6 @@ function handleIngredientChange(event) {
         updateIngredientType(event.target);
     }
 }
-/*
-function updateIngredientType(select) {
-    const row = select.closest('tr');
-    const typeInput = row.querySelector("input[name='type']");
-    fetch(`/api/getTypeByIcode?icode=${select.value}`)
-        .then(response => response.json())
-        .then(data => { typeInput.value = data.type; })
-        .catch(error => console.error('Error:', error));
-} */
 
 function handleIngredientDelete(event) {
     if (event.target.matches('.ingredient-delete-btn')) {
