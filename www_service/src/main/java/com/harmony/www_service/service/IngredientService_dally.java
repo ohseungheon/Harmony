@@ -34,7 +34,6 @@ public class IngredientService_dally {
 		iDto.setName(iDtoFile.getName());
 		iDto.setCategory(iDtoFile.getCategory());
 		iDto.setTip(iDtoFile.getTip());
-		iDto.setType(iDtoFile.getType());
 		iDto.setImgurl(iDtoFile.getFileName());
 		
 		MultipartFile file = iDtoFile.getFile();
@@ -109,7 +108,6 @@ public class IngredientService_dally {
 		iDto.setName(iDtoFile.getName());
 		iDto.setCategory(iDtoFile.getCategory());
 		iDto.setTip(iDtoFile.getTip());
-		iDto.setType(iDtoFile.getType());
 		iDto.setImgurl(iDtoFile.getFileName());
 		
 		
