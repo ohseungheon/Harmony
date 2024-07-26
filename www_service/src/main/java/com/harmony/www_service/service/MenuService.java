@@ -49,6 +49,7 @@ public class MenuService {
     	int size = icodeList.size();
     	return menu1dao.showCanMakeMenu2(icodeList,size);
     }
+    
     public List<MenuDto> getCanMakeMenu2Exclude(List<IngredientDto> iList, List<Integer> excludeList) {
     	List<Integer> icodeList = makeIcodeList(iList);
     	//System.out.println("=============================getCanMakeMenu=======================");
@@ -87,6 +88,9 @@ public class MenuService {
        List<Integer> icodeList = makeIcodeList(iList);
        return menu1dao.selectExcludeIngredient(icodeList,mno);
     }
+    
+    
+    
     public int getMno(String username) {
        return  menu1dao.getMno(username);
     }
@@ -115,6 +119,11 @@ public class MenuService {
 
    public List<MenuDto> searchMenus(String term) {
       return menuListDao.searchMenus(term);
+   }
+   
+   public int calCountIntersection(int inFridgeIngredientNum,List<Integer> fridgeIngredientList,List<Integer> icodeList) {
+	   int countIntersection =menu1dao.countIntersection(fridgeIngredientList, icodeList);
+	   return (inFridgeIngredientNum-countIntersection);
    }
 
    

@@ -88,6 +88,7 @@ public class Menu1Controller {
 		model.addAttribute("showCanMakeMenuList", showCanMakeMenuList);
 		model.addAttribute("showCanMakeMenuList2", showCanMakeMenuList2);
 		model.addAttribute("NoInFridgeIngredientList", NoInFridgeIngredientList);
+		model.addAttribute("InFridgeIngredientList", FridgeIngredientList);
 		model.addAttribute("days", days);
 		
 		
@@ -107,7 +108,7 @@ public class Menu1Controller {
 
 	@ResponseBody
 	@GetMapping("/deleteFridgeIngredientList") // 재료삭제후 가진 재료 리스트
-	public List<IngredientDto> deleteFridgeIngredientList(@RequestParam("icode") int icode, HttpSession session) {
+	public List<IngredientDto> deleteFridgeIngredientList(@RequestParam("icode") int icode, HttpSession session,Model model) {
 		System.out.println("===========================deleteFridgeIngredientList=========================");
 
 		List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session
@@ -133,6 +134,13 @@ public class Menu1Controller {
 
 		// 사용할 수 있는 재료리스트에서 뽑은 재료를 제거
 		InFridgeIngredientList.remove(getOneIngredient);
+		List<Integer> InFridgeIngredientIcodeList=  menuService.makeIcodeList(InFridgeIngredientList);
+		// 이함수를 돌아가면서 만들수있는 메뉴 리스트에 적용 한다음에 
+		
+		//null에 레시피 아이코드 들어가야함
+		
+		
+		menuService.calCountIntersection(InFridgeIngredientList.size(), InFridgeIngredientIcodeList, null);
 		session.setAttribute("InFridgeIngredientList", InFridgeIngredientList);
 
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -141,11 +149,14 @@ public class Menu1Controller {
 		// 냉장고에 없는 재료만 제외하고 사용자 냉장고에서 재료 출력해주는 dao 실행
 		List<IngredientDto> selectExcludeIngredientList = menuService.selectExcludeIngredient(NoInFridgeIngredientList,
 				mno);
-
+		
 		System.out.println("=================NoInFridgeIngredientList==================: " + NoInFridgeIngredientList);
 		System.out.println("=================InFridgeIngredientList==================: " + InFridgeIngredientList);
+		System.out.println("=================selectExcludeIngredientList ==================: " + selectExcludeIngredientList );
+		
+		model.addAttribute("InFridgeIngredientList",InFridgeIngredientList);
 		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
-
+		//menuService.makeIcodeList();
 		return selectExcludeIngredientList;
 	}
 
@@ -187,7 +198,7 @@ public class Menu1Controller {
 
 	@ResponseBody
 	@GetMapping("/mcodeListForIcodeList")
-	public List<Integer> mcodeListForIcodeList(@RequestParam("icode") int icode, HttpSession session) {
+	public List<Integer> mcodeListForIcodeList(@RequestParam("icode") int icode, HttpSession session,Model model) {
 		// System.out.println("===========================deleteCanMakeMenu=========================");
 		
 		System.out.println("***********************************************************************************");
@@ -219,12 +230,14 @@ public class Menu1Controller {
 		System.out.println("============================In mcodeListForIcodeList getOneIngredient"+getOneIngredient);
 
 		// 사용하지 않을 재료를 사용할수 있는재료 리스트에서 제거
+		int InFridgeIngredientListNum = InFridgeIngredientList.size();
+		System.out.println("====================================InFridgeIngredientListNum :"+ InFridgeIngredientListNum);
 		for (IngredientDto NoInFridgeIngredient : NoInFridgeIngredientList) {
 
 			InFridgeIngredientList.remove(NoInFridgeIngredient);
 		}
-		
-		
+		model.addAttribute("InFridgeIngredientListNum", InFridgeIngredientListNum);
+		System.out.println("====================================InFridgeIngredientListNum :"+ InFridgeIngredientListNum);
 		for (IngredientDto NoInFridgeIngredient : NoInFridgeIngredientList) {
 
 			InFridgeIngredientList.remove(NoInFridgeIngredient);
@@ -261,7 +274,7 @@ public class Menu1Controller {
 
 	@ResponseBody
 	@GetMapping("/mcodeListForIcodeList2")
-	public List<Integer> mcodeListForIcodeList2(@RequestParam("icode") int icode, HttpSession session) {
+	public List<Integer> mcodeListForIcodeList2(@RequestParam("icode") int icode, HttpSession session, Model model) {
 		// System.out.println("===========================deleteCanMakeMenu=========================");
 
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -293,6 +306,12 @@ public class Menu1Controller {
 		// 사용할수 있는 재료로 만들 수 있는 메뉴 보여주는 dao함수 실행
 		List<Integer> mcodeList = new ArrayList<>();
 		List<MenuDto> showCanMakeMenuList = new ArrayList<>();
+		int InFridgeIngredientListNum = InFridgeIngredientList.size();
+		model.addAttribute("InFridgeIngredientListNum", InFridgeIngredientListNum);
+		System.out.println("====================================InFridgeIngredientListNum :"+ InFridgeIngredientListNum);
+		
+		session.getAttribute("InFridgeIngredientList");
+	    
 		
 		if (NoInFridgeIngredientList.size()==0) {
 			showCanMakeMenuList = menuService.getCanMakeMenu2(InFridgeIngredientList);
@@ -304,7 +323,6 @@ public class Menu1Controller {
 			mcodeList = menuService.makeMcodeList(showCanMakeMenuList);
 		
 		}
-
 		//List<Integer> mcodeList = menuService.makeMcodeList(showCanMakeMenuList);
 		//System.out.println("==========================test showCanMakeMenuList: " + showCanMakeMenuList);
 		System.out.println("      ");
