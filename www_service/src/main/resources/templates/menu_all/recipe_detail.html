@@ -2,198 +2,198 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<link rel="stylesheet" as="style" crossorigin
-		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-	<style>
-		.recipeDetail-intro-area {
-			display: flex;
-			justify-content: center;
-			gap: 35px;
-		}
+<meta charset="UTF-8">
+<title>Document</title>
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+.recipeDetail-intro-area {
+	display: flex;
+	justify-content: center;
+	gap: 35px;
+}
 
-		.recipeDetail-intro-img img {
-			width: 500px;
-			height: auto;
-		}
+.recipeDetail-intro-img img {
+	width: 500px;
+	height: auto;
+}
 
-		.zzim-btn {
-			text-align: center;
-			margin-top: 25px;
-		}
+.zzim-btn {
+	text-align: center;
+	margin-top: 25px;
+}
 
-		#recipe-reco-btn {
-			font-family: "Pretendard Variable", Pretendard;
-			border: 1px solid #899ED5;
-			color: #899ED5;
-			background: #fff;
-			padding: 6px 10px;
-		}
+#recipe-reco-btn {
+	font-family: "Pretendard Variable", Pretendard;
+	border: 1px solid #899ED5;
+	color: #899ED5;
+	background: #fff;
+	padding: 6px 10px;
+}
 
-		#recipe-reco-btn i {
-			font-size: 15px;
-		}
+#recipe-reco-btn i {
+	font-size: 15px;
+}
 
-		#recipe-reco-btn i span {
-			font-family: "Pretendard Variable", Pretendard;
-			font-weight: 500;
-			padding-left: 5px;
-			font-size: 14px;
-		}
+#recipe-reco-btn i span {
+	font-family: "Pretendard Variable", Pretendard;
+	font-weight: 500;
+	padding-left: 5px;
+	font-size: 14px;
+}
 
-		.recipeDetail-info-area1 {
-			display: flex;
-			gap: 20px;
-			border-bottom: 1px solid #f1f1f1;
-			color: #666;
-			padding: 15px 0;
-			margin-bottom: 30px;
-		}
+.recipeDetail-info-area1 {
+	display: flex;
+	gap: 20px;
+	border-bottom: 1px solid #f1f1f1;
+	color: #666;
+	padding: 15px 0;
+	margin-bottom: 30px;
+}
 
-		.recipeDetail-info-area1 p {
-			font-size: 14px;
-		}
+.recipeDetail-info-area1 p {
+	font-size: 14px;
+}
 
-		.recipeDetail-info-area1 i {
-			padding-right: 5px;
-		}
+.recipeDetail-info-area1 i {
+	padding-right: 5px;
+}
 
-		.recipeDetail-info-area2 {
-			border-bottom: 1px solid #f1f1f1;
-			padding-bottom: 30px;
-		}
+.recipeDetail-info-area2 {
+	border-bottom: 1px solid #f1f1f1;
+	padding-bottom: 30px;
+}
 
-		.recipeDetail-meneName {
-			font-size: 30px;
-			font-weight: 500;
-		}
+.recipeDetail-meneName {
+	font-size: 30px;
+	font-weight: 500;
+}
 
-		.recipeDetail-recipeName {
-			margin: 15px 0 50px;
-			font-size: 16px;
-			color: #888;
-			font-weight: 500;
-		}
+.recipeDetail-recipeName {
+	margin: 15px 0 50px;
+	font-size: 16px;
+	color: #888;
+	font-weight: 500;
+}
 
-		.recipeDetail-intro {
-			font-size: 15px;
-			color: #666;
-			font-weight: 400;
-			padding-right: 180px;
-			line-height: 24px;
-		}
+.recipeDetail-intro {
+	font-size: 15px;
+	color: #666;
+	font-weight: 400;
+	padding-right: 180px;
+	line-height: 24px;
+}
 
-		.recipeDetail-info-area3 {
-			padding: 30px 0;
-		}
+.recipeDetail-info-area3 {
+	padding: 30px 0;
+}
 
-		.recipeDetail-info-area3 h2 {
-			margin-bottom: 15px;
-		}
+.recipeDetail-info-area3 h2 {
+	margin-bottom: 15px;
+}
 
-		.recipeDetail-info-area3 .ingredient-item {
-			display: flex;
-			margin-bottom: 5px;
-			font-size: 15px;
-			color: #777;
-		}
+.recipeDetail-info-area3 .ingredient-item {
+	display: flex;
+	margin-bottom: 5px;
+	font-size: 15px;
+	color: #777;
+}
 
-		.recipeDetail-info-area3 h2 .fa {
-			padding-left: 8px;
-			font-size: 15px;
-			color: #899ED5;
-		}
+.recipeDetail-info-area3 h2 .fa {
+	padding-left: 8px;
+	font-size: 15px;
+	color: #899ED5;
+}
 
-		.recipeDetail-info-area3 h2 span {
-			font-size: 13px;
-			padding-left: 5px;
-			color: #899ED5;
-		}
+.recipeDetail-info-area3 h2 span {
+	font-size: 13px;
+	padding-left: 5px;
+	color: #899ED5;
+}
 
-		.order-area {
-			padding: 80px;
-			box-sizing: border-box;
-			border-top: 1px solid #f1f1f1;
-			border-bottom: 1px solid #f1f1f1;
-			margin-top: 30px;
-		}
+.order-area {
+	padding: 80px;
+	box-sizing: border-box;
+	border-top: 1px solid #f1f1f1;
+	border-bottom: 1px solid #f1f1f1;
+	margin-top: 30px;
+}
 
-		.order-area .order-item {
-			width: 900px;
-			display: flex;
-			justify-content: center;
-			gap: 30px;
-			margin-bottom: 150px;
-		}
+.order-area .order-item {
+	width: 900px;
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+	margin-bottom: 150px;
+}
 
-		.order-item .recipeDetail-orderNum {
-			width: 100px;
-			color: #899ED5;
-			padding-top: 20px;
-		}
+.order-item .recipeDetail-orderNum {
+	width: 100px;
+	color: #899ED5;
+	padding-top: 20px;
+}
 
-		.order-item .recipeDetail-orderNum span {
-			display: inline-block;
-			font-size: 70px;
-			font-weight: 300;
-		}
+.order-item .recipeDetail-orderNum span {
+	display: inline-block;
+	font-size: 70px;
+	font-weight: 300;
+}
 
+.order-item .recipeDetail-orderImg-box {
+	width: 350px;
+	min-height: 100px;
+	background: #fff;
+	border: 1px solid #f1f1f1;
+}
 
-		.order-item .recipeDetail-orderImg-box {
-			width: 350px;
-			min-height: 100px;
-			background: #fff;
-			border: 1px solid #f1f1f1;
-		}
+.order-item .recipeDetail-orderImg img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
 
-		.order-item .recipeDetail-orderImg img {
-			display: block;
-			width: 100%;
-			height: auto;
-		}
+.order-item .recipeDetail-orderContent {
+	width: 500px;
+	padding-top: 20px;
+	box-sizing: border-box;
+}
 
-		.order-item .recipeDetail-orderContent {
-			width: 500px;
-			padding-top: 20px;
-			box-sizing: border-box;
-		}
+.order-item .recipeDetail-orderContent p {
+	line-height: 26px;
+	font-size: 15px;
+	font-weight: 500;
+	color: #555;
+}
 
-		.order-item .recipeDetail-orderContent p {
-			line-height: 26px;
-			font-size: 15px;
-			font-weight: 500;
-			color: #555;
-		}
+.recipeDetail-tag {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	font-size: 14px;
+	color: #888;
+	font-weight: 300;
+	padding: 10px 0;
+}
 
-		.recipeDetail-tag {
-			display: flex;
-			justify-content: center;
-			gap: 15px;
-			font-size: 14px;
-			color: #888;
-			font-weight: 300;
-			padding: 10px 0;
-		}
+.reference-video {
+	width: 100%;
+	text-align: center;
+	border-top: 1px solid #f1f1f1;
+	border-bottom: 1px solid #f1f1f1;
+	padding: 30px 0 50px;
+}
 
-		.reference-video {
-			width: 100%;
-			text-align: center;
-			border-top: 1px solid #f1f1f1;
-			border-bottom: 1px solid #f1f1f1;
-			padding: 30px 0 50px;
-		}
+.reference-video h3 {
+	margin-bottom: 30px;
+}
 
-		.reference-video h3 {
-			margin-bottom: 30px;
-		}
-
-		.liked {
-			color: red !important;
-			border: 1px solid red !important;
-		}
-	</style>
+.liked {
+	color: red !important;
+	border: 1px solid red !important;
+}
+</style>
 </head>
 
 <body>
@@ -208,7 +208,8 @@
 					th:src="@{/uploads/} + ${recipeOrderList[#lists.size(recipeOrderList) - 1].cookingImg}"
 					alt="대표 이미지">
 				<div class="zzim-btn">
-					<button class="" id="recipe-reco-btn" th:onclick="'toggleLike(event, this, ' + ${rcode} + ')'">
+					<button class="" id="recipe-reco-btn"
+						th:onclick="'toggleLike(event, this, ' + ${rcode} + ')'">
 						<i class="far fa-heart"><span>찜하기</span></i>
 					</button>
 				</div>
@@ -232,7 +233,8 @@
 					<h2>
 						재료<i class="fa fa-user"></i><span>[[${portions}]]인분</span>
 					</h2>
-					<div th:each="ingredient : ${recipeIngredientList}" class="ingredient-item">
+					<div th:each="ingredient : ${recipeIngredientList}"
+						class="ingredient-item">
 						<p th:text="${ingredient?.name}"></p>
 						<p>([[${ingredient?.amount}]])</p>
 					</div>
@@ -247,7 +249,8 @@
 					<span th:text="${order.orderNum}"></span>
 				</div>
 				<div class="recipeDetail-orderImg-box">
-					<div class="recipeDetail-orderImg" th:if="${order.cookingImg != null && order.cookingImg != ''}">
+					<div class="recipeDetail-orderImg"
+						th:if="${order.cookingImg != null && order.cookingImg != ''}">
 						<img th:src="@{/uploads/} + ${order.cookingImg}" alt="조리 이미지" />
 					</div>
 				</div>
@@ -258,21 +261,31 @@
 		</div>
 
 		<div class="recipeDetail-tag">
-			<p th:text="${recipeGetTagDto.tagContent}"></p>
+			<p
+				th:text="${recipeGetTagDto != null and recipeGetTagDto.tagContent != null} ? ${recipeGetTagDto.tagContent} : ''"></p>
 		</div>
 
 		<div class="reference-video">
 			<h3>참고 레시피 영상</h3>
 			<!-- ${url.indexOf('v=') + 2}는 URL에서 'v=' 다음의 위치를 찾습니다. -->
 			<!-- url.substring(...)은 그 위치부터 끝까지의 문자열을 추출합니다, 즉 동영상 ID를 얻습니다. -->
-			<iframe th:src="'https://www.youtube.com/embed/' + ${url.substring(url.indexOf('v=') + 2)}" width="560"
-				height="315" frameborder="0" allowfullscreen></iframe>
+			<th:block
+				th:with="videoId=${url != null and url.contains('v=') ? url.substring(url.indexOf('v=') + 2) : ''}">
+				<th:block th:if="${!videoId.isEmpty()}">
+					<iframe th:src="'https://www.youtube.com/embed/' + ${videoId}"
+						width="560" height="315" frameborder="0" allowfullscreen>
+					</iframe>
+				</th:block>
+				<th:block th:unless="${!videoId.isEmpty()}">
+					<p>유효한 YouTube URL이 제공되지 않았습니다.</p>
+				</th:block>
+			</th:block>
 		</div>
 	</section>
-	
+
 	<footer>
-        <th:block th:insert="~{/sub/footer.html}"></th:block>
-    </footer>
+		<th:block th:insert="~{/sub/footer.html}"></th:block>
+	</footer>
 
 	<script>
 		async function toggleLike(event, button, rcode) {
