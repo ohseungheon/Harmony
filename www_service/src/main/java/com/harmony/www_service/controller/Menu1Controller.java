@@ -238,10 +238,24 @@ public class Menu1Controller {
 		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
 
 		List<Integer> mcodeList = menuService.makeMcodeList(showCanMakeMenuList);
+		
 		System.out.println("==========================test showCanMakeMenuList: " + showCanMakeMenuList);
 		System.out.println("==========================test modeList: " + mcodeList);
 		System.out.println("***********************************************************************************");
 		System.out.println("***********************************************************************************");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("==========================InMcodeList NoInFridgeIngredient: " + NoInFridgeIngredientList);
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
 		return mcodeList;
 	}
 
@@ -277,10 +291,36 @@ public class Menu1Controller {
 		}
 
 		// 사용할수 있는 재료로 만들 수 있는 메뉴 보여주는 dao함수 실행
-		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu2(InFridgeIngredientList);
+		List<Integer> mcodeList = new ArrayList<>();
+		List<MenuDto> showCanMakeMenuList = new ArrayList<>();
+		
+		if (NoInFridgeIngredientList.size()==0) {
+			showCanMakeMenuList = menuService.getCanMakeMenu2(InFridgeIngredientList);
+			mcodeList = menuService.makeMcodeList(showCanMakeMenuList);
+			
+		}else if(NoInFridgeIngredientList.size()!=0) {
+			List<Integer>excludeIcode = menuService.makeIcodeList(NoInFridgeIngredientList);
+		    showCanMakeMenuList = menuService.getCanMakeMenu2Exclude(InFridgeIngredientList,excludeIcode);
+			mcodeList = menuService.makeMcodeList(showCanMakeMenuList);
+		
+		}
 
-		List<Integer> mcodeList = menuService.makeMcodeList(showCanMakeMenuList);
-		System.out.println("==========================test showCanMakeMenuList: " + showCanMakeMenuList);
+		//List<Integer> mcodeList = menuService.makeMcodeList(showCanMakeMenuList);
+		//System.out.println("==========================test showCanMakeMenuList: " + showCanMakeMenuList);
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("==========================InMcodeList NoInFridgeIngredient: " + NoInFridgeIngredientList);
+		System.out.println("==========================InMcodeList showCanMakeMenuList: " + showCanMakeMenuList);
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
+		System.out.println("      ");
 		System.out.println("==========================test modeList: " + mcodeList);
 		return mcodeList;
 	}

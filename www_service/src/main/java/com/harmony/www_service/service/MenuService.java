@@ -49,6 +49,12 @@ public class MenuService {
     	int size = icodeList.size();
     	return menu1dao.showCanMakeMenu2(icodeList,size);
     }
+    public List<MenuDto> getCanMakeMenu2Exclude(List<IngredientDto> iList, List<Integer> excludeList) {
+    	List<Integer> icodeList = makeIcodeList(iList);
+    	//System.out.println("=============================getCanMakeMenu=======================");
+    	//System.out.println("=============================getCanMakeMenu icodeList======================= :"+icodeList);
+    	return menu1dao.showCanMakeMenu2_exclude(icodeList,excludeList);
+    }
     
     public List<Integer> makeIcodeList(List<IngredientDto> iList) {
        
