@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title> 농축수산물·가공식품 가격 정보 </title>
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <th:block th:insert="~{/sub/header.html}"></th:block>
+    </header>
+    <section>
+        
+    </section>
+    <footer>
+        <th:block th:insert="~{/sub/footer.html}"></th:block>
+    </footer>
+</body>
+<script>
+    fetch('https://api.odcloud.kr/api/15087482/v1/uddi:b1fa0c3e-ce0b-4b8a-925c-d2a5021e5960?serviceKey=D5L7bdiOo%2Fy2t3Wgb8RJ8xXHA9M3RGwICLVQlv2SZ7nEZP5tNxPylv0M24bldi4kkRrX80WeTnj%2Fkh5yJV0aow%3D%3D')
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(error => console.log("Error:", error));
+</script>
+</html>
