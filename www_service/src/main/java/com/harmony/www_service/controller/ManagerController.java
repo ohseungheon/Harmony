@@ -111,12 +111,10 @@ public class ManagerController {
 			@RequestParam("category") String category,
 			@RequestParam("imgurl") String imgurl
 			) {
-		// type 처리할 방법 생각해보기 (하드코딩)
 		MenuDto mDto = new MenuDto();
 		mDto.setMenuName(menuName);
 		mDto.setImgurl(imgurl);
 		mDto.setCategory(category);
-		mDto.setType("중량");
 		mrService.addMenu(mDto);
 		mrService.deleteMenu(mrcode);
 
