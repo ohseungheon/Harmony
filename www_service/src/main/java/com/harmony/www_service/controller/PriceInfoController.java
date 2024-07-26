@@ -9,7 +9,7 @@ public class PriceInfoController {
     
     @RequestMapping("/main")
     public String main(){
-        return "price_info/main";
+        return "price_info/food_price_chart";
     }
     
 }
