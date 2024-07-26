@@ -7,6 +7,7 @@ public class RecipeIngredientDto {
     private int ricode;
     private int rcode;
     private int icode;
+    private String state;
     private int amount;
     private String name;
     private String type;

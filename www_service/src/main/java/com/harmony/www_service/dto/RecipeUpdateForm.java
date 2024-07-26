@@ -18,6 +18,8 @@ public class RecipeUpdateForm {
     private int portions;
     private String theme;
     private List<Integer> icode;
+    private List<String> state;
+    private List<String> type;
     private List<Integer> amount;
     private List<Integer> orderNum;
     private List<String> orderContent;
@@ -48,7 +50,9 @@ public class RecipeUpdateForm {
             RecipeIngredientDto dto = new RecipeIngredientDto();
             dto.setRcode(this.rcode);
             dto.setIcode(this.icode.get(i));
+            dto.setState(this.state.get(i));
             dto.setAmount(this.amount.get(i));
+            dto.setType(this.type.get(i));
             list.add(dto);
         }
         return list;

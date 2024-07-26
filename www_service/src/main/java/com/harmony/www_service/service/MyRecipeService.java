@@ -223,6 +223,7 @@ public class MyRecipeService {
 	    return dao.deleteMyRecipeOrder(rocode);
 	}
 	
+//	재료 정보 가져오기
 	public List<IngredientDto> getIngredientService(){
 		
 		return dao.getIngredient();
