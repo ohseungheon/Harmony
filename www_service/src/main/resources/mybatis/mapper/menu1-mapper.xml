@@ -156,6 +156,52 @@
 
 
 
+	<select id="showCanMakeMenu2_exclude"
+		parameterType="java.util.List"
+		resultType="com.harmony.www_service.dto.MenuDto">
+		SELECT *
+		FROM menu
+		WHERE mcode IN (
+		SELECT mcode
+		FROM recipe
+		WHERE rcode IN (
+		SELECT ri1.rcode
+		FROM recipe_ingredient ri1
+		WHERE ri1.icode IN
+		<foreach item="item" index="index" collection="icodeList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		AND (
+		SELECT COUNT(*)
+		FROM recipe_ingredient ri2
+		WHERE ri2.rcode = ri1.rcode
+		AND ri2.icode NOT IN (23, 3, 17)
+		) &lt;= 2
+		AND ri1.rcode NOT IN (
+		SELECT ri3.rcode
+		FROM recipe_ingredient ri3
+		WHERE ri3.icode IN
+		<foreach item="item" index="index" collection="excludList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		)
+		)
+		)
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<select id="showOneIngredient" parameterType="int"
 		resultType="com.harmony.www_service.dto.IngredientDto">
