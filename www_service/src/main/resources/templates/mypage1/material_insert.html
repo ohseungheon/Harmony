@@ -229,7 +229,6 @@ input[type="text"]{
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
 							th:data-category="${ingre.category}"
-							th:data-type="${ingre.type}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -245,7 +244,6 @@ input[type="text"]{
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
 							th:data-category="${ingre.category}"
-							th:data-type="${ingre.type}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -261,7 +259,6 @@ input[type="text"]{
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
 							th:data-category="${ingre.category}"
-							th:data-type="${ingre.type}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -277,7 +274,6 @@ input[type="text"]{
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
 							th:data-category="${ingre.category}"
-							th:data-type="${ingre.type}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -293,7 +289,6 @@ input[type="text"]{
 							th:data-imgurl="${ingre.imgurl}" 
 							th:data-name="${ingre.name}" 
 							th:data-category="${ingre.category}"
-							th:data-type="${ingre.type}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -301,7 +296,7 @@ input[type="text"]{
 					</div>
 				</div>
 			</div>
-		
+			<!-- 재료등록 폼 -->
 			<div class="insertForm-box">
 				<form id="insertForm" method="POST">
 					<div class="insertForm-inbox1">
@@ -322,8 +317,14 @@ input[type="text"]{
 							<div class="inbox2-amount-in1">
 							</div> 
 							<div class="inbox2-amount-in2">
-								<label for="amount" id="type">수량/중량</label> 
-								<input type="text" id="amount" name="amount">
+								<label for="amount">재료수량/중량</label> 
+								<input type="number" id="amount" name="amount">
+								
+								<label for="state">재료상태</label> 
+								<input type="text" id="state" name="state" placeholder="재료상태를 입력하세요. ex) 반 개, 몇 토막, 간 마늘 등 ">
+								
+								<label for="type">단위</label> 
+								<input type="text" id="type" name="type" placeholder="단위를 입력하세요. ex) 몇 g,몇 개,몇 스푼,몇 줌, 몇 포기 등 ">
 							</div>
 						</div> 
 					</div>
@@ -346,6 +347,7 @@ input[type="text"]{
 					<div class="insertForm-inbox4">
 						<label for="memo">메모</label> 
 						<textarea name="memo" id="memo"></textarea>
+						
 						<input type="hidden" id="icode" name="icode">
 						<input type="hidden" id="mno" name="mno" th:value="${mno}"> 
 					</div>
@@ -382,14 +384,12 @@ input[type="text"]{
 				const imgUrl = $(this).data("imgurl");
 				const name = $(this).data("name");
 				const category = $(this).data("category");
-				const type = $(this).data("type");
 				const tip = $(this).data("tip");
 				
 				$("#icode").val(icode);
 				$("#imgUrl").val(imgUrl);
 				$("#name").val(name);
 				$("#category").val(category);
-				$("#type").text(type);
 				$("#tip-text").text(tip); // 툴팁 내용 업데이트
 				
 				// 이미지 미리보기 업데이트
@@ -412,8 +412,9 @@ input[type="text"]{
 				const category = $("#category").val();
 				const deadline = $("#deadline").val();
 				const amount = $("#amount").val();
+				const state = $("#state").val();
+				const type = $("#type").val();
 				//const type = $("input[name='type']:checked").val();
-				const type = $("#type").text();
 				const keeptype = $("#keeptype").val();
 				const memo = $("#memo").val();
 				const mno = $("#mno").val();
@@ -425,6 +426,7 @@ input[type="text"]{
 					category: category,
 					deadline: deadline,
 					amount: amount,
+					state: state,
 					type: type,
 					keeptype: keeptype,
 					memo: memo,

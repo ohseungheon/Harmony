@@ -6,24 +6,23 @@
   
   	<insert id="registIngredient">
   		INSERT INTO ingredient 
-  		(name, type, tip, imgurl, category) 
+  		(name, tip, imgurl, category) 
   		values
-  		(#{iDto.name}, #{iDto.type}, #{iDto.tip}, #{iDto.imgurl}, #{iDto.category})
+  		(#{iDto.name}, #{iDto.tip}, #{iDto.imgurl}, #{iDto.category})
   	</insert>
   	
   	<select id="findByCategory" resultType="com.harmony.www_service.dto.IngredientDto">
-  		SELECT icode, name, type, tip, imgurl, category FROM ingredient WHERE category = #{category}
+  		SELECT icode, name, tip, imgurl, category FROM ingredient WHERE category = #{category}
   	</select>
   
   	<select id="getDetail" resultType="com.harmony.www_service.dto.IngredientDto">
-  		SELECT icode, name, type, tip, imgurl, category FROM ingredient WHERE icode = #{icode}
+  		SELECT icode, name, tip, imgurl, category FROM ingredient WHERE icode = #{icode}
   	</select>
   	
 	<update id="updateIngredient">
 		UPDATE ingredient
 		SET
 			name = #{iDto.name},
-			type = #{iDto.type},
 			tip = #{iDto.tip},
 			imgurl = #{iDto.imgurl},
 			category = #{iDto.category}

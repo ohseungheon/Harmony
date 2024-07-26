@@ -636,8 +636,8 @@ main {
 								</div>
 								<div class="by-form">
 									<div class="form-row">
-										<label for="by-count">[[${cool.type}]]</label> <input
-											type="text" id="by-count" th:value="${cool.amount}" readonly>
+										<label for="by-count">재료량</label> <input
+											type="text" id="by-count" th:value="${cool.amount} + ' '+ ${cool.type}" readonly>
 									</div>
 									<div class="form-row">
 										<label for="by-deadline">유통기한</label> <input type="text"
@@ -665,8 +665,8 @@ main {
 								</div>
 								<div class="by-form">
 									<div class="form-row">
-										<label for="by-count">[[${ice.type}]]</label> <input
-											type="text" id="by-count" th:value="${ice.amount}" readonly>
+										<label for="by-count">재료량</label> <input
+											type="text" id="by-count" th:value="${ice.amount} + ' '+ ${ice.type}" readonly>
 									</div>
 									<div class="form-row">
 										<label for="by-deadline">유통기한</label> <input type="text"
@@ -694,8 +694,8 @@ main {
 								</div>
 								<div class="by-form">
 									<div class="form-row">
-										<label for="by-count">[[${food.type}]]</label> <input
-											type="text" id="by-count" th:value="${food.amount}" readonly>
+										<label for="by-count">재료량</label> <input
+											type="text" id="by-count" th:value="${food.amount} + ' '+ ${food.type}" readonly>
 									</div>
 									<div class="form-row">
 										<label for="by-deadline">유통기한</label> <input type="text"
@@ -742,8 +742,14 @@ main {
 									<input type="date" id="modalDeadline" class="m-text" value="">
 								</div>
 								<div class="by-deadline-box">
-									<label for="modalCount" class="m-label">수량/중량</label> 
-									<input type="number" id="modalCount" class="m-text" value=""> 
+									<label for="modalCount" class="m-label">재료량</label> 
+									<input type="number" id="modalCount" class="m-text" value="">
+									
+									<label for="modalType" class="m-label">단위</label> 
+									<input type="text" id="modalType" class="m-text" value="">
+									
+									<label for="modalState" class="m-label">재료상태</label> 
+									<input type="text" id="modalState" class="m-text" value="">
 								</div>
 								<div class="by-deadline-box">
 									<label for="modalKeeptype" class="m-label">보관상태</label> 
@@ -793,6 +799,8 @@ main {
 			const modalName = document.getElementById("modalName");
 			const modalCategory = document.getElementById("modalCategory");
 			const modalCount = document.getElementById("modalCount");
+			const modalType = document.getElementById("modalType");
+			const modalState = document.getElementById("modalState");
 			const modalKeeptype = document.getElementById("modalKeeptype");
 			const modalDeadline = document.getElementById("modalDeadline");
 			const modalMemo = document.getElementById("modalMemo");
@@ -824,6 +832,8 @@ main {
 		            	document.getElementById("modalName").value = data.name;
 		                document.getElementById("modalCategory").value = data.category;
 		                document.getElementById("modalCount").value = data.amount;
+		                document.getElementById("modalType").value = data.type;
+		                document.getElementById("modalState").value = data.state;
 		                document.getElementById("modalKeeptype").value = data.keeptype;
 		                document.getElementById("modalDeadline").value = data.deadline;
 		                document.getElementById("modalMemo").value = data.memo;
@@ -843,6 +853,8 @@ main {
 				const mno = $("#modalMno").val();
 		        const deadline = $("#modalDeadline").val();
 		        const amount = $("#modalCount").val();
+		        const type = $("#modalType").val();
+		        const state = $("#modalState").val();
 		        const keeptype = $("#modalKeeptype").val();
 		        const memo = $("#modalMemo").val();
 
@@ -851,6 +863,8 @@ main {
 		        	mno: mno,
 		        	deadline: deadline,
 		        	amount: amount,
+		        	type: type,
+		        	state: state,
 		        	keeptype: keeptype,
 		        	memo: memo
 		        });
