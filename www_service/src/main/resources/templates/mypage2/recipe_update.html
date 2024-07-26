@@ -101,7 +101,7 @@ section {
 
 .recipe-regist-box2 select {
 	font-family: "Pretendard Variable", Pretendard;
-	width: 250px;
+	width: 150px;
 	height: 50px;
 	border: 1px solid #ececec;
 	border-radius: 5px;
@@ -110,12 +110,16 @@ section {
 
 .recipe-regist-box2 input[type="text"] {
 	font-family: "Pretendard Variable", Pretendard;
-	width: 120px;
+	width: 160px;
 	height: 50px;
 	border: 1px solid #ececec;
 	border-radius: 5px;
 	box-sizing: border-box;
 	padding-left: 10px;
+}
+
+.recipe-regist-box2 input[name="amount"] {
+	width: 100px;
 }
 
 .recipe-regist-box2 .addBtn {
@@ -362,40 +366,36 @@ section {
 								<option value="국/탕" th:selected="${recipe.category == '국/탕'}">국/탕</option>
 								<option value="찜/조림" th:selected="${recipe.category == '찜/조림'}">찜/조림</option>
 								<option value="구이" th:selected="${recipe.category == '구이'}">구이</option>
-								<option value="찌개/전골" th:selected="${recipe.category == '찌개/전골'}">찌개/전골</option>
-								<option value="볶음"
-									th:selected="${recipe.category == '볶음'}">볶음</option>
+								<option value="찌개/전골"
+									th:selected="${recipe.category == '찌개/전골'}">찌개/전골</option>
+								<option value="볶음" th:selected="${recipe.category == '볶음'}">볶음</option>
 								<option value="디저트" th:selected="${recipe.category == '디저트'}">디저트</option>
-								<option value="밥요리"
-									th:selected="${recipe.category == '밥요리'}">밥요리</option>
-								<option value="면요리"
-									th:selected="${recipe.category == '면요리'}">면요리</option>
+								<option value="밥요리" th:selected="${recipe.category == '밥요리'}">밥요리</option>
+								<option value="면요리" th:selected="${recipe.category == '면요리'}">면요리</option>
 								<option value="튀김" th:selected="${recipe.category == '튀김'}">튀김</option>
 								<option value="기타" th:selected="${recipe.category == '기타'}">기타</option>
 						</select></td>
 					</tr>
 					<tr>
-    			<th>테마</th>
-    			<td>
-    				<select name="theme" id="theme-sel">
-    					<option value="">테마별</option>
-    					<option value="한식" th:selected="${recipe.theme == '한식'}">한식</option>
-    					<option value="중식" th:selected="${recipe.theme == '중식'}">중식</option>
-    					<option value="일식" th:selected="${recipe.theme == '일식'}">일식</option>
-    					<option value="양식" th:selected="${recipe.theme == '양식'}">양식</option>
-    					<option value="분식" th:selected="${recipe.theme == '분식'}">분식</option>
-    					<option value="야식/안주" th:selected="${recipe.theme == '야식/안주'}">야식/안주</option>
-    					<option value="생일/기념일" th:selected="${recipe.theme == '생일/기념일'}">생일/기념일</option>
-    					<option value="다이어트" th:selected="${recipe.theme == '다이어트'}">다이어트</option>
-    					<option value="파티" th:selected="${recipe.theme == '파티'}">파티</option>
-    					<option value="손님상" th:selected="${recipe.theme == '손님상'}">손님상</option>
-    					<option value="아이반찬" th:selected="${recipe.theme == '아이반찬'}">아이반찬</option>
-    					<option value="캠핑/피크닉" th:selected="${recipe.theme == '캠핑/피크닉'}">캠핑/피크닉</option>
-    					<option value="명절" th:selected="${recipe.theme == '명절'}">명절</option>
-    					<option value="기타" th:selected="${recipe.theme == '기타'}">기타</option>
-    				</select>
-    			</td>
-    		</tr>
+						<th>테마</th>
+						<td><select name="theme" id="theme-sel">
+								<option value="">테마별</option>
+								<option value="한식" th:selected="${recipe.theme == '한식'}">한식</option>
+								<option value="중식" th:selected="${recipe.theme == '중식'}">중식</option>
+								<option value="일식" th:selected="${recipe.theme == '일식'}">일식</option>
+								<option value="양식" th:selected="${recipe.theme == '양식'}">양식</option>
+								<option value="분식" th:selected="${recipe.theme == '분식'}">분식</option>
+								<option value="야식/안주" th:selected="${recipe.theme == '야식/안주'}">야식/안주</option>
+								<option value="생일/기념일" th:selected="${recipe.theme == '생일/기념일'}">생일/기념일</option>
+								<option value="다이어트" th:selected="${recipe.theme == '다이어트'}">다이어트</option>
+								<option value="파티" th:selected="${recipe.theme == '파티'}">파티</option>
+								<option value="손님상" th:selected="${recipe.theme == '손님상'}">손님상</option>
+								<option value="아이반찬" th:selected="${recipe.theme == '아이반찬'}">아이반찬</option>
+								<option value="캠핑/피크닉" th:selected="${recipe.theme == '캠핑/피크닉'}">캠핑/피크닉</option>
+								<option value="명절" th:selected="${recipe.theme == '명절'}">명절</option>
+								<option value="기타" th:selected="${recipe.theme == '기타'}">기타</option>
+						</select></td>
+					</tr>
 					<tr>
 						<th>인원</th>
 						<td><select name="portions" id="portions-sel">
@@ -414,13 +414,12 @@ section {
 						<tr>
 							<th>재료 정보</th>
 							<td><select name="icode"
-								th:id="'ingredient-select-' + ${i.index}"
-								th:value="${ingre.icode}">
+								th:id="'ingredient-select-' + ${i.index}">
 									<option value="0">재료 이름</option>
-									<option th:each="ingredient, i : ${ingredientList}"
-										th:value="${ingredient.icode}" th:text="${ingredient.name}"
-										th:selected="${ingre.icode == i.index + 1}"></option>
 							</select></td>
+							<td><input type="text" name="state"
+								placeholder="재료상태 예) 간거, 온거" th:value="${ingre.state}">
+							</td>
 							<td><input type="text" name="amount" placeholder="수량"
 								th:value="${ingre.amount}"></td>
 							<td><input type="text" name="type" placeholder="단위(개/g)"
@@ -483,11 +482,11 @@ section {
 			</div>
 		</form>
 	</section>
-	
+
 	<footer>
-        <th:block th:insert="~{/sub/footer.html}"></th:block>
-    </footer>
-	
+		<th:block th:insert="~{/sub/footer.html}"></th:block>
+	</footer>
+
 	<script>
 	
 	document.getElementById('recipeForm').addEventListener('submit', function(e) {
@@ -513,9 +512,12 @@ section {
 	<script th:inline="javascript">
     console.log("Recipe data:", /*[[${recipe}]]*/ null);
 </script>
-
 	<script th:inline="javascript">
     var ingredientsList = /*[[${ingredientList}]]*/ [];
+</script>
+
+	<script th:inline="javascript">
+    var initialIngredients = /*[[${recipeIngredient}]]*/ [];
 </script>
 
 	<script th:inline="javascript">
@@ -526,7 +528,39 @@ function initializeApp() {
     loadInitialData();
     setupEventListeners();
     highlightSelectedMenu();
+    getIngredients();
 }
+
+//재료 정보 가져오기
+function getIngredients() {
+    const selects = document.querySelectorAll('select[name="icode"]');
+    
+    fetch('/api/ingredients')
+        .then(response => {
+        if(!response/ok){
+        	throw new Error('Network response was not ok');
+        }
+        return response.json();
+		})
+        .then(ingredients => {
+            console.log("Loaded ingredients:", ingredients);
+            selects.forEach((select) => {
+                const selectedValue = select.getAttribute('value');
+                ingredients.forEach(ingredient => {
+                    const option = document.createElement('option');
+                    option.value = ingredient.icode;
+                    option.textContent = ingredient.name;
+                    option.selected = (selectedValue == ingredient.icode);
+                    select.appendChild(option);
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error loading ingredients:', error);
+            alert('재료 정보를 불러오는 데 실패했습니다. 페이지를 새로고침해 주세요.');
+        });
+}
+
 
 function highlightSelectedMenu() {
     const currentMcode = document.getElementById("current-mcode").value;
@@ -596,15 +630,27 @@ function updateSelectedMenu(menuItem) {
 }
 
 function updateMenuImage(mcode) {
-    fetch(`/getMenuImage?mcode=${mcode}`)
-        .then(response => response.json())
-        .then(data => {
-            const imageUrl = `/uploads/${data.imgurl}`;
-            const menuImage = document.getElementById("menu-image");
-            menuImage.src = imageUrl;
-            menuImage.onerror = () => { menuImage.src = '/img/imgNone2.png'; };
+    fetch(`/api/getMenuImage?mcode=${mcode}`)  // '/api/' 추가
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
         })
-        .catch(error => console.error('Error:', error));
+        .then(data => {
+            if (data && data.imgurl) {
+                const imageUrl = `/uploads/${data.imgurl}`;
+                const menuImage = document.getElementById("menu-image");
+                menuImage.src = imageUrl;
+                menuImage.onerror = () => { menuImage.src = '/img/imgNone2.png'; };
+            } else {
+                throw new Error('Image URL is undefined');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById("menu-image").src = '/img/imgNone2.png';
+        });
 }
 
 function handleIngredientChange(event) {
@@ -612,15 +658,15 @@ function handleIngredientChange(event) {
         updateIngredientType(event.target);
     }
 }
-
+/*
 function updateIngredientType(select) {
     const row = select.closest('tr');
     const typeInput = row.querySelector("input[name='type']");
-    fetch(`/getTypeByIcode?icode=${select.value}`)
+    fetch(`/api/getTypeByIcode?icode=${select.value}`)
         .then(response => response.json())
         .then(data => { typeInput.value = data.type; })
         .catch(error => console.error('Error:', error));
-}
+} */
 
 function handleIngredientDelete(event) {
     if (event.target.matches('.ingredient-delete-btn')) {
@@ -770,7 +816,7 @@ function setupOrderImages() {
 }
 
 function loadMenuImage(mcode) {
-    fetch(`/getMenuImage?mcode=${mcode}`)
+    fetch(`/api/getMenuImage?mcode=${mcode}`)
         .then(response => response.json())
         .then(data => {
             document.getElementById("menu-image").src = `/uploads/${data.imgurl}`;
@@ -841,6 +887,7 @@ function createIngredientRow() {
                 <option value="54">양파</option>
             </select>
         </td>
+        <td><input type="text" name="state" placeholder="재료상태 예) 간거, 온거"></td>
         <td><input type="text" name="amount" placeholder="수량"></td>
         <td><input type="text" name="type" placeholder="단위(개/g)"></td>
         <td><span class="ingredient-delete-btn">X</span></td>

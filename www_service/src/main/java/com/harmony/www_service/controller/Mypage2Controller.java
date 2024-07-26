@@ -102,6 +102,7 @@ public class Mypage2Controller {
 			@RequestParam("introduce") String introduce, @RequestParam("url") String url,
 			@RequestParam("category") String category, @RequestParam("portions") int portions,
 			@RequestParam("icode") List<Integer> icode, @RequestParam("amount") List<Integer> amount,
+			@RequestParam("state") List<String> state, @RequestParam("type") List<String> type,
 			@RequestParam("orderNum") List<Integer> orderNum, @RequestParam("orderContent") List<String> orderContent,
 			@RequestPart("cookingImg") List<MultipartFile> cookingImg, @RequestParam("tagContent") String tagContent,
 			@RequestParam("theme") String theme,
@@ -134,6 +135,8 @@ public class Mypage2Controller {
 			recipeIngredientDto.setRcode(recipeDto.getRcode());
 			recipeIngredientDto.setIcode(icode.get(i));
 			recipeIngredientDto.setAmount(amount.get(i));
+			recipeIngredientDto.setState(state.get(i));
+			recipeIngredientDto.setType(type.get(i));
 			service.registMyRecipeIngredientService(recipeIngredientDto);
 
 		}

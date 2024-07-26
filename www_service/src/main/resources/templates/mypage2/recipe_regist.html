@@ -85,7 +85,7 @@
     }
     .recipe-regist-box2 table{
     	margin:0 auto;
-    	border-spacing:28px 30px;
+    	border-spacing:15px 30px;
     }
     .recipe-regist-box2 table th{
     	text-align:left;
@@ -95,7 +95,7 @@
     
     .recipe-regist-box2 select{
     	font-family: "Pretendard Variable", Pretendard;
-    	width:250px;
+    	width:150px;
     	height:50px;
     	border:1px solid #ececec;
     	border-radius:5px;
@@ -104,12 +104,15 @@
     
     .recipe-regist-box2 input[type="text"]{
     	font-family: "Pretendard Variable", Pretendard;
-    	width:120px;
+    	width:160px;
     	height:50px;
     	border:1px solid #ececec;
     	border-radius:5px;
     	box-sizing:border-box;
     	padding-left:10px;
+    }
+    .recipe-regist-box2 input[name="amount"]{
+    	width:100px;
     }
     .recipe-regist-box2 .addBtn{
     	text-align:center;
@@ -392,10 +395,13 @@
     				</select>
     			</td>
     			<td>
+    				<input type="text" name="state" placeholder="재료상태 예) 간거, 온거">
+    			</td>
+    			<td>
     				<input type="text" name="amount" placeholder="수량">
     			</td>
     			<td>
-    				<input type="text" name="type" placeholder="단위(개/g)">
+    				<input type="text" name="type" placeholder="단위(개/g/스푼/포기 등)">
     			</td>
     			<td>
     				<span class="ingredient-delete-btn">X</span>
