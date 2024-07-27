@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title> 농산물 소매 가격 정보 </title>
     <style>
-        
+
     </style>
 </head>
 
@@ -14,7 +14,14 @@
         <th:block th:insert="~{/sub/header.html}"></th:block>
     </header>
     <section>
-        
+        <h1>소매 가격 정보</h1>
+        <button onclick="fetchDataAll()"> 오늘자 부류 데이터 가져오기</button>
+        <button onclick="fetchDataByProduct()">특정 품목 데이터 가져오기</button>
+
+        <div id="king-retail-data-section">
+
+        </div>
+
     </section>
     <footer>
         <th:block th:insert="~{/sub/footer.html}"></th:block>
@@ -22,11 +29,49 @@
 </body>
 <script>
 
-    fetch('/proxy/retail-price/p_startday=2022-10-01&p_endday=2022-12-01&p_itemcategorycode=200&p_itemcode=212&p_kindcode=00&p_productrankcode=04&p_countrycode=1101&p_convert_kg_yn=Y')
-    // fetch('/proxy/retail-price')
-    .then(res=>res.json())
-    .then(data => {
-        console.log(data);
-    })
+    function fetchDataAll() {
+        // 100 : 식량 작물, 200 : 채소류, 300 : 특용작물, 400 : 과일류, 500 : 축산물, 600 : 수산물 
+        fetch('/proxy/retail-price/p_regday=2024-07-27&p_item_category_code=200')
+            .then(res => res.json())
+            .then(data => {
+                var itemList = data.data.item;
+                console.log(itemList);
+                document.getElementById('king-retail-data-section').innerHTML = "";
+                for(var i = 0; i< itemList.length ; i ++ ){
+                    document.getElementById('king-retail-data-section').innerHTML
+                        += '<li>'
+                        + itemList[i].item_name +' '+ itemList[i].item_code +' '
+                        + itemList[i].day1 + ' : ' + itemList[i].dpr1 + '   '
+                        + itemList[i].day2 + ' : ' + itemList[i].dpr2 + '   '
+                        + itemList[i].day3 + ' : ' + itemList[i].dpr3 + '   '
+                        + itemList[i].day4 + ' : ' + itemList[i].dpr4 + '   '
+                        + itemList[i].day5 + ' : ' + itemList[i].dpr5 + '   '
+                        + itemList[i].day6 + ' : ' + itemList[i].dpr6 + '   '
+                        + itemList[i].day7 + ' : ' + itemList[i].dpr7 + '   '
+                        + '</li>';
+                }
+            })
+    }
+
+    function fetchDataByProduct() {
+        fetch('/proxy/retail-product-price/p_startday=2024-07-01&p_endday=2024-07-27&p_itemcategorycode=200&p_itemcode=212&p_kindcode=00&p_productrankcode=04&p_countrycode=1101')
+            .then(res => res.json())
+            .then(data => {
+                var itemList = data.data.item;
+                console.log(itemList);
+                document.getElementById('king-retail-data-section').innerHTML = "";
+                for (var i = itemList.length - 1; i >= 0; i--) {
+                    if (itemList[i].kindname != '') {
+                        document.getElementById('king-retail-data-section').innerHTML
+                            += '<li>'
+                            + i + '번째 데이터' + itemList[i].kindname + ' '
+                            + itemList[i].price + ' ' + itemList[i].regday
+                            + '</li>';
+                    }
+                }
+
+            })
+    }
 </script>
+
 </html>
