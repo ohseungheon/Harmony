@@ -21,9 +21,12 @@
     </footer>
 </body>
 <script>
-    fetch('https://api.odcloud.kr/api/15087482/v1/uddi:b1fa0c3e-ce0b-4b8a-925c-d2a5021e5960?serviceKey=D5L7bdiOo%2Fy2t3Wgb8RJ8xXHA9M3RGwICLVQlv2SZ7nEZP5tNxPylv0M24bldi4kkRrX80WeTnj%2Fkh5yJV0aow%3D%3D')
-    .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(error => console.log("Error:", error));
+
+    fetch('/proxy/retail-price/p_startday=2022-10-01&p_endday=2022-12-01&p_itemcategorycode=200&p_itemcode=212&p_kindcode=00&p_productrankcode=04&p_countrycode=1101&p_convert_kg_yn=Y')
+    // fetch('/proxy/retail-price')
+    .then(res=>res.json())
+    .then(data => {
+        console.log(data);
+    })
 </script>
 </html>
