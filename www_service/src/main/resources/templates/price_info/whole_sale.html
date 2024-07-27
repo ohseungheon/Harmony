@@ -14,7 +14,10 @@
         <th:block th:insert="~{/sub/header.html}"></th:block>
     </header>
     <section>
-        
+    	<h1>농축산물 도매 가격정보</h1>
+        <div th:each="whole : ${wholeSaleList}">
+        	<p th:text="${whole.item}"></p>
+        </div>
     </section>
     <footer>
         <th:block th:insert="~{/sub/footer.html}"></th:block>

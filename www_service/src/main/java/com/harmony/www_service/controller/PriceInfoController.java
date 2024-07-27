@@ -12,10 +12,6 @@ public class PriceInfoController {
         return "price_info/price_info_main";
     }
     
-    @RequestMapping("/whole")
-    public String whole(){
-        return "price_info/whole_sale";
-    }
     
     @RequestMapping("/retail")
     public String retail(){
