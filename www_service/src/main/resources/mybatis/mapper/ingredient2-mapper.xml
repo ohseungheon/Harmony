@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.harmony.www_service.dao.IngredientDao">
     <select id="getAllIngredients" resultType="com.harmony.www_service.dto.IngredientDto">
-        SELECT icode, name, type, tip, imgurl, category
+        SELECT icode, name, tip, imgurl, category
         FROM ingredient
         ORDER BY category, name
     </select>

@@ -40,7 +40,7 @@ public class MyPage2ApiController {
 		
 		IngredientDto result = recipeMenuService.getTypeByIcode(icode);
 		Map<String, String> response = new HashMap<>();
-		response.put("type", result.getType());
+		// response.put("type", result.getType());
 		
 		return ResponseEntity.ok(response);
 	}

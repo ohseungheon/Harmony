@@ -13,7 +13,6 @@ public class IngredientDto {
 	
 	private int icode;
 	private String name;
-	private String type;
 	private String tip;
 	private String imgurl;
 	private String category;
