@@ -1,215 +1,257 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Document</title>
-<script src="https://code.jquery.com/jquery-3.7.1.js"
-	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-	crossorigin="anonymous"></script>
-<style>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://code.jquery.com/jquery-3.7.1.js"
+		integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<style>
+		#category-tabs {
+			display: flex;
+			justify-content: center;
+			gap: 20px;
+		}
 
-#category-tabs{
-	display:flex;
-	justify-content:center;
-	gap:20px;
-}
-.tab {
-	width:70px;
-	text-align:center;
-	padding: 10px;
-	border-bottom: 1px solid #ccc;
-	cursor: pointer;
-}
-.tab span{
-	display: inline-block;
-	transition: all 0.3s;
-	font-size: 18px;
-	font-weight: 300;
-	color: #333;
-}
-.tab:hover{
-	border-bottom:1px solid #F5A47D;
-}
-.tab:hover span{
-	transform: translateY(-3px);
-}
+		.tab {
+			width: 70px;
+			text-align: center;
+			padding: 10px;
+			border-bottom: 1px solid #ccc;
+			cursor: pointer;
+		}
 
-.tab-content {
-	display: none;
-	margin-top: 20px;
-}
-.active-tab {
-	border-bottom:2px solid #F5A47D;
-}
+		.tab span {
+			display: inline-block;
+			transition: all 0.3s;
+			font-size: 18px;
+			font-weight: 300;
+			color: #333;
+		}
 
-.ingre-container {
-	display: flex;
-	justify-content:center;
-	flex-wrap: wrap;
-	text-align:center;
-	border-bottom:1px solid #eee;
-	padding-bottom:20px;
-	margin-bottom:50px;
-}
+		.tab:hover {
+			border-bottom: 1px solid #F5A47D;
+		}
 
-.by-radio {
-	display: inline;
-	margin-right: 5px;
-}
-.by-ingre-span{
-	display: block;
-	width: 80px;
-	padding: 5px;
-	cursor: pointer;
-}
-.by-ingre-span img {
-	width: 40px;
-	height:40px;
-	border:1px solid #ccc;
-	border-radius:50%;
-	padding:10px;
-	margin-bottom:10px;
-	object-fit:contain;
-}
-.by-ingre-span p{
-	font-size:14px;
-}
+		.tab:hover span {
+			transform: translateY(-3px);
+		}
 
-input[type="text"]{
-	width:200px;
-	height:30px;
-	padding-left:5px;
-	box-sizing:border-box;
-}
+		.tab-content {
+			display: none;
+			margin-top: 20px;
+		}
 
-.insertForm-box{
-	width:600px;
-	margin:0 auto;
-}
+		.active-tab {
+			border-bottom: 2px solid #F5A47D;
+		}
 
-.insertForm-inbox1{
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	margin:50px 0 50px;
-	gap:50px;
-}
-.insertForm-inbox1 label input{
-	width:200px;
-	border:0;
-	font-size:30px;
-}
+		.ingre-container {
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+			text-align: center;
+			border-bottom: 1px solid #eee;
+			padding-bottom: 20px;
+			margin-bottom: 50px;
+		}
 
-.insertForm-inbox2{
-	display:flex;
-	justify-content:space-between;
-	align-items:center;
-	margin:20px 0;
-}
+		.by-radio {
+			display: inline;
+			margin-right: 5px;
+		}
+
+		.by-ingre-span {
+			display: block;
+			width: 80px;
+			padding: 5px;
+			cursor: pointer;
+		}
+
+		.by-ingre-span img {
+			width: 40px;
+			height: 40px;
+			border: 1px solid #ccc;
+			border-radius: 50%;
+			padding: 10px;
+			margin-bottom: 10px;
+			object-fit: contain;
+		}
+
+		.by-ingre-span p {
+			font-size: 14px;
+		}
+
+		input[type="text"] {
+			width: 200px;
+			height: 30px;
+			padding-left: 5px;
+			box-sizing: border-box;
+		}
+
+		.insertForm-box {
+			width: 600px;
+			margin: 0 auto;
+		}
+
+		.insertForm-inbox1 {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 50px 0 50px;
+			gap: 50px;
+		}
+
+		.insertForm-inbox1 label input {
+			width: 200px;
+			border: 0;
+			font-size: 30px;
+		}
+
+		.insertForm-inbox2 {
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+		}
+
+		.inbox2-category {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.inbox2-category label {
+			padding-right: 4px;
+		}
+
+		.inbox2-amount {
+			position: relative;
+		}
+
+		.inbox2-amount-in1 {
+			position: absolute;
+			right: 0;
+			top: -25px;
+			display: flex;
+		}
+
+		/* 
 .inbox2-category{
 	display:flex;
-	align-items:center;
-}
-.inbox2-category label{
-	padding-right:4px;
-}
-.inbox2-amount{
-	position:relative;
-}
-.inbox2-amount-in1{
-	position:absolute;
-	right:0;
-	top:-25px;
-	display:flex;
-}
-
-.insertForm-inbox3{
-	display:flex;
+	flex-direction: column;
 	justify-content:space-between;
 	align-items:center;
 	margin:20px 0;
-}
-.insertForm-inbox3 select{
-	width:200px;
-	height:30px;
-	box-sizing:border-box;
-}
-.insertForm-inbox3 input[type="date"]{
-	width:200px;
-	height:30px;
-	box-sizing:border-box;
-}
+} */
+		.inbox2-category select {
+			width: 200px;
+			height: 30px;
+			box-sizing: border-box;
+		}
 
-.insertForm-inbox4{
-	display:flex;
-	align-items:center;
-	flex-direction:column;
-	margin:40px 0;
-}
-.insertForm-inbox4 textarea{
-	width:600px;
-	height:150px;
-	padding:5px;
-	box-sizing:border-box;
-	margin-top: 5px;
-}
-.insertForm-inbox4 label{
-	margin-left: -565px;
-}
-.insertForm-inbox5{
-	display:flex;
-	justify-content:center;
-	margin:20px 0;
-}
-.insertForm-inbox5 input{
-	width:100px;
-	padding:10px 0;
-	background:#F5A47D;
-	border:0;
-	margin:0 15px;
-	color:#fff;
-}
-.insertForm-inbox5 input:hover{
-	cursor: pointer;
-}
-.active-content {
-	display: block;
-}
+		.inbox2-category input[type="date"] {
+			width: 200px;
+			height: 30px;
+			box-sizing: border-box;
+		}
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  font-weight: bold; /* TIP 텍스트 강조 */
-}
+		.insertForm-inbox4 {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			margin: 24px 0;
+		}
 
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 260px; /* 툴팁의 너비 */
-  background-color: #feff85; /* 배경 색상 */
-  color: black; /* 텍스트 색상 */
-  border-radius: 5px;
-  padding: 15px;
-  position: absolute;
-  z-index: 1;
-  left: 100%;
-  opacity: 0;
-  transition: opacity 0.3s;
-  white-space: wrap; 
-}
+		.insertForm-inbox4 textarea {
+			width: 600px;
+			height: 150px;
+			padding: 5px;
+			box-sizing: border-box;
+			margin-top: 5px;
+		}
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
-</style>
+		.insertForm-inbox4 label {
+			margin-left: -565px;
+		}
+
+		.insertForm-inbox5 {
+			display: flex;
+			justify-content: center;
+			margin: 20px 0;
+		}
+
+		.insertForm-inbox5 input {
+			width: 100px;
+			padding: 10px 0;
+			background: #F5A47D;
+			border: 0;
+			margin: 0 15px;
+			color: #fff;
+		}
+
+		.insertForm-inbox5 input:hover {
+			cursor: pointer;
+		}
+
+		.active-content {
+			display: block;
+		}
+
+		.tooltip {
+			position: relative;
+			display: inline-block;
+			cursor: pointer;
+			font-weight: bold;
+			/* TIP 텍스트 강조 */
+		}
+
+		.tooltip .tooltiptext {
+			visibility: hidden;
+			width: 260px;
+			/* 툴팁의 너비 */
+			background-color: #feff85;
+			/* 배경 색상 */
+			color: black;
+			/* 텍스트 색상 */
+			border-radius: 5px;
+			padding: 15px;
+			position: absolute;
+			z-index: 1;
+			left: 100%;
+			opacity: 0;
+			transition: opacity 0.3s;
+			white-space: wrap;
+		}
+
+		.tooltip:hover .tooltiptext {
+			visibility: visible;
+			opacity: 1;
+		}
+
+		.inbox2-amount-in2 {
+			display: flex;
+			flex-direction: column;
+		}
+		.inbox2-amount-in2 input{
+			height: 30px;
+			box-sizing: border-box;
+		}
+		.insertForm-inbox2 label{
+			margin-top: 24px;
+		}
+
+		#king-material-deadline-description{
+			display: flex;
+			justify-content: space-between;
+		}
+	</style>
 </head>
+
 <body>
 	<header>
 		<th:block th:insert="~{/sub/header.html}"></th:block>
 	</header>
 	<section>
-	
+
 		<div id="by-section">
 			<!-- 카테고리 탭 -->
 			<div id="category-tabs">
@@ -219,16 +261,13 @@ input[type="text"]{
 				<div class="tab" data-category="유제품"><span>유제품</span></div>
 				<div class="tab" data-category="기타"><span>기타</span></div>
 			</div>
-				
+
 			<!-- 재료 목록 -->
 			<div id="육류" class="tab-content">
 				<div class="ingre-container">
 					<div th:each="ingre : ${ingre}" th:if="${ingre.category == '육류'}">
-						<span class="by-ingre-span" 
-							th:data-icode="${ingre.icode}"
-							th:data-imgurl="${ingre.imgurl}" 
-							th:data-name="${ingre.name}" 
-							th:data-category="${ingre.category}"
+						<span class="by-ingre-span" th:data-icode="${ingre.icode}" th:data-imgurl="${ingre.imgurl}"
+							th:data-name="${ingre.name}" th:data-category="${ingre.category}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -239,11 +278,8 @@ input[type="text"]{
 			<div id="해산물" class="tab-content">
 				<div class="ingre-container">
 					<div th:each="ingre : ${ingre}" th:if="${ingre.category == '해산물'}">
-						<span class="by-ingre-span" 
-							th:data-icode="${ingre.icode}"
-							th:data-imgurl="${ingre.imgurl}" 
-							th:data-name="${ingre.name}" 
-							th:data-category="${ingre.category}"
+						<span class="by-ingre-span" th:data-icode="${ingre.icode}" th:data-imgurl="${ingre.imgurl}"
+							th:data-name="${ingre.name}" th:data-category="${ingre.category}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -254,11 +290,8 @@ input[type="text"]{
 			<div id="채소_과일" class="tab-content">
 				<div class="ingre-container">
 					<div th:each="ingre : ${ingre}" th:if="${ingre.category == '채소 / 과일'}">
-						<span class="by-ingre-span" 
-							th:data-icode="${ingre.icode}"
-							th:data-imgurl="${ingre.imgurl}" 
-							th:data-name="${ingre.name}" 
-							th:data-category="${ingre.category}"
+						<span class="by-ingre-span" th:data-icode="${ingre.icode}" th:data-imgurl="${ingre.imgurl}"
+							th:data-name="${ingre.name}" th:data-category="${ingre.category}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -269,11 +302,8 @@ input[type="text"]{
 			<div id="유제품" class="tab-content">
 				<div class="ingre-container">
 					<div th:each="ingre : ${ingre}" th:if="${ingre.category == '유제품'}">
-						<span class="by-ingre-span" 
-							th:data-icode="${ingre.icode}"
-							th:data-imgurl="${ingre.imgurl}" 
-							th:data-name="${ingre.name}" 
-							th:data-category="${ingre.category}"
+						<span class="by-ingre-span" th:data-icode="${ingre.icode}" th:data-imgurl="${ingre.imgurl}"
+							th:data-name="${ingre.name}" th:data-category="${ingre.category}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -284,11 +314,8 @@ input[type="text"]{
 			<div id="기타" class="tab-content">
 				<div class="ingre-container">
 					<div th:each="ingre : ${ingre}" th:if="${ingre.category == '기타'}">
-						<span class="by-ingre-span" 
-							th:data-icode="${ingre.icode}"
-							th:data-imgurl="${ingre.imgurl}" 
-							th:data-name="${ingre.name}" 
-							th:data-category="${ingre.category}"
+						<span class="by-ingre-span" th:data-icode="${ingre.icode}" th:data-imgurl="${ingre.imgurl}"
+							th:data-name="${ingre.name}" th:data-category="${ingre.category}"
 							th:data-tip="${ingre.tip}">
 							<img th:src="@{'/img/ingredient/'+ ${ingre.imgurl}}">
 							<p>[[${ingre.name}]]</p>
@@ -302,72 +329,70 @@ input[type="text"]{
 					<div class="insertForm-inbox1">
 						<div class="insertForm-inbox1-img">
 							<img id="previewImage" src="" style="width: 150px; height: auto;">
-							<input type="hidden" id="imgUrl" name="imgUrl"> 
-						</div> 
+							<input type="hidden" id="imgUrl" name="imgUrl">
+						</div>
 						<label for="name">
-							<input type="text" id="name" name="name" readonly> 
-						</label> 
-					</div>	
-					<div class="insertForm-inbox2">				
-						<div class="inbox2-category">		
+							<input type="text" id="name" name="name" readonly>
+						</label>
+					</div>
+					<div class="insertForm-inbox2">
+						<div class="inbox2-category">
 							<label for="deadline">카테고리</label>
-							<input type="text" id="category" name="category" placeholder="상단 카테고리를 선택해주세요." readonly> 
+							<input type="text" id="category" name="category" placeholder="상단 카테고리를 선택해주세요." readonly>
+							<label for="keeptype">보관상태</label>
+							<select id="keeptype" name="keeptype">
+								<option th:each="keeptype : ${keeptypes}" th:value="${keeptype}" th:text="${keeptype}"
+									th:selected="${keeptype}"></option>
+							</select>
+							<label for="deadline" id="king-material-deadline-description">
+								<span>
+									유통기한
+								</span>
+								<span id="tip" class="tooltip">TIPℹ️
+									<span class="tooltiptext" id="tip-text"></span>
+								</span>
+							</label>
+							<input type="date" id="deadline" name="deadline">
+
 						</div>
 						<div class="inbox2-amount">
-							<div class="inbox2-amount-in1">
-							</div> 
+							<!-- <div class="inbox2-amount-in1"></div>  -->
 							<div class="inbox2-amount-in2">
-								<label for="amount">재료수량/중량</label> 
+								<label for="amount">재료수량/중량</label>
 								<input type="number" id="amount" name="amount">
-								
-								<label for="state">재료상태</label> 
-								<input type="text" id="state" name="state" placeholder="재료상태를 입력하세요. ex) 반 개, 몇 토막, 간 마늘 등 ">
-								
-								<label for="type">단위</label> 
-								<input type="text" id="type" name="type" placeholder="단위를 입력하세요. ex) 몇 g,몇 개,몇 스푼,몇 줌, 몇 포기 등 ">
+
+								<label for="state">재료상태</label>
+								<input type="text" id="state" name="state" placeholder="ex. 반 개, 몇 토막, 간 마늘 등 ">
+
+								<label for="type">단위</label>
+								<input type="text" id="type" name="type" placeholder="ex. 몇 g,몇 개,몇 스푼,몇 줌, 몇 포기 등 ">
 							</div>
-						</div> 
-					</div>
-					<div class="insertForm-inbox3">
-						<div class="inbox3-keep">
-							<label for="keeptype">보관상태</label> 
-							<select id="keeptype" name="keeptype">
-								<option th:each="keeptype : ${keeptypes}" th:value="${keeptype}"
-									th:text="${keeptype}" th:selected="${keeptype}"></option>
-							</select>
 						</div>
-						<div class="inbox3-dead">
-							<label for="deadline">유통기한</label> 
-							<span id="tip" class="tooltip">TIP
-		  						<span class="tooltiptext" id="tip-text"></span>
-							</span>
-							<input type="date" id="deadline" name="deadline">
-						</div> 
 					</div>
 					<div class="insertForm-inbox4">
-						<label for="memo">메모</label> 
+						<label for="memo">메모</label>
 						<textarea name="memo" id="memo"></textarea>
-						
+
 						<input type="hidden" id="icode" name="icode">
-						<input type="hidden" id="mno" name="mno" th:value="${mno}"> 
+						<input type="hidden" id="mno" name="mno" th:value="${mno}">
 					</div>
-					<div class="insertForm-inbox5">						
-						<input type="submit" value="등록"> 
+					<div class="insertForm-inbox5">
+						<input type="submit" value="등록">
 						<input type="button" value="목록" onclick="window.location.href='/mypage_main'">
 					</div>
 				</form>
 			</div>
 		</div>
 	</section>
-	
+
 	<footer>
-        <th:block th:insert="~{/sub/footer.html}"></th:block>
-    </footer>
+		<th:block th:insert="~{/sub/footer.html}"></th:block>
+	</footer>
 
 	<script>
-		$(document).ready(function() {
+		$(document).ready(function () {
 			// 탭 클릭 시 이벤트
-			$(".tab").on("click", function() {
+			$(".tab").on("click", function () {
 				const category = $(this).data("category");
 				$(".tab").removeClass("active-tab");
 				$(this).addClass("active-tab");
@@ -379,33 +404,33 @@ input[type="text"]{
 			$(".tab").first().click();
 
 			// 재료 클릭 시 폼에 자동 입력
-			$(".by-ingre-span").on("click", function() {
+			$(".by-ingre-span").on("click", function () {
 				const icode = $(this).data("icode");
 				const imgUrl = $(this).data("imgurl");
 				const name = $(this).data("name");
 				const category = $(this).data("category");
 				const tip = $(this).data("tip");
-				
+
 				$("#icode").val(icode);
 				$("#imgUrl").val(imgUrl);
 				$("#name").val(name);
 				$("#category").val(category);
 				$("#tip-text").text(tip); // 툴팁 내용 업데이트
-				
+
 				// 이미지 미리보기 업데이트
 				$("#previewImage").attr("src", "/img/ingredient/" + imgUrl);
 			});
-			
-			$("#tip").on("hover", function(){
+
+			$("#tip").on("hover", function () {
 				const tip = $(this).data("tip");
-				
+
 				$("#tip")
 			});
-			
+
 			//재료등록 기능 
-			$("#insertForm").on("submit", function(event) {
+			$("#insertForm").on("submit", function (event) {
 				event.preventDefault();
-				
+
 				const icode = $("#icode").val();
 				const imgUrl = $("#imgUrl").val();
 				const name = $("#name").val();
@@ -435,16 +460,16 @@ input[type="text"]{
 				console.log(jsonData);
 
 				$.ajax({
-					url : '/mypage1/material_insert',
-					type : 'POST',
-					contentType : 'application/json', // JSON 형식으로 데이터 전송
-					data : jsonData,
-					dataType : 'text',
-					success : function(response) {
+					url: '/mypage1/material_insert',
+					type: 'POST',
+					contentType: 'application/json', // JSON 형식으로 데이터 전송
+					data: jsonData,
+					dataType: 'text',
+					success: function (response) {
 						alert("재료정보가 성공적으로 등록되었습니다🍖");
 						window.location.href = "/mypage_main";
 					},
-					error : function(xhr, status, error) {
+					error: function (xhr, status, error) {
 						console.log('Status: ' + status);
 						console.log('Error: ' + error);
 						alert("재료등록 실패😫");
@@ -454,4 +479,5 @@ input[type="text"]{
 		});
 	</script>
 </body>
+
 </html>

@@ -40,7 +40,7 @@
                 for(var i = 0; i< itemList.length ; i ++ ){
                     document.getElementById('king-retail-data-section').innerHTML
                         += '<li>'
-                        + itemList[i].item_name +' '+ itemList[i].item_code +' '
+                        + '<span id="'+itemList[i].item_code+'" >' + itemList[i].item_name +'('+ itemList[i].rank +') </span>  ' 
                         + itemList[i].day1 + ' : ' + itemList[i].dpr1 + '   '
                         + itemList[i].day2 + ' : ' + itemList[i].dpr2 + '   '
                         + itemList[i].day3 + ' : ' + itemList[i].dpr3 + '   '
