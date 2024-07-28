@@ -17,5 +17,10 @@ public class PriceInfoController {
     public String retail(){
         return "price_info/retail_sale";
     }
+
+    @RequestMapping("/retail-detail")
+    public String retailDetail(){
+        return "price_info/retail_sale_detail";
+    }
     
 }
