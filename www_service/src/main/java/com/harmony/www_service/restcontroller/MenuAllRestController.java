@@ -17,10 +17,12 @@ import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.RecipeAllResponseDto;
 import com.harmony.www_service.dto.RecipeDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
+import com.harmony.www_service.dto.WeatherMenuDto;
 import com.harmony.www_service.service.IngredientService;
 import com.harmony.www_service.service.MenuListService;
 import com.harmony.www_service.service.MenuService;
 import com.harmony.www_service.service.RecipeService;
+import com.harmony.www_service.service.WeatherMenuService;
 
 @RestController
 @RequestMapping("/api/menu")
@@ -39,6 +41,9 @@ public class MenuAllRestController {
     
     @Autowired
     private RecipeDao recipeDao;
+
+    @Autowired
+    private WeatherMenuService weatherMenuService;
 
     @GetMapping("/menu_all_list")
     public List<MenuDto> getMenuListByCategory(@RequestParam("category") String category){
@@ -109,6 +114,11 @@ public class MenuAllRestController {
     public List<String> getRecipeThemes(){
 
         return recipeService.getAllThemes();
+    }
+
+    @GetMapping("/weather_menu")
+    public WeatherMenuDto getWeatherMenuRecommendation(){
+        return weatherMenuService.getWeatherMenuRecommendation();
     }
 
 }

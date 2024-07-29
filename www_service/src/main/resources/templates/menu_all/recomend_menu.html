@@ -95,105 +95,42 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const apiKey = '5ec2a8343328554022efe9f92a7fdfa3';
-        const cityName = 'Busan';
-        const url = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
-
-        const weatherMapping = {
-            'clear sky': '맑음',
-            'few clouds': '맑음',
-            'scattered clouds': '맑음',
-            'broken clouds': '흐림',
-            'overcast clouds': '흐림',
-            'light rain': '비',
-            'moderate rain': '비',
-            'heavy intensity rain': '비',
-            'shower rain': '비',
-            'rain': '비',
-            'thunderstorm': '비',
-            'snow': '눈',
-            'mist': '안개',
-            'fog': '안개',
-            'haze': '안개',
-            'smoke': '안개',
-            'dust': '안개',
-            'sand': '안개',
-            'ash': '안개',
-            'squalls': '비',
-            'tornado': '비'
-        };
-
-        const weatherIcons = {
-            '맑음': '☀️',
-            '흐림': '☁️',
-            '비': '🌧️',
-            '눈': '❄️',
-            '안개': '🌫️'
-        };
-
-        const menuImages = {
-            '라멘': 'ramen.jpg',
-            '돈카츠': 'tonkatsu.png',
-            '짬뽕': 'jjamppong.png',
-            '딤섬': 'dim_sum.png',
-            '김치찌개': 'kimchi_stew.png',
-            '소바': 'soba.jpg',
-            '스테이크': 'steak.png',
-            '삼계탕': 'samgyetang.png',
-            '하이라이스': 'hayashi_rice.png',
-            '와플': 'waffles.png',
-            '동태찌개': 'dongtae_jjigae.png',
-            '호박죽': 'hobak_juk.png'
-        };
-
-        fetch(url)
+        fetch('/api/menu/weather_menu')
             .then(response => response.json())
             .then(data => {
-                const weatherContainer = document.getElementById('weather-container');
-                const date = new Date(data.dt * 1000);
-                const formattedDate = date.toISOString().split('T')[0];
-                const temp = (data.main.temp - 273.15).toFixed(2);
-                const description = data.weather[0].description;
-                const simplifiedDescription = weatherMapping[description] || '맑음';
-                const icon = weatherIcons[simplifiedDescription] || '☀️';
-
-                const content = `
-                    <div class="weather-item">
-                        <div class="weather-icon">
-                        	<p class="wicon">${icon}</p>
-                        	<div>
-	                        	<p>${temp}°C </p>
-	                        	<p>${simplifiedDescription}</p>
-	                        </div>
-                        </div>
-                        <p class="weather-item-text">이런 메뉴는 어때요?</p>
-                    </div>
-                `;
-
-                weatherContainer.innerHTML = content;
-
-                // 온도에 따른 메뉴 추천
-                let recommendedMenus;
-                if (temp < 26) {
-                    recommendedMenus = ['라멘', '돈카츠', '짬뽕', '딤섬', '소바'];
-                } else if (temp >= 26 && temp < 27) {
-                    recommendedMenus = ['김치찌개', '소바', '스테이크', '삼계탕', '라멘'];
-                } else {
-                    recommendedMenus = ['하이라이스', '와플', '동태찌개', '호박죽', '소바'];
-                }
-
-                const menuList = document.getElementById('menu-list');
-                menuList.innerHTML = recommendedMenus.map(menu => `
-                    <div class="menu-item" onclick="sendMenuName(this)">
-                        <img src="/uploads/${menuImages[menu] || 'default.jpg'}" alt="${menu}">
-                        <div class="menu-info">
-                            <div class="menu-name">${menu}</div>
-                        </div>
-                    </div>
-                `).join('');
+                updateWeatherDisplay(data);
+                updateMenuList(data.recommendedMenus);
             })
-            .catch(error => console.error('Error fetching weather data:', error));
+            .catch(error => console.error('Error:', error));
     });
+
+    function updateWeatherDisplay(data) {
+        const weatherContainer = document.getElementById('weather-container');
+        weatherContainer.innerHTML = `
+            <div class="weather-item">
+                <div class="weather-icon">
+                    <p class="wicon">${data.icon}</p>
+                    <div>
+                        <p>${data.temperature.toFixed(2)}°C</p>
+                        <p>${data.description}</p>
+                    </div>
+                </div>
+                <p class="weather-item-text">이런 메뉴는 어때요?</p>
+            </div>
+        `;
+    }
+
+    function updateMenuList(menus) {
+        const menuList = document.getElementById('menu-list');
+        menuList.innerHTML = menus.map(menu => `
+            <div class="menu-item" onclick="sendMenuName(this)">
+                <img src="/uploads/${menu}.jpg" alt="${menu}">
+                <div class="menu-info">
+                    <div class="menu-name">${menu}</div>
+                </div>
+            </div>
+        `).join('');
+    }
 
     function sendMenuName(element) {
         const menuName = element.querySelector('.menu-name').textContent;
