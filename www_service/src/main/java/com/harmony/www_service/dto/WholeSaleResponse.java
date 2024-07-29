@@ -8,5 +8,12 @@ import lombok.Data;
 public class WholeSaleResponse {
 	
 	private List<WholeSaleDto> data;
+	
+	@Data
+	public static class WholeSaleItem{
+		private String productName;
+		private String price;
+	}
 
+	
 }

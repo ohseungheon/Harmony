@@ -2,28 +2,108 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title> 농축산물 도매 가격 정보 </title>
-    <style>
-        
-    </style>
+<meta charset="UTF-8">
+<title>농축산물 도매 가격 정보</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+table, tr, th, td{
+	border-collapse:collapse;
+	border:1px solid #ccc;
+	padding:15px;
+	text-align:center;
+}
+table{
+	margin:0 auto;
+}
+th{
+	background:#eee;
+}
+</style>
 </head>
 
 <body>
-    <header>
-        <th:block th:insert="~{/sub/header.html}"></th:block>
-    </header>
-    <section>
-    	<h1>농축산물 도매 가격정보</h1>
-        <div th:each="whole : ${wholeSaleList}">
-        	<p th:text="${whole.item}"></p>
-        </div>
-    </section>
-    <footer>
-        <th:block th:insert="~{/sub/footer.html}"></th:block>
-    </footer>
+	<header>
+		<th:block th:insert="~{/sub/header.html}"></th:block>
+	</header>
+	<section>
+		<h1>도매 가격 정보</h1>
+
+		<div id="error" style="color: red; display: none;"></div>
+
+		<table id="dataTable" style="display: none;">
+			<thead>
+				<tr>
+					<th>상품명</th>
+					<th>종류</th>
+					<th>단위</th>
+					<th>당일(원)</th>
+					<th>1일전(원)</th>
+					<th>1주일전(원)</th>
+					<th>1개월전(원)</th>
+					<th>1년전(원)</th>
+					<th>일평년(원)</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</section>
+	<footer>
+		<th:block th:insert="~{/sub/footer.html}"></th:block>
+	</footer>
 </body>
 <script>
+	$(document).ready(
+			function() {
+				$.ajax({
+					url : '/api/wholesale',
+					type : 'GET',
+					dataType : 'json',
+					success : function(response) {
+						console.log("Full API Response:", response);
 
+						try {
+							if (!response || !response.data) {
+								throw new Error(
+										"Invalid API response structure");
+							}
+
+							var items = response.data.item;
+							if (!Array.isArray(items)) {
+								items = [ items ]; // 단일 항목인 경우 배열로 변환
+							}
+
+							var tbody = $('#dataTable tbody');
+							items.forEach(function(item) {
+								var itemName = item.item_name || "이름 없음";
+								var itemPrice = item.dpr1 || "가격 정보 없음";
+								var unit = item.unit || "단위 정보 없음";
+								tbody.append(
+										'<tr>'
+										+ '<td>' + item.item_name + '</td>'
+										+ '<td>' + item.kind_name + '</td>'
+										+ '<td>' + item.unit + '</td>'
+										+ '<td>' + item.dpr1 + '</td>'
+										+ '<td>' + item.dpr2 + '</td>'
+										+ '<td>' + item.dpr3 + '</td>'
+										+ '<td>' + item.dpr4 + '</td>'
+										+ '<td>' + item.dpr5 + '</td>'
+										+ '<td>' + item.dpr6 + '</td>'
+										+'</tr>'
+										);
+							});
+
+							$('#dataTable').show();
+						} catch (e) {
+							console.error("Error processing data:", e);
+							$('#error').text('데이터 처리 중 오류 발생: ' + e.message)
+									.show();
+						}
+					},
+					error : function(xhr, status, error) {
+						console.error("AJAX error:", status, error);
+						$('#error').text('API 호출 중 오류 발생: ' + error).show();
+					}
+				});
+			});
 </script>
 </html>
