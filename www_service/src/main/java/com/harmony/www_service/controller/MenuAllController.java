@@ -119,13 +119,19 @@ public class MenuAllController {
     }
 
     @GetMapping("/menu_all/recipe_list_name")
-    public String recipeListByName(@RequestParam("menuName") String menuName, Model model) {
-        List<RecipeDto> recipeList = recipeService.getRecipeListByMenuName(menuName);
-
-        model.addAttribute("menuName", menuName);
-        model.addAttribute("recipeList", recipeList);
-
-        return "menu_all/recipe_list";
+public String recipeListByName(@RequestParam("menuName") String menuName, Model model) {
+    List<RecipeDto> recipeList = recipeService.getRecipeListByMenuName(menuName);
+    
+    Map<Integer, String> lastImg = new HashMap<>();
+    for (RecipeDto recipe : recipeList) {
+        
     }
+    
+    model.addAttribute("menuName", menuName);
+    model.addAttribute("recipeList", recipeList);
+    model.addAttribute("lastImg", lastImg);
+    
+    return "menu_all/recipe_list";
+}
 
 }

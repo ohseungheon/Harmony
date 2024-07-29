@@ -42,18 +42,35 @@ public class WeatherMenuService {
         "안개", "🌫️"
     );
 
+    private static final Map<String, String> menuImages = new HashMap<>(); 
+
+    static {
+        menuImages.put("라멘", "");
+        menuImages.put("돈카츠", "");
+        menuImages.put("짬뽕", "");
+        menuImages.put("딤섬", "");
+        menuImages.put("소바", "soba.jpg");
+        menuImages.put("김치찌개", "");
+        menuImages.put("스테이크", "");
+        menuImages.put("삼계탕", "");
+        menuImages.put("하이라이스", "");
+        menuImages.put("와플", "waffles.png");
+        menuImages.put("동태찌개", "");
+        menuImages.put("호박죽", "");
+    }
+
     public WeatherMenuDto getWeatherMenuRecommendation() {
         WeatherMenuDto weatherMenuDto = new WeatherMenuDto();
-        
+
         RestTemplate restTemplate = new RestTemplate();
         String city = "Busan";
         String url = API_URL.replace("{city}", city);
 
         Map<String, Object> response = restTemplate.getForObject(url, Map.class);
-        
+
         Map<String, Object> main = (Map<String, Object>) response.get("main");
         List<Map<String, Object>> weather = (List<Map<String, Object>>) response.get("weather");
-        
+
         double temp = ((Number) main.get("temp")).doubleValue();
         String description = (String) weather.get(0).get("description");
         String simplifiedDescription = weatherMapping.getOrDefault(description, "맑음");
@@ -62,9 +79,20 @@ public class WeatherMenuService {
         weatherMenuDto.setTemperature(temp);
         weatherMenuDto.setDescription(simplifiedDescription);
         weatherMenuDto.setIcon(icon);
-        weatherMenuDto.setRecommendedMenus(getRecommendedMenus(temp));
+        
+        List<String> recommendedMenus = getRecommendedMenus(temp);
+        weatherMenuDto.setRecommendedMenus(recommendedMenus);
+        weatherMenuDto.setMenuImages(getMenuImages(recommendedMenus));
 
         return weatherMenuDto;
+    }
+
+    private List<String> getMenuImages(List<String> menus) {
+        List<String> images = new ArrayList<>();
+        for (String menu : menus) {
+            images.add(menuImages.getOrDefault(menu, "default.jpg"));
+        }
+        return images;
     }
 
     private List<String> getRecommendedMenus(double temperature) {
@@ -73,7 +101,7 @@ public class WeatherMenuService {
         } else if (temperature >= 26 && temperature < 27) {
             return Arrays.asList("김치찌개", "소바", "스테이크", "삼계탕", "라멘");
         } else {
-            return Arrays.asList("하이라이스", "와플", "동태찌개", "호박죽", "소바");
+            return Arrays.asList("하이라이스", "와플", "동태찌개", "김치찌개", "소바");
         }
     }
 }

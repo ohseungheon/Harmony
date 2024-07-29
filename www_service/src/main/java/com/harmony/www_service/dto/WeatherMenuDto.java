@@ -9,5 +9,6 @@ public class WeatherMenuDto {
     private String description;
     private String icon;
     private List<String> recommendedMenus;
+    private List<String> menuImages;
 
 }
