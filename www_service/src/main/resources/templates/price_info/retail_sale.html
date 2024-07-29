@@ -1,43 +1,195 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title> 농산물 소매 가격 정보 </title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
         .king-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 4px;
         }
-        .king-table, .king-th, .king-td {
+
+        .king-table,
+        .king-th,
+        .king-td {
             border: 1px solid #ddd;
         }
-        .king-th, .king-td {
+
+        .king-th,
+        .king-td {
             padding: 10px;
             text-align: center;
         }
+
         .king-th {
             background-color: #f4f4f4;
         }
+
         .king-loading {
             text-align: center;
             font-size: 18px;
             color: #333;
             margin-top: 20px;
         }
+
+        #king-radio-btns {
+            display: flex;
+            justify-content: center;
+            height: 24px;
+        }
+
+        .king-radio-label {
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .king-radio-label input {
+            margin-right: 5px;
+        }
+
+        .king-radio-label input[type="radio"] {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            outline: none;
+            transition: 0.45s;
+        }
+
+        .king-radio-label input[type="radio"]:checked {
+            border: 9px solid #F5A47E;
+        }
+
+        .king-radio-label span {
+            margin-left: 5px;
+        }
+
+        .king-description {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .king-filter-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .king-filter-container label {
+            margin: 0 10px;
+            font-size: 16px;
+        }
+
+        .king-filter-container input,
+        .king-filter-container select {
+            padding: 4px 8px;
+            font-size: 15px;
+        }
+
+        #king-price-table-section {
+            margin: 16px auto;
+        }
+
+        #king-far-away-each {
+            display: flex;
+            justify-content: space-between;
+        }
+        #king-all-filter-con{
+            margin:16px auto;
+        }
     </style>
 </head>
+
 <body>
     <header>
         <th:block th:insert="~{/sub/header.html}"></th:block>
     </header>
     <section class="king-section" style="width: 1140px;">
-        <h1>소매 가격 정보</h1>
+
+        <h1>소매 가격 정보&nbsp; <span class="king-description"> ℹ️ 데이터가 출력된 후, 다시 검색할 수 있습니다.</span> </h1>
+
+        <div id="king-all-filter-con">
+            <div id="king-far-away-each" style="align-items: flex-end;">
+                <div class="king-filter-container">
+                    <label for="king-date">날짜:</label>
+                    <input type="date" id="king-date">
+                    <label for="king-region">지역:</label>
+                    <select id="king-region">
+                        <option value="">전체지역</option>
+                        <option value="1101">서울</option>
+                        <option value="2100">부산</option>
+                        <option value="2200">대구</option>
+                        <option value="2300">인천</option>
+                        <option value="2401">광주</option>
+                        <option value="2501">대전</option>
+                        <option value="2601">울산</option>
+                        <option value="3111">수원</option>
+                        <option value="3214">강릉</option>
+                        <option value="3211">춘천</option>
+                        <option value="3311">청주</option>
+                        <option value="3511">전주</option>
+                        <option value="3711">포항</option>
+                        <option value="3911">제주</option>
+                        <option value="3113">의정부</option>
+                        <option value="3613">순천</option>
+                        <option value="3714">안동</option>
+                        <option value="3814">창원</option>
+                        <option value="3145">용인</option>
+                        <option value="2701">세종</option>
+                        <option value="3112">성남</option>
+                        <option value="3138">고양</option>
+                        <option value="3411">천안</option>
+                        <option value="3818">김해</option>
+                    </select>
+                </div>
+
+                <span class="king-description" style="text-align: center;"> &nbsp;&nbsp;👆 분류를 선택하면 데이터를 불러옵니다.</span>
+                
+            </div>
+
+            <div id="king-far-away-each" style="align-items: flex-start;">
+                
+                <span class="king-description" style="text-align: center;"> ※ 일요일은 데이터가 존재하지 않아 선택이 불가합니다.</span>
+
+                <div id="king-radio-btns">
+                    <label for="defaultRadio" class="king-radio-label">
+                        <input type="radio" id="defaultRadio" name="category" value="100"
+                            onclick="fetchDataAll(this.value)">
+                        <span>식량작물</span>
+                    </label>
+                    <label for="vegetables" class="king-radio-label">
+                        <input type="radio" id="vegetables" name="category" value="200"
+                            onclick="fetchDataAll(this.value)">
+                        <span>채소류</span>
+                    </label>
+                    <label for="specialCrops" class="king-radio-label">
+                        <input type="radio" id="specialCrops" name="category" value="300"
+                            onclick="fetchDataAll(this.value)">
+                        <span>특용작물</span>
+                    </label>
+                    <label for="fruits" class="king-radio-label">
+                        <input type="radio" id="fruits" name="category" value="400" onclick="fetchDataAll(this.value)">
+                        <span>과일류</span>
+                    </label>
+                    <label for="livestock" class="king-radio-label">
+                        <input type="radio" id="livestock" name="category" value="500"
+                            onclick="fetchDataAll(this.value)">
+                        <span>축산물</span>
+                    </label>
+                    <label for="fisheryProducts" class="king-radio-label">
+                        <input type="radio" id="fisheryProducts" name="category" value="600"
+                            onclick="fetchDataAll(this.value)">
+                        <span>수산물</span>
+                    </label>
+                </div>
+            </div>
+        </div>
 
         <div id="king-loading" class="king-loading">데이터를 불러오는 중입니다...</div>
 
@@ -51,22 +203,61 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            fetchDataAll();
+        // 페이지 로드 시 실행
+        document.addEventListener('DOMContentLoaded', function () {
+            // 오늘 날짜를 max 속성으로 설정하고 기본값으로 설정
+            var today = new Date().toISOString().split('T')[0];
+            var dateInput = document.getElementById('king-date');
+            dateInput.setAttribute('max', today);
+            dateInput.value = today;
+
+            // 날짜 선택 시 일요일 선택 불가
+            dateInput.addEventListener('input', function () {
+                var selectedDate = new Date(this.value);
+                if (selectedDate.getDay() === 0) {
+                    alert('일요일은 선택할 수 없습니다.');
+                    this.value = today;
+                }
+            });
+
+            fetchDataAll(100);
+            document.getElementById('defaultRadio').checked = true;
         });
 
-        function fetchDataAll() {
-            fetch('/proxy/retail-price/p_regday=2024-07-26&p_item_category_code=200')
+        // 데이터 요청 함수
+        function fetchDataAll(category_code) {
+            var date = document.getElementById('king-date').value;
+            var region = document.getElementById('king-region').value;
+
+
+            document.getElementById('king-loading').style.display = 'block'; // 데이터 불러오는 중 텍스트 출력
+            disableRadioButtons(true); // 선택버튼 잠시 비활성화
+
+            var url = '/proxy/retail-price/';
+            if (date) {
+                url += 'p_regday=' + date + '&';
+                console.log(date);
+            }
+            url += 'p_item_category_code=' + category_code;
+            if (region) {
+                url += '&p_country_code=' + region;
+                console.log(region);
+            }
+
+            // 요청
+            fetch(url)
                 .then(res => res.json())
                 .then(data => {
                     var itemList = data.data.item;
                     console.log(itemList);
                     document.getElementById('king-loading').style.display = 'none';
-                    document.getElementById('king-price-table-section').innerHTML = "";
+                    document.getElementById('king-price-table-section').innerHTML = '';
+                    if (date) {
+                        document.getElementById('king-price-table-section').innerHTML = '<span class="king-description"> 기준 날짜 : ' + date + ' </span>';
+                    }
+                    var tableHTML = '<table class="king-table"><tr><th class="king-th">농산물</th><th class="king-th">종류</th><th class="king-th">품질</th><th class="king-th">당일</th><th class="king-th">1일전</th><th class="king-th">1주일전</th><th class="king-th">1개월전</th><th class="king-th">1년전</th><th class="king-th">일평년</th><th class="king-th">단위</th></tr>';
 
-                    var tableHTML = '<table class="king-table"><tr><th class="king-th">농산물</th><th class="king-th">종류</th><th class="king-th">품질</th><th class="king-th">당일</th><th class="king-th">1일전</th><th class="king-th">1주일전</th><th class="king-th">1개월전</th><th class="king-th">1년전</th><th class="king-th">일평년</th></tr>';
-
-                    for(var i = 0; i < itemList.length; i++) {
+                    for (var i = 0; i < itemList.length; i++) {
                         var item = itemList[i];
                         tableHTML += '<tr>'
                             + '<td class="king-td">' + item.item_name + '</td>'
@@ -78,12 +269,25 @@
                             + '<td class="king-td">' + item.dpr4 + '</td>'
                             + '<td class="king-td">' + item.dpr5 + '</td>'
                             + '<td class="king-td">' + item.dpr6 + '</td>'
+                            + '<td class="king-td">원/' + item.unit + '</td>'  // 단위 추가
                             + '</tr>';
                     }
                     tableHTML += '</table>';
-                    document.getElementById('king-price-table-section').innerHTML = tableHTML;
+                    document.getElementById('king-price-table-section').innerHTML += tableHTML;
+                    disableRadioButtons(false);
                 })
+                .catch(() => {
+                    disableRadioButtons(false);
+                })
+        }
+
+        function disableRadioButtons(disabled) {
+            var radioButtons = document.querySelectorAll('#king-radio-btns input[type="radio"]');
+            radioButtons.forEach(function (radio) {
+                radio.disabled = disabled;
+            });
         }
     </script>
 </body>
+
 </html>
