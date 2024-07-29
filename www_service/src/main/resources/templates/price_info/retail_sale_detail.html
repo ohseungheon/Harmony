@@ -5,8 +5,18 @@
     <meta charset="UTF-8">
     <title> 농산물 소매 가격 정보 </title>
     <style>
+        #king-retail-data-section {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
+        #priceChart {
+            width: 1000px;
+            height: 550px;
+        }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -15,11 +25,10 @@
     </header>
     <section>
         <h1>소매 가격 정보</h1>
-        <button onclick="fetchDataAll()"> 오늘자 부류 데이터 가져오기</button>
         <button onclick="fetchDataByProduct()">특정 품목 데이터 가져오기</button>
 
         <div id="king-retail-data-section">
-
+            <canvas id="priceChart"></canvas>
         </div>
 
     </section>
@@ -28,30 +37,9 @@
     </footer>
 </body>
 <script>
-
-    function fetchDataAll() {
-        // 100 : 식량 작물, 200 : 채소류, 300 : 특용작물, 400 : 과일류, 500 : 축산물, 600 : 수산물 
-        fetch('/proxy/retail-price/p_regday=2024-07-27&p_item_category_code=200')
-            .then(res => res.json())
-            .then(data => {
-                var itemList = data.data.item;
-                console.log(itemList);
-                document.getElementById('king-retail-data-section').innerHTML = "";
-                for(var i = 0; i< itemList.length ; i ++ ){
-                    document.getElementById('king-retail-data-section').innerHTML
-                        += '<li>'
-                        + '<span id="'+itemList[i].item_code+'" >' + itemList[i].item_name +'('+ itemList[i].rank +') </span>  ' 
-                        + itemList[i].day1 + ' : ' + itemList[i].dpr1 + '   '
-                        + itemList[i].day2 + ' : ' + itemList[i].dpr2 + '   '
-                        + itemList[i].day3 + ' : ' + itemList[i].dpr3 + '   '
-                        + itemList[i].day4 + ' : ' + itemList[i].dpr4 + '   '
-                        + itemList[i].day5 + ' : ' + itemList[i].dpr5 + '   '
-                        + itemList[i].day6 + ' : ' + itemList[i].dpr6 + '   '
-                        + itemList[i].day7 + ' : ' + itemList[i].dpr7 + '   '
-                        + '</li>';
-                }
-            })
-    }
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchDataByProduct();
+    });
 
     function fetchDataByProduct() {
         fetch('/proxy/retail-product-price/p_startday=2024-07-01&p_endday=2024-07-27&p_itemcategorycode=200&p_itemcode=212&p_kindcode=00&p_productrankcode=04&p_countrycode=1101')
@@ -59,18 +47,131 @@
             .then(data => {
                 var itemList = data.data.item;
                 console.log(itemList);
-                document.getElementById('king-retail-data-section').innerHTML = "";
-                for (var i = itemList.length - 1; i >= 0; i--) {
-                    if (itemList[i].kindname != '') {
-                        document.getElementById('king-retail-data-section').innerHTML
-                            += '<li>'
-                            + i + '번째 데이터' + itemList[i].kindname + ' '
-                            + itemList[i].price + ' ' + itemList[i].regday
-                            + '</li>';
+
+                var marketData = {}; // 각 시장별 데이터를 저장할 객체
+                var averageData = {
+                    labels: [],
+                    prices: []
+                }; // 평균 데이터를 저장할 객체
+                var yearlyData = {
+                    labels: [],
+                    prices: []
+                }; // 평년 데이터를 저장할 객체
+
+                var allPrices = []; // 모든 가격 데이터를 저장할 배열
+
+                itemList.forEach(item => {
+                    if (item.kindname !== '') {
+                        // 가격 데이터가 문자열로 되어 있으므로, 쉼표를 제거하고 숫자로 변환
+                        var price = item.price ? parseFloat(item.price.replace(/,/g, '')) : 0;
+                        allPrices.push(price); // 모든 가격 데이터를 저장
+
+                        // countyname이 "평균" 또는 "평년"을 포함하면 해당 객체에 저장
+                        if (item.countyname.includes("평균")) {
+                            averageData.labels.push(item.regday);
+                            averageData.prices.push(price);
+                        } else if (item.countyname.includes("평년")) {
+                            yearlyData.labels.push(item.regday);
+                            yearlyData.prices.push(price);
+                        } else {
+                            // marketname별로 데이터를 marketData에 저장
+                            if (!marketData[item.marketname]) {
+                                marketData[item.marketname] = {
+                                    labels: [],
+                                    prices: []
+                                };
+                            }
+                            marketData[item.marketname].labels.push(item.regday);
+                            marketData[item.marketname].prices.push(price);
+                        }
                     }
+                });
+
+                var minPrice = Math.min(...allPrices) * 0.9; // 가장 작은 값의 90%
+                var maxPrice = Math.max(...allPrices) * 1.1; // 가장 큰 값의 110%
+
+                var ctx = document.getElementById('priceChart').getContext('2d');
+                var datasets = []; // 차트에 사용될 데이터셋 배열
+
+                var colorIndex = 0; // 색상 인덱스 초기화
+                for (var market in marketData) {
+                    // 각 시장별 데이터셋을 생성하여 datasets 배열에 추가
+                    datasets.push({
+                        label: market,
+                        data: marketData[market].prices,
+                        borderColor: getColor(colorIndex++), // 시장별 색상을 순차적으로 할당
+                        borderWidth: 3, // 선의 굵기를 더 굵게 설정
+                        fill: false,
+                        pointRadius: 5 // 데이터 포인트를 표시
+                    });
                 }
 
+                // 추가: 평균 데이터셋
+                datasets.push({
+                    label: '평균',
+                    data: averageData.prices,
+                    borderColor: 'rgba(255, 99, 132, 1)', // 색상 설정
+                    borderWidth: 3,
+                    fill: false,
+                    borderDash: [5, 5], // 점선으로 표시
+                    pointRadius: 5 // 데이터 포인트를 표시
+                });
+
+                // 추가: 평년 데이터셋
+                datasets.push({
+                    label: '평년',
+                    data: yearlyData.prices,
+                    borderColor: 'rgba(54, 162, 235, 1)', // 색상 설정
+                    borderWidth: 3,
+                    fill: false,
+                    borderDash: [5, 5], // 점선으로 표시
+                    pointRadius: 5 // 데이터 포인트를 표시
+                });
+
+                // 새로운 차트 생성
+                window.priceChart = new Chart(ctx, {
+                    type: 'line', // 라인 차트
+                    data: {
+                        // x축 레이블 설정 (평균 또는 평년 데이터가 있으면 이를 사용, 없으면 첫 시장의 레이블 사용)
+                        labels: averageData.labels.length > 0 ? averageData.labels : (yearlyData.labels.length > 0 ? yearlyData.labels : marketData[Object.keys(marketData)[0]].labels),
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true, // 반응형 설정
+                        maintainAspectRatio: true, // 비율 유지
+                        aspectRatio: 16 / 9, // 차트 비율 설정
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: '날짜' // x축 제목
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: '가격' // y축 제목
+                                },
+                                min: minPrice, // y축 최소값 설정
+                                max: maxPrice // y축 최대값 설정
+                            }
+                        }
+                    }
+                });
             })
+            .catch(error => console.error('Error fetching data:', error)); // 데이터 가져오기 실패 시 에러 로그 출력
+    }
+
+    // 미리 정의된 15가지 색상
+    const colors = [
+        '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
+        '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+        '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A'
+    ];
+
+    // 색상을 순환하여 반환하는 함수
+    function getColor(index) {
+        return colors[index % colors.length];
     }
 </script>
 

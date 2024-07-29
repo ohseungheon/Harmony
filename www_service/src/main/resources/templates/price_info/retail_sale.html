@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title> 농산물 소매 가격 정보 </title>
+    <title> 농축수산물 소매 가격 정보 </title>
     <style>
         .king-table {
             width: 100%;
@@ -255,7 +255,7 @@
                     if (date) {
                         document.getElementById('king-price-table-section').innerHTML = '<span class="king-description"> 기준 날짜 : ' + date + ' </span>';
                     }
-                    var tableHTML = '<table class="king-table"><tr><th class="king-th">농산물</th><th class="king-th">종류</th><th class="king-th">품질</th><th class="king-th">당일</th><th class="king-th">1일전</th><th class="king-th">1주일전</th><th class="king-th">1개월전</th><th class="king-th">1년전</th><th class="king-th">일평년</th><th class="king-th">단위</th></tr>';
+                    var tableHTML = '<table class="king-table"><tr><th class="king-th">품목명</th><th class="king-th">종류</th><th class="king-th">품질</th><th class="king-th">당일</th><th class="king-th">1일전</th><th class="king-th">1주일전</th><th class="king-th">1개월전</th><th class="king-th">1년전</th><th class="king-th">일평년</th><th class="king-th">단위</th></tr>';
 
                     for (var i = 0; i < itemList.length; i++) {
                         var item = itemList[i];
