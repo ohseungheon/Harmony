@@ -1,12 +1,10 @@
 package com.harmony.www_service.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.harmony.www_service.dao.IDashBoardDao;
-import com.harmony.www_service.dto.MemberDtoForDashBoard;
+import com.harmony.www_service.dto.GenderDtoForDashBoard;
 
 @Service
 public class DashBoardService {
@@ -29,11 +27,11 @@ public class DashBoardService {
 		return dbDao.findNewMonthMember();
 	}
 	
-//	// 회원 성비 구하기
-//	public double findMemByGender(){
-//		return dbDao.findMemByGender();
-//	}
-//	
+	// 회원 성비 구하기
+	public GenderDtoForDashBoard findMemByGender(){
+		return dbDao.findMemByGender();
+	}
+	
 	// 회원 나이
 	public int[] findMemByAges() {
 		return dbDao.findMemByAges();
