@@ -3,7 +3,6 @@ package com.harmony.www_service.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.IngredientDtoWithFile;
-import com.harmony.www_service.dto.MemberDtoForDashBoard;
 import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.MenuReqDto;
 import com.harmony.www_service.service.DashBoardService;
@@ -29,8 +27,8 @@ public class ManagerController {
 	MenuReqService mrService;
 	@Autowired
 	DashBoardService dbService;
-	@Autowired
-	private RedisTemplate<String, Object> redisTemplate;
+	//@Autowired
+	//private RedisTemplate<String, Object> redisTemplate;
 	
 	private static final String VISITOR_COUNT_KEY = "visitorCount";
 	
@@ -136,24 +134,24 @@ public class ManagerController {
 	
 	
 	
-	@GetMapping("/dashboard")
-	public String index(Model model) {
-		// 방문자수 증가
-		Long visitorCount = redisTemplate.opsForValue().increment(VISITOR_COUNT_KEY, 1);
-		
-		// 모델에 방문자 수 실어보내기
-		model.addAttribute("visitorCount", visitorCount);
-		return "redirect:/manager";
-	}
-	
-		
-	
-	// 연령대별 회원수 통계
-	public String memsByAges(Model model) {
-		List<MemberDtoForDashBoard> result = dbService.NumberOfMemsByAgeGroup();
-		model.addAttribute("list", result);
-		return "redirect:/manager";
-	}
+//	@GetMapping("/dashboard")
+//	public String index(Model model) {
+//		// 방문자수 증가
+//		Long visitorCount = redisTemplate.opsForValue().increment(VISITOR_COUNT_KEY, 1);
+//		
+//		// 모델에 방문자 수 실어보내기
+//		model.addAttribute("visitorCount", visitorCount);
+//		return "redirect:/manager";
+//	}
+//	
+//		
+//	
+//	// 연령대별 회원수 통계
+//	public String memsByAges(Model model) {
+//		List<MemberDtoForDashBoard> result = dbService.NumberOfMemsByAgeGroup();
+//		model.addAttribute("list", result);
+//		return "redirect:/manager";
+//	}
 	
 	
 	
