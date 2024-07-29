@@ -10,4 +10,7 @@ import java.util.List;
 @Mapper
 public interface MenuDao {
     List<MenuDto> getFilteredMenuList(@Param("categories") String categories, @Param("ingredients") String ingredients);
+    List<MenuDto> findAll();
+    List<MenuDto> findByMenuWeather(String weather);
+    List<MenuDto> findByMenuTemperature(String temperature);
 }

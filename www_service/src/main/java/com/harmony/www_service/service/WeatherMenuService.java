@@ -1,12 +1,20 @@
 package com.harmony.www_service.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import com.harmony.www_service.dao.MenuDao;
+import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.WeatherMenuDto;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class WeatherMenuService {
+    @Autowired
+    private MenuDao menuDao;
+
     private static final String API_URL = "http://api.openweathermap.org/data/2.5/weather?q={city}&appid=5ec2a8343328554022efe9f92a7fdfa3&units=metric";
 
     private static final Map<String, String> weatherMapping = Map.ofEntries(
@@ -33,7 +41,6 @@ public class WeatherMenuService {
         Map.entry("tornado", "비")
     );
 
-
     private static final Map<String, String> weatherIcons = Map.of(
         "맑음", "☀️",
         "흐림", "☁️",
@@ -42,25 +49,13 @@ public class WeatherMenuService {
         "안개", "🌫️"
     );
 
-    private static final Map<String, String> menuImages = new HashMap<>(); 
-
-    static {
-        menuImages.put("라멘", "");
-        menuImages.put("돈카츠", "");
-        menuImages.put("짬뽕", "");
-        menuImages.put("딤섬", "");
-        menuImages.put("소바", "soba.jpg");
-        menuImages.put("김치찌개", "");
-        menuImages.put("스테이크", "");
-        menuImages.put("삼계탕", "");
-        menuImages.put("하이라이스", "");
-        menuImages.put("와플", "waffles.png");
-        menuImages.put("동태찌개", "");
-        menuImages.put("호박죽", "");
-    }
 
     public WeatherMenuDto getWeatherMenuRecommendation() {
         WeatherMenuDto weatherMenuDto = new WeatherMenuDto();
+
+        // 하드코딩 테스트용
+        // double temp = 10.0; 
+        // String description = "snow";
 
         RestTemplate restTemplate = new RestTemplate();
         String city = "Busan";
@@ -79,29 +74,100 @@ public class WeatherMenuService {
         weatherMenuDto.setTemperature(temp);
         weatherMenuDto.setDescription(simplifiedDescription);
         weatherMenuDto.setIcon(icon);
-        
-        List<String> recommendedMenus = getRecommendedMenus(temp);
+
+        List<MenuDto> recommendedMenus = getRecommendedMenus(temp, simplifiedDescription);
         weatherMenuDto.setRecommendedMenus(recommendedMenus);
-        weatherMenuDto.setMenuImages(getMenuImages(recommendedMenus));
 
         return weatherMenuDto;
     }
 
-    private List<String> getMenuImages(List<String> menus) {
-        List<String> images = new ArrayList<>();
-        for (String menu : menus) {
-            images.add(menuImages.getOrDefault(menu, "default.jpg"));
+    private List<MenuDto> getRecommendedMenus(double temperature, String weather) {
+        // 날씨에 맞는 메뉴를 가져옴
+        Set<MenuDto> weatherMenus = getWeatherMenus(weather);
+
+        // 현재 온도에 맞는 메뉴를 필터링
+        String primaryCategory = getTemperatureCategory(temperature);
+        Set<MenuDto> primaryTempMenus = new HashSet<>(menuDao.findByMenuTemperature(primaryCategory));
+
+        // 서브 온도 카테고리 결정
+        String secondaryCategory = getSecondaryTemperatureCategory(temperature, weather);
+        Set<MenuDto> secondaryTempMenus = new HashSet<>(menuDao.findByMenuTemperature(secondaryCategory));
+
+        // 날씨와 온도에 맞는 메뉴를 필터링
+        List<MenuDto> currentTempMenus = weatherMenus.stream()
+            .filter(menu -> primaryTempMenus.contains(menu))
+            .collect(Collectors.toList());
+
+        List<MenuDto> secondaryTempMenusList = weatherMenus.stream()
+            .filter(menu -> secondaryTempMenus.contains(menu))
+            .collect(Collectors.toList());
+
+        List<MenuDto> recommendedMenus = new ArrayList<>();
+
+        // 현재 온도에 맞는 메뉴 3개 추천
+        addRandomMenus(recommendedMenus, currentTempMenus, 3);
+
+        // 서브 온도에 맞는 메뉴 2개 추천
+        addRandomMenus(recommendedMenus, secondaryTempMenusList, 2);
+
+        // 부족한 메뉴를 추가
+        if (recommendedMenus.size() < 5) {
+            Set<MenuDto> remainingWeatherMenus = new HashSet<>(weatherMenus);
+            remainingWeatherMenus.removeAll(recommendedMenus);
+            addRandomMenus(recommendedMenus, new ArrayList<>(remainingWeatherMenus), 5 - recommendedMenus.size());
         }
-        return images;
+
+        // 그래도 메뉴가 부족할 경우, 랜덤 메뉴를 추가
+        if (recommendedMenus.size() < 5) {
+            List<MenuDto> allMenus = menuDao.findAll();
+            allMenus.removeIf(menu -> "기타".equals(menu.getCategory()));
+            addRandomMenus(recommendedMenus, allMenus, 5 - recommendedMenus.size());
+        }
+
+        Collections.shuffle(recommendedMenus);
+        return recommendedMenus.subList(0, Math.min(recommendedMenus.size(), 5));
     }
 
-    private List<String> getRecommendedMenus(double temperature) {
-        if (temperature < 26) {
-            return Arrays.asList("라멘", "돈카츠", "짬뽕", "딤섬", "소바");
-        } else if (temperature >= 26 && temperature < 27) {
-            return Arrays.asList("김치찌개", "소바", "스테이크", "삼계탕", "라멘");
-        } else {
-            return Arrays.asList("하이라이스", "와플", "동태찌개", "김치찌개", "소바");
+    private Set<MenuDto> getWeatherMenus(String weather) {
+        switch (weather) {
+            case "맑음":
+                return new HashSet<>(menuDao.findByMenuWeather("sunny"));
+            case "비":
+                return new HashSet<>(menuDao.findByMenuWeather("rain"));
+            case "눈":
+                return new HashSet<>(menuDao.findByMenuWeather("snow"));
+            default:
+                return new HashSet<>(menuDao.findByMenuWeather("sunny"));
         }
+    }
+
+    private void addRandomMenus(List<MenuDto> targetList, List<MenuDto> sourceList, int count) {
+        List<MenuDto> newMenus = sourceList.stream()
+                .filter(menu -> !targetList.contains(menu))
+                .collect(Collectors.toList());
+        Collections.shuffle(newMenus);
+        targetList.addAll(newMenus.stream().limit(count).collect(Collectors.toList()));
+    }
+
+    private String getTemperatureCategory(double temperature) {
+        if (temperature < 15) return "hot";  
+        else if (temperature < 25) return "average";  
+        else return "ice";  
+    }
+
+    private String getSecondaryTemperatureCategory(double temperature, String weather) {
+        String primaryCategory = getTemperatureCategory(temperature);
+
+        if (weather.equals("비") || weather.equals("눈")) {
+            if (primaryCategory.equals("ice")) return "average";  
+            if (primaryCategory.equals("hot")) return "average";  
+        }
+        if (weather.equals("맑음")) {
+            if (primaryCategory.equals("ice")) return "average";
+            if (primaryCategory.equals("hot")) return "average";
+            if (primaryCategory.equals("average")) return "average";
+        }
+
+        return primaryCategory.equals("average") ? "hot" : "average";
     }
 }
