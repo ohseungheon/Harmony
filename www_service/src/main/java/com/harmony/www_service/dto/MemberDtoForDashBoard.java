@@ -12,13 +12,14 @@ public class MemberDtoForDashBoard {
 	private String nickName;
 	private String addr;
 	private LocalDate birth;
+	private int age;
 	private String phone;
 	private String gender;
 	private LocalDate joinDate;
-	private int recipeCnt;
-	private int newMemberCntPerDay;
-	private int newMemberCntPerMon;
-	private double genderRatio;
-	private int memberCntByAge;
+//	private int recipeCnt;
+//	private int newMemberCntPerDay;
+//	private int newMemberCntPerMon;
+//	private double genderRatio;
+//	private int memberCntByAge;
 	
 }
