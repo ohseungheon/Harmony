@@ -1,6 +1,7 @@
 package com.harmony.www_service.dto;
 
 import java.time.LocalDate;
+
 import lombok.Data;
 
 @Data
@@ -13,5 +14,11 @@ public class MemberDtoForDashBoard {
 	private LocalDate birth;
 	private String phone;
 	private String gender;
+	private LocalDate joinDate;
 	private int recipeCnt;
+	private int newMemberCntPerDay;
+	private int newMemberCntPerMon;
+	private double genderRatio;
+	private int memberCntByAge;
+	
 }
