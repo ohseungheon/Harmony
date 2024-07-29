@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,13 +25,13 @@ public class WholeSaleController {
 	
 	
 	@GetMapping("/api/wholesale")
-    public ResponseEntity<String> getWholeSaleData() {
+    public ResponseEntity<String> getWholeSaleData(@RequestParam(name = "p_item_category_code", defaultValue = "100") String cat) {
 		String url = "https://www.kamis.or.kr/service/price/xml.do" +
 		        "?action=dailyPriceByCategoryList" +
 		        "&p_product_cls_code=02" +
-		        "&p_regday=2024-07-26" +  // 오늘 날짜
+		        "&p_regday=" + getCurrentDate() + // 오늘 날짜
 		        "&p_convert_kg_yn=N" +
-		        "&p_item_category_code=100" +  // 채소류
+		        "&p_item_category_code=" + cat +  // 종류
 		        "&p_cert_key=" + apiKey +
 		        "&p_cert_id=" + id +
 		        "&p_returntype=json";
