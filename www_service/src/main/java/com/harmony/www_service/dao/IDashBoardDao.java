@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.harmony.www_service.dto.GenderDtoForDashBoard;
 import com.harmony.www_service.dto.MemberDtoForDashBoard;
 
 @Mapper
@@ -19,7 +20,7 @@ public interface IDashBoardDao {
 	public int findNewMonthMember();
 	
 	// 회원 성비 구하기
-	public double findMemByGender();
+	public GenderDtoForDashBoard findMemByGender();
 	
 	// 회원 나이 구하기 - for 연령대별 회원 수
 	public int[] findMemByAges();

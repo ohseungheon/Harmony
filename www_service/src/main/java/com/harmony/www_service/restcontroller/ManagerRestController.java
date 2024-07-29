@@ -33,8 +33,5 @@ public class ManagerRestController {
 		return result;
 	}
 	
-	// -------------------------------- 대시보드 (차트) -------------------------------------
-	
-	
 	
 }

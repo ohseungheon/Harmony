@@ -19,7 +19,6 @@ public class MemberDtoForDashBoard {
 //	private int recipeCnt;
 //	private int newMemberCntPerDay;
 //	private int newMemberCntPerMon;
-//	private double genderRatio;
 //	private int memberCntByAge;
 	
 }

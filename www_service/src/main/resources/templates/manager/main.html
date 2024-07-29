@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <title>DashBoard</title>
     <style>
-      #chartContainer {
+      #ageChartContainer,
+      #genderChartContainer {
         width: 400px;
         margin: auto;
       }
@@ -16,6 +17,10 @@
     </header>
     <section>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+      <!-- 연령대별 파이차트 -->
+      <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+      <!--데이터 세그먼트 내부에 레이블 표시하기 위해 추가-->
+      <!-- 성별 막대 차트 -->
       <h1>DashBoard</h1>
       <!-- <p>방문자 수 : <span th:text="${visitorCount}"></span></p> -->
       <div id="memberCountTable">
@@ -33,32 +38,41 @@
         </table>
       </div>
       <br />
-      <div id="chartContainer">
+      <div id="ageChartContainer">
         <canvas id="ageGroupChart" width="300" height="200"></canvas>
+      </div><br>
+      <div id="genderChartContainer">
+        <canvas id="genderChart" width="300" height="200"></canvas>
       </div>
     </section>
     <footer>
       <th:block th:insert="~{/sub/footer.html}"></th:block>
     </footer>
     <script>
+      // 연령대별 회원 차트
       async function fetchAgeGroups() {
         try {
           const response = await fetch("/getAgeGroups");
-          if (!response.ok){
-			throw new Error("Network response was not ok");
-		  }
-		  const data = await response.json();
-		  return data;
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return await response.json();
         } catch (error) {
           console.error("There was a problem with the fetch operation:", error);
-          return [0, 0, 0, 0, 0, 0]; // 기본값 설정
+          return {
+            ageGroups: [0, 0, 0, 0, 0, 0],
+            ageTitle: ["10대", "20대", "30대", "40대", "50대", "60대"],
+          }; // 기본값 설정
         }
       }
 
       // 데이터 로드 후 차트를 초기화 하는 함수
-      function initializeChart(ageGroups) {
-        const data = {
-          labels: ["10대", "20대", "30대", "40대", "50대", "60대"],
+      function initializeAgeChart(data) {
+        const ageGroups = data.ageGroups;
+        const ageTitles = data.ageTitle;
+
+        const ageChartData = {
+          labels: ageTitles,
           datasets: [
             {
               label: "연령대별 회원수",
@@ -72,13 +86,13 @@
                 "rgba(255, 159, 64, 0.8)",
               ],
               borderWidth: 1,
-            }
+            },
           ],
         };
 
         const config = {
           type: "pie",
-          data: data,
+          data: ageChartData,
           options: {
             responsive: true,
             plugins: {
@@ -88,16 +102,116 @@
               title: {
                 display: true,
                 text: "연령대별 회원 구분",
+                font: {
+                  size: 20,
+                  color: "#000000",
+                },
+              },
+              datalabels: {
+                color: "#fff",
+                formatter: (ageValue, ageContext) => {
+                  const label =
+                    ageContext.chart.data.labels[ageContext.dataIndex];
+                  return label;
+                },
               },
             },
           },
+          plugins: [ChartDataLabels],
         };
-        new Chart(document.getElementById('ageGroupChart'), config);
+
+        new Chart(document.getElementById("ageGroupChart"), config);
       }
-      window.onload = async function(){
-		const ageGroups = await fetchAgeGroups();
-		initializeChart(ageGroups);
-	  };
+
+      // ------------------------- 성별 차트 -------------------------------
+      // 성별 회원 차트
+      async function fetchGenderCount() {
+        try {
+          const response = await fetch("/getGenderCnt");
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return await response.json();
+        } catch (error) {
+          console.error("There was a problem with the fetch operation:", error);
+          return { genderCount: [0, 0], genderTitle: ["남성", "여성"] }; // 기본값 설정
+        }
+      }
+
+      // 데이터 로드 후 차트를 초기화 하는 함수
+      function initializeGenderChart(data) {
+        const genderCounts = data.genderCount;
+        const genderTitles = data.genderTitle;
+
+        const genderChartData = {
+          labels: genderTitles,
+          datasets: [
+            {
+              label: "회원 성별",
+              data: genderCounts,
+              backgroundColor: ["#36a2eb", "#ff6384"],  // 남성: 파란색, 여성: 분홍색
+              borderWidth: 1,
+            },
+          ],
+        };
+
+        const config = {
+          type: "bar",
+          data: genderChartData,
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "top",
+              },
+              title: {
+                display: true,
+                text: "성별에 따른 회원 비율",
+                font: {
+                  size: 20,
+                  color: "#000000",
+                },
+              },
+            },
+            scales: {
+              x: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "성별",
+                },
+                // x축에 남성, 여성만 표시
+                ticks: {
+                  callback: function (value, index, ticks){
+                    return genderTitles[index];
+                  },
+                },
+              },
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "회원 비율",
+                },
+                ticks: {
+                  stepSize: 10, // y축 10명 단위로 끊기
+                },
+              },
+            },
+          },
+          plugins: [ChartDataLabels],
+        };
+
+        new Chart(document.getElementById("genderChart"), config);
+      }
+
+      window.onload = async function () {
+        const ageData = await fetchAgeGroups();
+        initializeAgeChart(ageData);
+
+        const genderData = await fetchGenderCount();
+        initializeGenderChart(genderData);
+      };
     </script>
   </body>
 </html>
