@@ -20,4 +20,16 @@
             </foreach>
         </if>
     </select>
+
+    <select id="findAll" resultType="com.harmony.www_service.dto.MenuDto">
+        SELECT * FROM menu
+    </select>
+
+    <select id="findByMenuWeather" parameterType="string" resultType="com.harmony.www_service.dto.MenuDto">
+        SELECT * FROM menu WHERE menuWeather = #{weather}
+    </select>
+
+    <select id="findByMenuTemperature" parameterType="string" resultType="com.harmony.www_service.dto.MenuDto">
+        SELECT * FROM menu WHERE menuTemperature = #{temperature}
+    </select>
 </mapper>

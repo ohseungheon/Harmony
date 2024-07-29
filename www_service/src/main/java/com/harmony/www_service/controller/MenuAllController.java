@@ -20,6 +20,7 @@ import com.harmony.www_service.dto.RecipeIngredientDto;
 import com.harmony.www_service.dto.RecipeOrderDto;
 import com.harmony.www_service.service.MemberService;
 import com.harmony.www_service.service.RecipeService;
+import com.harmony.www_service.service.WeatherMenuService;
 
 @Controller
 public class MenuAllController {
@@ -32,6 +33,9 @@ public class MenuAllController {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    private WeatherMenuService weatherMenuService;
 
     @GetMapping("/menu_all/menu_all_list")
     public String menu_all_list() {
@@ -113,19 +117,27 @@ public class MenuAllController {
     }
 
     @GetMapping("/menu_all/recomend_menu")
-    public String recomend_menu() {
-
+    public String recomend_menu(Model model) {
+        
+        model.addAttribute("weatherMenu", weatherMenuService.getWeatherMenuRecommendation());
         return "menu_all/recomend_menu";
     }
 
+
     @GetMapping("/menu_all/recipe_list_name")
-    public String recipeListByName(@RequestParam("menuName") String menuName, Model model) {
-        List<RecipeDto> recipeList = recipeService.getRecipeListByMenuName(menuName);
+public String recipeListByName(@RequestParam("menuName") String menuName, Model model) {
+    List<RecipeDto> recipeList = recipeService.getRecipeListByMenuName(menuName);
+    
+    Map<Integer, String> lastImg = new HashMap<>();
+    for (RecipeDto recipe : recipeList) {
 
-        model.addAttribute("menuName", menuName);
-        model.addAttribute("recipeList", recipeList);
-
-        return "menu_all/recipe_list";
     }
+    
+    model.addAttribute("menuName", menuName);
+    model.addAttribute("recipeList", recipeList);
+    model.addAttribute("lastImg", lastImg);
+    
+    return "menu_all/recipe_list";
+}
 
 }

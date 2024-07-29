@@ -8,6 +8,5 @@ public class WeatherMenuDto {
     private double temperature;
     private String description;
     private String icon;
-    private List<String> recommendedMenus;
-
+    private List<MenuDto> recommendedMenus;
 }

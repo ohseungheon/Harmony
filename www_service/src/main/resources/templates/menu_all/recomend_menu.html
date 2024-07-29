@@ -99,7 +99,7 @@
             .then(response => response.json())
             .then(data => {
                 updateWeatherDisplay(data);
-                updateMenuList(data.recommendedMenus);
+                updateMenuList(data);
             })
             .catch(error => console.error('Error:', error));
     });
@@ -120,13 +120,13 @@
         `;
     }
 
-    function updateMenuList(menus) {
+    function updateMenuList(data) {
         const menuList = document.getElementById('menu-list');
-        menuList.innerHTML = menus.map(menu => `
+        menuList.innerHTML = data.recommendedMenus.map((menu) => `
             <div class="menu-item" onclick="sendMenuName(this)">
-                <img src="/uploads/${menu}.jpg" alt="${menu}">
+                <img src="/uploads/${menu.imgurl}" alt="${menu.menuName}" class="menuImage">
                 <div class="menu-info">
-                    <div class="menu-name">${menu}</div>
+                    <div class="menu-name">${menu.menuName}</div>
                 </div>
             </div>
         `).join('');
