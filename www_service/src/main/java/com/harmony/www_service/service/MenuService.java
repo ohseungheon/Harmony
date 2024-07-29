@@ -121,10 +121,17 @@ public class MenuService {
       return menuListDao.searchMenus(term);
    }
    
-   public int calCountIntersection(int inFridgeIngredientNum,List<Integer> fridgeIngredientList,List<Integer> icodeList) {
-	   int countIntersection =menu1dao.countIntersection(fridgeIngredientList, icodeList);
-	   return (inFridgeIngredientNum-countIntersection);
-   }
-
+//   public int calCountIntersection(int inFridgeIngredientNum,List<Integer> fridgeIngredientList,List<Integer> icodeList) {
+//	   int countIntersection =menu1dao.countIntersection(fridgeIngredientList, icodeList);
+//	   return (inFridgeIngredientNum-countIntersection);
+//   }
+   public List<Integer> getCountUsedIcodeFromInfridgeIcodeList(List<Integer> icodeList){
+	   List<Integer> getCountUsedIcodeFromInfridgeIcodeList = menu1dao.getCountUsedIcodeFromInfridgeIcodeList(icodeList);
+	   return getCountUsedIcodeFromInfridgeIcodeList;
+   };
+   public List<Integer> getCountUsedIcodeFromInfridgeIcodeList2(List<Integer> icodeList,List<Integer> excludList){
+	   List<Integer> getCountUsedIcodeFromInfridgeIcodeList = menu1dao.getCountUsedIcodeFromInfridgeIcodeList2(icodeList,excludList);
+	   return getCountUsedIcodeFromInfridgeIcodeList;
+   };
    
 }

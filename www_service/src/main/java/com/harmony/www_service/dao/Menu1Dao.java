@@ -22,9 +22,14 @@ public interface Menu1Dao {
     int getMno(@Param("username") String username);
     
     
-    int countIntersection(@Param("fridgeIngredientList") List<Integer> fridgeIngredientList ,@Param("icodeList") List<Integer> recipeIcodeList);
+   // int countIntersection(@Param("fridgeIngredientList") List<Integer> fridgeIngredientList ,@Param("icodeList") List<Integer> recipeIcodeList);
     
     List<Integer> showFridgeIngredientIcodeList(@Param("mno") int mno);
     List<Integer> showRecipeIngredientIcodeList(@Param("rcode") int rcode);
     List<Integer> getRcodeForMcode(int rcode);
+    
+    List<Integer>  getCountUsedIcodeFromInfridgeIcodeList(@Param("icodeList") List<Integer> icodeList);
+    List<Integer>  getCountUsedIcodeFromInfridgeIcodeList2(@Param("icodeList") List<Integer> icodeList,@Param("excludList") List<Integer> excludList);
+    
+    
 }
