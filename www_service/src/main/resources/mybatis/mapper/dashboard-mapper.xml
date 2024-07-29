@@ -2,45 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.harmony.www_service.dao.IDashBoardDao">
 	<!-- 총 회원 수 구하기 -->
-	<select id="findAll"
-		resultType="com.harmony.www_service.dto.MemberDtoForDashBoard">
+	<select id="findAll">
 		SELECT COUNT(mno) FROM member;
 	</select>
 
 	<!-- 새 사용자 수 (일별) -->
-	<select id="findNewDayMember"
-		resultType="com.harmony.www_service.dto.MemberDtoForDashBoard">
+	<select id="findNewDayMember">
 		SELECT COUNT(mno) FROM member
-		WHERE joinDate >= CURDATE();
+		WHERE joinDate >=
+		CURDATE();
 	</select>
 
 	<!-- 새 사용자 수 (월별) -->
-	<select id="findNewMonthMember"
-		resultType="com.harmony.www_service.dto.MemberDtoForDashBoard">
+	<select id="findNewMonthMember">
 		SELECT COUNT(mno)
 		FROM member
-		WHERE joinDate >= DATE_SUB(CURDATE(), INTERVAL DAY(CURDATE()) - 1 DAY);
+		WHERE joinDate >= DATE_format(CURDATE(), '%Y-%m-01');
 	</select>
 
 	<!-- 회원 나이 구하기 - for 연령대별 회원 수 -->
-	<select id="findMemByAges"
-		resultType="com.harmony.www_service.dto.MemberDtoForDashBoard">
-		SELECT *, YEAR(CURDATE())-YEAR(birth) age
+	<select id="findMemByAges">
+		SELECT YEAR(CURDATE())-YEAR(birth) age
 		FROM member;
 	</select>
 
 	<!-- 회원 성비 구하기 -->
-	<select id="findMemByGender"
-		resultType="com.harmony.www_service.dto.MemberDtoForDashBoard">
+	<select id="findMemByGender">
 		SELECT
-		SUM(case when gender='남자' then 1 ELSE 0 END) / COUNT(*) *100 AS
+		SUM(case when gender='남자' then 1 ELSE 0 END) /
+		COUNT(*) *100 AS
 		mael_ratio,
-		SUM(case when gender='여자' then 1 ELSE 0 END) / COUNT(*) *100 AS
+		SUM(case when gender='여자' then 1 ELSE 0
+		END) / COUNT(*) *100 AS
 		female_ratio
 		FROM member;
 	</select>
 
-	<!-- 회원 정보 + 회원이 등록한 레시피 수-->
+	<!-- 회원 정보 + 회원이 등록한 레시피 수 -->
 	<select id="findMemAllInfo"
 		resultType="com.harmony.www_service.dto.MemberDtoForDashBoard">
 		SELECT m.*, count(r.rcode) AS recipe_count

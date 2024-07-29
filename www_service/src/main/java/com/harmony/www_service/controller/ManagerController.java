@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.IngredientDtoWithFile;
@@ -32,11 +33,6 @@ public class ManagerController {
 	
 	private static final String VISITOR_COUNT_KEY = "visitorCount";
 	
-	@GetMapping(value = "/manager")
-	public String managerMain() {
-		return "manager/main";
-	}
-
 	// 재료 등록 페이지
 	@RequestMapping("/ingredients_regist")
 	public String goRegist() {
@@ -132,38 +128,74 @@ public class ManagerController {
 	
 	// ----------------------------- 대시보드 ------------------------------
 	
-	
-	
-//	@GetMapping("/dashboard")
-//	public String index(Model model) {
-//		// 방문자수 증가
+	@RequestMapping("/dashboard")
+	public String index(Model model) {
+		
+//		// 방문자수 증가 (redis)
 //		Long visitorCount = redisTemplate.opsForValue().increment(VISITOR_COUNT_KEY, 1);
 //		
 //		// 모델에 방문자 수 실어보내기
 //		model.addAttribute("visitorCount", visitorCount);
 //		return "redirect:/manager";
-//	}
-//	
-//		
-//	
-//	// 연령대별 회원수 통계
-//	public String memsByAges(Model model) {
-//		List<MemberDtoForDashBoard> result = dbService.NumberOfMemsByAgeGroup();
-//		model.addAttribute("list", result);
-//		return "redirect:/manager";
-//	}
+//		-----------------------------------------------------------------------------		
+		
+		// 연령대별 회원수 통계
+		int[] ageGroups = getAgeGroups();
+		model.addAttribute("ageGroups", ageGroups);
+		
+		// 총 회원수
+		int totalMemberCnt = dbService.findAll();
+		model.addAttribute("totalMemberCount", totalMemberCnt);
+		
+		// 새 회원 수 (일별)
+		int newDayMemberCount = dbService.findNewDayMember();
+		model.addAttribute("newDayMemberCount", newDayMemberCount);
+		
+		// 새 회원 수 (월별)
+		int newMonthMemberCount = dbService.findNewMonthMember();
+		model.addAttribute("newMonthMemberCount", newMonthMemberCount);
+		
+//		// 회원 성비 구하기
+//		double genderCount = dbService.findMemByGender();
+//		model.addAttribute("genderCount", genderCount);
+		
+		//회원 정보 + 회원이 등록한 레시피 수
+//		List<MemberDtoForDashBoard> memberInfo = dbService.findMemberInfo();
+//		model.addAttribute("memberInfo", memberInfo);
+		
+		return "manager/main";
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@GetMapping("/getAgeGroups")
+	@ResponseBody
+	public int[] getAgeGroups() {
+		
+		int[] ageGroups = new int[6];
+		int[] ages = dbService.findMemByAges();
+		
+		for(int age : ages) {
+			if(age >= 0 && age < 20) {
+				ageGroups[0]++;
+				System.out.println("ageGroups[0] :" + ageGroups[0]);
+			}else if(age >= 20 && age < 30) {
+				ageGroups[1]++;
+				System.out.println("ageGroups[1] :" + ageGroups[1]);
+			}else if(age >= 30 && age < 40) {
+				ageGroups[2]++;
+				System.out.println("ageGroups[2] :" + ageGroups[2]);
+			}else if(age >= 40 && age < 50) {
+				ageGroups[3]++;
+				System.out.println("ageGroups[3] :" + ageGroups[3]);
+			}else if(age >= 50 && age < 60) {
+				ageGroups[4]++;
+				System.out.println("ageGroups[4] :" + ageGroups[4]);
+			}else if(age >= 60 && age < 70) {
+				ageGroups[5]++;
+				System.out.println("ageGroups[5] :" + ageGroups[5]);
+			}
+		}
+		return ageGroups;
+	}
 	
 	
 	

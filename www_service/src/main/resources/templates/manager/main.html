@@ -1,24 +1,103 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>DashBoard</title>
-<style>
-</style>
-</head>
-<body>
-	<header>
-		<th:block th:insert="~{/sub/header.html}"></th:block>
-	</header>
-	<section>
-        <h1>DashBoard</h1>
-        <!-- <p>방문자 수 : <span th:text="${visitorCount}"></span></p> -->
-	</section>
-	<footer>
-		<th:block th:insert="~{/sub/footer.html}"></th:block>
-	</footer>
-	<script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>DashBoard</title>
+    <style>
+      #chartContainer {
+        width: 400px;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <th:block th:insert="~{/sub/header.html}"></th:block>
+    </header>
+    <section>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+      <h1>DashBoard</h1>
+      <!-- <p>방문자 수 : <span th:text="${visitorCount}"></span></p> -->
+      <div id="memberCountTable">
+        <table>
+          <tr>
+            <th>총 회원수</th>
+            <th>일별 새 회원수</th>
+            <th>월별 새 회원수</th>
+          </tr>
+          <tr>
+            <td th:text="${totalMemberCount}">0</td>
+            <td th:text="${newDayMemberCount}">0</td>
+            <td th:text="${newMonthMemberCount}">0</td>
+          </tr>
+        </table>
+      </div>
+      <br />
+      <div id="chartContainer">
+        <canvas id="ageGroupChart" width="300" height="200"></canvas>
+      </div>
+    </section>
+    <footer>
+      <th:block th:insert="~{/sub/footer.html}"></th:block>
+    </footer>
+    <script>
+      async function fetchAgeGroups() {
+        try {
+          const response = await fetch("/getAgeGroups");
+          if (!response.ok){
+			throw new Error("Network response was not ok");
+		  }
+		  const data = await response.json();
+		  return data;
+        } catch (error) {
+          console.error("There was a problem with the fetch operation:", error);
+          return [0, 0, 0, 0, 0, 0]; // 기본값 설정
+        }
+      }
 
-	</script>
-</body>
+      // 데이터 로드 후 차트를 초기화 하는 함수
+      function initializeChart(ageGroups) {
+        const data = {
+          labels: ["10대", "20대", "30대", "40대", "50대", "60대"],
+          datasets: [
+            {
+              label: "연령대별 회원수",
+              data: ageGroups,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.8)",
+                "rgba(54, 162, 235, 0.8)",
+                "rgba(255, 206, 86, 0.8)",
+                "rgba(75, 192, 192, 0.8)",
+                "rgba(153, 102, 255, 0.8)",
+                "rgba(255, 159, 64, 0.8)",
+              ],
+              borderWidth: 1,
+            }
+          ],
+        };
+
+        const config = {
+          type: "pie",
+          data: data,
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "top",
+              },
+              title: {
+                display: true,
+                text: "연령대별 회원 구분",
+              },
+            },
+          },
+        };
+        new Chart(document.getElementById('ageGroupChart'), config);
+      }
+      window.onload = async function(){
+		const ageGroups = await fetchAgeGroups();
+		initializeChart(ageGroups);
+	  };
+    </script>
+  </body>
 </html>
