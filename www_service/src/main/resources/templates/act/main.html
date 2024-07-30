@@ -4,29 +4,36 @@
 <head>
 <meta charset="UTF-8">
 <title>체험 활동 정보</title>
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
 <style>
 table {
 	font-size: 10px;
 	border-collapse: collapse;
 	margin: 50px;
 }
+
 #map {
 	margin: 50px;
 }
+
 .search-container {
 	margin-left: 50px;
 }
+
 #search-box {
 	width: 330px;
 	height: 25px;
 	padding: 3px;
 }
+
 #search-button {
-	width: 50px; 
+	width: 50px;
 	height: 30px;
 	padding: 3px;
 }
+
 .hidden {
 	display: none;
 }
@@ -43,12 +50,13 @@ table {
 	<section>
 
 		<div id="map" style="width: 500px; height: 400px;"></div>
-		
+
 		<div class="search-container">
-			<input type="text" id="search-box" class="search-box" placeholder="시도명 or 시군구명 or 체험마을 or 체험내용 입력하세요.">
+			<input type="text" id="search-box" class="search-box"
+				placeholder="시도명 or 시군구명 or 체험마을 or 체험내용 입력하세요.">
 			<button id="search-button" class="search-button">검색</button>
 		</div>
-				
+
 		<table border="1">
 			<thead>
 				<tr>
@@ -68,7 +76,7 @@ table {
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="act : ${act}">
+				<!-- tr th:each="act : ${act}">
 					<td th:text="${act.vacode}"></td>
 					<td id="vname" th:text="${act.vname}" class="clickable" data-locationx="${act.locationx}" data-locationy="${act.locationy}"></td>
 					<td th:text="${act.sido}"></td>
@@ -82,10 +90,15 @@ table {
 					<td th:text="${act.agencyname}"></td>
 					<td id="locationx" th:text="${act.locationx}"></td>
 					<td id="ldcationy" th:text="${act.locationy}"></td>
-				</tr>
+				</tr -->
 			</tbody>
 		</table>
 
+		<div class="pagination">
+			<button id="prev-page">이전</button>
+			<span id="current-page">1</span>
+			<button id="next-page">다음</button>
+		</div>
 	</section>
 
 	<footer>
@@ -95,10 +108,119 @@ table {
 	<script>
 	var container = document.getElementById('map');
     var options = {
-        center: new kakao.maps.LatLng(37.456497, 128.683133),
+    	center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
         level: 3
     };
-    var map = new kakao.maps.Map(container, options);
+    var map = new kakao.maps.Map(container, options); //지도생성 
+	// 마커가 표시될 위치입니다 
+    var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); 
+    
+ 	// 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        position: markerPosition
+    });
+ 	
+ 	// 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+ 	
+    let currentPage = 1;
+    const itemsPerPage = 50; // 한 페이지에 표시할 항목 수
+    
+    
+    
+ 	//체험마을 전체 리스트 
+	$(document).ready(function() {
+    	//검색
+    	$("#search-button").on("click", function() {
+            const searchQuery = $("#search-box").val().trim();
+            console.log(searchQuery);
+            if (!searchQuery) {
+                alert("검색어를 입력하세요");
+                return;
+            }
+            searchList(searchQuery);
+        });
+    	
+    // 페이지네이션 버튼 이벤트 설정
+    $('#prev-page').on('click', function() {
+        if (currentPage > 1) {
+            currentPage--;
+            loadPage(currentPage);
+        }
+    });
+
+    $('#next-page').on('click', function() {
+        currentPage++;
+        loadPage(currentPage);
+    });
+
+    loadPage(currentPage); // 첫 페이지 로드
+});
+
+	
+	function loadPage(page) {
+    	$.ajax({
+        	url: "/act/getActiveList",
+        	method: "GET",
+        	data: {
+            	page: page,
+            	itemsPerPage: itemsPerPage
+        	},
+        	success: function(data) {
+            	updateTable(data);
+            	$('#current-page').text(page);
+        	},
+        	error: function(error) {
+            	console.log("Error:", error);
+        	}
+    	});
+	}
+	
+	function searchList(query) {
+	    $.ajax({
+	        url: "/act/searchList",
+	        method: "GET",
+	        data: {
+	            query: query
+	        },
+	        success: function(data) {
+	            updateTable(data);
+	            console.log(data);
+	            
+	        },
+	        error: function(error) {
+	            console.log("Error:", error);
+	        }
+	    });
+	}
+	
+function updateTable(data) {
+    const tbody = $("tbody");
+    tbody.empty();
+    data.forEach(act => {
+        tbody.append(
+            "<tr>" +
+                "<td>" + act.vacode + "</td>" +
+                "<td class='clickable' data-locationx='" + act.locationx + "' data-locationy='" + act.locationy + "'>" + act.vname + "</td>" +
+                "<td>" + act.sido + "</td>" +
+                "<td>" + act.sgg + "</td>" +
+                "<td>" + act.acttype + "</td>" +
+                "<td>" + act.actname + "</td>" +
+                "<td>" + act.actadress + "</td>" +
+                "<td>" + act.ceo + "</td>" +
+                "<td>" + act.tel + "</td>" +
+                "<td>" + act.homeurl + "</td>" +
+                "<td>" + act.agencyname + "</td>" +
+                "<td>" + act.locationx + "</td>" +
+                "<td>" + act.locationy + "</td>" +
+            "</tr>"
+        );
+    });
+}
+
+
+ 	
+ 	/*
     var markers = []; // 마커를 저장할 배열
 
     function updateMap(positions) {
@@ -135,14 +257,28 @@ table {
 
         $(document).on("click", ".clickable", function() {
             var vname = $(this).text();
-            var locationx = parseFloat($(this).data("locationx"));
-            var locationy = parseFloat($(this).data("locationy"));
+            var locationx = $(this).data("locationx");
+            var locationy = $(this).data("locationy");
 
-            var positions = [{
-                title: vname,
-                latlng: new kakao.maps.LatLng(locationx, locationy)
-            }];
-            updateMap(positions);
+            console.log("Original data-locationx:", locationx);
+            console.log("Original data-locationy:", locationy);
+            
+            locationx = parseFloat(locationx);
+            locationy = parseFloat(locationy);
+            
+            console.log("Parsed locationx:", locationx);
+            console.log("Parsed locationy:", locationy);
+            
+            if (!isNaN(locationx) && !isNaN(locationy)) {
+                var positions = [{
+                    title: vname,
+                    latlng: new kakao.maps.LatLng(locationx, locationy)
+                }];
+                updateMap(positions);
+            } else {
+                console.error("Invalid coordinates:", locationx, locationy);
+                alert("유효하지 않은 좌표입니다.");
+            }
         });
     });
 
@@ -191,7 +327,7 @@ table {
             );
         });
     }
-	    
+	*/    
     </script>
 </body>
 
