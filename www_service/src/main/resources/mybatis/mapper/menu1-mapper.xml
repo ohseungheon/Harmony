@@ -317,7 +317,7 @@
 
 	<select id="getCountUsedIcodeFromInfridgeIcodeList"
 		parameterType="java.util.List" resultType="int">
-		SELECT COUNT(*)
+			SELECT COUNT(*)
 		FROM
 		recipe_ingredient ri1
 		WHERE rcode IN( SELECT
@@ -325,7 +325,7 @@
 		FROM
 		recipe_ingredient ri1
 		WHERE ri1.icode IN
-		<foreach item="item" index="index" collection="icodeList"
+	<foreach item="item" index="index" collection="icodeList"
 			open="(" separator="," close=")">
 			#{item}
 		</foreach>
@@ -337,49 +337,91 @@
 		ri1.rcode
 		AND
 		ri2.icode NOT IN
-		<foreach item="item" index="index" collection="icodeList"
+		 <foreach item="item" index="index" collection="icodeList"
 			open="(" separator="," close=")">
 			#{item}
 		</foreach>
-		) &lt;= 2
+		)&lt;= 2
 
-		) GROUP BY rcode;
+		)
+		AND ri1.icode NOT IN <foreach item="item" index="index" collection="icodeList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		 GROUP BY rcode;
+
 	</select>
 
+
+
+<!-- 
 
 	<select id="getCountUsedIcodeFromInfridgeIcodeList2"
 		parameterType="java.util.List" resultType="int">
 		SELECT COUNT(*)
-		FROM
-		recipe_ingredient ri1
-		WHERE rcode IN( SELECT DISTINCT rcode
-		FROM
-		recipe_ingredient ri1
-		WHERE ri1.icode IN (23, 6, 17)
+		FROM recipe_ingredient ri1
+		WHERE rcode IN (
+		SELECT DISTINCT rcode
+		FROM recipe_ingredient ri1
+		WHERE ri1.icode IN <foreach item="item" index="index" collection="icodeList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
 		AND (
-		SELECT
-		COUNT(*)
+		SELECT COUNT(*)
 		FROM recipe_ingredient ri2
 		WHERE ri2.rcode = ri1.rcode
-		AND
-		ri2.icode NOT IN (23, 6, 17)
+		AND ri2.icode NOT IN <foreach item="item" index="index" collection="icodeList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
 		) &lt;= 2
-		AND ri1.rcode NOT IN ( 
+		AND ri1.rcode NOT IN (
 		SELECT ri3.rcode
 		FROM recipe_ingredient ri3
-		WHERE
-		<if test="excludList != null and excludList.size() > 0">
-			ri3.icode IN
-			<foreach item="item" index="index" collection="excludList"
+		WHERE ri3.icode IN <foreach item="item" index="index" collection="excludList"
 				open="(" separator="," close=")">
 				#{item}
 			</foreach>
-		</if>
-		<if test="excludList == null or excludList.size() == 0">
-			1=1
-		</if>
+		)
+		)GROUP BY rcode;
 	</select>
-		
+-->
 
+	<select id="getCountUsedIcodeFromInfridgeIcodeList2"
+		parameterType="java.util.List" resultType="int">
+		SELECT COUNT(*) AS count
+FROM recipe_ingredient ri1
+WHERE rcode IN (
+    SELECT DISTINCT rcode
+    FROM recipe_ingredient ri1
+    WHERE ri1.icode IN <foreach item="item" index="index" collection="icodeList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+    AND (
+        SELECT COUNT(*)
+        FROM recipe_ingredient ri2
+        WHERE ri2.rcode = ri1.rcode
+        AND ri2.icode NOT IN <foreach item="item" index="index" collection="icodeList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+    ) &lt;= 2
+    AND ri1.rcode NOT IN (
+        SELECT ri3.rcode
+        FROM recipe_ingredient ri3
+        WHERE ri3.icode IN <foreach item="item" index="index" collection="excludList"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+    )
+)
+AND ri1.icode NOT IN <foreach item="item" index="index" collection="icodeList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+GROUP BY rcode;
+	</select>
 
 </mapper>

@@ -45,16 +45,15 @@ public class Menu1Controller {
 		int mno = menu1dao.getMno(username); // id로 mno값 가져옴
 
 		// 사용자 냉장고에 들어있는 재료
-		List<IngredientDto> FridgeIngredientList = menu1dao.showFridgeIngredient(mno);
-		model.addAttribute("FridgeIngredientList", FridgeIngredientList);
+		List<IngredientDto> InFridgeIngredientList = menu1dao.showFridgeIngredient(mno);
+		model.addAttribute("InFridgeIngredientList", InFridgeIngredientList);
 		List<IngredientDto2> FridgeIngredientListForDto = menu1dao.showFridgeIngredientForDto(mno);
+		System.out.println("=================main 남은 냉장고 재료 : " +  InFridgeIngredientList.size());
 		
-		
-		model.addAttribute("FridgeIngredientList", FridgeIngredientList);
 		model.addAttribute("FridgeIngredientListForDto", FridgeIngredientListForDto);
 
 		// 메뉴1 화면에서 사용할 사용자가 가지고 있는 재료를 세션에 저장
-		session.setAttribute("InFridgeIngredientList", FridgeIngredientList);
+		session.setAttribute("InFridgeIngredientList", InFridgeIngredientList);
 
 		List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session
 				.getAttribute("NoInFridgeIngredientList"); // 세션에서 사용하지 않을 재료 리스트 불러옴
@@ -77,8 +76,8 @@ public class Menu1Controller {
 		
 
 		// 가지고 있는 재료로 만들 수 있는 메뉴 리스트
-		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(FridgeIngredientList);
-		List<MenuDto> showCanMakeMenuList2 = menuService.getCanMakeMenu2(FridgeIngredientList);
+		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
+		List<MenuDto> showCanMakeMenuList2 = menuService.getCanMakeMenu2(InFridgeIngredientList);
 		
 //		List<Integer> rcodeList = new ArrayList<>();
 //		for (MenuDto menu:showCanMakeMenuList2) {
@@ -88,7 +87,8 @@ public class Menu1Controller {
 		model.addAttribute("showCanMakeMenuList", showCanMakeMenuList);
 		model.addAttribute("showCanMakeMenuList2", showCanMakeMenuList2);
 		model.addAttribute("NoInFridgeIngredientList", NoInFridgeIngredientList);
-		model.addAttribute("InFridgeIngredientList", FridgeIngredientList);
+		model.addAttribute("InFridgeIngredientList", InFridgeIngredientList);
+		model.addAttribute("test",30);
 		model.addAttribute("days", days);
 		
 		
@@ -125,14 +125,20 @@ public class Menu1Controller {
 		List<IngredientDto> InFridgeIngredientList = (List<IngredientDto>) session
 				.getAttribute("InFridgeIngredientList");
 		// 사용할 수 있는 재료리스트를 불러옴
+		
+		
 		if (InFridgeIngredientList == null) {
 			InFridgeIngredientList = new ArrayList<>();
 		}
-
+		
+		System.out.println("====================================BeforeIngredientListNum :"+ InFridgeIngredientList.size());
 		// 사용할 수 있는 재료리스트에서 뽑은 재료를 제거
 		InFridgeIngredientList.remove(getOneIngredient);
 		List<Integer> InFridgeIngredientIcodeList=  menuService.makeIcodeList(InFridgeIngredientList);
+		model.addAttribute("InFridgeIngredientList",InFridgeIngredientList.size());
 		
+		
+		int lackIngredient = InFridgeIngredientList.size();
 		session.setAttribute("InFridgeIngredientList", InFridgeIngredientList);
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -142,23 +148,15 @@ public class Menu1Controller {
 		List<IngredientDto> selectExcludeIngredientList = menuService.selectExcludeIngredient(NoInFridgeIngredientList,
 				mno);
 		System.out.println("=================NoInFridgeIngredientList==================: " + NoInFridgeIngredientList);
-		System.out.println("=================InFridgeIngredientList==================: " + InFridgeIngredientList);
+		
 		System.out.println("=================selectExcludeIngredientList ==================: " + selectExcludeIngredientList );
 		
 		
-		List<Integer> getCountUsedIcodeFromInfridgeIcodeList = new ArrayList<>();
+//		/System.out.println("==================================getCountUsedIcodeFromInfridgeIcodeList :============"+getCountUsedIcodeFromInfridgeIcodeList);
 		
-		if (NoInFridgeIngredientList.size()==0) {
-		
-			getCountUsedIcodeFromInfridgeIcodeList = menuService.getCountUsedIcodeFromInfridgeIcodeList(InFridgeIngredientIcodeList);
-			
-		}else if(NoInFridgeIngredientList.size()!=0) {
-			getCountUsedIcodeFromInfridgeIcodeList = menuService.getCountUsedIcodeFromInfridgeIcodeList(InFridgeIngredientIcodeList);
-		
-		}
-		
-		System.out.println("==================================getCountUsedIcodeFromInfridgeIcodeList :============"+getCountUsedIcodeFromInfridgeIcodeList);
-		
+		model.addAttribute("lackIngredient",lackIngredient);
+		System.out.println("=================lackIngredient InFridgeIngredientList==================: " + lackIngredient);
+		model.addAttribute("test",100);
 		model.addAttribute("InFridgeIngredientList",InFridgeIngredientList);
 		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
 		//menuService.makeIcodeList();
@@ -197,7 +195,7 @@ public class Menu1Controller {
 
 			InFridgeIngredientList.remove(NoInFridgeIngredient);
 		}
-
+		
 		// 사용할수 있는 재료로 만들 수 있는 메뉴 보여주는 dao함수 실행
 		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
 
@@ -245,7 +243,7 @@ public class Menu1Controller {
 			InFridgeIngredientList.remove(NoInFridgeIngredient);
 		}
 		model.addAttribute("InFridgeIngredientListNum", InFridgeIngredientListNum);
-		System.out.println("====================================InFridgeIngredientListNum :"+ InFridgeIngredientListNum);
+		System.out.println("====================================22222222InFridgeIngredientListNum :"+ InFridgeIngredientListNum);
 		for (IngredientDto NoInFridgeIngredient : NoInFridgeIngredientList) {
 
 			InFridgeIngredientList.remove(NoInFridgeIngredient);
@@ -566,6 +564,34 @@ public class Menu1Controller {
 		
 		
 		return "";
+	}
+	
+	
+	
+	@ResponseBody
+	@GetMapping("/getCountUsedIcodeFromInfridgeIcodeList")
+	public List<Integer> getCountUsedIcodeFromInfridgeIcodeList(@RequestParam("icode") int icode, HttpSession session) {
+		
+		List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session
+				.getAttribute("NoInFridgeIngredientList"); // 세션에서 사용하지 않을 재료 리스트 불러옴
+		List<IngredientDto> InFridgeIngredientList = (List<IngredientDto>) session
+				.getAttribute("InFridgeIngredientList"); // 세션에서 사용하지 않을 재료 리스트 불러옴
+	
+	
+		IngredientDto dto = menuService.getOneIngredient(icode);
+		//InFridgeIngredientList.remove(dto);
+		
+		List<Integer> InFridgeicodeList =  menuService.makeIcodeList(InFridgeIngredientList);
+		List<Integer> NoInFridgeicodeList =  menuService.makeIcodeList(NoInFridgeIngredientList);
+		List<Integer> getCountUsedIcodeFromInfridgeIcodeList2 = menuService.getCountUsedIcodeFromInfridgeIcodeList2(InFridgeicodeList,NoInFridgeicodeList);
+		// 리스트가 null일 경우 새로운 리스트를 생성합니다.
+//		System.out.println("==============================getCountUsedIcodeFromInfridgeIcodeList2 : "+getCountUsedIcodeFromInfridgeIcodeList2);
+		
+			
+		
+		
+		System.out.println("==============================getCountUsedIcodeFromInfridgeIcodeList_result : "+getCountUsedIcodeFromInfridgeIcodeList2);
+		return getCountUsedIcodeFromInfridgeIcodeList2;
 	}
 
 	
