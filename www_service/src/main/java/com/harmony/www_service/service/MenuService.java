@@ -129,9 +129,10 @@ public class MenuService {
 	   List<Integer> getCountUsedIcodeFromInfridgeIcodeList = menu1dao.getCountUsedIcodeFromInfridgeIcodeList(icodeList);
 	   return getCountUsedIcodeFromInfridgeIcodeList;
    };
+   
    public List<Integer> getCountUsedIcodeFromInfridgeIcodeList2(List<Integer> icodeList,List<Integer> excludList){
-	   List<Integer> getCountUsedIcodeFromInfridgeIcodeList = menu1dao.getCountUsedIcodeFromInfridgeIcodeList2(icodeList,excludList);
-	   return getCountUsedIcodeFromInfridgeIcodeList;
+	   List<Integer> getCountUsedIcodeFromInfridgeIcodeList2 = menu1dao.getCountUsedIcodeFromInfridgeIcodeList2(icodeList,excludList);
+	   return getCountUsedIcodeFromInfridgeIcodeList2;
    };
    
 }

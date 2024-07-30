@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <title>Document</title>
 <style>
-#mainForm {
-	margin-bottom: 15px;
-}
 
 #mainForm input {
 	padding: 5px 20px;
@@ -95,9 +92,6 @@
 #NoUseIngredient {
 	border: 1px solid #eee;
 	padding: 10px;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
 }
 
 #NoUseIngredient button {
@@ -332,6 +326,18 @@ input[type="submit"]:hover {
 .low-value {
 	color: red;
 }
+
+.ingredient-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.except-ingre {
+    flex: 1 1 45%; /* 각 요소가 45% 너비를 가지도록 설정 */
+    box-sizing: border-box;
+    margin: 5px;
+    border: 1px solid #ccc;
+}
 </style>
 </head>
 <body>
@@ -339,9 +345,7 @@ input[type="submit"]:hover {
 		<th:block th:insert="~{/sub/header.html}"></th:block>
 	</header>
 	<section>
-		<form id="mainForm" action="/menu1/main" method="get">
-			<input type="submit" value="초기화">
-		</form>
+
 
 
 		<div id="all-area">
@@ -360,15 +364,25 @@ input[type="submit"]:hover {
 							</div>
 							<div>
 								<button id="xBtn" type="button" class="outIngre"
-									th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\');'">-</button>
+									th:onclick="'toggleHighlight(event, \'' + ${dto.icode} + '\',\'' + ${InFridgeIngredientList.size()} + '\');'">-</button>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div>
+
 					<div style="text-align: center">제외된 재료</div>
 					<div id="NoUseIngredient">
-						<button onclick="NoUseIngredientAllDelete(event)">전체삭제</button>
+						<div id="NoUseIngredientBtn">
+						<form id="mainForm" action="/menu1/main" method="get">
+							<input type="submit" value="전체삭제">
+						</form>
+						</div>
+						<br>
+						<div id="NoUseIngredientBody">
+			
+						
+						</div>
 					</div>
 				</div>
 			</div>
@@ -379,7 +393,7 @@ input[type="submit"]:hover {
 					<div class="possible-recipe-line-box1">
 						<div>요리가능한 레시피</div>
 						<label><input type="checkbox" class="item-checkbox"
-							id="toggle-checkbox"> 재료가 부족해요</label>
+							id="toggle-checkbox"> 1~2개의 재료가 부족해도 만들 수 있는 레시피</label>
 					</div>
 					<div class="howToUse">
 						<button id="howToUseBtn">어떻게 쓰나요?</button>
@@ -421,15 +435,17 @@ input[type="submit"]:hover {
 							<div class="possible-menu-info">
 								<span id="category">[[${dto.category}]]</span>
 								[[${dto.menuName}]]
-								<p class="asd" th:if="${#lists.contains(showCanMakeMenuList, dto) == false}">
-                    ⓘ <span class="tooltip">[[${InFridgeIngredientList.size()}]] 개</span>
-                </p>
+								<p class="asd"
+									th:if="${#lists.contains(showCanMakeMenuList, dto) == false}">
+									ⓘ <span id="rackInfo" class="tooltip">1개 이상의 재료가 부족합니다</span>
+								</p>
 							</div>
 							<div class="possible-menu-go">
 								<button id="xBtn" type="button"
 									th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
 									보러가기 ></button>
 							</div>
+
 						</div>
 					</div>
 				</div>
@@ -478,17 +494,43 @@ input[type="submit"]:hover {
             modal.style.display = "none";
         }
     }
-
-    function toggleHighlight(event, icode) {
+	
+    function getCountUsedIcodeFromInfridgeIcodeList(icode){
+    	   event.preventDefault();
+           
+           fetch("/menu1/getCountUsedIcodeFromInfridgeIcodeList?icode=" + icode, {
+               method: "GET",
+               headers: {
+                   "Content-Type": "application/json",
+               },
+           })
+           .then(response => response.json())
+           .then(data => {
+               // Handle ingredient deletion
+               //deleteCanMakeMenu(event, icode);
+               
+               document.getElementById("rackInfo").innerHTML =data;
+           })
+           .catch(error => {
+               console.error('Error:', error);
+           });
+    	
+    }
+    
+    
+    
+    function toggleHighlight(event, icode,IngredientNum) {
         const button = event.currentTarget;
         const row = button.closest('.row');
         const checkboxBtn = document.getElementById('toggle-checkbox');
         let checked = checkboxBtn.checked;
+        var IngredientNum =IngredientNum;
         row.classList.toggle('highlight');
 
         if (row.classList.contains('highlight')) {
             NoUseIngredient(event);
-            deleteIngredient(event, icode);
+            deleteIngredient(event, icode,IngredientNum);
+     
             if(!checked){
             mcodeListForIcodeList(event, icode);
             } else{
@@ -528,8 +570,11 @@ input[type="submit"]:hover {
         window.location.href = '/menu_all/recipe_list?mcode=' + mcode;
     }
 
-    function deleteIngredient(event, icode) {
+    function deleteIngredient(event, icode,IngredientNum) {
         event.preventDefault();
+        console.log("==================IngredientNum============="+IngredientNum)
+        var ingredientCount = IngredientNum;
+        
         fetch("/menu1/deleteFridgeIngredientList?icode=" + icode, {
             method: "GET",
             headers: {
@@ -540,12 +585,32 @@ input[type="submit"]:hover {
         .then(data => {
             // Handle ingredient deletion
             //deleteCanMakeMenu(event, icode);
-            NoUseIngredient(event);
+            
+            //document.getElementById("rackInfo").innerHTML =data;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        
+        fetch("/menu1/getCountUsedIcodeFromInfridgeIcodeList?icode=" + icode, {
+            method: "GET",
+           headers: {
+                "Content-Type": "application/json",
+           },
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+            deleteCanMakeMenu(event, icode);
+            
+            document.getElementById("rackInfo").innerHTML =data;
         })
         .catch(error => {
             console.error('Error:', error);
         });
     }
+    
+    
     function decreaseNumber() {
         var asdBtn = document.getElementById("asd");
        
@@ -631,13 +696,14 @@ input[type="submit"]:hover {
         })
         .then(response => response.json())
         .then(data => {
-            document.getElementById("NoUseIngredient").innerHTML = CreateNoUseIngredientTable(data);
+            document.getElementById("NoUseIngredientBody").innerHTML = CreateNoUseIngredientTable(data);
         })
         .catch(error => {
             console.error('Error:', error);
         });
     }
 
+    
     function undoIngredient(event, icode) {
         event.preventDefault();
         const checkboxBtn = document.getElementById('toggle-checkbox');
@@ -756,17 +822,18 @@ input[type="submit"]:hover {
             html += '';
         } else {
             // 배열이 있고 데이터가 있는 경우
+             html += '<div class="ingredient-container">';
             jsonData.forEach(item => {
                 html += '<div>';
-                html += '<form id="mainForm" action="/menu1/main" method="get">'
-                html += '<input type="submit" value="초기화">';
-				html += '</form>';
+                //html += '<form id="mainForm" action="/menu1/main" method="get">'
+                //html += '<input type="submit" value="전체삭제">';
+				//html += '</form>';
                 html += '<div class="except-ingre">' + item.name;
-                html += '<button type="button" onclick="undoIngredient(event, \'' + item.icode + '\')">x</button>';
+                html += '<button type="button" onclick="undoIngredient(event, \'' + item.icode + '\')">-</button>';
                 html += '</div>';
             	html += '</div>';
             });
-
+            html += '</div>';
         }
 
         return html;
