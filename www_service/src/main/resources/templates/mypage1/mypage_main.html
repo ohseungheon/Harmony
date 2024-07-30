@@ -1,915 +1,974 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Document</title>
-<link rel="stylesheet" as="style" crossorigin
-	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-<script src="https://code.jquery.com/jquery-3.7.1.js"
-	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-	crossorigin="anonymous"></script>
-<style>
-section {
-	position: relative;
-}
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <style>
+        section {
+            position: relative;
+        }
 
-main {
-	position: absolute;
-	top: 0;
-	left: -220px;
-}
+        main {
+            position: absolute;
+            top: 0;
+            left: -220px;
+        }
 
-#by-section {
-	width: 1140px;
-	min-height: 1000px;
-	border: 1px solid #ddd;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	box-sizing: border-box;
-}
+        #by-section {
+            width: 1140px;
+            min-height: 1000px;
+            border: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+        }
 
-#by-myInfo {
-	width: 200px;
-	background: white;
-	border: 1px solid #ccc;
-	padding: 25px 0;
-	margin-bottom: 30px;
-}
+        #by-myInfo {
+            width: 200px;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 25px 0;
+            margin-bottom: 30px;
+        }
 
-#by-myInfo .info-inbox {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 30px;
-}
+        #by-myInfo .info-inbox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
 
-#by-myInfo .info-inbox2 p, #by-myInfo2 .info-inbox2 p {
-	margin-bottom: 20px;
-	font-size: 18px;
-}
+        #by-myInfo .info-inbox2 p,
+        #by-myInfo2 .info-inbox2 p {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
 
-#by-myInfo2 {
-	width: 200px;
-	border: 1px solid #ccc;
-	padding: 25px 0;
-	background: #fff;
-}
+        #by-myInfo2 {
+            width: 200px;
+            border: 1px solid #ccc;
+            padding: 25px 0;
+            background: #fff;
+        }
 
-#by-myInfo, #by-myInfo2 {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
-}
+        #by-myInfo,
+        #by-myInfo2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
 
-.info-inbox, .info-inbox2 {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-}
+        .info-inbox,
+        .info-inbox2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
 
-#by-nickName {
-	font-size: 25px;
-}
+        #by-nickName {
+            font-size: 25px;
+        }
 
-#by-nickName2 {
-	font-size: 25px;
-	border-bottom: 2px solid #ccc;
-	text-align: center;
-	margin-bottom: 30px;
-}
+        #by-nickName2 {
+            font-size: 25px;
+            border-bottom: 2px solid #ccc;
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-.by-div {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	flex-direction: row;
-}
+        .by-div {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: row;
+        }
 
-.by-topdiv {
-	border: 1px solid #ddd;
-	width: 455px;
-	height: 180px;
-	margin: 50px 20px;
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
-}
+        .by-topdiv {
+            border: 1px solid #ddd;
+            width: 455px;
+            height: 180px;
+            margin: 50px 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
 
-.by-span {
-	margin-top: -30px;
-	margin-bottom: 23px;
-}
+        .by-span {
+            margin-top: -30px;
+            margin-bottom: 23px;
+        }
 
-.by-ingre-div {
-	border: 1px solid #ddd;
-	width: 915px;
-	height: 950px;
-	padding: 20px;
-	margin-bottom: 20px;
-}
+        .by-ingre-div {
+            border: 1px solid #ddd;
+            width: 915px;
+            height: 950px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
 
-#by-dday-span {
-	position: absolute;
-	margin-left: -10px;
-	margin-top: -170px;
-}
+        #by-dday-span {
+            position: absolute;
+            margin-left: -10px;
+            margin-top: -170px;
+        }
 
-#by-now-span {
-	position: absolute;
-	margin-left: 790px;
-	margin-top: -170px;
-}
+        #by-now-span {
+            position: absolute;
+            margin-left: 790px;
+            margin-top: -170px;
+        }
 
-#by-dday-list {
-	border: 3px solid #e0ebf7;
-	background-color: white;
-	width: 870px;
-	height: 100px;
-	margin-bottom: 115px;
-	margin-top: 35px;
-	padding: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	flex-direction: row;
-	overflow-x: auto;
-	overflow-y: hidden;
-	scrollbar-width: auto;
-	scrollbar-color: #ffffff #e0ebf7;
-}
+        #by-dday-list {
+            border: 3px solid #e0ebf7;
+            background-color: white;
+            width: 870px;
+            height: 100px;
+            margin-bottom: 115px;
+            margin-top: 35px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: row;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: auto;
+            scrollbar-color: #ffffff #e0ebf7;
+        }
 
-.by-dday {
-	border: 2px solid #e0ebf7;
-	border-radius: 10px;
-	background-color: white;
-	width: 100px;
-	margin: 20px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	flex-shrink: 0;
-}
+        .by-dday {
+            border: 2px solid #e0ebf7;
+            border-radius: 10px;
+            background-color: white;
+            width: 100px;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
 
-#by-tab-span {
-	position: absolute;
-	margin-left: 15px;
-	margin-top: -30px;
-}
+        #by-tab-span {
+            position: absolute;
+            margin-left: 15px;
+            margin-top: -30px;
+        }
 
-#by-tab {
-	width: 920px;
-	border-radius: 20px;
-}
+        #by-tab {
+            width: 920px;
+            border-radius: 20px;
+        }
 
-#by-tab2 {
-	background-color: #e0ebf7;
-	border: 3px solid #e0ebf7;
-	width: 915px;
-	height: 620px;
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
-	overflow: auto;
-	scrollbar-width: auto;
-	scrollbar-color: #ffffff #e0ebf7;
-}
+        #by-tab2 {
+            background-color: #e0ebf7;
+            border: 3px solid #e0ebf7;
+            width: 915px;
+            height: 620px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            overflow: auto;
+            scrollbar-width: auto;
+            scrollbar-color: #ffffff #e0ebf7;
+        }
 
-.tabs {
-	display: flex;
-	margin-top: -35px;
-}
+        .tabs {
+            display: flex;
+            margin-top: -35px;
+        }
 
-.tabs button {
-	flex: 1;
-	padding: 13px;
-	cursor: pointer;
-	background-color: #fff;
-	border: 1px solid #ddd;
-	outline: none;
-	transition: background-color 0.3s ease;
-	font-size: 15px;
-}
+        .tabs button {
+            flex: 1;
+            padding: 13px;
+            cursor: pointer;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-size: 15px;
+        }
 
-.tabs button:hover {
-	background-color: #ddd;
-}
-/* 활성화된 탭 버튼 스타일 */
-.tabs button.active {
-	background-color: white;
-	border: 5px solid #e0ebf7;
-}
-/* 탭 콘텐츠 기본 스타일 - 숨김 */
-.tab-content {
-	display: none;
-	padding: 20px;
-}
-/* 활성화된 탭 콘텐츠 스타일 - 표시 */
-.tab-content.active {
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: row;
-}
+        .tabs button:hover {
+            background-color: #ddd;
+        }
 
-.by-list {
-	border: 1px solid #ddd;
-	background-color: #fff;
-	box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15); /* 우하단에 그림자 추가 */
-	width: 170px;
-	padding: 10px;
-	margin: 20px;
-	box-sizing: border-box;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center; /* 수평 가운데 정렬 */
-	border-radius: 5px;
-}
+        /* 활성화된 탭 버튼 스타일 */
+        .tabs button.active {
+            background-color: white;
+            border: 5px solid #e0ebf7;
+        }
 
-.by-mImg {
-	box-sizing: border-box;
-	border-radius: 5px;
-	padding: 5px;
-}
+        /* 탭 콘텐츠 기본 스타일 - 숨김 */
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
 
-.by-list img {
-	width: 75px;
-	box-sizing: border-box;
-}
+        /* 활성화된 탭 콘텐츠 스타일 - 표시 */
+        .tab-content.active {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
 
-.by-mInfo {
-	flex-grow: 1;
-}
+        .by-list {
+            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+            /* 우하단에 그림자 추가 */
+            width: 170px;
+            padding: 10px;
+            margin: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* 수평 가운데 정렬 */
+            border-radius: 5px;
+        }
 
-#by-mName {
-	font-size: 18px;
-	margin-bottom: 5px;
-}
+        .by-mImg {
+            box-sizing: border-box;
+            border-radius: 5px;
+            padding: 5px;
+        }
 
-.by-form {
-	margin-top: 5px;
-}
+        .by-list img {
+            width: 75px;
+            box-sizing: border-box;
+        }
 
-.by-form label, .by-form input {
-	margin-bottom: 15px;
-	text-align: center;
-}
+        .by-mInfo {
+            flex-grow: 1;
+        }
 
-.by-form label {
-	width: 50px;
-	text-align: right;
-	margin-right: 7px;
-	font-size: 11px;
-}
+        #by-mName {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
 
-.by-form .form-row {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
+        .by-form {
+            margin-top: 5px;
+        }
 
-.by-form input[type="text"] {
-	width: 70%;
-	padding: 3px;
-	border: 1px solid #bbb;
-	box-sizing: border-box;
-	text-align: center;
-	margin-right: 10px;
-	border-radius: 5px;
-	font-size: 13px;
-}
+        .by-form label,
+        .by-form input {
+            margin-bottom: 15px;
+            text-align: center;
+        }
 
-.by-update-btn, .by-delete-btn {
-	padding: 5px 15px;
-	background-color: #FF9A8B;
-	color: white;
-	border: none;
-	cursor: pointer;
-	margin: 0 5px; /* 추가: 버튼을 왼쪽으로 이동 */
-	border-radius: 5px;
-}
+        .by-form label {
+            width: 50px;
+            text-align: right;
+            margin-right: 7px;
+            font-size: 11px;
+        }
 
-.by-update-btn:hover, .by-delete-btn:hover {
-	background-color: #FF6F61;
-}
+        .by-form .form-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-#by-btn-insert {
-	width: 100px;
-	height: 33px;
-	position: absolute;
-	margin-left: 813px;
-	margin-top: -40px;
-	background-color: white;
-	border: 1px solid #ccc;
-	text-align: center;
-	color: grey;
-	cursor:pointer;
-}
+        .by-form input[type="text"] {
+            width: 70%;
+            padding: 3px;
+            border: 1px solid #bbb;
+            box-sizing: border-box;
+            text-align: center;
+            margin-right: 10px;
+            border-radius: 5px;
+            font-size: 13px;
+        }
 
-#by-btn-insert:hover {
-	background-color: #eee;
-}
+        .by-update-btn,
+        .by-delete-btn {
+            padding: 5px 15px;
+            background-color: #FF9A8B;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 0 5px;
+            /* 추가: 버튼을 왼쪽으로 이동 */
+            border-radius: 5px;
+        }
 
-.by-jjim {
-	border: 1px solid #eee;
-	width: 370px;
-	height: 40px;
-	margin: 5px 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
+        .by-update-btn:hover,
+        .by-delete-btn:hover {
+            background-color: #FF6F61;
+        }
 
-.by-jjim span {
-	margin-left: 25px;
-}
+        #by-btn-insert {
+            width: 100px;
+            height: 33px;
+            position: absolute;
+            margin-left: 813px;
+            margin-top: -40px;
+            background-color: white;
+            border: 1px solid #ccc;
+            text-align: center;
+            color: grey;
+            cursor: pointer;
+        }
 
-.by-jjim:hover {
-	background-color: #eee;
-}
+        #by-btn-insert:hover {
+            background-color: #eee;
+        }
 
-#by-menu-img {
-	width: 50%;
-	margin: 5px;
-}
+        .by-jjim {
+            border: 1px solid #eee;
+            width: 370px;
+            height: 40px;
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-#by-menu-plus {
-	color: red;
-}
+        .by-jjim span {
+            margin-left: 25px;
+        }
 
-#by-menu-plus, #by-menu-minus, #by-menu-d0 {
-	font-weight: bold;
-}
+        .by-jjim:hover {
+            background-color: #eee;
+        }
 
-.d-day-info {
-	text-align: center;
-	font-size: 13px;
-	margin: 5px;
-}
-/* 모달 배경 */
-.modal {
-	display: none; /* 기본적으로 숨김 */
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgb(0, 0, 0);
-	background-color: rgba(0, 0, 0, 0.4);
-}
-#modalData{
-	margin-bottom: 40px;
-}
-/* 모달 콘텐츠 */
-.modal-content {
-	background-color: #fefefe;
-	margin: 110px auto;
-	padding: 20px;
-	width: 500px;
-	padding:30px 0;
-    border-radius:5px;
-    box-sizing:border-box;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    position:relative;
-}
+        #by-menu-img {
+            width: 50%;
+            margin: 5px;
+        }
 
-.modal-area-box{
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:center;
-}
-.modal-area-box label{
-	width:60px;
-	font-size:14px;
-	font-weight:300;
-}
+        #by-menu-plus {
+            color: red;
+        }
 
-.modal-box1 #modalName{
-	width:187px;
-	border:0;
-	font-size:15px;
-	box-sizing:border-box;
-}
-.modal-box1 #modalCategory{
-	width:187px;
-	border:0;
-	font-size:15px;
-	box-sizing: border-box;
-}
-.modal-box2{
-	margin-bottom:25px;
-}
-.modal-box2 .by-deadline-box{
-	margin-bottom:20px;
-}
-.modal-box2 input{
-	font-family: "Pretendard Variable", Pretendard;
-	height:30px;
-	padding-left:5px;
-	box-sizing:border-box;
-}
+        #by-menu-plus,
+        #by-menu-minus,
+        #by-menu-d0 {
+            font-weight: bold;
+        }
 
-.modal-area-box textarea{
-	font-family: "Pretendard Variable", Pretendard;
-	width:350px;
-	height:100px;
-	padding:5px;
-	box-sizing:border-box;
-}
-.modal-area-box select{
-	width:100px;
-	height:30px;
-	font-family: "Pretendard Variable", Pretendard;
-}
+        .d-day-info {
+            text-align: center;
+            font-size: 13px;
+            margin: 5px;
+        }
 
-/* 닫기 버튼 */
-.close {
-	display:inline-block;
-	color: #aaa;
-	font-size: 42px;
-	font-weight: 400;
-	position:absolute;
-	top:5px;
-	right:15px;
-	transition:all 0.2s;
-}
+        /* 모달 배경 */
+        .modal {
+            display: none;
+            /* 기본적으로 숨김 */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
 
-.close:hover, .close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-}
+        #modalData {
+            margin-bottom: 40px;
+        }
 
-.by-modal {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin: 20px;
-}
-.by-deadline-box {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	margin-bottom: 20px;
-}
-#by-button-group {
-	display: flex; 
-	margin: 10px;
-}
-#by-btn-group{
-	text-align:center;
-	margin-top:15px;
-}
-#by-btn-group input{
-	width:350px;
-	padding:10px 0;
-	background:#F5A47D;
-	color:#fff;
-	border:1px solid #F5A47D;
-	border-radius:5px;
-	cursor:pointer;
-}
-.by-if{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-.by-if p{
-	margin-bottom: 5px;
-}
-.by-for-if{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    margin: auto;
-}
-</style>
+        /* 모달 콘텐츠 */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 110px auto;
+            padding: 20px;
+            width: 500px;
+            padding: 30px 0;
+            border-radius: 5px;
+            box-sizing: border-box;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            position: relative;
+        }
+
+        .modal-area-box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .modal-area-box label {
+            width: 60px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        .modal-box1 {
+            display: flex;
+            width: 360px;
+            justify-content: center;
+        }
+
+        .modal-box1 #modalName {
+            width: 102px;
+            border: 0;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        .modal-box1 #modalCategory {
+            width: 120px;
+            border: 0;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        .modal-box2 {
+            width: 360px;
+            margin: 16px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .modal-box2 .by-deadline-box {
+            margin-bottom: 20px;
+        }
+
+        .modal-box2 input {
+            font-family: "Pretendard Variable", Pretendard;
+            height: 30px;
+            padding-left: 5px;
+            box-sizing: border-box;
+        }
+
+        .modal-area-box textarea {
+            font-family: "Pretendard Variable", Pretendard;
+            width: 350px;
+            height: 100px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .modal-area-box select {
+            width: 100px;
+            height: 30px;
+            font-family: "Pretendard Variable", Pretendard;
+        }
+
+        /* 닫기 버튼 */
+        .close {
+            display: inline-block;
+            color: #aaa;
+            font-size: 42px;
+            font-weight: 400;
+            position: absolute;
+            top: 5px;
+            right: 15px;
+            transition: all 0.2s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .by-modal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .by-deadline-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #by-button-group {
+            display: flex;
+            margin: 10px;
+        }
+
+        #by-btn-group {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        #by-btn-group input {
+            width: 350px;
+            padding: 10px 0;
+            background: #F5A47D;
+            color: #fff;
+            border: 1px solid #F5A47D;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .by-if {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .by-if p {
+            margin-bottom: 5px;
+        }
+
+        .by-for-if {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            margin: auto;
+        }
+
+        #king-fridge-ingredient-update {
+            margin-right: 52px;
+        }
+
+        #king-fridge-ingredient-update input {
+            width: 102px;
+            padding: 3px 8px;
+        }
+
+        #king-fridge-untouchable-area {
+            margin-left: 4px;
+            margin-right: 52px;
+        }
+        .by-modal label {
+            margin: 3px 0;
+        }
+    </style>
 </head>
+
 <body>
-	<header>
-		<th:block th:insert="~{/sub/header.html}"></th:block>
-	</header>
+    <header>
+        <th:block th:insert="~{/sub/header.html}"></th:block>
+    </header>
 
-	<section>
-		<!-- 내정보 -->
-		<main>
+    <section>
+        <!-- 내정보 -->
+        <main>
 
-			<div id="by-sidebar">
-				<div id="by-myInfo">
-					<div class="info-inbox">
-						<span id="by-nickName"> [[${member.nickName}]] </span>
-					</div>
-					<div class="info-inbox2">
-						<p>
-							<a th:href="@{/info_update}">😀 내 정보 수정</a>
-						</p>
-						<p>
-							<a th:href="@{/my/recipe/list(mno=${mno})}">🍳 나의 레시피 관리</a>
-						</p>
-						<p>
-							<a th:href="@{/like_hate_list}">💘 나의 좋아요 관리</a>
-						</p>
-					</div>
-				</div>
+            <div id="by-sidebar">
+                <div id="by-myInfo">
+                    <div class="info-inbox">
+                        <span id="by-nickName"> [[${member.nickName}]] </span>
+                    </div>
+                    <div class="info-inbox2">
+                        <p>
+                            <a th:href="@{/info_update}">😀 내 정보 수정</a>
+                        </p>
+                        <p>
+                            <a th:href="@{/my/recipe/list(mno=${mno})}">🍳 나의 레시피 관리</a>
+                        </p>
+                        <p>
+                            <a th:href="@{/like_hate_list}">💘 나의 좋아요 관리</a>
+                        </p>
+                    </div>
+                </div>
 
-				<div id="by-myInfo2">
-					<div class="info-inbox">
-						<span id="by-nickName2"> MY PAGE </span>
-					</div>
-					<div class="info-inbox2">
-						<p>
-							<a th:href="@{/material_insert(mno=${mno})}">재료 등록</a>
-						</p>
-						<p>
-							<a th:href="@{/my/recipe/registForm(mno=${mno})}">레시피 등록</a>
-						</p>
-						<p>
-							<a th:href="@{/my/recipe/list(mno=${mno})}">나의 레시피</a>
-						</p>
-						<p>
-							<a th:href="@{/like_hate_list}">좋아요 레시피</a>
-						</p>
-						<p>
-							<a th:href="@{/menu1/main(mno=${mno})}">메뉴 추천 받기</a>
-						</p>
-					</div>
-				</div>
-			</div>
+                <div id="by-myInfo2">
+                    <div class="info-inbox">
+                        <span id="by-nickName2"> MY PAGE </span>
+                    </div>
+                    <div class="info-inbox2">
+                        <p>
+                            <a th:href="@{/material_insert(mno=${mno})}">재료 등록</a>
+                        </p>
+                        <p>
+                            <a th:href="@{/my/recipe/registForm(mno=${mno})}">레시피 등록</a>
+                        </p>
+                        <p>
+                            <a th:href="@{/my/recipe/list(mno=${mno})}">나의 레시피</a>
+                        </p>
+                        <p>
+                            <a th:href="@{/like_hate_list}">좋아요 레시피</a>
+                        </p>
+                        <p>
+                            <a th:href="@{/menu1/main(mno=${mno})}">메뉴 추천 받기</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-		</main>
-		<div id="by-section">
-			<!-- 상단 : 리스트 -->
-			<div class="by-div">
-				<div class="by-topdiv">
-					<span class="by-span">찜 레시피 LIST</span>
-					<div class="by-for-if" th:if="${#lists.isEmpty(recipeLike)}">
-						<div class="by-if">
-							<p>찜한 레시피가 없습니다.</p>
-						</div>
-					</div>
-					<div th:each="recipeLike : ${recipeLike}">
-						<a th:href="@{/menu_all/recipe_detail(rcode=${recipeLike.rcode})}">
-							<div class="by-jjim">
-								<span th:text="${recipeLike.recipeName} +' 👍'"></span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="by-topdiv">
-					<span class="by-span">나의 레시피 LIST</span>
-					<div class="by-for-if" th:if="${#lists.isEmpty(my)}">
-						<div class="by-if">
-							<p>나의 레시피가 없습니다.</p>
-							<a th:href="@{/my/recipe/registForm(mno=${mno})}">+레시피 등록하기</a>
-						</div>
-					</div>
-					<div th:each="my : ${my}">
-						<a th:href="@{/menu_all/recipe_detail(rcode=${my.rcode})}">
-							<div class="by-jjim">
-								<span th:text="${my.recipeName} +' 🍛'"></span>
-							</div>
-						</a>
-					</div>
-				</div>
-			</div>
+        </main>
+        <div id="by-section">
+            <!-- 상단 : 리스트 -->
+            <div class="by-div">
+                <div class="by-topdiv">
+                    <span class="by-span">찜 레시피 LIST</span>
+                    <div class="by-for-if" th:if="${#lists.isEmpty(recipeLike)}">
+                        <div class="by-if">
+                            <p>찜한 레시피가 없습니다.</p>
+                        </div>
+                    </div>
+                    <div th:each="recipeLike : ${recipeLike}">
+                        <a th:href="@{/menu_all/recipe_detail(rcode=${recipeLike.rcode})}">
+                            <div class="by-jjim">
+                                <span th:text="${recipeLike.recipeName} +' 👍'"></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="by-topdiv">
+                    <span class="by-span">나의 레시피 LIST</span>
+                    <div class="by-for-if" th:if="${#lists.isEmpty(my)}">
+                        <div class="by-if">
+                            <p>나의 레시피가 없습니다.</p>
+                            <a th:href="@{/my/recipe/registForm(mno=${mno})}">+레시피 등록하기</a>
+                        </div>
+                    </div>
+                    <div th:each="my : ${my}">
+                        <a th:href="@{/menu_all/recipe_detail(rcode=${my.rcode})}">
+                            <div class="by-jjim">
+                                <span th:text="${my.recipeName} +' 🍛'"></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-			<div class="by-ingre-div">
-				<!-- 중간 : 유통기한임박리스트 or 재료없으면 재료등록 버튼 -->
-				<div id="by-dday-list">
-					<span id="by-dday-span">유통기한 임박 LIST</span> <span id="by-now-span">[[${now}]]</span>
-					<div class="by-for-if" th:if="${#lists.isEmpty(dd)}">
-						<div class="by-if">
-							<p>재료가 없습니다. 나의 냉장고에 재료를 등록하세요.</p>
-						</div>
-					</div>
-					<div th:each="dd, iterStat : ${dd}">
-						<div class="by-dday">
-							<img id="by-menu-img"
-								th:src="@{'/img/ingredient/'+ ${dd.imgUrl}}">
-							<div class="d-day-info">
-								<p id="by-menu-plus" th:if="${days[iterStat.index] > 0}"
-									th:text="'D+' + ${days[iterStat.index]}"></p>
-								<p id="by-menu-minus" th:if="${days[iterStat.index] < 0}"
-									th:text="'D' + ${days[iterStat.index]}"></p>
-								<p id="by-menu-d0" th:if="${days[iterStat.index] == 0}"
-									th:text="'D-day'"></p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- 하단 : 등록한 재료 전체 조회 -->
-				<div id="by-tab">
-					<span id="by-tab-span">나의 재료 LIST</span>
-					<a th:href="@{/material_insert(mno=${mno})}">
-						<button id="by-btn-insert">재료등록</button>
-					</a>	
+            <div class="by-ingre-div">
+                <!-- 중간 : 유통기한임박리스트 or 재료없으면 재료등록 버튼 -->
+                <div id="by-dday-list">
+                    <span id="by-dday-span">유통기한 임박 LIST</span> <span id="by-now-span">[[${now}]]</span>
+                    <div class="by-for-if" th:if="${#lists.isEmpty(dd)}">
+                        <div class="by-if">
+                            <p>재료가 없습니다. 나의 냉장고에 재료를 등록하세요.</p>
+                        </div>
+                    </div>
+                    <div th:each="dd, iterStat : ${dd}">
+                        <div class="by-dday">
+                            <img id="by-menu-img" th:src="@{'/img/ingredient/'+ ${dd.imgUrl}}">
+                            <div class="d-day-info">
+                                <p id="by-menu-plus" th:if="${days[iterStat.index] > 0}"
+                                    th:text="'D+' + ${days[iterStat.index]}"></p>
+                                <p id="by-menu-minus" th:if="${days[iterStat.index] < 0}"
+                                    th:text="'D' + ${days[iterStat.index]}"></p>
+                                <p id="by-menu-d0" th:if="${days[iterStat.index] == 0}" th:text="'D-day'"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 하단 : 등록한 재료 전체 조회 -->
+                <div id="by-tab">
+                    <span id="by-tab-span">나의 재료 LIST</span>
+                    <a th:href="@{/material_insert(mno=${mno})}">
+                        <button id="by-btn-insert">재료등록</button>
+                    </a>
 
-					<div class="tabs">
-						<button class="tab-button active" data-tab="cool">냉장</button>
-						<button class="tab-button" data-tab="ice">냉동</button>
-						<button class="tab-button" data-tab="food">상온</button>
-					</div>
-					<div id="by-tab2">
-						<div class="by-for-if" th:if="${#lists.isEmpty(cool) && #lists.isEmpty(ice) && #lists.isEmpty(food)}">
-							<div class="by-if">
-								<p>재료가 없습니다. 나의 냉장고에 재료를 등록하세요.</p>
-								<a th:href="@{/material_insert(mno=${mno})}">+재료등록하기</a>
-							</div>
-						</div>
-						<!-- 냉장 -->
-						<div class="tab-content active" id="cool">
-							<div th:each="cool : ${cool}" class="by-list">
-								<div class="by-mImg">
-									<img th:src="@{'/img/ingredient/'+ ${cool.imgUrl}}">
-								</div>
-								<div class="by-mInfo">
-									<div id="by-mName">[[${cool.name}]]</div>
-								</div>
-								<div class="by-form">
-									<div class="form-row">
-										<label for="by-count">재료량</label> <input
-											type="text" id="by-count" th:value="${cool.amount} + ' '+ ${cool.type}" readonly>
-									</div>
-									<div class="form-row">
-										<label for="by-deadline">유통기한</label> <input type="text"
-											id="by-deadline" th:value="${cool.deadline}" readonly>
-									</div>
-								</div>
-								<div class="by-btn-div">
-									<!-- hidden input 추가 -->
-									<input type="hidden" class="fcode" th:value="${cool.fcode}">
-									<input type="hidden" name="icode" th:value="${cool.icode}">
-									<input type="hidden" name="category" th:value="${cool.category}">
-									<button id="by-update-btn" class="by-update-btn">수정</button>
-									<button id="by-delete-btn" class="by-delete-btn">삭제</button>
-								</div>
-							</div>
-						</div>
-						<!-- 냉동 -->
-						<div class="tab-content" id="ice">
-							<div th:each="ice : ${ice}" class="by-list">
-								<div class="by-mImg">
-									<img th:src="@{'/img/ingredient/'+ ${ice.imgUrl}}">
-								</div>
-								<div class="by-mInfo">
-									<div id="by-mName">[[${ice.name}]]</div>
-								</div>
-								<div class="by-form">
-									<div class="form-row">
-										<label for="by-count">재료량</label> <input
-											type="text" id="by-count" th:value="${ice.amount} + ' '+ ${ice.type}" readonly>
-									</div>
-									<div class="form-row">
-										<label for="by-deadline">유통기한</label> <input type="text"
-											id="by-deadline" th:value="${ice.deadline}" readonly>
-									</div>
-								</div>
-								<div class="by-btn-div">
-									<!-- hidden input 추가 -->
-									<input type="hidden" class="fcode" th:value="${ice.fcode}">
-									<input type="hidden" name="icode" th:value="${ice.icode}">
-									<input type="hidden" name="category" th:value="${ice.category}">
-									<button id="by-update-btn" class="by-update-btn">수정</button>
-									<button id="by-delete-btn" class="by-delete-btn">삭제</button>
-								</div>
-							</div>
-						</div>
-						<!-- 상온 -->
-						<div class="tab-content" id="food">
-							<div th:each="food : ${food}" class="by-list">
-								<div class="by-mImg">
-									<img th:src="@{'/img/ingredient/'+ ${food.imgUrl}}">
-								</div>
-								<div class="by-mInfo">
-									<div id="by-mName">[[${food.name}]]</div>
-								</div>
-								<div class="by-form">
-									<div class="form-row">
-										<label for="by-count">재료량</label> <input
-											type="text" id="by-count" th:value="${food.amount} + ' '+ ${food.type}" readonly>
-									</div>
-									<div class="form-row">
-										<label for="by-deadline">유통기한</label> <input type="text"
-											id="by-deadline" th:value="${food.deadline}" readonly>
-									</div>
-								</div>
-								<div class="by-btn-div">
-									<!-- hidden input 추가 -->
-									<input type="hidden" class="fcode" th:value="${food.fcode}">
-									<input type="hidden" name="icode" th:value="${food.icode}">
-									<input type="hidden" name="category" th:value="${food.category}">
-									<button id="by-update-btn" class="by-update-btn">수정</button>
-									<button id="by-delete-btn" class="by-delete-btn">삭제</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                    <div class="tabs">
+                        <button class="tab-button active" data-tab="cool">냉장</button>
+                        <button class="tab-button" data-tab="ice">냉동</button>
+                        <button class="tab-button" data-tab="food">상온</button>
+                    </div>
+                    <div id="by-tab2">
+                        <div class="by-for-if"
+                            th:if="${#lists.isEmpty(cool) && #lists.isEmpty(ice) && #lists.isEmpty(food)}">
+                            <div class="by-if">
+                                <p>재료가 없습니다. 나의 냉장고에 재료를 등록하세요.</p>
+                                <a th:href="@{/material_insert(mno=${mno})}">+재료등록하기</a>
+                            </div>
+                        </div>
+                        <!-- 냉장 -->
+                        <div class="tab-content active" id="cool">
+                            <div th:each="cool : ${cool}" class="by-list">
+                                <div class="by-mImg">
+                                    <img th:src="@{'/img/ingredient/'+ ${cool.imgUrl}}">
+                                </div>
+                                <div class="by-mInfo">
+                                    <div id="by-mName">[[${cool.name}]]</div>
+                                </div>
+                                <div class="by-form">
+                                    <div class="form-row">
+                                        <label for="by-count">재료량</label> <input type="text" id="by-count"
+                                            th:value="${cool.amount} + ' '+ ${cool.type}" readonly>
+                                    </div>
+                                    <div class="form-row">
+                                        <label for="by-deadline">유통기한</label> <input type="text" id="by-deadline"
+                                            th:value="${cool.deadline}" readonly>
+                                    </div>
+                                </div>
+                                <div class="by-btn-div">
+                                    <!-- hidden input 추가 -->
+                                    <input type="hidden" class="fcode" th:value="${cool.fcode}">
+                                    <input type="hidden" name="icode" th:value="${cool.icode}">
+                                    <input type="hidden" name="category" th:value="${cool.category}">
+                                    <button id="by-update-btn" class="by-update-btn">수정</button>
+                                    <button id="by-delete-btn" class="by-delete-btn">삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 냉동 -->
+                        <div class="tab-content" id="ice">
+                            <div th:each="ice : ${ice}" class="by-list">
+                                <div class="by-mImg">
+                                    <img th:src="@{'/img/ingredient/'+ ${ice.imgUrl}}">
+                                </div>
+                                <div class="by-mInfo">
+                                    <div id="by-mName">[[${ice.name}]]</div>
+                                </div>
+                                <div class="by-form">
+                                    <div class="form-row">
+                                        <label for="by-count">재료량</label> <input type="text" id="by-count"
+                                            th:value="${ice.amount} + ' '+ ${ice.type}" readonly>
+                                    </div>
+                                    <div class="form-row">
+                                        <label for="by-deadline">유통기한</label> <input type="text" id="by-deadline"
+                                            th:value="${ice.deadline}" readonly>
+                                    </div>
+                                </div>
+                                <div class="by-btn-div">
+                                    <!-- hidden input 추가 -->
+                                    <input type="hidden" class="fcode" th:value="${ice.fcode}">
+                                    <input type="hidden" name="icode" th:value="${ice.icode}">
+                                    <input type="hidden" name="category" th:value="${ice.category}">
+                                    <button id="by-update-btn" class="by-update-btn">수정</button>
+                                    <button id="by-delete-btn" class="by-delete-btn">삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 상온 -->
+                        <div class="tab-content" id="food">
+                            <div th:each="food : ${food}" class="by-list">
+                                <div class="by-mImg">
+                                    <img th:src="@{'/img/ingredient/'+ ${food.imgUrl}}">
+                                </div>
+                                <div class="by-mInfo">
+                                    <div id="by-mName">[[${food.name}]]</div>
+                                </div>
+                                <div class="by-form">
+                                    <div class="form-row">
+                                        <label for="by-count">재료량</label> <input type="text" id="by-count"
+                                            th:value="${food.amount} + ' '+ ${food.type}" readonly>
+                                    </div>
+                                    <div class="form-row">
+                                        <label for="by-deadline">유통기한</label> <input type="text" id="by-deadline"
+                                            th:value="${food.deadline}" readonly>
+                                    </div>
+                                </div>
+                                <div class="by-btn-div">
+                                    <!-- hidden input 추가 -->
+                                    <input type="hidden" class="fcode" th:value="${food.fcode}">
+                                    <input type="hidden" name="icode" th:value="${food.icode}">
+                                    <input type="hidden" name="category" th:value="${food.category}">
+                                    <button id="by-update-btn" class="by-update-btn">수정</button>
+                                    <button id="by-delete-btn" class="by-delete-btn">삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<!-- 재료 상세 모달 -->
-		<!-- 모달 창 -->
-		<div id="myModal" class="modal">
-			<div class="modal-content">
-				<span class="close">&times;</span>
-				<div class="by-modal">
-					<h2 id="modalData">재료 수정</h2>
-					<form id="m-updateForm" th:action="@{/mypage1/material_update}" method="POST">
-						<div class="modal-area-box">
-							<div class="modal-box1">
-								<div class="by-deadline-box">
-									<label for="modalName" class="m-label">재료명</label> 
-									<input type="text" id="modalName" class="m-text" value="" readonly> 
-								</div>
-								<div class="by-deadline-box">
-									<label for="modalCategory" class="m-label">카테고리</label> 
-									<input type="text" id="modalCategory" class="m-text" value="" readonly> 
-								</div>
-							</div>
-							<div class="modal-box2">
-				    			<div class="by-deadline-box">
-									<label for="modalDeadline" class="m-label">유통기한</label>
-									<input type="date" id="modalDeadline" class="m-text" value="">
-								</div>
-								<div class="by-deadline-box">
-									<label for="modalCount" class="m-label">재료량</label> 
-									<input type="number" id="modalCount" class="m-text" value="">
-									
-									<label for="modalType" class="m-label">단위</label> 
-									<input type="text" id="modalType" class="m-text" value="">
-									
-									<label for="modalState" class="m-label">재료상태</label> 
-									<input type="text" id="modalState" class="m-text" value="">
-								</div>
-								<div class="by-deadline-box">
-									<label for="modalKeeptype" class="m-label">보관상태</label> 
-									<select id="modalKeeptype" name="modalKeeptype" class="m-text">
-				    					<option value="냉장">냉장</option>
-		                   	 			<option value="냉동">냉동</option>
-		                    			<option value="상온">상온</option>
-				    				</select>
-				    			</div>
-			    			</div>
-			    			
-							<div class="by-deadline-box">
-								<textarea id="modalMemo" class="m-text"></textarea> 
-							</div>
-							
-							<input type="hidden" id="modalFcode" name="modalFcode" value="">
-		    				<input type="hidden" id="modalMno" name="modalMno" value="">
-						</div>
-		    				<div id="by-btn-group">
-								<input type="submit" value="수정"> 
-							</div>	
-					</form>
-				</div>
-			</div>
-		</div>
+        <!-- 재료 상세 모달 -->
+        <!-- 모달 창 -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="by-modal">
+                    <h2 id="modalData">재료 수정</h2>
+                    <form id="m-updateForm" th:action="@{/mypage1/material_update}" method="POST">
+                        <div class="modal-area-box">
+                            <div class="modal-box1">
+                                <div class="by-deadline-box" id="king-fridge-untouchable-area">
+                                    <label for="modalName" class="m-label">재료명</label>
+                                    <input type="text" id="modalName" class="m-text" value="" readonly>
+                                </div>
+                                <div class="by-deadline-box">
+                                    <label for="modalCategory" class="m-label">카테고리</label>
+                                    <input type="text" id="modalCategory" class="m-text" value="" readonly>
+                                </div>
+                            </div>
+                            <div class="modal-box2">
+                                <div class="by-deadline-box" id="king-fridge-ingredient-update">
+                                    <label for="modalCount" class="m-label">재료량</label>
+                                    <input type="number" id="modalCount" class="m-text" value="">
 
-	</section>
-	
-	<footer>
+                                    <label for="modalType" class="m-label">단위</label>
+                                    <input type="text" id="modalType" class="m-text" value="">
+
+                                    <label for="modalState" class="m-label">재료상태</label>
+                                    <input type="text" id="modalState" class="m-text" value="">
+                                </div>
+                                <div>
+                                    <div class="by-deadline-box">
+                                        <label for="modalDeadline" class="m-label">유통기한</label>
+                                        <input type="date" id="modalDeadline" class="m-text" value="">
+                                    </div>
+                                    <div class="by-deadline-box">
+                                        <label for="modalKeeptype" class="m-label">보관상태</label>
+                                        <select id="modalKeeptype" name="modalKeeptype" class="m-text">
+                                            <option value="냉장">냉장</option>
+                                            <option value="냉동">냉동</option>
+                                            <option value="상온">상온</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="by-deadline-box">
+                                <textarea id="modalMemo" class="m-text"></textarea>
+                            </div>
+
+                            <input type="hidden" id="modalFcode" name="modalFcode" value="">
+                            <input type="hidden" id="modalMno" name="modalMno" value="">
+                        </div>
+                        <div id="by-btn-group">
+                            <input type="submit" value="수정">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
         <th:block th:insert="~{/sub/footer.html}"></th:block>
     </footer>
 
-	<script>
-		$(document).ready(function() {
-			// 탭 전환 로직
-			$('.tab-button').on('click', function() {
-				var tabId = $(this).data('tab');
-				$('.tab-button').removeClass('active');
-				$(this).addClass('active');
-				$('.tab-content').removeClass('active');
-				$('#' + tabId).addClass('active');
-			});
-			
-			//모달
-			var modal = $('#myModal');
-    		var closeBtn = $('.close');
-			const modalName = document.getElementById("modalName");
-			const modalCategory = document.getElementById("modalCategory");
-			const modalCount = document.getElementById("modalCount");
-			const modalType = document.getElementById("modalType");
-			const modalState = document.getElementById("modalState");
-			const modalKeeptype = document.getElementById("modalKeeptype");
-			const modalDeadline = document.getElementById("modalDeadline");
-			const modalMemo = document.getElementById("modalMemo");
-			
-			// 모달 열기
-			$('.by-update-btn').on('click', function() {
-				var fcode = $(this).siblings(".fcode").val();
-				console.log("내재료",fcode);
-				
-				modal.show();
-				fetchModalData(fcode);
-			});
+    <script>
+        $(document).ready(function () {
+            // 탭 전환 로직
+            $('.tab-button').on('click', function () {
+                var tabId = $(this).data('tab');
+                $('.tab-button').removeClass('active');
+                $(this).addClass('active');
+                $('.tab-content').removeClass('active');
+                $('#' + tabId).addClass('active');
+            });
 
-			// 모달 닫기
-			closeBtn.on('click', function() {
-        		modal.hide();
-    		});
+            //모달
+            var modal = $('#myModal');
+            var closeBtn = $('.close');
+            const modalName = document.getElementById("modalName");
+            const modalCategory = document.getElementById("modalCategory");
+            const modalCount = document.getElementById("modalCount");
+            const modalType = document.getElementById("modalType");
+            const modalState = document.getElementById("modalState");
+            const modalKeeptype = document.getElementById("modalKeeptype");
+            const modalDeadline = document.getElementById("modalDeadline");
+            const modalMemo = document.getElementById("modalMemo");
 
-			// 모달 데이터 가져오기
-			function fetchModalData(fcode) {
-				console.log("모달재료번호",fcode);
-				$.ajax({
-		            url: '/mypage1/' + fcode, // 서버에서 데이터를 가져올 URL
-		            type: 'GET',
-		            data: fcode,
-		            success: function(data) {
-		            	document.getElementById("modalFcode").value = data.fcode;
-		            	document.getElementById("modalMno").value = data.mno;
-		            	document.getElementById("modalName").value = data.name;
-		                document.getElementById("modalCategory").value = data.category;
-		                document.getElementById("modalCount").value = data.amount;
-		                document.getElementById("modalType").value = data.type;
-		                document.getElementById("modalState").value = data.state;
-		                document.getElementById("modalKeeptype").value = data.keeptype;
-		                document.getElementById("modalDeadline").value = data.deadline;
-		                document.getElementById("modalMemo").value = data.memo;
-		                
-		            	console.log("수정재료",data);
-		            },
-					error : function(error) {
-						console.error('Error:', error);
-					}
-				});
-			}
-			//모달 데이터 수정기능 
-			$("#m-updateForm").on("submit", function(event){
-				event.preventDefault();
-				
-				const fcode = $("#modalFcode").val();
-				const mno = $("#modalMno").val();
-		        const deadline = $("#modalDeadline").val();
-		        const amount = $("#modalCount").val();
-		        const type = $("#modalType").val();
-		        const state = $("#modalState").val();
-		        const keeptype = $("#modalKeeptype").val();
-		        const memo = $("#modalMemo").val();
+            // 모달 열기
+            $('.by-update-btn').on('click', function () {
+                var fcode = $(this).siblings(".fcode").val();
+                console.log("내재료", fcode);
 
-		        var jsonData = JSON.stringify({
-		        	fcode: fcode,
-		        	mno: mno,
-		        	deadline: deadline,
-		        	amount: amount,
-		        	type: type,
-		        	state: state,
-		        	keeptype: keeptype,
-		        	memo: memo
-		        });
-		        console.log(jsonData);
-				
-				$.ajax({
-					url: $(this).attr('action'),
-		            type: 'PUT',
-		            contentType: 'application/json', // JSON 형식으로 데이터 전송
-		            data: jsonData,
-		            dataType: 'text',
-		            success: function(response) {
-		                alert("재료정보가 성공적으로 수정되었습니다🍉");
-		                window.location.href = "/mypage_main";
-		            },
-		            error: function(xhr, status, error) {
-		                console.log('Status: ' + status);
-		                console.log('Error: ' + error);
-		                alert("재료수정 실패😫");
-		            }
-		        });
-			});
-		});
+                modal.show();
+                fetchModalData(fcode);
+            });
 
-		//삭제
-		$(document).on("click", "#by-delete-btn", function(e) {
-			if (confirm('재료를 삭제하시겠습니까?')) {
-				const fcode = $(this).siblings(".fcode").val();
-				console.log(fcode);
+            // 모달 닫기
+            closeBtn.on('click', function () {
+                modal.hide();
+            });
 
-				$.ajax({
-					url : '/mypage1/material/' + fcode,
-					type : "DELETE",
-					success : function(response) {
-						alert(response);
-						console.log("삭제성공");
-						location.reload(); // 페이지 새로고침
-					},
-					error : function(xhr, textStatus, errorThrown) {
-						console.log("삭제실패", textStatus, errorThrown);
-					}
-				});
-			}
-		});
+            // 모달 데이터 가져오기
+            function fetchModalData(fcode) {
+                console.log("모달재료번호", fcode);
+                $.ajax({
+                    url: '/mypage1/' + fcode, // 서버에서 데이터를 가져올 URL
+                    type: 'GET',
+                    data: fcode,
+                    success: function (data) {
+                        document.getElementById("modalFcode").value = data.fcode;
+                        document.getElementById("modalMno").value = data.mno;
+                        document.getElementById("modalName").value = data.name;
+                        document.getElementById("modalCategory").value = data.category;
+                        document.getElementById("modalCount").value = data.amount;
+                        document.getElementById("modalType").value = data.type;
+                        document.getElementById("modalState").value = data.state;
+                        document.getElementById("modalKeeptype").value = data.keeptype;
+                        document.getElementById("modalDeadline").value = data.deadline;
+                        document.getElementById("modalMemo").value = data.memo;
 
-	</script>
+                        console.log("수정재료", data);
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+            //모달 데이터 수정기능 
+            $("#m-updateForm").on("submit", function (event) {
+                event.preventDefault();
+
+                const fcode = $("#modalFcode").val();
+                const mno = $("#modalMno").val();
+                const deadline = $("#modalDeadline").val();
+                const amount = $("#modalCount").val();
+                const type = $("#modalType").val();
+                const state = $("#modalState").val();
+                const keeptype = $("#modalKeeptype").val();
+                const memo = $("#modalMemo").val();
+
+                var jsonData = JSON.stringify({
+                    fcode: fcode,
+                    mno: mno,
+                    deadline: deadline,
+                    amount: amount,
+                    type: type,
+                    state: state,
+                    keeptype: keeptype,
+                    memo: memo
+                });
+                console.log(jsonData);
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'PUT',
+                    contentType: 'application/json', // JSON 형식으로 데이터 전송
+                    data: jsonData,
+                    dataType: 'text',
+                    success: function (response) {
+                        alert("재료정보가 성공적으로 수정되었습니다🍉");
+                        window.location.href = "/mypage_main";
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Status: ' + status);
+                        console.log('Error: ' + error);
+                        alert("재료수정 실패😫");
+                    }
+                });
+            });
+        });
+
+        //삭제
+        $(document).on("click", "#by-delete-btn", function (e) {
+            if (confirm('재료를 삭제하시겠습니까?')) {
+                const fcode = $(this).siblings(".fcode").val();
+                console.log(fcode);
+
+                $.ajax({
+                    url: '/mypage1/material/' + fcode,
+                    type: "DELETE",
+                    success: function (response) {
+                        alert(response);
+                        console.log("삭제성공");
+                        location.reload(); // 페이지 새로고침
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log("삭제실패", textStatus, errorThrown);
+                    }
+                });
+            }
+        });
+
+    </script>
 </body>
+
 </html>
