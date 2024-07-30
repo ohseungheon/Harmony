@@ -8,4 +8,18 @@
       SELECT * FROM village_activities
     </select>
     
+    <select id="getSearchList">
+    	SELECT * FROM 
+    		village_activities 
+    	WHERE 
+    		vname LIKE CONCAT('%', #{query}, '%')
+    	OR 
+    		sido LIKE CONCAT('%', #{query}, '%') 
+    	OR 
+    		sgg LIKE CONCAT('%', #{query}, '%')
+    	OR 
+    		acttype LIKE CONCAT('%', #{query}, '%') 
+    	OR 
+    		actname LIKE CONCAT('%', #{query}, '%')
+    </select>
 </mapper>
