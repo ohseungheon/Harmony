@@ -18,14 +18,14 @@
           phone = #{member.phone}
       WHERE username = #{member.username};
     </update>
-    
+   <!--  
   <update id="updateMemberInfo2" >
     UPDATE user
     SET
         password = #{member.password}
     WHERE username = (SELECT username FROM member WHERE username = #{member.username});
   </update>
-
+--> 
   <select id="getMemberNoByUsername">
     SELECT mno FROM member 
     WHERE username = #{username}
