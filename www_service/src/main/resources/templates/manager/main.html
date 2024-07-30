@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DashBoard</title>
     <!-- Bootstrap CSS -->
     <link
@@ -11,6 +12,17 @@
       crossorigin="anonymous"
     />
     <style>
+      table {
+        width: 100%;
+        border-collapse: collapse; /* 셀 사이에 빈 공간을 없앰 */
+      }
+      th,
+      td {
+        border: 1px solid black; /* 셀에 경계선을 추가 */
+        padding: 8px;
+        text-align: center;
+      }
+
       #ageChartContainer,
       #genderChartContainer {
         width: 400px;
@@ -43,7 +55,7 @@
       }
       .sidebar-link:hover,
       .sidebar-link:focus {
-        background-color: #444;
+        background-color: #f44336;
         border-radius: 5px;
         text-decoration: none;
       }
@@ -86,7 +98,7 @@
         align-items: center;
         justify-content: center;
       }
-      .manager-container img{
+      .manager-container img {
         margin-right: 10px;
       }
       /* end od navbar */
@@ -101,7 +113,7 @@
       <div class="col-lg-3 sidebar fixed-top">
         <p
           class="navbar-brand text-white text-center d-block mx-auto py-3 mb-4 bottom-border"
-          style="font-size: 30px;"
+          style="font-size: 30px"
         >
           WWW_HARMONY
         </p>
@@ -117,19 +129,24 @@
         <ul class="navbar-nav flex-column mt-4">
           <!-- Dashboard -->
           <li class="nav-item">
-            <a href="#" class="sidebar-link current">
+            <a href="#" class="sidebar-link ">
               <i class="fas fa-home text-white fa-lg mr-3"></i>Dashboard
             </a>
           </li>
           <!-- UserInfo -->
           <li class="nav-item">
-            <a href="#" class="sidebar-link">
+            <a href="#" class="sidebar-link ">
               <i class="fas fa-user text-white fa-lg mr-3"></i>회원 정보
             </a>
           </li>
           <!-- IngredientManagement -->
           <li class="nav-item dropdown">
-            <a href="#" class="sidebar-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <a
+              href="#"
+              class="sidebar-link dropdown-toggle "
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               <i class="fas fa-ingredient text-white fa-lg mr-3"></i>재료 관리
             </a>
             <ul class="dropdown-menu">
@@ -141,7 +158,12 @@
           </li>
           <!-- MenuManagement -->
           <li class="nav-item dropdown">
-            <a href="#" class="sidebar-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <a
+              href="#"
+              class="sidebar-link dropdown-toggle "
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               <i class="fas fa-menu text-white fa-lg mr-3"></i>메뉴 관리
             </a>
             <ul class="dropdown-menu">
@@ -153,7 +175,12 @@
           </li>
           <!-- RecipeManagement -->
           <li class="nav-item dropdown">
-            <a href="#" class="sidebar-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <a
+              href="#"
+              class="sidebar-link dropdown-toggle current"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               <i class="fas fa-recipe text-white fa-lg mr-3"></i>레시피 관리
             </a>
             <ul class="dropdown-menu">
@@ -173,20 +200,25 @@
       <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
       <!--데이터 세그먼트 내부에 레이블 표시하기 위해 추가-->
       <!-- 성별 막대 차트 -->
-      <h1>DashBoard</h1>
+      
       <!-- <p>방문자 수 : <span th:text="${visitorCount}"></span></p> -->
+       <div style="font-size: 30px; font-weight: bold; text-align: center;"> 회원 통계 </div>
       <div id="memberCountTable">
-        <table>
-          <tr>
-            <th>총 회원수</th>
-            <th>일별 새 회원수</th>
-            <th>월별 새 회원수</th>
-          </tr>
-          <tr>
-            <td th:text="${totalMemberCount}">0</td>
-            <td th:text="${newDayMemberCount}">0</td>
-            <td th:text="${newMonthMemberCount}">0</td>
-          </tr>
+        <table border="1">
+          <thead>
+            <tr>
+              <th>총 회원수</th>
+              <th>일별 새 회원수</th>
+              <th>월별 새 회원수</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td th:text="${totalMemberCount}">0</td>
+              <td th:text="${newDayMemberCount}">0</td>
+              <td th:text="${newMonthMemberCount}">0</td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <br />
