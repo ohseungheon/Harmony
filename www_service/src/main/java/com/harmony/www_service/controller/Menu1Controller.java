@@ -76,6 +76,8 @@ public class Menu1Controller {
 		
 
 		// 가지고 있는 재료로 만들 수 있는 메뉴 리스트
+		
+		
 		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
 		List<MenuDto> showCanMakeMenuList2 = menuService.getCanMakeMenu2(InFridgeIngredientList);
 		
@@ -83,11 +85,15 @@ public class Menu1Controller {
 //		for (MenuDto menu:showCanMakeMenuList2) {
 //			rcodeList.add(menu.getMcode())
 //		}
+		List<Integer> InFridgeicodeList =  menuService.makeIcodeList(InFridgeIngredientList);
+		List<Integer> NoInFridgeicodeList =  menuService.makeIcodeList(NoInFridgeIngredientList);
+		List<Integer> getCountUsedIcodeFromInfridgeIcodeList = menuService.getCountUsedIcodeFromInfridgeIcodeList(InFridgeicodeList);
 		
 		model.addAttribute("showCanMakeMenuList", showCanMakeMenuList);
 		model.addAttribute("showCanMakeMenuList2", showCanMakeMenuList2);
 		model.addAttribute("NoInFridgeIngredientList", NoInFridgeIngredientList);
 		model.addAttribute("InFridgeIngredientList", InFridgeIngredientList);
+		model.addAttribute("getCountUsedIcodeFromInfridgeIcodeList", getCountUsedIcodeFromInfridgeIcodeList);
 		model.addAttribute("test",30);
 		model.addAttribute("days", days);
 		
