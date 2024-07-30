@@ -424,31 +424,31 @@ input[type="submit"]:hover {
 				</div>
 
 				<div id="canMakeMenuDiv2" class="container">
-					<div class="row" style="display: none;">만들 수 있는 메뉴2</div>
-					<div th:each="dto : ${showCanMakeMenuList2}" class="row row9"
-						th:id="'canMakeMenuMcode2_' + ${dto.mcode}">
-						<input type="hidden" value="${dto.mcode}">
-						<div class="possible-menu">
-							<div class="possible-menu-img">
-								<img th:src="@{'/uploads/'+ ${dto.imgurl}}">
-							</div>
-							<div class="possible-menu-info">
-								<span id="category">[[${dto.category}]]</span>
-								[[${dto.menuName}]]
-								<p class="asd"
-									th:if="${#lists.contains(showCanMakeMenuList, dto) == false}">
-									ⓘ <span id="rackInfo" class="tooltip">1개 이상의 재료가 부족합니다</span>
-								</p>
-							</div>
-							<div class="possible-menu-go">
-								<button id="xBtn" type="button"
-									th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피
-									보러가기 ></button>
-							</div>
-
-						</div>
-					</div>
-				</div>
+    <div class="row" style="display: none;">만들 수 있는 메뉴2</div>
+    <div th:each="dto, iterStat : ${showCanMakeMenuList2}" class="row row9"
+         th:id="'canMakeMenuMcode2_' + ${dto.mcode}">
+        <input type="hidden" value="${dto.mcode}">
+        <div class="possible-menu">
+            <div class="possible-menu-img">
+                <img th:src="@{'/uploads/'+ ${dto.imgurl}}">
+            </div>
+            <div class="possible-menu-info">
+                <span id="category" th:text="${dto.category}"></span>
+                <span th:text="${dto.menuName}"></span>
+                <div th:with="isInsufficientMaterials=${#lists.contains(showCanMakeMenuList, dto) == false}, index=${iterStat.index}">
+                    <p class="asd" th:if="${isInsufficientMaterials}">
+                        ⓘ <span id="rackInfo" class="tooltip"
+                              th:text="${getCountUsedIcodeFromInfridgeIcodeList[index] + '개의 재료가 부족합니다'}"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="possible-menu-go">
+                <button id="xBtn" type="button"
+                        th:onclick="'goRecipeList(event, \'' + ${dto.mcode} + '\')'">레시피 보러가기 ></button>
+            </div>
+        </div>
+    </div>
+</div>
 			</div>
 			<!-- possible-recipe -->
 		</div>
@@ -600,8 +600,8 @@ input[type="submit"]:hover {
         })
         .then(response => response.json())
         .then(data => {
-            
-            deleteCanMakeMenu(event, icode);
+            console.log("===========================data:"+data)
+     
             
             document.getElementById("rackInfo").innerHTML =data;
         })
