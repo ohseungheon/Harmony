@@ -66,6 +66,15 @@
 	color: #333;
 	cursor: pointer;
 }
+.dally-ingre-detail-btn a {
+	padding: 10px 30px;
+	background: #F5A47D;
+	border: 1px solid #F5A47D;
+	border-radius: 5px;
+	font-size: 14px;
+	color: #333;
+	cursor: pointer;
+}
 </style>
 </head>
 
@@ -107,6 +116,7 @@
 						type="submit" value="삭제" id="dally_delete_btn" />
 				</form>
 			</div>
+			<a th:href="@{'/ingredients_list'}">목록</a>
 		</div>
 	</section>
 	<footer>
