@@ -15,7 +15,7 @@ public interface IMemberDao {
 	//회원번호로 회원정보 수정 
 	public void updateMemberInfo1(@Param("member")MemberDto_by member);
 	// 비밀번호 수정
-	public void updateMemberInfo2(@Param("member")MemberDto_by member);
+	//public void updateMemberInfo2(@Param("member")MemberDto_by member);
 
 	// 아이디로 회원 번호 조회
 	public Optional<Integer> getMemberNoByUsername(@Param("username") String username);

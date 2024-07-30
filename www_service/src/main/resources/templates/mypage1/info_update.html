@@ -104,7 +104,6 @@ $(document).ready(function() {
 		event.preventDefault();
 		
         const username = $("#username").val();
-        const password = $("#password").val();
         const nickName = $("#nickName").val();
         const addr = $("#addr").val();
         const birth = $("#birth").val();
@@ -112,7 +111,6 @@ $(document).ready(function() {
 		
         var jsonData = JSON.stringify({
         	username: username,
-            password: password,
             nickName: nickName,
             addr: addr,
             birth: birth,
@@ -128,6 +126,7 @@ $(document).ready(function() {
             dataType: 'text',
             success: function(response) {
                 alert(response);
+                window.location.href = "/mypage_main";
             },
             error: function(xhr, status, error) {
                 console.log('Status: ' + status);

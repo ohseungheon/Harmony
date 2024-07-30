@@ -16,7 +16,7 @@ public class MemberService {
 	//회원정보수정
 	public void updateMemberInfo(MemberDto_by memberDto) {
 		memDao.updateMemberInfo1(memberDto);
-		memDao.updateMemberInfo2(memberDto);
+		//memDao.updateMemberInfo2(memberDto);
 	}
 	//회원번호를 가져오는 서비스 
 	public MemberDto_by getMemberByUsername(String username) {
