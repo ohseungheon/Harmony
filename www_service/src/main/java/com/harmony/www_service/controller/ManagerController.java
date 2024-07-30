@@ -100,7 +100,7 @@ public class ManagerController {
 	public String getReqMenuList(Model model) {
 		List<MenuReqDto> lists = mrService.getReqMenuList();
 		model.addAttribute("list", lists);
-		System.out.println("^^^^^^^^^^^^^^^^^^^^" + lists);
+		// System.out.println("^^^^^^^^^^^^^^^^^^^^" + lists);
 
 		return "manager/menu_approval";
 	}
@@ -170,22 +170,22 @@ public class ManagerController {
 		for (int age : ages) {
 			if (age >= 0 && age < 20) {
 				ageGroups[0]++;
-				System.out.println("ageGroups[0] :" + ageGroups[0]);
+				//System.out.println("ageGroups[0] :" + ageGroups[0]);
 			} else if (age >= 20 && age < 30) {
 				ageGroups[1]++;
-				System.out.println("ageGroups[1] :" + ageGroups[1]);
+				//System.out.println("ageGroups[1] :" + ageGroups[1]);
 			} else if (age >= 30 && age < 40) {
 				ageGroups[2]++;
-				System.out.println("ageGroups[2] :" + ageGroups[2]);
+				//System.out.println("ageGroups[2] :" + ageGroups[2]);
 			} else if (age >= 40 && age < 50) {
 				ageGroups[3]++;
-				System.out.println("ageGroups[3] :" + ageGroups[3]);
+				//System.out.println("ageGroups[3] :" + ageGroups[3]);
 			} else if (age >= 50 && age < 60) {
 				ageGroups[4]++;
-				System.out.println("ageGroups[4] :" + ageGroups[4]);
+				//System.out.println("ageGroups[4] :" + ageGroups[4]);
 			} else if (age >= 60 && age < 70) {
 				ageGroups[5]++;
-				System.out.println("ageGroups[5] :" + ageGroups[5]);
+				//System.out.println("ageGroups[5] :" + ageGroups[5]);
 			}
 		}
 
@@ -204,15 +204,15 @@ public class ManagerController {
 		// 성별 회원수 통계
 		String[] genderTitle = { "남성", "여성" };
 		GenderDtoForDashBoard genderCountDto = dbService.findMemByGender();
-		
+
 		// 성별 데이터 배열로 변환
-		int[] genderCount = {genderCountDto.getMale_ratio(), genderCountDto.getFemale_ratio()};
-		
+		int[] genderCount = { genderCountDto.getMale_ratio(), genderCountDto.getFemale_ratio() };
+
 		// 성별 제목과 데이터를 동시에 view로 보내기
 		Map<String, Object> genderResponse = new HashMap<>();
 		genderResponse.put("genderTitle", genderTitle);
 		genderResponse.put("genderCount", genderCount);
-		
+
 		return genderResponse;
 	}
 
