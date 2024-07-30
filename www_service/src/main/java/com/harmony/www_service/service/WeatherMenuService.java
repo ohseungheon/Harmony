@@ -54,20 +54,20 @@ public class WeatherMenuService {
         WeatherMenuDto weatherMenuDto = new WeatherMenuDto();
 
         // 하드코딩 테스트용
-        // double temp = 10.0; 
-        // String description = "snow";
+        double temp = 17.0; 
+        String description = "clear sky";
 
-        RestTemplate restTemplate = new RestTemplate();
-        String city = "Busan";
-        String url = API_URL.replace("{city}", city);
+        // RestTemplate restTemplate = new RestTemplate();
+        // String city = "Busan";
+        // String url = API_URL.replace("{city}", city);
 
-        Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+        // Map<String, Object> response = restTemplate.getForObject(url, Map.class);
 
-        Map<String, Object> main = (Map<String, Object>) response.get("main");
-        List<Map<String, Object>> weather = (List<Map<String, Object>>) response.get("weather");
+        // Map<String, Object> main = (Map<String, Object>) response.get("main");
+        // List<Map<String, Object>> weather = (List<Map<String, Object>>) response.get("weather");
 
-        double temp = ((Number) main.get("temp")).doubleValue();
-        String description = (String) weather.get(0).get("description");
+        // double temp = ((Number) main.get("temp")).doubleValue();
+        // String description = (String) weather.get(0).get("description");
         String simplifiedDescription = weatherMapping.getOrDefault(description, "맑음");
         String icon = weatherIcons.getOrDefault(simplifiedDescription, "☀️");
 
@@ -85,7 +85,7 @@ public class WeatherMenuService {
         // 날씨에 맞는 메뉴를 가져옴
         Set<MenuDto> weatherMenus = getWeatherMenus(weather);
 
-        // 현재 온도에 맞는 메뉴를 필터링
+        // 현재 온도에 맞는 메뉴를 가져옴
         String primaryCategory = getTemperatureCategory(temperature);
         Set<MenuDto> primaryTempMenus = new HashSet<>(menuDao.findByMenuTemperature(primaryCategory));
 

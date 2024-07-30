@@ -8,7 +8,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="searchMenus" resultType="com.harmony.www_service.dto.MenuDto">
-        SELECT * FROM menu WHERE menuName LIKE CONCAT('%', #{term}, '%') OR category LIKE CONCAT('%', #{term}, '%')
+        SELECT * FROM menu 
+        WHERE menuName LIKE CONCAT('%', #{term}, '%') 
+        OR category = #{term}
     </select>
 
     <select id="getFilteredMenuList" resultType="com.harmony.www_service.dto.MenuDto">
