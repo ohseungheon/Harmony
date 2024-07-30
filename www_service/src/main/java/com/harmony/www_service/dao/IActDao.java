@@ -10,7 +10,7 @@ import com.harmony.www_service.dto.ActDto;
 @Mapper
 public interface IActDao {
 	
-	public List<ActDto> getActList();
+	public List<ActDto> getActList(@Param("offset") int offset, @Param("itemsPerPage") int itemsPerPage);
 	
 	//검색필터 리스트 
 	public List<ActDto> getSearchList(@Param("query") String query);
