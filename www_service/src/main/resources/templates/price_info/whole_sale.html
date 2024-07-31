@@ -6,8 +6,8 @@
 <title>농축산물 도매 가격 정보</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-h1{
-	text-align:center;
+h1 {
+	text-align: center;
 }
 
 table, tr, th, td {
@@ -25,26 +25,28 @@ th {
 	background: #eee;
 }
 
-.choice-tap{
-	margin:50px 0;
+.choice-tap {
+	margin: 50px 0;
 }
-.choice-tap ul{
-	display:flex;
-	justify-content:center;
-	gap:30px;
+
+.choice-tap ul {
+	display: flex;
+	justify-content: center;
+	gap: 30px;
 }
-.choice-tap ul li{
-	padding:10px 15px;
-	background:#f9f9f9;
-	border:1px solid #eee;
-	cursor:pointer;
-	color:#666;
+
+.choice-tap ul li {
+	padding: 10px 15px;
+	background: #f9f9f9;
+	border: 1px solid #eee;
+	cursor: pointer;
+	color: #666;
 }
 
 .selected {
-    background: #f1f1f1 !important;
-    border:1px solid #ccc;
-    color:#000;
+	background: #f1f1f1 !important;
+	border: 1px solid #ccc;
+	color: #000;
 }
 </style>
 </head>
@@ -84,79 +86,141 @@ th {
 			</thead>
 			<tbody></tbody>
 		</table>
+
+		<div id="pagination-controls"
+			style="text-align: center; margin-top: 20px;">
+			<button id="prev-page">이전</button>
+			<span id="current-page">1</span> / <span id="total-pages">1</span>
+			<button id="next-page">다음</button>
+		</div>
 	</section>
 	<footer>
 		<th:block th:insert="~{/sub/footer.html}"></th:block>
 	</footer>
 </body>
 <script>
-	$(document).ready(
-			function() {
-				
-				var $categoryList = $('#category-list');
+$(document).ready(function() {
+    var $categoryList = $('#category-list');
+    var itemsPerPage = 10; // 한 페이지에 표시할 항목 수
+    var currentData = []; // 현재 카테고리의 전체 데이터를 저장
+    var currentCategory = '100'; // 현재 선택된 카테고리 (기본값: 식량작물)
 
-			    // 카테고리 클릭 이벤트 처리
-			    $categoryList.on('click', 'li', function() {
-			        var $this = $(this);
-			        var categoryCode = $this.data('category-code');
+    // 각 카테고리별 페이지 상태를 저장할 객체
+    // 각 카테고리 코드를 키로 사용하고, 현재 페이지 번호를 값으로 저장
+    var categoryPages = {
+        '100': 1, // 식량작물
+        '200': 1, // 채소류
+        '300': 1, // 특용작물
+        '400': 1, // 과일류
+        '500': 1, // 축산물
+        '600': 1  // 수산물
+    };
 
-			        // 이전에 선택된 항목의 스타일 제거
-			        $categoryList.find('li').removeClass('selected');
+    // 카테고리 클릭 이벤트 처리
+    $categoryList.on('click', 'li', function() {
+        var $this = $(this);
+        var categoryCode = $this.data('category-code');
 
-			        // 현재 선택된 항목에 스타일 적용
-			        $this.addClass('selected');
+        // 선택된 카테고리 스타일 변경
+        $categoryList.find('li').removeClass('selected');
+        $this.addClass('selected');
 
-			        // 데이터 로드
-			        loadWholesaleData(categoryCode);
-			    });
+        // 현재 카테고리 업데이트 및 데이터 로드
+        currentCategory = categoryCode;
+        loadWholesaleData(categoryCode);
+    });
 
-			    // 페이지 로드 시 첫 번째 카테고리 선택 및 데이터 로드
-			    var $firstCategory = $categoryList.find('li:first');
-			    $firstCategory.addClass('selected');
-			    loadWholesaleData($firstCategory.data('category-code'));
-				
-			    function loadWholesaleData(categoryCode) {
-			        $.ajax({
-			            url: '/api/wholesale',
-			            type: 'GET',
-			            data: { p_item_category_code: categoryCode },
-			            dataType: 'json',
-			            success: function(response) {
-			                console.log("API Response:", response);
-			                // 테이블 데이터 갱신
-			                updateTable(response);
-			            },
-			            error: function(xhr, status, error) {
-			                console.error("AJAX error:", status, error);
-			                $('#error').text('데이터 로드 중 오류 발생: ' + error).show();
-			            }
-			        });
-			    }
+    // 페이지 로드 시 첫 번째 카테고리 선택 및 데이터 로드
+    var $firstCategory = $categoryList.find('li:first');
+    $firstCategory.addClass('selected');
+    loadWholesaleData($firstCategory.data('category-code'));
 
-			    function updateTable(data) {
-			        var tbody = $('#dataTable tbody');
-			        tbody.empty(); // 기존 데이터 삭제
+    // AJAX를 사용하여 서버에서 데이터 로드
+    function loadWholesaleData(categoryCode) {
+        $.ajax({
+            url: '/api/wholesale',
+            type: 'GET',
+            data: {
+                p_item_category_code: categoryCode
+            },
+            dataType: 'json',
+            success: function(response) {
+                console.log("API Response:", response);
+                updateTable(response);
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", status, error);
+                $('#error').text('데이터 로드 중 오류 발생: ' + error).show();
+            }
+        });
+    }
 
-			        if (data && data.data && Array.isArray(data.data.item)) {
-			            data.data.item.forEach(function(item) {
-			                var row = '<tr>' +
-			                    '<td>' + (item.item_name || '이름 없음') + '</td>' +
-			                    '<td>' + (item.kind_name || '가격 정보 없음') + '</td>' +
-			                    '<td>' + (item.unit || '단위 정보 없음') + '</td>' +
-			                    '<td>' + (item.dpr1 || '단위 정보 없음') + '</td>' +
-			                    '<td>' + (item.dpr2 || '단위 정보 없음') + '</td>' +
-			                    '<td>' + (item.dpr3 || '단위 정보 없음') + '</td>' +
-			                    '<td>' + (item.dpr4 || '단위 정보 없음') + '</td>' +
-			                    '<td>' + (item.dpr5 || '단위 정보 없음') + '</td>' +
-			                    '<td>' + (item.dpr6 || '단위 정보 없음') + '</td>' +
-			                    '</tr>';
-			                tbody.append(row);
-			            });
-			            $('#dataTable').show();
-			        } else {
-			            $('#error').text('유효한 데이터가 없습니다.').show();
-			        }
-			    }
-			});
+    // 서버에서 받은 데이터로 테이블 업데이트
+    function updateTable(data) {
+        if (data && data.data && Array.isArray(data.data.item)) {
+            currentData = data.data.item; // 현재 카테고리의 전체 데이터 저장
+            displayPage(categoryPages[currentCategory]); // 현재 카테고리의 저장된 페이지 번호로 데이터 표시
+        } else {
+            $('#error').text('유효한 데이터가 없습니다.').show();
+        }
+    }
+
+    // 지정된 페이지의 데이터를 테이블에 표시
+    function displayPage(page) {
+        var tbody = $('#dataTable tbody');
+        tbody.empty();
+
+        // 현재 페이지에 해당하는 데이터 슬라이스
+        var start = (page - 1) * itemsPerPage;
+        var end = start + itemsPerPage;
+        var pageItems = currentData.slice(start, end);
+
+        // 테이블에 데이터 추가
+        pageItems.forEach(function(item) {
+            var row = '<tr>' +
+                '<td>' + (item.item_name || '이름 없음') + '</td>' +
+                '<td>' + (item.kind_name || '가격 정보 없음') + '</td>' +
+                '<td>' + (item.unit || '단위 정보 없음') + '</td>' +
+                '<td>' + (item.dpr1 || '단위 정보 없음') + '</td>' +
+                '<td>' + (item.dpr2 || '단위 정보 없음') + '</td>' +
+                '<td>' + (item.dpr3 || '단위 정보 없음') + '</td>' +
+                '<td>' + (item.dpr4 || '단위 정보 없음') + '</td>' +
+                '<td>' + (item.dpr5 || '단위 정보 없음') + '</td>' +
+                '<td>' + (item.dpr6 || '단위 정보 없음') + '</td>' +
+                '</tr>';
+            tbody.append(row);
+        });
+
+        $('#dataTable').show();
+        updatePaginationControls();
+    }
+
+    // 페이지네이션 컨트롤 업데이트
+    function updatePaginationControls() {
+        var totalPages = Math.ceil(currentData.length / itemsPerPage);
+        $('#current-page').text(categoryPages[currentCategory]);
+        $('#total-pages').text(totalPages);
+        // 이전/다음 버튼 활성화/비활성화
+        $('#prev-page').prop('disabled', categoryPages[currentCategory] === 1);
+        $('#next-page').prop('disabled', categoryPages[currentCategory] === totalPages);
+    }
+
+    // 이전 페이지 버튼 클릭 이벤트
+    $('#prev-page').click(function() {
+        if (categoryPages[currentCategory] > 1) {
+            categoryPages[currentCategory]--; // 현재 카테고리의 페이지 번호 감소
+            displayPage(categoryPages[currentCategory]);
+        }
+    });
+
+    // 다음 페이지 버튼 클릭 이벤트
+    $('#next-page').click(function() {
+        var totalPages = Math.ceil(currentData.length / itemsPerPage);
+        if (categoryPages[currentCategory] < totalPages) {
+            categoryPages[currentCategory]++; // 현재 카테고리의 페이지 번호 증가
+            displayPage(categoryPages[currentCategory]);
+        }
+    });
+});
 </script>
 </html>
