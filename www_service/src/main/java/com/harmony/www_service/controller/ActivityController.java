@@ -31,7 +31,6 @@ public class ActivityController {
 		// page는 1부터 시작한다고 가정
 	    int offset = (page - 1) * itemsPerPage;
 		List<ActDto> list = actDao.getActList(offset, itemsPerPage);
-		System.out.println(list+"지도!!!!!!!!!!!!!!!!!!!!!");
 		return list;
 	}
 	
@@ -39,7 +38,6 @@ public class ActivityController {
 	@ResponseBody
 	public List<ActDto> filterList(@RequestParam("query") String query){
 		List<ActDto> act = actDao.getSearchList(query);
-		System.out.println("searchList!!!!!!!!!!!!!"+act);
 		return act;
 	}
 }

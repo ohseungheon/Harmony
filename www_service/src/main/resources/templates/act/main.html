@@ -9,34 +9,148 @@
 	crossorigin="anonymous"></script>
 <style>
 table {
-	font-size: 10px;
-	border-collapse: collapse;
-	margin: 50px;
+    font-size: 12px;
+    border-collapse: collapse;
+    margin: 30px auto;
+    width: 1200px;
+    max-width: 1200px;
+    border: 1px solid #ddd;
 }
 
-#map {
-	margin: 50px;
+table th, table td {
+    padding: 20px 20px;
+    border: 1px solid #ddd;
+    text-align: center;
 }
 
+table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+    font-size: 15px;
+}
+table td {
+	font-size: 16px;
+}
+
+table tr.clickable:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+/* 검색 상자 스타일 */
 .search-container {
-	margin-left: 50px;
+    margin: 20px auto;
+    text-align: center;
 }
 
 #search-box {
-	width: 330px;
-	height: 25px;
-	padding: 3px;
+    width: 360px;
+    height: 45px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 #search-button {
-	width: 50px;
-	height: 30px;
-	padding: 3px;
+    height: 40px;
+    padding: 0 20px;
+    font-size: 14px;
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
 }
 
-.hidden {
-	display: none;
+#search-button:hover {
+    background-color: #0056b3;
 }
+
+/* 지도 영역 스타일 */
+#map {
+    margin: 50px auto;
+    width: 1000px;
+    max-width: 1000px;
+    height: 500px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.pagination button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #f2f2f2;
+}
+
+.pagination span {
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+/* 팝업 정보창 스타일 */
+.wrap {
+    width: 200px;
+    height: auto;
+}
+
+.title {
+    padding: 10px;
+    background-color: #eee;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.desc {
+    padding: 10px;
+}
+
+.desc .actadress,
+.desc .tel,
+.desc .homeurl {
+    margin-bottom: 7px;
+    font-size: 14px;
+}
+.homeurl {
+	border-bottom: 1px solid #ccc;
+}
+
+.desc .homeurl a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.desc .homeurl a:hover {
+    text-decoration: underline;
+}
+.w {
+    width: 60px;
+}
+#find{
+	font-size: 35px;
+	text-align: center;
+	font-weight: bold;
+}
+
+
 </style>
 </head>
 
@@ -48,8 +162,8 @@ table {
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9dc3cd9f3f49ffc9bf97e4d73894b388&libraries=services,clusterer,drawing"></script>
 	<section>
-
-		<div id="map" style="width: 500px; height: 400px;"></div>
+		<div id="find"> 🔍 자연 체험 프로그램 휴양마을 찾기 </div>
+		<div id="map"></div>
 
 		<div class="search-container">
 			<input type="text" id="search-box" class="search-box"
@@ -60,37 +174,17 @@ table {
 		<table border="1">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th class="w">번호</th>
 					<th>체험마을명</th>
 					<th>시도명</th>
-					<th>시군구명</th>
-					<th>체험프로그램구분</th>
-					<th>체험프로그램명</th>
-					<th>소재지도로명주소</th>
-					<th>대표자명</th>
-					<th>대표전화번호</th>
-					<th>홈페이지주소</th>
-					<th>관리기관명</th>
-					<th>위도</th>
-					<th>경도</th>
+					<th class="w">시군구명</th>
+					<th>체험프로그램</th>
+					<th>주소</th>
+					<th>기관명</th>
 				</tr>
 			</thead>
 			<tbody>
-				<!-- tr th:each="act : ${act}">
-					<td th:text="${act.vacode}"></td>
-					<td id="vname" th:text="${act.vname}" class="clickable" data-locationx="${act.locationx}" data-locationy="${act.locationy}"></td>
-					<td th:text="${act.sido}"></td>
-					<td th:text="${act.sgg}"></td>
-					<td th:text="${act.acttype}"></td>
-					<td th:text="${act.actname}"></td>
-					<td th:text="${act.actadress}"></td>
-					<td th:text="${act.ceo}"></td>
-					<td th:text="${act.tel}"></td>
-					<td th:text="${act.homeurl}"></td>
-					<td th:text="${act.agencyname}"></td>
-					<td id="locationx" th:text="${act.locationx}"></td>
-					<td id="ldcationy" th:text="${act.locationy}"></td>
-				</tr -->
+				<!-- 테이블 -->
 			</tbody>
 		</table>
 
@@ -106,30 +200,96 @@ table {
 	</footer>
 
 	<script>
-	var container = document.getElementById('map');
-    var options = {
-    	center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3
-    };
-    var map = new kakao.maps.Map(container, options); //지도생성 
-	// 마커가 표시될 위치입니다 
-    var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); 
-    
- 	// 마커를 생성합니다
-    var marker = new kakao.maps.Marker({
-        position: markerPosition
-    });
+	
+	var map;
+	var marker;
+	var container;
+	var options;
+	var markerPosition;
+	
+	function initMap() {
+		//초기지도설정
+		container = document.getElementById('map');
+	    options = {
+	    	center: new kakao.maps.LatLng(37.5665, 126.9780), // 지도의 중심좌표
+	        level: 3
+	    };
+	    map = new kakao.maps.Map(container, options); //지도생성 
+	    
+		// 마커가 표시될 위치입니다 
+	    markerPosition  = new kakao.maps.LatLng(37.5665, 126.9780); 
+	    
+	 	// 마커를 생성합니다
+	    marker = new kakao.maps.Marker({
+	        position: markerPosition,
+	        map: map //마커를 초기지도에 표시 
+	    });
+	 	
+	 	// 마커가 지도 위에 표시되도록 설정합니다
+	    //marker.setMap(map);
+	}
+	
+	function updateMap(lat, lng, vname, homeurl, actadress, tel) {
+		//마커 위치 이동 
+		container = document.getElementById('map');
+		options = {
+		    	center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
+		        level: 3
+		    };
+		map = new kakao.maps.Map(container, options); // 클릭한 지역 지도 이동 
+		
+		markerPosition = new kakao.maps.LatLng(lat, lng); //마커생성
+		
+		marker = new kakao.maps.Marker({   //클릭한 지역으로 마커 이동
+			position: markerPosition,
+			map: map
+		});
+		
+		console.log(lat, lng);
+		console.log(map, markerPosition);
+		console.log(vname, homeurl, actadress, tel);
+		
+		//좌표값이 NaN인지 확인 
+		if (isNaN(lat) || isNaN(lng)) {
+		    console.error('Invalid coordinates:', lat, lng);
+		    return;
+		}
+		
+		// 변수값이 undefined나 null인 경우 빈 문자열로 설정
+	    vname = vname || '';
+	    homeurl = homeurl || '#';
+	    actadress = actadress || '';
+	    tel = tel || '';
+		
+		var content = 
+			'<div class="wrap">' + 
+				'<div class="info">' + 
+					'<div class="title">' + vname + '</div>' +  
+				'</div>' + 	
+				'<div class="desc">' + 
+					'<div class="actadress">' + actadress + '</div>' +
+					'<div class="tel">' + tel + '</div>' + 
+					'<div><a href="'+homeurl+'" class="homeurl">' + '홈페이지 가기' + '</a></div>' +
+				'</div>' + 	
+			+ '</div>'	
+	
+		var infowindow = new kakao.maps.InfoWindow({
+			content: content,
+			map: map,
+			position: markerPosition 
+		});
+		
+		infowindow.open(map, marker);
+	}
  	
- 	// 마커가 지도 위에 표시되도록 설정합니다
-    marker.setMap(map);
- 	
+ 	//페이지네이션
     let currentPage = 1;
-    const itemsPerPage = 50; // 한 페이지에 표시할 항목 수
-    
-    
+    const itemsPerPage = 20; // 한 페이지에 표시할 항목 수
     
  	//체험마을 전체 리스트 
 	$(document).ready(function() {
+		initMap(); //지도초기화
+		
     	//검색
     	$("#search-button").on("click", function() {
             const searchQuery = $("#search-box").val().trim();
@@ -155,9 +315,44 @@ table {
     });
 
     loadPage(currentPage); // 첫 페이지 로드
+    
+    //tr 클릭시 해당 좌표 가져와서 지도에 표시 
+    $(document).on("click", ".clickable", function() {
+    	var locationx = $(this).data("locationx");
+        var locationy = $(this).data("locationy");
+        var vname = $(this).data("vname");
+        var homeurl = $(this).data("homeurl");
+        var actadress = $(this).data("actadress");
+        var tel = $(this).data("tel");
+        
+        console.log("Original data-locationx:", locationx);
+        console.log("Original data-locationy:", locationy);
+        console.log("vaname:", vname);
+        console.log("homeurl:", homeurl);
+        console.log("actadress:", actadress);
+        console.log("tel:", tel);
+        
+     	// 좌표를 숫자로 변환
+        locationx = parseFloat(locationx);
+        locationy = parseFloat(locationy);
+        
+        // 변환된 좌표를 콘솔에 출력
+        console.log("Parsed locationx:", locationx);
+        console.log("Parsed locationy:", locationy);
+        
+     	// 좌표가 유효한 경우 추가 작업 수행
+        if (!isNaN(locationx) && !isNaN(locationy)) {
+            // 예: 지도에 마커를 표시하거나 지도 중심 이동
+            // updateMap 또는 다른 함수를 사용하여 작업 수행
+            updateMap(locationx, locationy, vname, homeurl, actadress, tel);
+        } else {
+            console.error("Invalid coordinates:", locationx, locationy);
+            alert("유효하지 않은 좌표입니다.");
+        }
+     	
+    });
 });
 
-	
 	function loadPage(page) {
     	$.ajax({
         	url: "/act/getActiveList",
@@ -197,137 +392,21 @@ table {
 function updateTable(data) {
     const tbody = $("tbody");
     tbody.empty();
-    data.forEach(act => {
+    data.slice(1).forEach((act, index) => {
         tbody.append(
-            "<tr>" +
-                "<td>" + act.vacode + "</td>" +
-                "<td class='clickable' data-locationx='" + act.locationx + "' data-locationy='" + act.locationy + "'>" + act.vname + "</td>" +
+            "<tr class='clickable' data-locationx='" + act.locationx + "' data-locationy='" + act.locationy + "' data-homeurl='"+ act.homeurl +"' data-vname='"+act.vname+"' data-actadress='"+act.actadress+"' data-tel='"+act.tel+"'>" +
+                "<td>" + (index + 1) + "</td>" +
+                "<td>" + act.vname + "</td>" +
                 "<td>" + act.sido + "</td>" +
                 "<td>" + act.sgg + "</td>" +
                 "<td>" + act.acttype + "</td>" +
-                "<td>" + act.actname + "</td>" +
                 "<td>" + act.actadress + "</td>" +
-                "<td>" + act.ceo + "</td>" +
-                "<td>" + act.tel + "</td>" +
-                "<td>" + act.homeurl + "</td>" +
                 "<td>" + act.agencyname + "</td>" +
-                "<td>" + act.locationx + "</td>" +
-                "<td>" + act.locationy + "</td>" +
             "</tr>"
         );
     });
 }
 
-
- 	
- 	/*
-    var markers = []; // 마커를 저장할 배열
-
-    function updateMap(positions) {
-        // 기존 마커 제거
-        markers.forEach(marker => marker.setMap(null));
-        markers = [];
-
-        // 새 마커 추가
-        positions.forEach(position => {
-            var markerPosition = new kakao.maps.LatLng(position.latlng.lat, position.latlng.lng);
-            var marker = new kakao.maps.Marker({
-                position: markerPosition,
-                title: position.title
-            });
-            marker.setMap(map);
-            markers.push(marker);
-        });
-
-        if (positions.length > 0) {
-            map.setCenter(new kakao.maps.LatLng(positions[0].latlng.lat, positions[0].latlng.lng));
-        }
-    }
-
-    $(document).ready(function() {
-        $("#search-button").on("click", function() {
-            const searchQuery = $("#search-box").val().trim();
-            console.log(searchQuery);
-            if (!searchQuery) {
-                alert("검색어를 입력하세요");
-                return;
-            }
-            searchList(searchQuery);
-        });
-
-        $(document).on("click", ".clickable", function() {
-            var vname = $(this).text();
-            var locationx = $(this).data("locationx");
-            var locationy = $(this).data("locationy");
-
-            console.log("Original data-locationx:", locationx);
-            console.log("Original data-locationy:", locationy);
-            
-            locationx = parseFloat(locationx);
-            locationy = parseFloat(locationy);
-            
-            console.log("Parsed locationx:", locationx);
-            console.log("Parsed locationy:", locationy);
-            
-            if (!isNaN(locationx) && !isNaN(locationy)) {
-                var positions = [{
-                    title: vname,
-                    latlng: new kakao.maps.LatLng(locationx, locationy)
-                }];
-                updateMap(positions);
-            } else {
-                console.error("Invalid coordinates:", locationx, locationy);
-                alert("유효하지 않은 좌표입니다.");
-            }
-        });
-    });
-
-    function searchList(query) {
-        $.ajax({
-            url: "/act/searchList",
-            method: "GET",
-            data: {
-                query: query
-            },
-            success: function(data) {
-                updateTable(data);
-                console.log(data);
-                var positions = data.map(act => ({
-                    title: act.vname,
-                    latlng: new kakao.maps.LatLng(act.locationx, act.locationy)
-                }));
-                updateMap(positions);
-            },
-            error: function(error) {
-                console.log("Error:", error);
-            }
-        });
-    }
-
-    function updateTable(data) {
-        const tbody = $("tbody");
-        tbody.empty();
-        data.forEach(act => {
-            tbody.append(
-                "<tr>" +
-                    "<td>" + act.vacode + "</td>" +
-                    "<td class='clickable' data-locationx='" + act.locationx + "' data-locationy='" + act.locationy + "'>" + act.vname + "</td>" +
-                    "<td>" + act.sido + "</td>" +
-                    "<td>" + act.sgg + "</td>" +
-                    "<td>" + act.acttype + "</td>" +
-                    "<td>" + act.actname + "</td>" +
-                    "<td>" + act.actadress + "</td>" +
-                    "<td>" + act.ceo + "</td>" +
-                    "<td>" + act.tel + "</td>" +
-                    "<td>" + act.homeurl + "</td>" +
-                    "<td>" + act.agencyname + "</td>" +
-                    "<td>" + act.locationx + "</td>" +
-                    "<td>" + act.locationy + "</td>" +
-                "</tr>"
-            );
-        });
-    }
-	*/    
     </script>
 </body>
 
