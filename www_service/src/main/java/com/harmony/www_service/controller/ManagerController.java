@@ -164,7 +164,7 @@ public class ManagerController {
 
 		// 연령대별 회원수 통계
 		int[] ageGroups = { 0, 0, 0, 0, 0, 0 };
-		String[] ageTitle = { "10대", "20대", "30대", "40대", "50대", "60대" };
+		String[] ageTitle = { "10대", "20대", "30대", "40대", "50대", "60대 이상" };
 		int[] ages = dbService.findMemByAges();
 
 		for (int age : ages) {
@@ -214,6 +214,12 @@ public class ManagerController {
 		genderResponse.put("genderCount", genderCount);
 
 		return genderResponse;
+	}
+	
+	// 회원관리 페이지
+	@RequestMapping("/memberManagement")
+	public String memberPage(Model model) {
+		return "manager/memberManagement";
 	}
 
 }

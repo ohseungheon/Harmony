@@ -11,6 +11,11 @@
       integrity="sha384-dpuaG1suU0eT09tx5plTaGMLBsfDLzUCCUXOY2j/LSvXYuG6Bqs43ALlhIqAJVRb"
       crossorigin="anonymous"
     />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <style>
       table {
         width: 100%;
@@ -28,7 +33,107 @@
         width: 400px;
         margin: auto;
       }
+
+      table {
+        width: 100%;
+        border-collapse: collapse; /* 셀 사이에 빈 공간을 없앰 */
+      }
+
+      th,
+      td {
+        border: 1px solid black; /* 셀에 경계선을 추가 */
+        padding: 8px;
+        text-align: center;
+      }
+
+      /* sidebar css */
+      /* 노멀라이즈 시작 */
+      ul,
+      li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      a {
+        color: inherit; /* 부모 엘리먼트의 값을 물려받는다 */
+        text-decoration: none;
+      }
+
+      /* 노멀라이즈 끝 */
+
+      /* 2차 이상의 메뉴를 숨기기*/
+      .side-bar > ul ul {
+        display: none;
+      }
+
+      /* 사이드바의 너비와 높이를 변수를 통해 통제 */
+      :root {
+        --side-bar-width: 270px;
+        --side-bar-height: 90vh;
+      }
+
+      .side-bar {
+        position: fixed;
+        background-color: #164772;
+        width: var(--side-bar-width);
+        min-height: var(--side-bar-height);
+        margin-top: calc((100vh - var(--side-bar-height)) / 2);
+        /* 헤더 영역 위에 고정되도록 수정 */
+        top: 0; /* 헤더 영역 위에 붙이기 */
+        z-index: 1000; /* 다른 요소들 위에 나타나도록 z-index 설정 */
+      }
+
+      /* 모든 메뉴의 a에 속성값 부여 */
+      .side-bar ul > li > a {
+        display: block;
+        color: white;
+        font-size: 1.4rem;
+        font-weight: bold;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 50px;
+      }
+
+      /* 자식의 position이 absolute일 때 자식을 영역 안에 가두어 준다 */
+      .side-bar > ul > li {
+        position: relative;
+      }
+
+      /* 모든 메뉴가 마우스 인식 시 반응 */
+      .side-bar ul > li:hover > a {
+        background-color: #4178a5;
+        border-bottom: 1px solid #999;
+      }
+
+      /* 1차 메뉴의 항목이 마우스 인식 시에 2차 메뉴 등장 */
+      .side-bar > ul > li:hover > ul {
+        display: block;
+        position: absolute;
+        background-color: #888;
+        top: 0; /* 2차 메뉴의 상단을 1차 메뉴의 상단에 고정 */
+        left: 100%; /* 2차 메뉴를 1차 메뉴의 너비만큼 이동 */
+        width: 100%; /* 1차 메뉴의 너비를 상속 */
+      }
+
+      /* 사이드바 너비의 80%만큼 왼쪽으로 이동 */
+      .side-bar {
+        border-radius: 20px;
+        transform: translate(calc(var(--side-bar-width) * -0.8), 0);
+        /* X축 이동, Y축 고정 */
+        transition: 0.5s;
+      }
+
+      /* 마우스 인식 시 원래의 위치로 이동 */
+      .side-bar:hover {
+        transform: translate(
+          -20px,
+          0
+        ); /* 둥근 모서리의 너비만큼 X축 이동, Y축 고정 */
+      }
+
       /* navbar */
+      /*
       .sidebar {
         height: 100vh;
         background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
@@ -101,6 +206,7 @@
       .manager-container img {
         margin-right: 10px;
       }
+        */
       /* end od navbar */
     </style>
   </head>
@@ -110,101 +216,80 @@
     </header>
     <section>
       <!-- sidebar -->
-      <div class="col-lg-3 sidebar fixed-top">
-        <p
-          class="navbar-brand text-white text-center d-block mx-auto py-3 mb-4 bottom-border"
-          style="font-size: 30px"
-        >
-          WWW_HARMONY
-        </p>
-        <div class="bottom-border pb-3 manager-container">
-          <img
-            th:src="@{/img/manager.png}"
-            alt=""
-            width="50"
-            class="rounded-circle"
-          />
-          <a href="#" class="text-white">MANAGER</a>
-        </div>
-        <ul class="navbar-nav flex-column mt-4">
-          <!-- Dashboard -->
-          <li class="nav-item">
-            <a href="#" class="sidebar-link ">
-              <i class="fas fa-home text-white fa-lg mr-3"></i>Dashboard
+      <aside class="side-bar">
+        <section class="side-bar__icon-box">
+          <section class="side-bar__icon-1">
+            <div></div>
+            <div></div>
+            <div></div>
+          </section>
+        </section>
+        <ul>
+          <li>
+            <a href="/dashboard" class="sidebar-link" id="dashboardLink">
+              <i class="fas fa-home text-white fa-lg mr-3"></i> Dashboard
             </a>
           </li>
-          <!-- UserInfo -->
-          <li class="nav-item">
-            <a href="#" class="sidebar-link ">
-              <i class="fas fa-user text-white fa-lg mr-3"></i>회원 정보
+          <li>
+            <a href="/memberManagement" class="sidebar-link" id="userInfoLink">
+              <i class="fas fa-user text-white fa-lg mr-3"></i> 회원 정보
             </a>
           </li>
-          <!-- IngredientManagement -->
-          <li class="nav-item dropdown">
+          <li>
             <a
               href="#"
-              class="sidebar-link dropdown-toggle "
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+              class="sidebar-link dropdown-toggle"
+              id="IngredientManagementLink"
             >
-              <i class="fas fa-ingredient text-white fa-lg mr-3"></i>재료 관리
+              <i class="fas fa-carrot text-white fa-lg mr-3"></i> 재료 관리
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">재료 등록</a></li>
-              <li><a class="dropdown-item" href="#">재료 리스트</a></li>
-              <li><a class="dropdown-item" href="#">재료 수정</a></li>
-              <li><a class="dropdown-item" href="#">재료 삭제</a></li>
+
+            <ul>
+              <li><a href="/ingredients_list">재료 목록</a></li>
+              <li><a href="/ingredients_regist">재료 등록</a></li>
+              <li><a href="/ingredients_list">재료 수정 / 삭제</a></li>
             </ul>
           </li>
-          <!-- MenuManagement -->
-          <li class="nav-item dropdown">
+          <li>
             <a
-              href="#"
-              class="sidebar-link dropdown-toggle "
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="fas fa-menu text-white fa-lg mr-3"></i>메뉴 관리
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">메뉴 등록</a></li>
-              <li><a class="dropdown-item" href="#">메뉴 리스트</a></li>
-              <li><a class="dropdown-item" href="#">메뉴 수정</a></li>
-              <li><a class="dropdown-item" href="#">메뉴 삭제</a></li>
+            href="#"
+            class="sidebar-link dropdown-toggle"
+            id="MenuManagementLink"
+          >
+            <i class="fas fa-utensils text-white fa-lg mr-3"></i> 메뉴 관리
+          </a>
+            <ul>
+              <li><a href="/menu_all/menu_all_list">메뉴 목록</a></li>
+              <li><a href="#">메뉴 등록</a></li>
+              <li><a href="#">메뉴 수정 / 삭제</a></li>
+              <li><a href="/menu_req_list">요청 메뉴 목록</a></li>
             </ul>
           </li>
-          <!-- RecipeManagement -->
-          <li class="nav-item dropdown">
+          <li>
             <a
-              href="#"
-              class="sidebar-link dropdown-toggle current"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="fas fa-recipe text-white fa-lg mr-3"></i>레시피 관리
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">레시피 등록</a></li>
-              <li><a class="dropdown-item" href="#">레시피 리스트</a></li>
-              <li><a class="dropdown-item" href="#">레시피 수정</a></li>
-              <li><a class="dropdown-item" href="#">레시피 삭제</a></li>
+            href="#"
+            class="sidebar-link dropdown-toggle current"
+            id="RecipeManagementLink"
+          >
+            <i class="fas fa-book text-white fa-lg mr-3"></i> 레시피 관리
+          </a>
+            <ul>
+              <li><a href="/menu_all/recipe_all_list">레시피 목록</a></li>
+              <li><a href="/my/recipe/registForm">레시피 등록</a></li>
+              <li><a href="/menu_all/recipe_all_list">레시피 수정 / 삭제</a></li>
             </ul>
           </li>
         </ul>
-      </div>
-      <!-- end of sidebar-->
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-      <!-- 연령대별 파이차트 -->
-      <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-      <!--데이터 세그먼트 내부에 레이블 표시하기 위해 추가-->
-      <!-- 성별 막대 차트 -->
-      
+      </aside>
+      <!-- end sidebar -->
+    </section>
+    <section id="newMemberStatistic">
       <!-- <p>방문자 수 : <span th:text="${visitorCount}"></span></p> -->
-       <div style="font-size: 30px; font-weight: bold; text-align: center;"> 회원 통계 </div>
+      <div style="font-size: 30px; font-weight: bold; text-align: center">
+        회원 통계
+      </div>
       <div id="memberCountTable">
-        <table border="1">
+        <table>
           <thead>
             <tr>
               <th>총 회원수</th>
@@ -221,182 +306,179 @@
           </tbody>
         </table>
       </div>
-      <br />
-      <div id="ageChartContainer">
-        <canvas id="ageGroupChart" width="300" height="200"></canvas>
+
+    </section>
+    <section class="content">
+      <div class="row">
+        <div class="col-md-6" id="ageChartContainer">
+          <canvas id="ageChart"></canvas>
+        </div>
+        <div class="col-md-6" id="genderChartContainer">
+          <canvas id="genderChart"></canvas>
+        </div>
       </div>
-      <br />
-      <div id="genderChartContainer">
-        <canvas id="genderChart" width="300" height="200"></canvas>
+      <div class="row">
+        <div class="col-md-6" id="enrollmentStatusChartContainer">
+          <canvas id="enrollmentStatusChart"></canvas>
+        </div>
+        <div class="col-md-6" id="signupChartContainer">
+          <canvas id="signupChart"></canvas>
+        </div>
       </div>
     </section>
-    <footer>
-      <th:block th:insert="~{/sub/footer.html}"></th:block>
-    </footer>
+
+    <!-- JavaScript 파일들 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-      // 연령대별 회원 차트
-      async function fetchAgeGroups() {
-        try {
-          const response = await fetch("/getAgeGroups");
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return await response.json();
-        } catch (error) {
-          console.error("There was a problem with the fetch operation:", error);
-          return {
-            ageGroups: [0, 0, 0, 0, 0, 0],
-            ageTitle: ["10대", "20대", "30대", "40대", "50대", "60대"],
-          }; // 기본값 설정
-        }
-      }
+      document.addEventListener("DOMContentLoaded", function () {
+        // 이벤트 리스너 추가
+        const sidebarLinks = document.querySelectorAll(".sidebar-link");
+        sidebarLinks.forEach(function (link) {
+          link.addEventListener("click", function (event) {
+            event.preventDefault();
+            const href = this.getAttribute("href");
+            window.location.href = href;
+          });
+        });
 
-      // 데이터 로드 후 차트를 초기화 하는 함수
-      function initializeAgeChart(data) {
-        const ageGroups = data.ageGroups;
-        const ageTitles = data.ageTitle;
+        
+        // 연령대 차트 생성 함수
+        async function createAgeChart() {
+          try {
+            const response = await fetch("/getAgeGroups");
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
 
-        const ageChartData = {
-          labels: ageTitles,
-          datasets: [
-            {
-              label: "연령대별 회원수",
-              data: ageGroups,
-              backgroundColor: [
-                "rgba(255, 99, 132, 0.8)",
-                "rgba(54, 162, 235, 0.8)",
-                "rgba(255, 206, 86, 0.8)",
-                "rgba(75, 192, 192, 0.8)",
-                "rgba(153, 102, 255, 0.8)",
-                "rgba(255, 159, 64, 0.8)",
+            const ageGroups = data.ageGroups || [0, 0, 0, 0, 0, 0];
+            const ageTitles = data.ageTitle || ["Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown"];
+
+            const ageChartData = {
+              labels: ageTitles,
+              datasets: [
+                {
+                  label: "회원수",
+                  data: ageGroups,
+                  backgroundColor: [
+                    "rgba(255, 99, 132, 0.8)",
+                    "rgba(54, 162, 235, 0.8)",
+                    "rgba(255, 206, 86, 0.8)",
+                    "rgba(75, 192, 192, 0.8)",
+                    "rgba(153, 102, 255, 0.8)",
+                    "rgba(255, 159, 64, 0.8)",
+                  ],
+                  borderWidth: 1,
+                },
               ],
-              borderWidth: 1,
-            },
-          ],
-        };
+            };
 
-        const config = {
-          type: "pie",
-          data: ageChartData,
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: "top",
-              },
-              title: {
-                display: true,
-                text: "연령대별 회원 구분",
-                font: {
-                  size: 20,
-                  color: "#000000",
+            const config = {
+              type: "bar",
+              data: ageChartData,
+              options: {
+                responsive: true,
+                plugins: {
+                  legend: {
+                    display: false, // 범례를 표시하지 않음
+                  },
+                  title: {
+                    display: true,
+                    text: "연령대별 회원 구분",
+                    font: {
+                      size: 20,
+                      color: "#000000",
+                    },
+                  },
+                  // 데이터 라벨 제거
+                  datalabels: {
+                    display: false,
+                  },
                 },
-              },
-              datalabels: {
-                color: "#fff",
-                formatter: (ageValue, ageContext) => {
-                  const label =
-                    ageContext.chart.data.labels[ageContext.dataIndex];
-                  return label;
-                },
-              },
-            },
-          },
-          plugins: [ChartDataLabels],
-        };
-
-        new Chart(document.getElementById("ageGroupChart"), config);
-      }
-
-      // ------------------------- 성별 차트 -------------------------------
-      // 성별 회원 차트
-      async function fetchGenderCount() {
-        try {
-          const response = await fetch("/getGenderCnt");
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return await response.json();
-        } catch (error) {
-          console.error("There was a problem with the fetch operation:", error);
-          return { genderCount: [0, 0], genderTitle: ["남성", "여성"] }; // 기본값 설정
-        }
-      }
-
-      // 데이터 로드 후 차트를 초기화 하는 함수
-      function initializeGenderChart(data) {
-        const genderCounts = data.genderCount;
-        const genderTitles = data.genderTitle;
-
-        const genderChartData = {
-          labels: genderTitles,
-          datasets: [
-            {
-              label: "회원 성별",
-              data: genderCounts,
-              backgroundColor: ["#36a2eb", "#ff6384"], // 남성: 파란색, 여성: 분홍색
-              borderWidth: 1,
-            },
-          ],
-        };
-
-        const config = {
-          type: "bar",
-          data: genderChartData,
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: "top",
-              },
-              title: {
-                display: true,
-                text: "성별에 따른 회원 비율",
-                font: {
-                  size: 20,
-                  color: "#000000",
-                },
-              },
-            },
-            scales: {
-              x: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: "성별",
-                },
-                // x축에 남성, 여성만 표시
-                ticks: {
-                  callback: function (value, index, ticks) {
-                    return genderTitles[index];
+                scales: {
+                  x: {
+                    beginAtZero: true,
                   },
                 },
               },
-              y: {
-                beginAtZero: true,
+            };
+
+            new Chart(document.getElementById("ageChart"), config);
+          } catch (error) {
+            console.error("Failed to fetch age groups data:", error);
+          }
+        }
+     
+        // 성별 차트 생성 함수
+        function createGenderChart() {
+          const genderChartCtx = document
+            .getElementById("genderChart")
+            .getContext("2d");
+          new Chart(genderChartCtx, {
+            type: "pie",
+            data: {
+              labels: ["남성", "여성"],
+              datasets: [
+                {
+                  label: "성별",
+                  data: [60, 40],
+                  backgroundColor: ["#36A2EB", "#FF6384"],
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: "top",
+                },
                 title: {
                   display: true,
-                  text: "회원 비율",
-                },
-                ticks: {
-                  stepSize: 10, // y축 10명 단위로 끊기
+                  text: "성별 비율",
                 },
               },
             },
-          },
-          plugins: [ChartDataLabels],
-        };
+          });
+        }
 
-        new Chart(document.getElementById("genderChart"), config);
-      }
+        // 가입 차트 생성 함수
+        function createSignupChart() {
+          const signupChartCtx = document
+            .getElementById("signupChart")
+            .getContext("2d");
+          new Chart(signupChartCtx, {
+            type: "line",
+            data: {
+              labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+              datasets: [
+                {
+                  label: "가입자 수",
+                  data: [5, 10, 8, 15, 12, 20, 14, 10, 18, 22, 32, 38],
+                  borderColor: "#36A2EB",
+                  fill: false,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: "top",
+                },
+                title: {
+                  display: true,
+                  text: "월별 가입자 수",
+                },
+              },
+            },
+          });
+        }
 
-      window.onload = async function () {
-        const ageData = await fetchAgeGroups();
-        initializeAgeChart(ageData);
-
-        const genderData = await fetchGenderCount();
-        initializeGenderChart(genderData);
-      };
+        // 차트 생성 함수 호출
+          createAgeChart();
+          createGenderChart();
+          createSignupChart();
+      })
     </script>
   </body>
 </html>
