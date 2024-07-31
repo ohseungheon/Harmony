@@ -17,98 +17,107 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <style>
+      #ageChartContainer{
+        height: 400px;
+        margin: auto;
+      }
+      #genderChartContainer {
+        width: 400px;
+        height: 400px;
+        margin: auto;
+      }
 
-#ageChartContainer, #genderChartContainer {
-	width: 400px;
-	margin: auto;
-}
+      table {
+        width: 100%;
+        margin: 50px 0;
+      }
 
-table {
-	width: 100%;
-	margin:50px 0;
-}
+      table,
+      tr,
+      th,
+      td {
+        border-collapse: collapse; /* 셀 사이에 빈 공간을 없앰 */
+        border: 1px solid black; /* 셀에 경계선을 추가 */
+        text-align: center;
+        padding: 8px;
+      }
+      tr,
+      td {
+        width: calc(100% / 3);
+      }
 
-table, tr, th, td {
-	border-collapse: collapse; /* 셀 사이에 빈 공간을 없앰 */
-	border: 1px solid black; /* 셀에 경계선을 추가 */
-	text-align:center;
-	padding:8px;
-}
-tr, td{
-	width:calc(100% / 3);
-}
+      /* sidebar css */
+      /* 노멀라이즈 시작 */
+      ul,
+      li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
 
-/* sidebar css */
-/* 노멀라이즈 시작 */
-ul, li {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
+      a {
+        color: inherit; /* 부모 엘리먼트의 값을 물려받는다 */
+        text-decoration: none;
+      }
 
-a {
-	color: inherit; /* 부모 엘리먼트의 값을 물려받는다 */
-	text-decoration: none;
-}
+      /* 노멀라이즈 끝 */
 
-/* 노멀라이즈 끝 */
+      /* 2차 이상의 메뉴를 숨기기*/
+      .side-bar > ul ul {
+        display: none;
+      }
 
-/* 2차 이상의 메뉴를 숨기기*/
-.side-bar>ul ul {
-	display: none;
-}
+      /* 사이드바의 너비와 높이를 변수를 통해 통제 */
+      :root {
+        --side-bar-width: 270px;
+        --side-bar-height: 90vh;
+      }
 
-/* 사이드바의 너비와 높이를 변수를 통해 통제 */
-:root {
-	--side-bar-width: 270px;
-	--side-bar-height: 90vh;
-}
+      .side-bar {
+        position: fixed;
+        background-color: #164772;
+        width: 250px;
+        top: 200px;
+        left: 50px;
+        z-index: 1000; /* 다른 요소들 위에 나타나도록 z-index 설정 */
+        border-radius: 20px;
+        padding: 50px 0 150px;
+      }
 
-.side-bar {
-	position: fixed;
-	background-color: #164772;
-	width: 250px;
-	top: 200px;
-	left: 50px;
-	z-index: 1000; /* 다른 요소들 위에 나타나도록 z-index 설정 */
-	border-radius: 20px;
-	padding: 50px 0 150px;
-}
+      /* 모든 메뉴의 a에 속성값 부여 */
+      .side-bar ul > li > a {
+        display: block;
+        color: white;
+        font-size: 1.4rem;
+        font-weight: bold;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 50px;
+      }
 
-/* 모든 메뉴의 a에 속성값 부여 */
-.side-bar ul>li>a {
-	display: block;
-	color: white;
-	font-size: 1.4rem;
-	font-weight: bold;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	padding-left: 50px;
-}
+      /* 자식의 position이 absolute일 때 자식을 영역 안에 가두어 준다 */
+      .side-bar > ul > li {
+        position: relative;
+      }
 
-/* 자식의 position이 absolute일 때 자식을 영역 안에 가두어 준다 */
-.side-bar>ul>li {
-	position: relative;
-}
+      /* 모든 메뉴가 마우스 인식 시 반응 */
+      .side-bar ul > li:hover > a {
+        background-color: #4178a5;
+        border-bottom: 1px solid #999;
+      }
 
-/* 모든 메뉴가 마우스 인식 시 반응 */
-.side-bar ul>li:hover>a {
-	background-color: #4178a5;
-	border-bottom: 1px solid #999;
-}
+      /* 1차 메뉴의 항목이 마우스 인식 시에 2차 메뉴 등장 */
+      .side-bar > ul > li:hover > ul {
+        display: block;
+        position: absolute;
+        background-color: #888;
+        top: 0; /* 2차 메뉴의 상단을 1차 메뉴의 상단에 고정 */
+        left: 100%; /* 2차 메뉴를 1차 메뉴의 너비만큼 이동 */
+        width: 100%; /* 1차 메뉴의 너비를 상속 */
+      }
 
-/* 1차 메뉴의 항목이 마우스 인식 시에 2차 메뉴 등장 */
-.side-bar>ul>li:hover>ul {
-	display: block;
-	position: absolute;
-	background-color: #888;
-	top: 0; /* 2차 메뉴의 상단을 1차 메뉴의 상단에 고정 */
-	left: 100%; /* 2차 메뉴를 1차 메뉴의 너비만큼 이동 */
-	width: 100%; /* 1차 메뉴의 너비를 상속 */
-}
-
-/* navbar */
-/*
+      /* navbar */
+      /*
       .sidebar {
         height: 100vh;
         background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
@@ -182,12 +191,12 @@ a {
         margin-right: 10px;
       }
         */
-/* end od navbar */
+      /* end od navbar */
 
-#signupChartContainer{
-	margin:0 auto;
-}
-</style>
+      #signupChartContainer {
+        margin: 0 auto;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -224,12 +233,12 @@ a {
           </li>
           <li>
             <a
-            href="#"
-            class="sidebar-link dropdown-toggle"
-            id="MenuManagementLink"
-          >
-            <i class="fas fa-utensils text-white fa-lg mr-3"></i> 메뉴 관리
-          </a>
+              href="#"
+              class="sidebar-link dropdown-toggle"
+              id="MenuManagementLink"
+            >
+              <i class="fas fa-utensils text-white fa-lg mr-3"></i> 메뉴 관리
+            </a>
             <ul>
               <li><a href="/menu_all/menu_all_list">메뉴 목록</a></li>
               <li><a href="#">메뉴 등록</a></li>
@@ -239,16 +248,18 @@ a {
           </li>
           <li>
             <a
-            href="#"
-            class="sidebar-link dropdown-toggle current"
-            id="RecipeManagementLink"
-          >
-            <i class="fas fa-book text-white fa-lg mr-3"></i> 레시피 관리
-          </a>
+              href="#"
+              class="sidebar-link dropdown-toggle current"
+              id="RecipeManagementLink"
+            >
+              <i class="fas fa-book text-white fa-lg mr-3"></i> 레시피 관리
+            </a>
             <ul>
               <li><a href="/menu_all/recipe_all_list">레시피 목록</a></li>
               <li><a href="/my/recipe/registForm">레시피 등록</a></li>
-              <li><a href="/menu_all/recipe_all_list">레시피 수정 / 삭제</a></li>
+              <li>
+                <a href="/menu_all/recipe_all_list">레시피 수정 / 삭제</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -278,7 +289,6 @@ a {
           </tbody>
         </table>
       </div>
-
     </section>
     <section class="content">
       <div class="row">
@@ -310,7 +320,6 @@ a {
           });
         });
 
-        
         // 연령대 차트 생성 함수
         async function createAgeChart() {
           try {
@@ -321,7 +330,14 @@ a {
             const data = await response.json();
 
             const ageGroups = data.ageGroups || [0, 0, 0, 0, 0, 0];
-            const ageTitles = data.ageTitle || ["Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown"];
+            const ageTitles = data.ageTitle || [
+              "Unknown",
+              "Unknown",
+              "Unknown",
+              "Unknown",
+              "Unknown",
+              "Unknown",
+            ];
 
             const ageChartData = {
               labels: ageTitles,
@@ -359,10 +375,6 @@ a {
                       color: "#000000",
                     },
                   },
-                  // 데이터 라벨 제거
-                  datalabels: {
-                    display: false,
-                  },
                 },
                 scales: {
                   x: {
@@ -377,7 +389,78 @@ a {
             console.error("Failed to fetch age groups data:", error);
           }
         }
-     
+
+        /*
+        async function createAgeChart() {
+          try {
+            const response = await fetch("/getAgeGroups");
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+
+            const ageGroups = data.ageGroups || [0, 0, 0, 0, 0, 0];
+            const ageTitles = data.ageTitle || ["Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown"];
+
+            const ageChartData = {
+              labels: ageTitles,
+              datasets: [
+                {
+                  label: "회원수",
+                  data: ageGroups,
+                  backgroundColor: [
+                    "rgba(255, 99, 132, 0.8)",
+                    "rgba(54, 162, 235, 0.8)",
+                    "rgba(255, 206, 86, 0.8)",
+                    "rgba(75, 192, 192, 0.8)",
+                    "rgba(153, 102, 255, 0.8)",
+                    "rgba(255, 159, 64, 0.8)",
+                  ],
+                  borderWidth: 1,
+                },
+              ],
+            };
+
+            const config = {
+              type: "bar",
+              data: ageChartData,
+              options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                  legend: {
+                    display: false, // 범례를 표시하지 않음
+                  },
+                  title: {
+                    display: true,
+                    text: "연령대별 회원 구분",
+                    font: {
+                      size: 20,
+                      color: "#000000",
+                    },
+                  },
+                  // 데이터 라벨 제거
+                  datalabels: {
+                    display: false,
+                  },
+                },
+                scales: {
+                  x: {
+                    beginAtZero: true,
+                  },
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            };
+
+            new Chart(document.getElementById("ageChart"), config);
+          } catch (error) {
+            console.error("Failed to fetch age groups data:", error);
+          }
+        }
+     */
         // 성별 차트 생성 함수
         function createGenderChart() {
           const genderChartCtx = document
@@ -403,7 +486,11 @@ a {
                 },
                 title: {
                   display: true,
-                  text: "성별 비율",
+                  text: "성별에 따른 회원 구분",
+                  font: {
+                    size: 20,
+                    color: "#000000",
+                  },
                 },
               },
             },
@@ -418,7 +505,20 @@ a {
           new Chart(signupChartCtx, {
             type: "line",
             data: {
-              labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+              labels: [
+                "1월",
+                "2월",
+                "3월",
+                "4월",
+                "5월",
+                "6월",
+                "7월",
+                "8월",
+                "9월",
+                "10월",
+                "11월",
+                "12월",
+              ],
               datasets: [
                 {
                   label: "가입자 수",
@@ -437,6 +537,10 @@ a {
                 title: {
                   display: true,
                   text: "월별 가입자 수",
+                  font: {
+                    size: 20,
+                    color: "#000000",
+                  },
                 },
               },
             },
@@ -444,10 +548,10 @@ a {
         }
 
         // 차트 생성 함수 호출
-          createAgeChart();
-          createGenderChart();
-          createSignupChart();
-      })
+        createAgeChart();
+        createGenderChart();
+        createSignupChart();
+      });
     </script>
   </body>
 </html>
