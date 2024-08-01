@@ -26,6 +26,7 @@ public class MyPage2ApiController {
 	@Autowired
 	private MyRecipeService myRecipeService;
 	
+	//레시피 등록,수정에서 메뉴이름 클릭하면 이미지 띄우기
 	@GetMapping("/getMenuImage")
 	public MenuDto getMenuImage(@RequestParam("mcode") int mcode) {
 		

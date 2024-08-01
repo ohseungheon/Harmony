@@ -21,10 +21,13 @@ public class LoginController {
 
 	@GetMapping("/login_page")
 	public String loginForm(@RequestParam(name = "error", required = false) Integer error, Model model, HttpServletRequest request, HttpSession session) {
+		
+		
 		if (error != null && error == 1) {
 			model.addAttribute("err_msg", "아이디 또는 비밀번호가 틀렸습니다.");
 			return "main/login_page";
 		}
+		
 		// 로그인 성공 시 로그인 페이지로 이동 전의 페이지로 redirect 해주기 위한 이전 페이지 url 저장
 		String referer = request.getHeader("Referer");
         if (referer != null && !referer.contains("/login_page")) {
