@@ -422,7 +422,6 @@ input[type="submit"]:hover {
 
 					</div>
 				</div>
-
 				<div id="canMakeMenuDiv2" class="container">
     <div class="row" style="display: none;">만들 수 있는 메뉴2</div>
     <div th:each="dto, iterStat : ${showCanMakeMenuList2}" class="row row9"
@@ -433,12 +432,12 @@ input[type="submit"]:hover {
                 <img th:src="@{'/uploads/'+ ${dto.imgurl}}">
             </div>
             <div class="possible-menu-info">
+                <div th:with="isInsufficientMaterials=${#lists.contains(showCanMakeMenuList, dto) == false}, index=${iterStat.index}">
                 <span id="category" th:text="${dto.category}"></span>
                 <span th:text="${dto.menuName}"></span>
-                <div th:with="isInsufficientMaterials=${#lists.contains(showCanMakeMenuList, dto) == false}, index=${iterStat.index}">
                     <p class="asd" th:if="${isInsufficientMaterials}">
                         ⓘ <span id="rackInfo" class="tooltip"
-                              th:text="${getCountUsedIcodeFromInfridgeIcodeList[index] + '개의 재료가 부족합니다'}"></span>
+                                th:text="'회원님의 냉장고에서 '+${dto.lackNum} + '개의 재료가 부족합니다'"></span>
                     </p>
                 </div>
             </div>

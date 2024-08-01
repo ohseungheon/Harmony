@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.IngredientDto2;
-import com.harmony.www_service.dto.MenuDto;
+import com.harmony.www_service.dto.MenuDto2;
 
 @Mapper
 public interface Menu1Dao {
@@ -15,9 +15,9 @@ public interface Menu1Dao {
 	List<IngredientDto2> showFridgeIngredientForDto(@Param("mno") int mno);
 	IngredientDto showOneIngredient(@Param("icode") int icode);
 	//MenuDto showCanMakeMenu();
-    List<MenuDto> showCanMakeMenu(@Param("icodeList") List<Integer> icodeList, @Param("size") Integer size);
-    List<MenuDto> showCanMakeMenu2(@Param("icodeList") List<Integer> icodeList, @Param("size") Integer size);
-    List<MenuDto> showCanMakeMenu2_exclude(@Param("icodeList") List<Integer> icodeList,@Param("excludList") List<Integer> excludList );
+    List<MenuDto2> showCanMakeMenu(@Param("icodeList") List<Integer> icodeList, @Param("size") Integer size);
+    List<MenuDto2> showCanMakeMenu2(@Param("icodeList") List<Integer> icodeList, @Param("size") Integer size);
+    List<MenuDto2> showCanMakeMenu2_exclude(@Param("icodeList") List<Integer> icodeList,@Param("excludList") List<Integer> excludList );
     List<IngredientDto> selectExcludeIngredient(@Param("icodeList") List<Integer> icodeList,@Param("mno") int mno);
     int getMno(@Param("username") String username);
     
@@ -30,6 +30,7 @@ public interface Menu1Dao {
     
     List<Integer>  getCountUsedIcodeFromInfridgeIcodeList(@Param("icodeList") List<Integer> icodeList);
     List<Integer>  getCountUsedIcodeFromInfridgeIcodeList2(@Param("icodeList") List<Integer> icodeList,@Param("excludList") List<Integer> excludList);
+    Integer extractLackNumFromMcode(@Param("mno") int mno,@Param("mcode") int mcode);
     
     
 }
