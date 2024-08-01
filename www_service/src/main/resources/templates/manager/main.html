@@ -17,14 +17,14 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <style>
-      #ageChartContainer{
+      #ageChartContainer {
         height: 400px;
-        margin: auto;
+        margin: 10px;
       }
       #genderChartContainer {
-        width: 400px;
+        width: 370px;
         height: 400px;
-        margin: auto;
+        margin: 10px;
       }
 
       table {
@@ -46,6 +46,24 @@
         width: calc(100% / 3);
       }
 
+      #table_memeberInfo_title{
+        margin: 50px;
+        font-size: 24px;
+        text-align: center;
+        font-weight: bold;
+      }
+      #table_memeberInfo tr,
+      #table_memeberInfo td{
+        border-collapse: collapse;
+        width: 1140px;
+        height: 30px;
+        margin: auto;
+        text-align: center;
+      }
+      #table_memeberInfo th {
+        width: 1200px;
+        height: auto;
+      }
       /* sidebar css */
       /* 노멀라이즈 시작 */
       ul,
@@ -116,85 +134,11 @@
         width: 100%; /* 1차 메뉴의 너비를 상속 */
       }
 
-      /* navbar */
-      /*
-      .sidebar {
-        height: 100vh;
-        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        box-shadow: 5px 7px 25px #999;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 300px;
-        padding-top: 20px;
-        z-index: 1000;
-      }
-      .bottom-border {
-        border-bottom: 2px groove #eee;
-      }
-      .sidebar-link {
-        transition: all 0.4s;
-        display: block;
-        color: white;
-        padding: 15px;
-        text-decoration: none;
-      }
-      .sidebar-link:hover,
-      .sidebar-link:focus {
-        background-color: #f44336;
-        border-radius: 5px;
-        text-decoration: none;
-      }
-      .current {
-        background-color: #f44336;
-        border-radius: 7px;
-        box-shadow: 2px 5px 10px #111;
-      }
-      .current:hover {
-        background-color: #f66436;
-        border-radius: 7px;
-        box-shadow: 2px 5px 20px #111;
-        transform: translateY(-1px);
-      }
-      .content {
-        margin-left: 300px;
-        padding: 20px;
-      }
-      .navbar-custom {
-        margin-left: 300px;
-      }
-      .nav-item {
-        font-size: 20px;
-      }
-      .dropdown-menu {
-        background-color: #333;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-      }
-      .dropdown-item {
-        color: white;
-      }
-      .dropdown-item:hover,
-      .dropdown-item:focus {
-        background-color: #f44336;
-      }
-      .manager-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .manager-container img {
-        margin-right: 10px;
-      }
-        */
-      /* end od navbar */
-
       #signupChartContainer {
         margin: 0 auto;
+      }
+      .row{
+        justify-content: center;
       }
     </style>
   </head>
@@ -290,6 +234,13 @@
         </table>
       </div>
     </section>
+    <section id="newMemberCountByMonth">
+      <div class="row">
+        <div class="col-md-10" id="signupChartContainer">
+          <canvas id="signupChart"></canvas>
+        </div>
+      </div>
+    </section>
     <section class="content">
       <div class="row">
         <div class="col-md-6" id="ageChartContainer">
@@ -299,11 +250,37 @@
           <canvas id="genderChart"></canvas>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-10" id="signupChartContainer">
-          <canvas id="signupChart"></canvas>
-        </div>
-      </div>
+      <div id="table_memeberInfo_title">회원 정보</div>
+      <table id="table_memeberInfo" border="1">
+        <thead>
+          <tr>
+            <th>회원 번호</th>
+            <th style="width: 40px">username</th>
+            <th>닉네임</th>
+            <th>성별</th>
+            <th>등록한 레시피 수</th>
+            <th>가입 일자</th>
+            <th>주소</th>
+            <th>생년월일</th>
+            <th>연락처</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="m : ${memberInfo}">
+            <td th:text="${m.mno}">회원 번호</td>
+            <td th:text="${m.username}" style="width: 40px">username</td>
+            <td th:text="${m.nickName}">닉네임</td>
+            <td th:text="${m.gender}">성별</td>
+            <td th:text="${m.recipe_count}" style="width: 70px">
+              등록한 레시피 수
+            </td>
+            <td th:text="${m.joinDate}">가입 일자</td>
+            <td th:text="${m.addr}">주소</td>
+            <td th:text="${m.birth}">생년월일</td>
+            <td th:text="${m.phone}">연락처</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
     <!-- JavaScript 파일들 -->
@@ -331,12 +308,12 @@
 
             const ageGroups = data.ageGroups || [0, 0, 0, 0, 0, 0];
             const ageTitles = data.ageTitle || [
-              "Unknown",
-              "Unknown",
-              "Unknown",
-              "Unknown",
-              "Unknown",
-              "Unknown",
+              "10대",
+              "20대",
+              "30대",
+              "40대",
+              "50대",
+              "60대 이상",
             ];
 
             const ageChartData = {
@@ -365,7 +342,7 @@
                 responsive: true,
                 plugins: {
                   legend: {
-                    display: false, // 범례를 표시하지 않음
+                    display: true, // 범례를 표시하지 않음
                   },
                   title: {
                     display: true,
@@ -390,77 +367,6 @@
           }
         }
 
-        /*
-        async function createAgeChart() {
-          try {
-            const response = await fetch("/getAgeGroups");
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            const data = await response.json();
-
-            const ageGroups = data.ageGroups || [0, 0, 0, 0, 0, 0];
-            const ageTitles = data.ageTitle || ["Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown"];
-
-            const ageChartData = {
-              labels: ageTitles,
-              datasets: [
-                {
-                  label: "회원수",
-                  data: ageGroups,
-                  backgroundColor: [
-                    "rgba(255, 99, 132, 0.8)",
-                    "rgba(54, 162, 235, 0.8)",
-                    "rgba(255, 206, 86, 0.8)",
-                    "rgba(75, 192, 192, 0.8)",
-                    "rgba(153, 102, 255, 0.8)",
-                    "rgba(255, 159, 64, 0.8)",
-                  ],
-                  borderWidth: 1,
-                },
-              ],
-            };
-
-            const config = {
-              type: "bar",
-              data: ageChartData,
-              options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                  legend: {
-                    display: false, // 범례를 표시하지 않음
-                  },
-                  title: {
-                    display: true,
-                    text: "연령대별 회원 구분",
-                    font: {
-                      size: 20,
-                      color: "#000000",
-                    },
-                  },
-                  // 데이터 라벨 제거
-                  datalabels: {
-                    display: false,
-                  },
-                },
-                scales: {
-                  x: {
-                    beginAtZero: true,
-                  },
-                  y: {
-                    beginAtZero: true,
-                  },
-                },
-              },
-            };
-
-            new Chart(document.getElementById("ageChart"), config);
-          } catch (error) {
-            console.error("Failed to fetch age groups data:", error);
-          }
-        }
-     */
         // 성별 차트 생성 함수
         function createGenderChart() {
           const genderChartCtx = document
@@ -513,16 +419,12 @@
                 "5월",
                 "6월",
                 "7월",
-                "8월",
-                "9월",
-                "10월",
-                "11월",
-                "12월",
+                "8월"
               ],
               datasets: [
                 {
                   label: "가입자 수",
-                  data: [5, 10, 8, 15, 12, 20, 14, 10, 18, 22, 32, 38],
+                  data: [5, 10, 8, 15, 12, 20, 14, 10],
                   borderColor: "#36A2EB",
                   fill: false,
                 },

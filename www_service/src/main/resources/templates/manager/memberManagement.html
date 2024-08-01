@@ -1,11 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원 관리</title>
-</head>
-<body>
-    <h1> 회원 관리</h1>
-</body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원 관리 페이지</title>
+    <style>
+      h1 {
+        margin: 50px;
+        flex: auto;
+        display: flexbox;
+        text-align: center;
+      }
+      table,
+      tr,
+      td {
+        border-collapse: collapse;
+        width: 1140px;
+        height: 30px;
+        margin: auto;
+        text-align: center;
+      }
+      th {
+        width: 1200px;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <th:block th:insert="~{/sub/header.html}"></th:block>
+    </header>
+    <h1>회원 정보</h1>
+    <!-- 고도화 : 필터 - 정렬(레시피 많은 순) -->
+    <table border="1">
+      <thead>
+        <tr>
+          <th>회원 번호</th>
+          <th style="width: 40px">username</th>
+          <th>닉네임</th>
+          <th>성별</th>
+          <th>등록한 레시피 수</th>
+          <th>가입 일자</th>
+          <th>주소</th>
+          <th>생년월일</th>
+          <th>연락처</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="m : ${memberInfo}">
+          <td th:text="${m.mno}">회원 번호</td>
+          <td th:text="${m.username}" style="width: 40px">username</td>
+          <td th:text="${m.nickName}">닉네임</td>
+          <td th:text="${m.gender}">성별</td>
+          <td th:text="${m.recipe_count}" style="width: 70px">
+            등록한 레시피 수
+          </td>
+          <td th:text="${m.joinDate}">가입 일자</td>
+          <td th:text="${m.addr}">주소</td>
+          <td th:text="${m.birth}">생년월일</td>
+          <td th:text="${m.phone}">연락처</td>
+        </tr>
+      </tbody>
+    </table>
+    <footer>
+        <th:block th:insert="~{/sub/footer.html}"></th:block>
+      </footer>
+  </body>
 </html>

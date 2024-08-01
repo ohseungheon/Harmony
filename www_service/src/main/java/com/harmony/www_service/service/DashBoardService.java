@@ -1,10 +1,13 @@
 package com.harmony.www_service.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.harmony.www_service.dao.IDashBoardDao;
 import com.harmony.www_service.dto.GenderDtoForDashBoard;
+import com.harmony.www_service.dto.MemberDtoForDashBoard;
 
 @Service
 public class DashBoardService {
@@ -38,7 +41,7 @@ public class DashBoardService {
 	}
 	
 	//회원 정보 + 회원이 등록한 레시피 수
-//	public List<MemberDtoForDashBoard> findMemberInfo(){
-//		return dbDao.findMemberInfo();
-//	}
+	public List<MemberDtoForDashBoard> findMemberInfo(){
+		return dbDao.findMemAllInfo();
+	}
 }
