@@ -76,6 +76,7 @@ section{
 }
 .err-box p{
 	font-size:14px;
+	color:red;
 }
 </style>
 </head>
@@ -103,6 +104,11 @@ section{
     </footer>
 
     <script>
+    // 새로고침시 아이디,비밀번호 틀렸을때 메세지 사라짐
+    if (window.history.replaceState) {
+        const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+    }
     </script>
 </body>
 </html>

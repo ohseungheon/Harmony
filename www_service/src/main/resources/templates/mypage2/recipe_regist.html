@@ -520,12 +520,16 @@ function handleMenuSelection(menuItem) {
     // 클릭된 메뉴 아이템에 'selected' 클래스를 추가
     menuItem.classList.add("selected");
 
+    // 클릭된 메뉴 아이템의 attr에 담긴 mcode를 상수 mcode에 저장
     const mcode = menuItem.getAttribute("mcode");
+    // ID가 mcode인 애 value에 attr에 담긴 mcode값을 저장 
     document.getElementById("mcode").value = mcode;
+    // fetchAndSetMenuImage(mcode) 함수에 매개변수로 전달 
     fetchAndSetMenuImage(mcode);
 }
 
 function fetchAndSetMenuImage(mcode) {
+	// MyPage2ApiController에 있는 getMenuImage함수에 mcode를 파라미터로 전달
     fetch(`/api/getMenuImage?mcode=${mcode}`)
         .then(response => {
             if (!response.ok) throw new Error(response.status);
@@ -534,7 +538,9 @@ function fetchAndSetMenuImage(mcode) {
         .then(data => {
             const imageUrl = data.imgurl;
             const menuImage = document.getElementById("menu-image");
+            // MyPage2ApiController에서 받아온 img 데이터를 src에 입력
             menuImage.src = "/uploads/" + imageUrl;
+            // 받아올 이미지가 없으면 지정된 기본이미지 입력
             menuImage.onerror = () => { menuImage.src = '/img/imgNone.png'; };
         })
         .catch(console.error);
