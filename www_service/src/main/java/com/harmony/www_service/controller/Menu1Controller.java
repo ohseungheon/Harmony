@@ -113,8 +113,14 @@ public class Menu1Controller {
 	            }
 	        }
 		  
-		  System.out.println("===========================testList : " +testList);
+		 System.out.println("===========================testList : " +testList);
 		menuService.extractLackNumFromMcode(mno,showCanMakeMenuList2);
+		System.out.println("=========================== InFridgeIngredientList: " +menuService.makeIcodeList(InFridgeIngredientList));
+		System.out.println("=========================== mno: " +mno);
+		System.out.println("=========================== showCanMakeMenuList2: " +showCanMakeMenuList2);
+		//menuService.showExtractIngredientName(InFridgeIngredientList,mno,showCanMakeMenuList2);
+		
+		System.out.println("========================showCanMakeMenuList2============= :"+showCanMakeMenuList2);
 		model.addAttribute("showCanMakeMenuList", showCanMakeMenuList);
 		model.addAttribute("showCanMakeMenuList2", showCanMakeMenuList2);
 		model.addAttribute("NoInFridgeIngredientList", NoInFridgeIngredientList);
