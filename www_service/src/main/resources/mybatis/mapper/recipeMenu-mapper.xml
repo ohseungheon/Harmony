@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select * from menu
 </select>
 
+<!-- 레시피등록에서 메뉴 클릭하면 이미지 가져오기 -->
 <select id="getImageUrlByMcode">
 	select imgurl from menu where mcode = #{mcode}
 </select>
