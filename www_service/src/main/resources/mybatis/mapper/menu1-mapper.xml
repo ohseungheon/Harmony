@@ -381,7 +381,8 @@
 		AND (
 		SELECT COUNT(*)
 		FROM recipe_ingredient ri2
-		WHERE ri2.rcode = ri1.rcode
+		WHERE ri2.rcode =
+		ri1.rcode
 		AND ri2.icode NOT IN
 		<foreach item="item" index="index" collection="icodeList"
 			open="(" separator="," close=")">
@@ -390,7 +391,8 @@
 		) &lt;= 2
 		AND ri1.rcode NOT IN (
 		SELECT ri3.rcode
-		FROM recipe_ingredient ri3
+		FROM recipe_ingredient
+		ri3
 		WHERE ri3.icode IN
 		<foreach item="item" index="index" collection="excludList"
 			open="(" separator="," close=")">
@@ -407,38 +409,68 @@
 	</select>
 
 
-	<select id="extractLackNumFromMcode"
-        parameterType="map" resultType="java.lang.Integer">
-    SELECT COALESCE(COUNT(*), 0)
-    FROM recipe_ingredient ri1
-    JOIN recipe r ON ri1.rcode = r.rcode
-    JOIN menu m ON r.mcode = m.mcode
-    WHERE ri1.rcode IN (
-        SELECT DISTINCT ri1.rcode
-        FROM recipe_ingredient ri1
-        WHERE ri1.icode IN (
-            SELECT icode
-            FROM fridge
-            WHERE mno = #{mno}
-        )
-        AND (
-            SELECT COUNT(*)
-            FROM recipe_ingredient ri2
-            WHERE ri2.rcode = ri1.rcode
-            AND ri2.icode NOT IN (
-                SELECT icode
-                FROM fridge
-                WHERE mno = #{mno}
-            )
-        ) &lt;= 2
-    )
-    AND ri1.icode NOT IN (
-        SELECT icode
-        FROM fridge
-        WHERE mno = #{mno}
-    )
-    AND m.mcode = #{mcode}
-    GROUP BY m.mcode, r.rcode;
-</select>
+	<select id="extractLackNumFromMcode" parameterType="map"
+		resultType="java.lang.Integer">
+		SELECT COALESCE(COUNT(*), 0)
+		FROM recipe_ingredient ri1
+		JOIN recipe r ON ri1.rcode = r.rcode
+		JOIN menu m ON r.mcode = m.mcode
+		WHERE ri1.rcode IN (
+		SELECT DISTINCT ri1.rcode
+		FROM recipe_ingredient ri1
+		WHERE ri1.icode IN (
+		SELECT icode
+		FROM fridge
+		WHERE mno = #{mno}
+		)
+		AND (
+		SELECT COUNT(*)
+		FROM recipe_ingredient ri2
+		WHERE ri2.rcode = ri1.rcode
+		AND ri2.icode NOT IN (
+		SELECT icode
+		FROM fridge
+		WHERE mno = #{mno}
+		)
+		) &lt;= 2
+		)
+		AND ri1.icode NOT IN (
+		SELECT icode
+		FROM fridge
+		WHERE mno = #{mno}
+		)
+		AND m.mcode = #{mcode}
+		GROUP BY m.mcode, r.rcode;
+	</select>
+
+
+	<select id="showExtractIngredientName" parameterType="map"
+		resultType="java.lang.String">
+
+		SELECT name
+		FROM recipe_ingredient ri1
+		JOIN recipe r ON ri1.rcode = r.rcode
+		JOIN ingredient i ON ri1.icode = i.icode
+		WHERE ri1.icode IN (
+		SELECT icode
+		FROM fridge
+		WHERE mno = #{mno}
+		)
+		AND r.mcode = #{mcode}
+		AND ri1.icode NOT IN <foreach item="item" index="index" collection="icodeList"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach> 
+		AND (
+		SELECT COUNT(*)
+		FROM recipe_ingredient ri2
+		WHERE ri2.rcode = ri1.rcode
+		AND ri2.icode NOT IN (
+		SELECT icode
+		FROM fridge
+		WHERE mno =  #{mno}
+		)
+		)   &lt;= 2;
+	</select>
 
 </mapper>

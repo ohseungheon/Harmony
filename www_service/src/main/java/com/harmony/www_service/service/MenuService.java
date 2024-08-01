@@ -135,6 +135,8 @@ public class MenuService {
 	   List<Integer> getCountUsedIcodeFromInfridgeIcodeList2 = menu1dao.getCountUsedIcodeFromInfridgeIcodeList2(icodeList,excludList);
 	   return getCountUsedIcodeFromInfridgeIcodeList2;
    };
+   
+   
    public void extractLackNumFromMcode(int mno, List<MenuDto2> mList) {
 	    for (MenuDto2 m : mList) {
 	        Integer count = menu1dao.extractLackNumFromMcode(mno, m.getMcode());
@@ -142,7 +144,20 @@ public class MenuService {
 	            count = 0; // 기본값 설정
 	        }
 	        m.setLackNum(count);
+	
 	    }
 	}
    
+   
+   
+   public void showExtractIngredientName(List<IngredientDto> iList,int mno,List<MenuDto2> mList) {
+	   List<Integer> icodeList = makeIcodeList(iList);
+	   for (MenuDto2 m : mList) {
+		   List<String> list = menu1dao.showExtractIngredientName(icodeList,mno,m.getMcode());
+		   m.setLackIngredient(list);
+		   System.out.println("==================== list : "+list); 
+	   }
+	   
+   }
+
 }
