@@ -22,6 +22,7 @@ import com.harmony.www_service.dto.FridgeIngredientDto;
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.IngredientDto2;
 import com.harmony.www_service.dto.MenuDto;
+import com.harmony.www_service.dto.MenuDto2;
 import com.harmony.www_service.service.MenuService;
 
 import jakarta.servlet.http.HttpSession;
@@ -78,8 +79,8 @@ public class Menu1Controller {
 		// 가지고 있는 재료로 만들 수 있는 메뉴 리스트
 		
 		
-		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
-		List<MenuDto> showCanMakeMenuList2 = menuService.getCanMakeMenu2(InFridgeIngredientList);
+		List<MenuDto2> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
+		List<MenuDto2> showCanMakeMenuList2 = menuService.getCanMakeMenu2(InFridgeIngredientList);
 		
 //		List<Integer> rcodeList = new ArrayList<>();
 //		for (MenuDto menu:showCanMakeMenuList2) {
@@ -89,11 +90,37 @@ public class Menu1Controller {
 		List<Integer> NoInFridgeicodeList =  menuService.makeIcodeList(NoInFridgeIngredientList);
 		List<Integer> getCountUsedIcodeFromInfridgeIcodeList = menuService.getCountUsedIcodeFromInfridgeIcodeList(InFridgeicodeList);
 		
+		// 배열을 돌리는데, 2번쨰 결과 리스트를 첫번쨰 겨ㅛㄹ과와 비교하고, 값이 안같으면  
+		// 
+		//나오는 배열은 두번째 배열과 같은 크기 
+		
+		List<Integer> testList = new ArrayList<>();
+		
+		
+		  for (int i = 0; i < showCanMakeMenuList2.size(); i++) {
+			  testList.add(0);
+	        }
+
+	        // c 배열의 인덱스
+	        int getCountUsedIcodeFromInfridgeIcodeListIndex = 0;
+
+	        // b 배열을 순회하며 각 요소가 a 배열에 포함되지 않으면 c 배열의 값을 할당
+	        for (int i = 0; i < showCanMakeMenuList2.size(); i++) {
+	        	System.out.println(showCanMakeMenuList2.get(i));
+	            if (!showCanMakeMenuList.contains(showCanMakeMenuList2.get(i))) {
+	                if (getCountUsedIcodeFromInfridgeIcodeListIndex < getCountUsedIcodeFromInfridgeIcodeList.size()) {
+	                	testList.set(i, getCountUsedIcodeFromInfridgeIcodeList.get(getCountUsedIcodeFromInfridgeIcodeListIndex++));	                }
+	            }
+	        }
+		  
+		  System.out.println("===========================testList : " +testList);
+		menuService.extractLackNumFromMcode(mno,showCanMakeMenuList2);
 		model.addAttribute("showCanMakeMenuList", showCanMakeMenuList);
 		model.addAttribute("showCanMakeMenuList2", showCanMakeMenuList2);
 		model.addAttribute("NoInFridgeIngredientList", NoInFridgeIngredientList);
 		model.addAttribute("InFridgeIngredientList", InFridgeIngredientList);
 		model.addAttribute("getCountUsedIcodeFromInfridgeIcodeList", getCountUsedIcodeFromInfridgeIcodeList);
+		model.addAttribute("testList", testList);
 		model.addAttribute("test",30);
 		model.addAttribute("days", days);
 		
@@ -164,7 +191,7 @@ public class Menu1Controller {
 		System.out.println("=================lackIngredient InFridgeIngredientList==================: " + lackIngredient);
 		model.addAttribute("test",100);
 		model.addAttribute("InFridgeIngredientList",InFridgeIngredientList);
-		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
+		List<MenuDto2> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
 		//menuService.makeIcodeList();
 		return selectExcludeIngredientList;
 	}
@@ -174,7 +201,7 @@ public class Menu1Controller {
 	
 	@ResponseBody
 	@GetMapping("/deleteCanMakeMenu") // 삭제
-	public List<MenuDto> deleteCanMakeMenu(@RequestParam("icode") int icode, HttpSession session) {
+	public List<MenuDto2> deleteCanMakeMenu(@RequestParam("icode") int icode, HttpSession session) {
 		// System.out.println("===========================deleteCanMakeMenu=========================");
 
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -203,7 +230,7 @@ public class Menu1Controller {
 		}
 		
 		// 사용할수 있는 재료로 만들 수 있는 메뉴 보여주는 dao함수 실행
-		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
+		List<MenuDto2> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
 
 		return showCanMakeMenuList;
 	}
@@ -260,7 +287,7 @@ public class Menu1Controller {
 		System.out.println(" ");
 
 		// 사용할수 있는 재료로 만들 수 있는 메뉴 보여주는 dao함수 실행
-		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
+		List<MenuDto2> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
 
 		List<Integer> mcodeList = menuService.makeMcodeList(showCanMakeMenuList);
 		
@@ -317,7 +344,7 @@ public class Menu1Controller {
 
 		// 사용할수 있는 재료로 만들 수 있는 메뉴 보여주는 dao함수 실행
 		List<Integer> mcodeList = new ArrayList<>();
-		List<MenuDto> showCanMakeMenuList = new ArrayList<>();
+		List<MenuDto2> showCanMakeMenuList = new ArrayList<>();
 		int InFridgeIngredientListNum = InFridgeIngredientList.size();
 		model.addAttribute("InFridgeIngredientListNum", InFridgeIngredientListNum);
 		System.out.println("====================================InFridgeIngredientListNum :"+ InFridgeIngredientListNum);
@@ -425,7 +452,7 @@ public class Menu1Controller {
 		// 사용하지 않을 재료를 사용할수 있는재료 리스트에서 제거
 
 		// 사용할수 있는 재료로 만들 수 있는 메뉴 보여주는 dao함수 실행
-		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
+		List<MenuDto2> showCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
 
 		List<Integer> mcodeList = menuService.makeMcodeList(showCanMakeMenuList);
 		System.out.println("==========================test showCanMakeMenuList: " + showCanMakeMenuList);
@@ -463,7 +490,7 @@ public class Menu1Controller {
 		// 사용하지 않을 재료를 사용할수 있는재료 리스트에서 제거
 
 		// 사용할수 있는 재료로 만들 수 있는 메뉴 보여주는 dao함수 실행
-		List<MenuDto> showCanMakeMenuList = menuService.getCanMakeMenu2(InFridgeIngredientList);
+		List<MenuDto2> showCanMakeMenuList = menuService.getCanMakeMenu2(InFridgeIngredientList);
 
 		List<Integer> mcodeList = menuService.makeMcodeList(showCanMakeMenuList);
 		System.out.println("==========================test showCanMakeMenuList: " + showCanMakeMenuList);
@@ -473,7 +500,7 @@ public class Menu1Controller {
 
 	@ResponseBody // 재료 복원시 사용되는 함수
 	@GetMapping("/undoIngredient2")
-	public List<MenuDto> undoIngredient2(@RequestParam("icode") int icode, HttpSession session) {
+	public List<MenuDto2> undoIngredient2(@RequestParam("icode") int icode, HttpSession session) {
 		List<IngredientDto> NoInFridgeIngredientList = (List<IngredientDto>) session
 				.getAttribute("NoInFridgeIngredientList");
 		if (NoInFridgeIngredientList == null) {
@@ -493,7 +520,7 @@ public class Menu1Controller {
 		}
 		// 사용할수 있는 재료 리스트에 추가
 		InFridgeIngredientList.add(getOneIngredient);
-		List<MenuDto> undoCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
+		List<MenuDto2> undoCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
 		System.out.println(
 				"================================undoCanMakeMenuList===================== " + undoCanMakeMenuList);
 		return undoCanMakeMenuList;
@@ -532,7 +559,7 @@ public class Menu1Controller {
 
 	@ResponseBody
 	@GetMapping("/undoCanMakeMenu")
-	public List<MenuDto> undoCanMakeMenu(HttpSession session) {
+	public List<MenuDto2> undoCanMakeMenu(HttpSession session) {
 
 		List<IngredientDto> InFridgeIngredientList = (List<IngredientDto>) session
 				.getAttribute("InFridgeIngredientList");
@@ -541,7 +568,7 @@ public class Menu1Controller {
 		if (InFridgeIngredientList == null) {
 			InFridgeIngredientList = new ArrayList<>();
 		}
-		List<MenuDto> undoCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
+		List<MenuDto2> undoCanMakeMenuList = menuService.getCanMakeMenu(InFridgeIngredientList);
 
 		return undoCanMakeMenuList;
 	}

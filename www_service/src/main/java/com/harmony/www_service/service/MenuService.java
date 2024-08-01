@@ -3,15 +3,16 @@ package com.harmony.www_service.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.harmony.www_service.dao.Menu1Dao;
 import com.harmony.www_service.dao.MenuDao;
 import com.harmony.www_service.dao.MenuListDao;
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.MenuDto;
+import com.harmony.www_service.dto.MenuDto2;
 
 @Service
 public class MenuService {
@@ -35,14 +36,14 @@ public class MenuService {
        
     }
 
-    public List<MenuDto> getCanMakeMenu(List<IngredientDto> iList) {
+    public List<MenuDto2> getCanMakeMenu(List<IngredientDto> iList) {
        List<Integer> icodeList = makeIcodeList(iList);
        //System.out.println("=============================getCanMakeMenu=======================");
        //System.out.println("=============================getCanMakeMenu icodeList======================= :"+icodeList);
        int size = icodeList.size();
         return menu1dao.showCanMakeMenu(icodeList,size);
     }
-    public List<MenuDto> getCanMakeMenu2(List<IngredientDto> iList) {
+    public List<MenuDto2> getCanMakeMenu2(List<IngredientDto> iList) {
     	List<Integer> icodeList = makeIcodeList(iList);
     	//System.out.println("=============================getCanMakeMenu=======================");
     	//System.out.println("=============================getCanMakeMenu icodeList======================= :"+icodeList);
@@ -50,7 +51,7 @@ public class MenuService {
     	return menu1dao.showCanMakeMenu2(icodeList,size);
     }
     
-    public List<MenuDto> getCanMakeMenu2Exclude(List<IngredientDto> iList, List<Integer> excludeList) {
+    public List<MenuDto2> getCanMakeMenu2Exclude(List<IngredientDto> iList, List<Integer> excludeList) {
     	List<Integer> icodeList = makeIcodeList(iList);
     	//System.out.println("=============================getCanMakeMenu=======================");
     	//System.out.println("=============================getCanMakeMenu icodeList======================= :"+icodeList);
@@ -71,10 +72,10 @@ public class MenuService {
         return icodeList;
     }
     
-    public List<Integer> makeMcodeList(List<MenuDto> menuDtoList){
+    public List<Integer> makeMcodeList(List<MenuDto2> menuDtoList){
        List<Integer> mcodeList =  new ArrayList<>();
        
-       for ( MenuDto menuListElement:menuDtoList) {
+       for ( MenuDto2 menuListElement:menuDtoList) {
           
          int mcode = menuListElement.getMcode();
          mcodeList.add(mcode);
@@ -134,5 +135,14 @@ public class MenuService {
 	   List<Integer> getCountUsedIcodeFromInfridgeIcodeList2 = menu1dao.getCountUsedIcodeFromInfridgeIcodeList2(icodeList,excludList);
 	   return getCountUsedIcodeFromInfridgeIcodeList2;
    };
+   public void extractLackNumFromMcode(int mno, List<MenuDto2> mList) {
+	    for (MenuDto2 m : mList) {
+	        Integer count = menu1dao.extractLackNumFromMcode(mno, m.getMcode());
+	        if (count == null) {
+	            count = 0; // 기본값 설정
+	        }
+	        m.setLackNum(count);
+	    }
+	}
    
 }
