@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.harmony.www_service.dto.GenderDtoForDashBoard;
 import com.harmony.www_service.dto.IngredientDto;
 import com.harmony.www_service.dto.IngredientDtoWithFile;
+import com.harmony.www_service.dto.MemberDtoForDashBoard;
 import com.harmony.www_service.dto.MenuDto;
 import com.harmony.www_service.dto.MenuReqDto;
 import com.harmony.www_service.service.DashBoardService;
@@ -152,8 +153,8 @@ public class ManagerController {
 		model.addAttribute("newMonthMemberCount", newMonthMemberCount);
 
 		// 회원 정보 + 회원이 등록한 레시피 수
-//		List<MemberDtoForDashBoard> memberInfo = dbService.findMemberInfo();
-//		model.addAttribute("memberInfo", memberInfo);
+		List<MemberDtoForDashBoard> memberInfo = dbService.findMemberInfo();
+		model.addAttribute("memberInfo", memberInfo);
 
 		return "manager/main";
 	}
@@ -219,7 +220,11 @@ public class ManagerController {
 	// 회원관리 페이지
 	@RequestMapping("/memberManagement")
 	public String memberPage(Model model) {
+		List<MemberDtoForDashBoard> memberInfo = dbService.findMemberInfo();
+		model.addAttribute("memberInfo", memberInfo);
 		return "manager/memberManagement";
 	}
 
+	
+	
 }

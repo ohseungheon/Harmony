@@ -16,9 +16,6 @@ public class MemberDtoForDashBoard {
 	private String phone;
 	private String gender;
 	private LocalDate joinDate;
-//	private int recipeCnt;
-//	private int newMemberCntPerDay;
-//	private int newMemberCntPerMon;
-//	private int memberCntByAge;
+	private int recipe_count;
 	
 }

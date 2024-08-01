@@ -26,5 +26,5 @@ public interface IDashBoardDao {
 	public int[] findMemByAges();
 	
 	//회원 정보 + 회원이 등록한 레시피 수
-	public List<MemberDtoForDashBoard> findMemberInfo();
+	public List<MemberDtoForDashBoard> findMemAllInfo();
 }
