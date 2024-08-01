@@ -520,16 +520,18 @@ function handleMenuSelection(menuItem) {
     // 클릭된 메뉴 아이템에 'selected' 클래스를 추가
     menuItem.classList.add("selected");
 
-    // 클릭된 메뉴 아이템의 attr에 담긴 mcode를 상수 mcode에 저장
+    // 클릭된 메뉴 아이템의 attribute속성에 있는 mcode를 변수 mcode에 저장
     const mcode = menuItem.getAttribute("mcode");
-    // ID가 mcode인 애 value에 attr에 담긴 mcode값을 저장 
+    // ID가 mcode인 input value에 변수 mcode에 저장된 값을 전달 
     document.getElementById("mcode").value = mcode;
     // fetchAndSetMenuImage(mcode) 함수에 매개변수로 전달 
     fetchAndSetMenuImage(mcode);
 }
 
 function fetchAndSetMenuImage(mcode) {
-	// MyPage2ApiController에 있는 getMenuImage함수에 mcode를 파라미터로 전달
+	// handleMenuSelection 함수에서 전달받은 매개변수 mcode를
+	// MyPage2ApiController에 있는 getMenuImage 메소드에 mcode를 파라미터로 전달
+	// fetch API를 이용한 비동기 통신
     fetch(`/api/getMenuImage?mcode=${mcode}`)
         .then(response => {
             if (!response.ok) throw new Error(response.status);
@@ -566,34 +568,45 @@ function handleIngredientSelection(event) {
     }
 } */
 
+// 재료정보 삭제 이벤트
 function addDeleteEvent(deleteBtn) {
     deleteBtn.addEventListener('click', () => {
+    	// 현재 요소에서 가장 가까운 상위의 tr 요소를 찾는다(삭제버튼이 속한 행)
         const row = deleteBtn.closest('tr');
         row.remove();
+        // delete-btn이라는 클래스이름을 가진 버튼만 updateStepNumbers 함수를 실행하게 한다.
         if (deleteBtn.classList.contains('delete-btn')) {
+        	// 요리순서 step의 번호는 재정렬하기 위한 함수
             updateStepNumbers();
         }
     });
 }
 
+// 재료 추가 버튼 (새로운 재료 행을 table에 추가)
 function addIngredientRow() {
     const table = document.getElementById('ingredient-table');
+    // createIngredientRow() 함수의 return으로 반환한 tr요소를 newRow변수에 저장
     const newRow = createIngredientRow();
+    // table의 자식요소로 newRow 추가
     table.appendChild(newRow);
-    //addChangeListener(newRow.querySelector('select'));
+    // addDeleteEvent(newRow내의 삭제 버튼) 함수를 호출하여 삭제버튼에 이벤트 추가
     addDeleteEvent(newRow.querySelector('.ingredient-delete-btn'));
 }
 
+// 재료 추가 버튼 클릭시 tr안의 요소들을 추가하여 HTML구조 생성
 function createIngredientRow() {
+	// tr 요소를 생성해 변수에 담기
     const newRow = document.createElement('tr');
+	// 생성된 tr 안에 재료정보와 같은 HTML 추가
     newRow.innerHTML = `
         <th>재료 정보</th>
         <td>
             <select name="icode" id="ingredient-select-${selectIdCounter++}">
                 <option value="0">재료 이름</option>
+                // map메서드를 이용해 ingredientsList의 각 재료들을 각각 option태그의 문자열로 변환
                 ${ingredientsList.map(ingredient =>
                     `<option value="${ingredient.icode}">${ingredient.name}</option>`
-                ).join('')}
+                ).join('')} // join메서드를 이용해 map으로 생성된 배열을 연속된 하나의 문자열로 변환
             </select>
         </td>
         <td><input type="text" name="state" placeholder="재료상태 예) 간거, 온거"></td>
@@ -601,6 +614,7 @@ function createIngredientRow() {
         <td><input type="text" name="type" placeholder="단위(개/g/스푼/포기 등)"></td>
         <td><span class="ingredient-delete-btn">X</span></td>
     `;
+    // 생성된 tr요소를 return으로 반환
     return newRow;
 }
 
@@ -624,12 +638,18 @@ function addImageUploadEvent(orderImgCell) {
     });
 }
 
+// 요리순서 삭제됬을때 step 번호 재정렬 
 function updateStepNumbers() {
+	// recipe-steps 테이블 내의 모든 tr요소를 찾는다
     const rows = document.querySelectorAll('#recipe-steps tr');
+	// 선택된 행에 대해 순차적으로 처리
     rows.forEach((row, index) => {
+    	// 각행의 첫번째 th와 그안의 input[name="orderNum"]을 찾는다
         const stepCell = row.querySelector('th');
         const orderNumInput = stepCell.querySelector('input[name="orderNum"]');
+        // 첫번째 th에 있는 step의 문자를 다시 1부터 시작하게 한다.
         stepCell.childNodes[0].textContent = `Step ${index + 1}`;
+        // input[name="orderNum"]의 value값을 step과 같이 1부터 시작하게한다.
         orderNumInput.value = index + 1;
     });
 }
