@@ -267,8 +267,8 @@
           <thead>
             <tr>
               <th>총 회원수</th>
-              <th>일별 새 회원수</th>
-              <th>월별 새 회원수</th>
+              <th>일별 가입 회원수</th>
+              <th>월별 가입 회원수</th>
             </tr>
           </thead>
           <tbody>
@@ -281,13 +281,6 @@
         </table>
       </div>
     </section>
-    <section id="newMemberCountByMonth">
-      <div class="row">
-        <div class="col-md-10" id="signupChartContainer">
-          <canvas id="signupChart"></canvas>
-        </div>
-      </div>
-    </section>
     <section class="content">
       <div class="row">
         <div class="col-md-6" id="ageChartContainer">
@@ -297,6 +290,13 @@
           <canvas id="genderChart"></canvas>
         </div>
       </div>
+    <section id="newMemberCountByMonth">
+      <div class="row">
+        <div class="col-md-10" id="signupChartContainer">
+          <canvas id="signupChart"></canvas>
+        </div>
+      </div>
+    </section>
       <div id="table_memeberInfo_title">회원 정보</div>
       <table id="table_memeberInfo">
         <thead>
@@ -476,7 +476,7 @@
               ],
               datasets: [
                 {
-                  label: "가입자 수",
+                  label: "가입 회원 수",
                   data: [5, 10, 8, 15, 12, 20, 14, 10],
                   borderColor: "#36A2EB",
                   fill: false,
@@ -491,7 +491,7 @@
                 },
                 title: {
                   display: true,
-                  text: "월별 가입자 수",
+                  text: "월별 가입 회원 수",
                   padding: {
                       bottom: 30  // 아래쪽 여백
                     },
