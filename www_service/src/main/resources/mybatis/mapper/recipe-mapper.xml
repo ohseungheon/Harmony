@@ -17,8 +17,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getRecipeIngredientsByRcode" parameterType="int"
 		resultType="com.harmony.www_service.dto.RecipeIngredientDto">
-		SELECT ri.ricode AS ricode, ri.rcode, ri.icode, ri.state, ri.amount, i.name, ri.type
-		FROM recipe_ingredient ri JOIN ingredient i ON ri.icode =
+		SELECT ri.ricode AS ricode, ri.rcode, ri.icode, ri.state,
+		ri.amount, i.name, ri.type
+		FROM recipe_ingredient ri JOIN ingredient i
+		ON ri.icode =
 		i.icode WHERE
 		ri.rcode = #{rcode}
 	</select>
@@ -158,9 +160,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 레시피 영상 가져오기 5개 랜덤 근데 뒤에서 11자리 자르기를 곁들인 -->
 	<select id="recipeGetUrl"
 		resultType="com.harmony.www_service.dto.RecipeDto">
-		SELECT RIGHT(url, 11) url FROM recipe
-		order by rand()
-		limit 5
+		SELECT DISTINCT RIGHT(url, 11) AS url
+		FROM recipe
+		WHERE url IS NOT NULL AND LENGTH(url) >= 11
+		ORDER BY RAND()
+		LIMIT 5
 	</select>
 
 	<!-- 랜덤 레시피 -->
@@ -182,17 +186,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		limit 5
 	</select>
 
-	<!-- 랜덤 메뉴 중복제거-->
+	<!-- 랜덤 메뉴 중복제거 -->
 	<select id="randomMenu"
 		resultType="com.harmony.www_service.dto.MenuDto">
 		SELECT m.mcode, m.menuName, m.imgurl
 		FROM (
-		SELECT DISTINCT mcode
+		SELECT DISTINCT
+		mcode
 		FROM recipe
 		ORDER BY RAND()
 		LIMIT 5
 		) AS random_recipes
-		JOIN menu m ON m.mcode = random_recipes.mcode
+		JOIN menu m
+		ON m.mcode = random_recipes.mcode
 	</select>
 
 	<!-- 어떤 사용자가 어떤 레시피를 조회 했는지 (봤는지) 등록 -->
