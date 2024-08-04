@@ -567,13 +567,13 @@
                     </div>
                     <div class="info-inbox2">
                         <p>
-                            <a th:href="@{/info_update}">😀 내 정보 수정</a>
+                            <a th:href="@{/my/info_update}">😀 내 정보 수정</a>
                         </p>
                         <p>
                             <a th:href="@{/my/recipe/list(mno=${mno})}">🍳 나의 레시피 관리</a>
                         </p>
                         <p>
-                            <a th:href="@{/like_hate_list}">💘 나의 좋아요 관리</a>
+                            <a th:href="@{/my/like_hate_list}">💘 나의 찜 관리</a>
                         </p>
                     </div>
                 </div>
@@ -584,7 +584,7 @@
                     </div>
                     <div class="info-inbox2">
                         <p>
-                            <a th:href="@{/material_insert(mno=${mno})}">재료 등록</a>
+                            <a th:href="@{/my/material_insert(mno=${mno})}">재료 등록</a>
                         </p>
                         <p>
                             <a th:href="@{/my/recipe/registForm(mno=${mno})}">레시피 등록</a>
@@ -593,7 +593,7 @@
                             <a th:href="@{/my/recipe/list(mno=${mno})}">나의 레시피</a>
                         </p>
                         <p>
-                            <a th:href="@{/like_hate_list}">좋아요 레시피</a>
+                            <a th:href="@{/my/like_hate_list}">찜 레시피</a>
                         </p>
                         <p>
                             <a th:href="@{/menu1/main(mno=${mno})}">메뉴 추천 받기</a>
@@ -664,7 +664,7 @@
                 <!-- 하단 : 등록한 재료 전체 조회 -->
                 <div id="by-tab">
                     <span id="by-tab-span">나의 재료 LIST</span>
-                    <a th:href="@{/material_insert(mno=${mno})}">
+                    <a th:href="@{/my/material_insert(mno=${mno})}">
                         <button id="by-btn-insert">재료등록</button>
                     </a>
 
@@ -936,7 +936,7 @@
                     dataType: 'text',
                     success: function (response) {
                         alert("재료정보가 성공적으로 수정되었습니다🍉");
-                        window.location.href = "/mypage_main";
+                        window.location.href = "/my/mypage_main";
                     },
                     error: function (xhr, status, error) {
                         console.log('Status: ' + status);
