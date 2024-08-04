@@ -58,16 +58,13 @@
     }
     .by-delete-btn {
     	margin-right: 50px;
-    	width: 80px;
-    	height: 40px;
-    	background-color: #F5A47E;
         border: none; /* 테두리 없애기 */
-        border-radius: 5px;
+        background-color: white;
         color: white;
         cursor: pointer;
     }
     .by-delete-btn:hover {
-    	background-color: #e5946e; /* 마우스 오버 시 색상 변경 */ 
+    	background-color: #ddd; /* 마우스 오버 시 색상 변경 */ 
     }
     #by-favorite_menu{
     	display: flex; /* Flexbox 사용 */
@@ -99,7 +96,7 @@
 <th:block th:insert="~{/sub/header.html}"></th:block>
 </header>
 <section id="by-section">
-    <span class="by-list-span">💛레시피 좋아요 리스트</span>
+    <span class="by-list-span">💛레시피 찜 리스트</span>
     <div class="by-list" id="by-list-1">
     	<!-- 레시피 추천한 리스트 출력(반복문 사용해야함) -->
     	<div th:each="recipeLike : ${recipeLike}" id="by-recipe_recom">
@@ -108,7 +105,7 @@
     		</a>
 			<input type="hidden" class="mno" th:value="${recipeLike.mno}">
 			<input type="hidden" class="rrcode" th:value="${recipeLike.rrcode}">
-			<button class="by-delete-btn"> 싫어요 👎</button>
+			<button class="by-delete-btn"> ❌ </button>
 		</div>
     </div>
     

@@ -378,7 +378,7 @@
 					</div>
 					<div class="insertForm-inbox5">
 						<input type="submit" value="등록">
-						<input type="button" value="목록" onclick="window.location.href='/mypage_main'">
+						<input type="button" value="목록" onclick="window.location.href='/my/mypage_main'">
 					</div>
 				</form>
 			</div>
@@ -467,7 +467,7 @@
 					dataType: 'text',
 					success: function (response) {
 						alert("재료정보가 성공적으로 등록되었습니다🍖");
-						window.location.href = "/mypage_main";
+						window.location.href = "/my/mypage_main";
 					},
 					error: function (xhr, status, error) {
 						console.log('Status: ' + status);

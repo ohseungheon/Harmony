@@ -181,13 +181,13 @@
 			<a th:href="@{/regist_page}">회원가입</a>
 		</span>
 		<span th:if="${#authentication.principal != 'anonymousUser'}">
-			<a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" th:href="@{/mypage_main(mno=${mno})}"
+			<a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" th:href="@{/my/mypage_main(mno=${mno})}"
 				id="nick"></a>
 			<a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" th:href="@{/dashboard}"
 				id="nick"></a>
 		</span>
 		<span th:if="${#authentication.principal != 'anonymousUser'}">
-			<a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" th:href="@{/mypage_main(mno=${mno})}">
+			<a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" th:href="@{/my/mypage_main(mno=${mno})}">
 				마이 페이지 </a>
 			<a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" th:href="@{/dashboard}">
 				관리자 페이지 </a>

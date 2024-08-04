@@ -27,6 +27,7 @@ import com.harmony.www_service.service.LikeService;
 import com.harmony.www_service.service.MemberService;
 
 @Controller
+@RequestMapping("/my")
 public class Mypage1Controller {
 	@Autowired
 	IMemberDao memDao;
@@ -121,8 +122,8 @@ public class Mypage1Controller {
 		}
 		model.addAttribute("dd", dd);
 		model.addAttribute("days", days);
-		//System.out.println("임박한거디데이!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+days);
-		//
+		
+		//s
 		List<Long> daysBetween_ice = new ArrayList<>();
 		List<Long> daysBetween_cool = new ArrayList<>();
 		List<Long> daysBetween_food = new ArrayList<>();
