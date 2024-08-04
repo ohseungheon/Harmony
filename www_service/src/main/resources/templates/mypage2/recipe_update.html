@@ -357,7 +357,8 @@ section {
 					</tr>
 					<tr>
 						<th>동영상 주소</th>
-						<td><input type="text" name="url" th:value="${recipe.url}" required></td>
+						<td><input type="text" name="url" th:value="${recipe.url}"
+							required></td>
 					</tr>
 					<tr>
 						<th>카테고리</th>
@@ -442,8 +443,7 @@ section {
 								name="orderNum" th:value="${i.index + 1}" required>
 							</th>
 							<td><textarea name="orderContent"
-									placeholder="예) 소고기를 숭덩숭덩 썰어주세요"
-									th:text="${order.orderContent}"></textarea></td>
+									placeholder="예) 파를 송송 썰어주세요" th:text="${order.orderContent}"></textarea></td>
 							<td class="order-img">
 								<p class="order-img-text"
 									th:style="${order.cookingImg != null && !order.cookingImg.isEmpty() ? 'display:none;' : ''}">➕</p>
@@ -487,56 +487,29 @@ section {
 		<th:block th:insert="~{/sub/footer.html}"></th:block>
 	</footer>
 
-	<script>
+
+	<script th:inline="javascript">
 	
-	document.getElementById('recipeForm').addEventListener('submit', function(e) {
-	    const mcodeInput = document.getElementById('current-mcode');
-	    const menuSelectionArea = document.querySelector('.choice-menu-name');
-	    
-	    if (!mcodeInput.value) {
-	        e.preventDefault(); // 폼 제출을 막습니다
-	        alert('메뉴를 선택해주세요.');
-	        menuSelectionArea.style.border = '2px solid red';
-	        menuSelectionArea.scrollIntoView({ behavior: 'smooth' });
-	        setTimeout(() => {
-	            menuSelectionArea.style.border = '';
-	        }, 3000);
-	    } else {
-	        console.log("Form data:", new FormData(this));
-	        // 폼 제출 전에 추가적인 유효성 검사나 데이터 처리를 할 수 있습니다.
-	    }
-	});
-	
-	</script>
+	<!-- Thymeleaf를 통해 서버에서 전달된 데이터를 JavaScript 변수에 할당 -->
+	const ingredientsList = /*[[${ingredientList}]]*/ [];
+	var initialIngredients = /*[[${recipeIngredient}]]*/ [];
+    let selectIdCounter = 1;
 
-	<script th:inline="javascript">
-    console.log("Recipe data:", /*[[${recipe}]]*/ null);
-	</script>
-	
-	<script th:inline="javascript">
-    var ingredientsList = /*[[${ingredientList}]]*/ [];
-	</script>
-
-	<script th:inline="javascript">
-    var initialIngredients = /*[[${recipeIngredient}]]*/ [];
-	</script>
-
-	<script th:inline="javascript">
-
-document.addEventListener("DOMContentLoaded", function(){
-	initializeApp();
-    getIngredients();
+	// 페이지 로드 시 초기화 함수 실행
+document.addEventListener("DOMContentLoaded", async function(){
+    await initializeApp();
 });
 
+	// 앱 초기화 함수
 async function initializeApp() {
-	loadInitialData();
+    loadInitialData();
     setupEventListeners();
     highlightSelectedMenu();
     await getIngredients();
     applyInitialIngredients();
 }
 
-//재료 정보 가져오기
+//재료 정보를 서버에서 가져오는 함수
 function getIngredients() {
     return new Promise((resolve, reject) => {
         const selects = document.querySelectorAll('select[name="icode"]');
@@ -545,9 +518,9 @@ function getIngredients() {
             .then(response => response.json())
             .then(ingredients => {
                 console.log("Loaded ingredients:", ingredients);
+             // 각 select 요소에 재료 옵션 추가
                 selects.forEach((select) => {
                     const selectedValue = select.value; // 현재 선택된 값을 저장
-                    // select.innerHTML = '<option value="0">재료 이름</option>'; // 이 라인을 제거 또는 주석 처리
                     ingredients.forEach(ingredient => {
                         if (!select.querySelector(`option[value="${ingredient.icode}"]`)) {
                             const option = document.createElement('option');
@@ -569,6 +542,7 @@ function getIngredients() {
     });
 }
 
+//초기 재료 정보 적용 함수
 function applyInitialIngredients() {
     initialIngredients.forEach((ingre, index) => {
         const select = document.getElementById(`ingredient-select-${index}`);
@@ -585,7 +559,7 @@ function applyInitialIngredients() {
     });
 }
 
-
+//선택된 메뉴 하이라이트 함수
 function highlightSelectedMenu() {
     const currentMcode = document.getElementById("current-mcode").value;
     const currentMenuItem = document.querySelector(`li[mcode="${currentMcode}"]`);
@@ -594,12 +568,14 @@ function highlightSelectedMenu() {
     }
 }
 
+//초기 데이터 로드 함수
 function loadInitialData() {
+	// 카테고리, 인분, 테마 정보 설정
 	const categorySel = document.getElementById("category-sel");
     const portionsSel = document.getElementById("portions-sel");
     const themeSel = document.getElementById("theme-sel");
     
-    // 서버에서 전달받은 데이터를 사용
+ 	// Thymeleaf를 통해 서버에서 전달받은 데이터 사용
     const recipeCategory = /*[[${recipe.category}]]*/ '';
     const recipePortions = /*[[${recipe.portions}]]*/ '';
     const recipeTheme = /*[[${recipe.theme}]]*/ '';
@@ -620,31 +596,38 @@ function loadInitialData() {
     console.log("Portions:", recipePortions); // 디버깅을 위한 로그
     console.log("Theme:", recipeTheme); // 디버깅을 위한 로그
     
-    loadMenuImage(document.getElementById("current-mcode").value);
+    updateMenuImage(document.getElementById("current-mcode").value);
     setupOrderImages();
 }
 
+//이벤트 리스너 설정 함수
 function setupEventListeners() {
+	// 메뉴 클릭 이벤트
     document.querySelectorAll('#recipe-menu-name').forEach(menuItem => {
         menuItem.addEventListener("click", handleMenuClick);
     });
 
+ 	// 재료 테이블 이벤트
     document.getElementById('ingredient-table').addEventListener('change', handleIngredientChange);
     document.getElementById('ingredient-table').addEventListener('click', handleIngredientDelete);
 
+ 	// 재료 및 레시피 순서 추가 버튼 이벤트
     document.getElementById('recipe-ingredient-add').addEventListener('click', addIngredient);
     document.getElementById('recipe-order-add').addEventListener('click', addRecipeOrder);
 
+ 	// 레시피 단계 관련 이벤트
     document.getElementById('recipe-steps').addEventListener('click', handleRecipeStepEvents);
 }
 
+//메뉴 클릭 핸들러
 function handleMenuClick(event) {
-	updateSelectedMenu(event.target);
+    updateSelectedMenu(event.target);
     const mcode = event.target.getAttribute("mcode");
     updateMenuImage(mcode);
     document.getElementById("current-mcode").value = mcode;
 }
 
+//선택된 메뉴 업데이트 함수
 function updateSelectedMenu(menuItem) {
 	const prevSelected = document.querySelector('li.selected');
     if (prevSelected) {
@@ -653,6 +636,7 @@ function updateSelectedMenu(menuItem) {
     menuItem.classList.add("selected");
 }
 
+//메뉴 이미지 업데이트 함수
 function updateMenuImage(mcode) {
     fetch(`/api/getMenuImage?mcode=${mcode}`)
         .then(response => {
@@ -666,62 +650,42 @@ function updateMenuImage(mcode) {
                 const imageUrl = `/uploads/${data.imgurl}`;
                 const menuImage = document.getElementById("menu-image");
                 menuImage.src = imageUrl;
-                menuImage.onerror = () => { menuImage.src = '/img/imgNone2.png'; };
+                menuImage.onerror = () => { 
+                    menuImage.src = '/img/imgNone2.png';
+                    console.warn(`Failed to load image for mcode: ${mcode}`);
+                };
             } else {
                 throw new Error('Image URL is undefined');
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Error updating menu image:', error);
             document.getElementById("menu-image").src = '/img/imgNone2.png';
         });
 }
 
+//재료 변경 핸들러
 function handleIngredientChange(event) {
     if (event.target.matches("select[name='icode']")) {
         updateIngredientType(event.target);
     }
 }
 
+//재료 삭제 핸들러
 function handleIngredientDelete(event) {
     if (event.target.matches('.ingredient-delete-btn')) {
         event.target.closest('tr').remove();
     }
 }
 
+//재료 추가 함수
 function addIngredient() {
     const table = document.getElementById('ingredient-table');
     const newRow = createIngredientRow();
     table.appendChild(newRow);
 }
 
-function createIngredientRow() {
-	const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-        <th>재료 정보</th>
-        <td>
-            <select name="icode">
-                <option value="0">재료 이름</option>
-                ${ingredientsList.map(ingredient => 
-                    `<option value="${ingredient.icode}">${ingredient.name}</option>`
-                ).join('')}
-            </select>
-        </td>
-        <td><input type="text" name="amount" placeholder="수량"></td>
-        <td><input type="text" name="type" placeholder="단위(개/g)"></td>
-        <td><span class="ingredient-delete-btn">X</span></td>
-    `;
-
-    // 새로 생성된 행에 이벤트 리스너 추가
-    const newSelect = newRow.querySelector('select[name="icode"]');
-    addChangeListener(newSelect);
-
-    const newDeleteBtn = newRow.querySelector('.ingredient-delete-btn');
-    addDeleteEvent(newDeleteBtn);
-
-    return newRow;
-}
-
+//레시피 단계 이벤트 핸들러
 function handleRecipeStepEvents(event) {
     if (event.target.matches('.order-img')) {
         handleImageUpload(event.target);
@@ -730,6 +694,7 @@ function handleRecipeStepEvents(event) {
     }
 }
 
+//이미지 업로드 핸들러
 function handleImageUpload(orderImgCell) {
     const imageInput = orderImgCell.querySelector('input[type="file"]');
     const imageDisplay = orderImgCell.querySelector('img');
@@ -742,6 +707,7 @@ function handleImageUpload(orderImgCell) {
         }
     });
     
+ // 파일 선택 시 이미지 미리보기
     imageInput.addEventListener('change', function() {
         if (this.files && this.files[0]) {
             const reader = new FileReader();
@@ -757,11 +723,13 @@ function handleImageUpload(orderImgCell) {
     });
 }
 
+//레시피 단계 삭제 핸들러
 function handleStepDelete(deleteBtn) {
     deleteBtn.closest('tr').remove();
     updateStepNumbers();
 }
 
+//레시피 순서 추가 함수
 function addRecipeOrder() {
     const table = document.getElementById("recipe-steps");
     const stepNumber = table.rows.length + 1;
@@ -771,6 +739,7 @@ function addRecipeOrder() {
     updateStepNumbers();
 }
 
+//요리순서 추가버튼 클릭시 HTML 구조생성
 function createRecipeOrderRow(stepNumber, existingImageUrl = '') {
     const newRow = document.createElement('tr');
     newRow.innerHTML = `
@@ -778,7 +747,7 @@ function createRecipeOrderRow(stepNumber, existingImageUrl = '') {
             <input type="hidden" name="orderNum" value="${stepNumber}">
         </th>
         <td>
-            <textarea name="orderContent[${stepNumber - 1}]" placeholder="예) 소고기를 숭덩숭덩 썰어주세요"></textarea>
+            <textarea name="orderContent[${stepNumber - 1}]"></textarea>
         </td>
         <td class="order-img">
             <p class="order-img-text" ${existingImageUrl ? 'style="display:none;"' : ''}>➕</p>
@@ -793,6 +762,7 @@ function createRecipeOrderRow(stepNumber, existingImageUrl = '') {
     return newRow;
 }
 
+//레시피 단계 번호 업데이트 함수
 function updateStepNumbers() {
     const rows = document.querySelectorAll('#recipe-steps tr');
     rows.forEach((row, index) => {
@@ -811,8 +781,10 @@ function updateStepNumbers() {
     });
 }
 
+//레시피 요리순서 이미지 설정 함수
 function setupOrderImages() {
     document.querySelectorAll('.order-img').forEach((cell, index) => {
+    	// 동적으로 이미지 표시 여부 결정
         const img = cell.querySelector('img');
         const textElem = cell.querySelector('.order-img-text');
         const fileInput = cell.querySelector('input[type="file"]');
@@ -830,120 +802,52 @@ function setupOrderImages() {
     });
 }
 
-function loadMenuImage(mcode) {
-    fetch(`/api/getMenuImage?mcode=${mcode}`)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("menu-image").src = `/uploads/${data.imgurl}`;
-        })
-        .catch(error => console.error("Error:", error));
-}
-
+// 재료정보 추가버튼 클릭시 HTML 구조생성
 function createIngredientRow() {
+	// tr 요소를 생성해 변수에 담기
     const newRow = document.createElement('tr');
+	// 생성된 tr 안에 재료정보와 같은 HTML 추가
     newRow.innerHTML = `
         <th>재료 정보</th>
         <td>
-            <select name="icode">
+            <select name="icode" id="ingredient-select-${selectIdCounter++}">
                 <option value="0">재료 이름</option>
-                <option value="1">레몬</option>
-                <option value="2">칠면조고기</option>
-                <option value="3">대파</option>
-                <option value="4">쪽파</option>
-                <option value="5">생강</option>
-                <option value="6">마늘</option>
-                <option value="7">감자</option>
-                <option value="8">당근</option>
-                <option value="9">브로콜리</option>
-                <option value="10">배추</option>
-                <option value="11">시금치</option>
-                <option value="12">애호박</option>
-                <option value="13">오이</option>
-                <option value="14">토마토</option>
-                <option value="15">피망</option>
-                <option value="16">상추</option>
-                <option value="17">양배추</option>
-                <option value="18">호박</option>
-                <option value="19">콜리플라워</option>
-                <option value="20">무</option>
-                <option value="21">파프리카</option>
-                <option value="22">소고기</option>
-                <option value="23">돼지고기</option>
-                <option value="24">닭고기</option>
-                <option value="25">오리고기</option>
-                <option value="26">양고기</option>
-                <option value="27">명태</option>
-                <option value="28">고등어</option>
-                <option value="29">연어</option>
-                <option value="30">새우</option>
-                <option value="31">굴</option>
-                <option value="32">양송이 버섯</option>
-                <option value="33">호두</option>
-                <option value="34">아몬드</option>
-                <option value="35">땅콩</option>
-                <option value="36">파인애플</option>
-                <option value="37">바나나</option>
-                <option value="38">사과</option>
-                <option value="39">딸기</option>
-                <option value="40">포도</option>
-                <option value="41">수박</option>
-                <option value="42">옥수수</option>
-                <option value="43">검은콩</option>
-                <option value="44">완두콩</option>
-                <option value="45">고구마</option>
-                <option value="46">청경채</option>
-                <option value="47">무화과</option>
-                <option value="48">블루베리</option>
-                <option value="49">참외</option>
-                <option value="50">키위</option>
-                <option value="51">깻잎</option>
-                <option value="52">고추</option>
-                <option value="53">가지</option>
-                <option value="54">양파</option>
+                // map메서드를 이용해 ingredientsList의 각 재료들을 각각 option태그의 문자열로 변환
+                ${ingredientsList.map(ingredient =>
+                    `<option value="${ingredient.icode}">${ingredient.name}</option>`
+                ).join('')} // join메서드를 이용해 map으로 생성된 배열을 연속된 하나의 문자열로 변환
             </select>
         </td>
         <td><input type="text" name="state" placeholder="재료상태 예) 간거, 온거"></td>
         <td><input type="text" name="amount" placeholder="수량"></td>
-        <td><input type="text" name="type" placeholder="단위(개/g)"></td>
+        <td><input type="text" name="type" placeholder="단위(개/g/스푼/포기 등)"></td>
         <td><span class="ingredient-delete-btn">X</span></td>
     `;
+    // 생성된 tr요소를 return으로 반환
     return newRow;
 }
 
-function createRecipeOrderRow(stepNumber, existingImageUrl = '') {
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-        <th>Step ${stepNumber}
-            <input type="hidden" name="orderNum" value="${stepNumber}">
-        </th>
-        <td>
-            <textarea name="orderContent[${stepNumber - 1}]" placeholder="예) 소고기를 숭덩숭덩 썰어주세요"></textarea>
-        </td>
-        <td class="order-img">
-            <p class="order-img-text">➕</p>
-            <input type="file" name="newCookingImg[${stepNumber - 1}]" accept="image/*" style="display:none;">
-            <input type="hidden" name="existingCookingImg[${stepNumber - 1}]" value="${existingImageUrl}">
-            <img src="${existingImageUrl || '/img/imgNone.png'}" style="${existingImageUrl ? '' : 'display:none;'}">
-        </td>
-        <td>
-            <span class="delete-btn">X</span>
-        </td>
-    `;
-    return newRow;
-}
 
-document.querySelector('form').addEventListener('submit', function(e) {
+//폼 제출 이벤트 리스너
+document.getElementById('recipeForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    console.log("Form data:", new FormData(this));
-    this.submit();
+    const mcodeInput = document.getElementById('current-mcode');
+    const menuSelectionArea = document.querySelector('.choice-menu-name');
+    
+    if (!mcodeInput.value) {
+        alert('메뉴를 선택해주세요.');
+        menuSelectionArea.style.border = '2px solid red';
+        menuSelectionArea.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+            menuSelectionArea.style.border = '';
+        }, 3000);
+    } else {
+        console.log("Form data:", new FormData(this));
+        this.submit();
+    }
 });
 
 </script>
-
-
-
-
-
 
 </body>
 </html>
