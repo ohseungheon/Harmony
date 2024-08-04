@@ -33,10 +33,10 @@ public class LikeRestController {
 
 		likeDao.deleteRecipeReco(rrcode);
 
-		return "해당 레시피 찜을 취소하였습니다🙄";
+		return "해당 레시피 추천을 취소하였습니다🙄";
 	}
 
-	// 레시피 찜(좋아요, 추천) 등록 레시피 코드 필요
+	// 레시피 추천(좋아요, 추천) 등록 레시피 코드 필요
 	@GetMapping("/recipe-reco/{rcode}")
 	public String insertRecommend(@PathVariable("rcode") int rcode) {
 		String msg = "비정상적인 작동";
@@ -49,18 +49,18 @@ public class LikeRestController {
 		if (mno_.isPresent()) { // 로그인된 아이디로 회원 정보가 존재하면
 			int mno = mno_.get();
 			Optional<Integer> rrcodeOptional = likeDao.isPresentRecommend(mno, rcode);
-			if (rrcodeOptional.isPresent()) { // 이미 찜 해놨다면
+			if (rrcodeOptional.isPresent()) { // 이미 추천 해놨다면
 				int rrcode = rrcodeOptional.get();
 				likeDao.deleteRecipeReco(rrcode);
-				msg = "해당 레시피 찜을 취소하였습니다🙄";
+				msg = "해당 레시피 추천을 취소하였습니다🙄";
 			} else {
 				likeDao.insertRecipeReco(mno, rcode);
-				msg = "레시피 찜 성공👍";
+				msg = "레시피 추천 성공👍";
 			}
 
 		} else {
 			// 로그인된 아이디의 회원 정보가 없으면 로그인 페이지로
-			msg = "찜하기 실패 😢 로그인 요망";
+			msg = "추천하기 실패 😢 로그인 요망";
 
 		}
 
